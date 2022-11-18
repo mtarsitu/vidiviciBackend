@@ -1,19 +1,22 @@
 import Link from 'next/link';
+import { useState } from 'react';
 import styles from './styles.module.scss';
 
 export default function Login() {
+    const loginData = useState({username:'', password: ''})
+
     return (
         <div className={styles.login_form}>
             <div>
                 <form>
                     <div>
                         <label>Username </label>
-                        <input type="text" name="uname" required />
+                        <input type="text" name="username" required />
                         {/* {renderErrorMessage("uname")} */}
                     </div>
                     <div>
                         <label>Password </label>
-                        <input type="password" name="pass" required />
+                        <input type="password" name="password" required />
                         {/* {renderErrorMessage("pass")} */}
                     </div>
                     <div>
