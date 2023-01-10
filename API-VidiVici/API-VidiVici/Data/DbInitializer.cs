@@ -11,7 +11,7 @@ namespace API_VidiVici.Data
             if (!userManager.Users.Any())
             {
               DataMemory.SetUsers(userManager);   
-            context.SaveChanges();
+              context.SaveChanges();
             }
             if (!context.PrincipalInvestments.Any())
             { var PrincipalInvestements = DataMemory.GetPrincipalInvestments();

@@ -14,19 +14,23 @@ namespace API_VidiVici.Modifiers
         {
             return new Investment
             {
+                Id = item.Id,
                 ClientId = item.ClientId,
-                DateCreated = item.DateCreated,
-                InvestmentTypeId = item.InvestmentTypeId
+                DateCreated = (DateTime)item.DateCreated,
+                InvestmentType = item.InvestmentType
             };
         }
         public static InvestmentDto ToInvestmentDto(Investment item)
         {
-            return new InvestmentDto
+            InvestmentDto investmentDto = new InvestmentDto
             {
-                ClientId = item.ClientId,
+                Id = item.Id,
+                ClientId = item.Client.Id,
                 DateCreated = item.DateCreated,
-                InvestmentTypeId = item.InvestmentTypeId
+                InvestmentType = item.InvestmentType
             };
+            
+            return  investmentDto;
         }
     }
 }

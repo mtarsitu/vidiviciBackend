@@ -174,37 +174,37 @@ namespace APIVidiVici.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2965d2ea-147f-4e0c-9f24-75c68704938e",
+                            Id = "f8af3d8f-ea19-4da1-b630-02af25354789",
                             Name = "Poweruser",
                             NormalizedName = "POWERUSER"
                         },
                         new
                         {
-                            Id = "75fb6266-614b-47dc-b166-96610de7b836",
+                            Id = "5e85cc7f-0f14-4fe1-8c6d-84ccd91136a2",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "630a6cb2-cbf5-4ece-b319-cdbc37ffa8b8",
+                            Id = "20d8a379-2120-44ee-b8d2-a172a492d941",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "48e4f7ce-e8e2-437e-9b84-e6b8721e231d",
+                            Id = "ae52f185-63ec-4c91-8295-7fd05469b951",
                             Name = "Prospect",
                             NormalizedName = "PROSPECT"
                         },
                         new
                         {
-                            Id = "01e06f27-6935-4942-ab1d-fd3392ac22cb",
+                            Id = "4f8da647-e5bc-4130-b6b0-8dff957db33d",
                             Name = "Pending",
                             NormalizedName = "PENDING"
                         },
                         new
                         {
-                            Id = "a9d260ae-1a8e-4340-8793-26b5d7342f09",
+                            Id = "9cc2f7f0-0359-4998-870b-1d929530a947",
                             Name = "Investor",
                             NormalizedName = "INVESTOR"
                         });
@@ -319,7 +319,7 @@ namespace APIVidiVici.Data.Migrations
             modelBuilder.Entity("API_VidiVici.Model.Investment", b =>
                 {
                     b.HasOne("API_VidiVici.Model.User", "Client")
-                        .WithMany("Investments")
+                        .WithMany()
                         .HasForeignKey("ClientId");
 
                     b.HasOne("API_VidiVici.Model.PrincipalInvestment", "InvestmentType")
@@ -382,11 +382,6 @@ namespace APIVidiVici.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("API_VidiVici.Model.User", b =>
-                {
-                    b.Navigation("Investments");
                 });
 #pragma warning restore 612, 618
         }

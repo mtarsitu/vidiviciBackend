@@ -22,7 +22,11 @@ namespace API_VidiVici.Controllers
         private readonly SignInManager<User> SignInManager;
 
         private readonly VidiviciDbContext _context;
-        public AccountsController(UserManager<User> userManager, TokenService tokenService, SignInManager<User> signInManager, VidiviciDbContext context)
+        public AccountsController(
+        UserManager<User> userManager, 
+        TokenService tokenService, SignInManager<User> signInManager, 
+        VidiviciDbContext context
+        )
         {
             _tokenService = tokenService;
             _userManager = userManager;
@@ -101,24 +105,23 @@ namespace API_VidiVici.Controllers
             return Ok("");
         }
 
+        // [Authorize(Roles = "Admin")]
+        // [Authorize(Roles = "Investor")]
+
         [HttpGet("getUserAndInvestments")]
-        public async Task<ActionResult<User>> GetUserAndInvestments(string username)
+        public async Task<ActionResult<InvestorDto>> GetUserAndInvestments(string username)
         {
             var user = await _userManager.FindByNameAsync(username);
-            var actualUser = await _context.Users.Include(x=>x.Investments).SingleAsync(x=>x.Id == user.Id);
-
+            var actualUser = InvestorModifier.GetInvestorDto(user);
+            var Investments = await _context.Investments
+            .Include(t=> t.InvestmentType)
+            .Where(x=>x.ClientId == user.Id)
+            .ToListAsync();
+            actualUser.Investments = new List<InvestmentDto>();
             
-            // var investments = await _context.Investments
-            // .Include(t=>t.InvestmentType)
-            // .Where(i=>i.ClientId == user.Id)
-            // .ToListAsync();
-            
-            // // List<InvestmentDto> investmentDtos = new List<InvestmentDto>();
-
-            // // foreach(Investment investment in investments){
-            // //     investmentDtos.Add(InvestmentModifier.ToInvestmentDto(investment));
-            // // }
-            
+            foreach(Investment investment in Investments){
+                actualUser.Investments.Add(InvestmentModifier.ToInvestmentDto(investment));
+            }
             return actualUser;
         }
         

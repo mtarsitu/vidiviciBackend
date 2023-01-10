@@ -30,28 +30,28 @@ namespace API_VidiVici.Data
            return new List<Investment>
            {
                new Investment{
-                   ClientId= "e488b538-2a6f-4201-ae5b-08186cad5fc1",
+                   ClientId= "e3e07f12-4ba6-4819-b1fe-c42f1dd39989",
                    InvestmentTypeId =1,
 
                },
 
                new Investment{
-                   ClientId= "e488b538-2a6f-4201-ae5b-08186cad5fc1",
+                   ClientId= "e3e07f12-4ba6-4819-b1fe-c42f1dd39989",
                    InvestmentTypeId =1,
                },
 
                new Investment{
-                   ClientId= "e488b538-2a6f-4201-ae5b-08186cad5fc1",
+                   ClientId= "e3e07f12-4ba6-4819-b1fe-c42f1dd39989",
                    InvestmentTypeId =2,
                },
 
                new Investment{
-                   ClientId= "e488b538-2a6f-4201-ae5b-08186cad5fc1",
+                   ClientId= "e3e07f12-4ba6-4819-b1fe-c42f1dd39989",
                    InvestmentTypeId =1,
                },
 
                new Investment{
-                   ClientId= "e488b538-2a6f-4201-ae5b-08186cad5fc1",
+                   ClientId= "e3e07f12-4ba6-4819-b1fe-c42f1dd39989",
                    InvestmentTypeId =1,
                },
            };
