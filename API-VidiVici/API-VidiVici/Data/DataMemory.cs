@@ -30,28 +30,28 @@ namespace API_VidiVici.Data
            return new List<Investment>
            {
                new Investment{
-                   ClientId= "e3e07f12-4ba6-4819-b1fe-c42f1dd39989",
+                   ClientId= "ff7f411e-1aa2-48a0-af77-6836a5337324",
                    InvestmentTypeId =1,
 
                },
 
                new Investment{
-                   ClientId= "e3e07f12-4ba6-4819-b1fe-c42f1dd39989",
+                   ClientId= "ff7f411e-1aa2-48a0-af77-6836a5337324",
                    InvestmentTypeId =1,
                },
 
                new Investment{
-                   ClientId= "e3e07f12-4ba6-4819-b1fe-c42f1dd39989",
+                   ClientId= "14ef07c0-8cd3-48dd-93ff-5d709c77982f",
                    InvestmentTypeId =2,
                },
 
                new Investment{
-                   ClientId= "e3e07f12-4ba6-4819-b1fe-c42f1dd39989",
+                   ClientId= "14ef07c0-8cd3-48dd-93ff-5d709c77982f",
                    InvestmentTypeId =1,
                },
 
                new Investment{
-                   ClientId= "e3e07f12-4ba6-4819-b1fe-c42f1dd39989",
+                   ClientId= "14ef07c0-8cd3-48dd-93ff-5d709c77982f",
                    InvestmentTypeId =1,
                },
            };
@@ -100,7 +100,7 @@ namespace API_VidiVici.Data
                     
                 };
                 await userManager.CreateAsync(prospect, "Pa$$1234");
-                await userManager.AddToRoleAsync(prospect,  "Employee" );
+                await userManager.AddToRoleAsync(prospect,  "Prospect" );
 
                 var pending = new User
                 {
@@ -111,7 +111,7 @@ namespace API_VidiVici.Data
                     
                 };
                 await userManager.CreateAsync(pending, "Pa$$1234");
-                await userManager.AddToRoleAsync(pending,  "Employee" );
+                await userManager.AddToRoleAsync(pending,  "Pending" );
 
                 var investor = new User
                 {
@@ -122,7 +122,18 @@ namespace API_VidiVici.Data
                     
                 };
                 await userManager.CreateAsync(investor, "Pa$$1234");
-                await userManager.AddToRoleAsync(investor,  "Employee" );
+                await userManager.AddToRoleAsync(investor,  "Investor" );
+
+                var secondInvestor = new User
+                {
+                    UserName = "Secondinvestor",
+                    Email = "secondinvestor@test.com",
+                    FirstName = "Second Investor First Name",
+                    LastName = "Second Investor Last Name"
+                    
+                };
+                await userManager.CreateAsync(secondInvestor, "Pa$$1234");
+                await userManager.AddToRoleAsync(secondInvestor,  "Investor" );
        }
 
     }

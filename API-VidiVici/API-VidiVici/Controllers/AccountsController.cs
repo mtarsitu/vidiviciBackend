@@ -105,8 +105,8 @@ namespace API_VidiVici.Controllers
             return Ok("");
         }
 
-        // [Authorize(Roles = "Admin")]
-        // [Authorize(Roles = "Investor")]
+        [Authorize(Roles = "Admin,Investor,Employee")]
+       
 
         [HttpGet("getUserAndInvestments")]
         public async Task<ActionResult<InvestorDto>> GetUserAndInvestments(string username)
