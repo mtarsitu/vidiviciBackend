@@ -34,8 +34,8 @@ namespace APIVidiVici.Data.Migrations
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
                     UserType = table.Column<int>(type: "integer", nullable: false),
-                    FirstName = table.Column<string>(type: "text", nullable: false),
-                    LastName = table.Column<string>(type: "text", nullable: false),
+                    FirstName = table.Column<string>(type: "text", nullable: true),
+                    LastName = table.Column<string>(type: "text", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -184,17 +184,16 @@ namespace APIVidiVici.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ClientId = table.Column<int>(type: "integer", nullable: false),
+                    ClientId = table.Column<string>(type: "text", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    InvestmentTypeId = table.Column<int>(type: "integer", nullable: false),
-                    ClientId1 = table.Column<string>(type: "text", nullable: true)
+                    InvestmentTypeId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Investments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Investments_AspNetUsers_ClientId1",
-                        column: x => x.ClientId1,
+                        name: "FK_Investments_AspNetUsers_ClientId",
+                        column: x => x.ClientId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -210,8 +209,12 @@ namespace APIVidiVici.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "6bb1d1f7-16b3-497f-9713-5a4c8930b128", null, "Member", "MEMBER" },
-                    { "e4a9320e-a67d-4a4c-8890-f390b8ecb3bd", null, "Admin", "ADMIN" }
+                    { "01e06f27-6935-4942-ab1d-fd3392ac22cb", null, "Pending", "PENDING" },
+                    { "2965d2ea-147f-4e0c-9f24-75c68704938e", null, "Poweruser", "POWERUSER" },
+                    { "48e4f7ce-e8e2-437e-9b84-e6b8721e231d", null, "Prospect", "PROSPECT" },
+                    { "630a6cb2-cbf5-4ece-b319-cdbc37ffa8b8", null, "Employee", "EMPLOYEE" },
+                    { "75fb6266-614b-47dc-b166-96610de7b836", null, "Admin", "ADMIN" },
+                    { "a9d260ae-1a8e-4340-8793-26b5d7342f09", null, "Investor", "INVESTOR" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -252,9 +255,9 @@ namespace APIVidiVici.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Investments_ClientId1",
+                name: "IX_Investments_ClientId",
                 table: "Investments",
-                column: "ClientId1");
+                column: "ClientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Investments_InvestmentTypeId",

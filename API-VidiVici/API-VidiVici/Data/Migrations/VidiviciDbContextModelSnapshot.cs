@@ -3,7 +3,6 @@ using System;
 using API_VidiVici.data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,12 +10,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace APIVidiVici.Data.Migrations
 {
-    [DbContext(typeof(VidiviciContext))]
-    [Migration("20230109130117_InitialCreate")]
-    partial class InitialCreate
+    [DbContext(typeof(VidiviciDbContext))]
+    partial class VidiviciDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,10 +30,7 @@ namespace APIVidiVici.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ClientId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("ClientId1")
+                    b.Property<string>("ClientId")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("DateCreated")
@@ -47,7 +41,7 @@ namespace APIVidiVici.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId1");
+                    b.HasIndex("ClientId");
 
                     b.HasIndex("InvestmentTypeId");
 
@@ -99,11 +93,9 @@ namespace APIVidiVici.Data.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool>("LockoutEnabled")
@@ -182,15 +174,39 @@ namespace APIVidiVici.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6bb1d1f7-16b3-497f-9713-5a4c8930b128",
-                            Name = "Member",
-                            NormalizedName = "MEMBER"
+                            Id = "2965d2ea-147f-4e0c-9f24-75c68704938e",
+                            Name = "Poweruser",
+                            NormalizedName = "POWERUSER"
                         },
                         new
                         {
-                            Id = "e4a9320e-a67d-4a4c-8890-f390b8ecb3bd",
+                            Id = "75fb6266-614b-47dc-b166-96610de7b836",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "630a6cb2-cbf5-4ece-b319-cdbc37ffa8b8",
+                            Name = "Employee",
+                            NormalizedName = "EMPLOYEE"
+                        },
+                        new
+                        {
+                            Id = "48e4f7ce-e8e2-437e-9b84-e6b8721e231d",
+                            Name = "Prospect",
+                            NormalizedName = "PROSPECT"
+                        },
+                        new
+                        {
+                            Id = "01e06f27-6935-4942-ab1d-fd3392ac22cb",
+                            Name = "Pending",
+                            NormalizedName = "PENDING"
+                        },
+                        new
+                        {
+                            Id = "a9d260ae-1a8e-4340-8793-26b5d7342f09",
+                            Name = "Investor",
+                            NormalizedName = "INVESTOR"
                         });
                 });
 
@@ -303,8 +319,8 @@ namespace APIVidiVici.Data.Migrations
             modelBuilder.Entity("API_VidiVici.Model.Investment", b =>
                 {
                     b.HasOne("API_VidiVici.Model.User", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId1");
+                        .WithMany("Investments")
+                        .HasForeignKey("ClientId");
 
                     b.HasOne("API_VidiVici.Model.PrincipalInvestment", "InvestmentType")
                         .WithMany()
@@ -366,6 +382,11 @@ namespace APIVidiVici.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("API_VidiVici.Model.User", b =>
+                {
+                    b.Navigation("Investments");
                 });
 #pragma warning restore 612, 618
         }

@@ -28,10 +28,6 @@ namespace API_VidiVici.Services
                 new Claim(ClaimTypes.Name, user.UserName),
             };
 
-
-           
-
-
             var roles = await _userManager.GetRolesAsync(user);
             foreach (var role in roles)
             {

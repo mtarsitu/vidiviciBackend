@@ -3,38 +3,48 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API_VidiVici.data;
+using API_VidiVici.DTOs;
 using API_VidiVici.Model;
+using API_VidiVici.Modifiers;
 using Microsoft.EntityFrameworkCore;
 
 namespace API_VidiVici.Repositories.Implementation
 {
-    public class InvestementsRepository : IRepository<Investment>
+    public class InvestementsRepository 
     {
-        private VidiviciContext _context;
-        public InvestementsRepository(VidiviciContext context)
+        private VidiviciDbContext _context;
+        public InvestementsRepository(VidiviciDbContext context)
         {
             _context = context;
         }
-        public void Add(Investment item)
+        public void Add(InvestmentDto item)
         {
-            _context.Investments?.Add(item);
+            _context.Investments?.Add(InvestmentModifier.ToInvestment(item));
             _context.SaveChanges();
         }
 
-        public void Edit(Investment item)
+        public void Edit(InvestmentDto item)
         {
-            _context.Investments?.Update(item);
+            _context.Investments?.Update(InvestmentModifier.ToInvestment(item));
             _context.SaveChanges();
         }
 
         public async Task<Investment?> Get(int id)
         {
-            return await _context.Investments.Where( x => x.Id == id).FirstOrDefaultAsync();
+            var investment = await _context.Investments
+            .Include(t=>t.InvestmentType)
+            .SingleAsync( x => x.Id == id);
+            return  investment;
         }
 
-        public async Task<IEnumerable<Investment>> GetAll()
+        public async Task<IEnumerable<InvestmentDto>> GetAll()
         {
-            return await _context.Investments.ToListAsync();
+            List<InvestmentDto> investmentDtos = new List<InvestmentDto>();
+            List<Investment> investments = await _context.Investments.ToListAsync();
+            foreach(Investment investment in investments ){
+                investmentDtos.Add(InvestmentModifier.ToInvestmentDto(investment));
+            }
+            return investmentDtos;
         }
 
         public void Remove(int id)
@@ -42,5 +52,6 @@ namespace API_VidiVici.Repositories.Implementation
             _context.Investments.Remove(_context.Investments.Single(x=> x.Id==id));
             _context.SaveChanges();
         }
+
     }
 }

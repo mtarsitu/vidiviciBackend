@@ -9,8 +9,8 @@ namespace API_VidiVici.Repositories.Implementation
 {
     public class PrincipalInvestmentsRepository : IRepository<PrincipalInvestment>
     {
-        private readonly VidiviciContext _context;
-        public PrincipalInvestmentsRepository(VidiviciContext context)
+        private readonly VidiviciDbContext _context;
+        public PrincipalInvestmentsRepository(VidiviciDbContext context)
         {
             _context = context;
         }

@@ -5,12 +5,10 @@ namespace API_VidiVici.Model
     {
         public UserType UserType{get;set;}
         
-        public string FirstName{get;set;}
-        public string LastName {get;set;}
-        public User()
-        {
+        public string? FirstName{get;set;}
+        public string? LastName {get;set;}
 
-        }
+        public List<Investment>? Investments {get;set;}
         
     }
 }

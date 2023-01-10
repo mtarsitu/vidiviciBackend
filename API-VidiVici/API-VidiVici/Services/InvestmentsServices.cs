@@ -1,22 +1,22 @@
 
 using API_VidiVici.Model;
 using API_VidiVici.Repositories.Implementation;
-
+using API_VidiVici.DTOs;
 namespace API_VidiVici.Services
 {
-    public class InvestmentsServices : IServices<Investment>
+    public class InvestmentsServices 
     {
         private InvestementsRepository _repository;
         public InvestmentsServices(InvestementsRepository repository)
         {
             _repository = repository;
         }
-        public void Add(Investment investment)
+        public void Add(InvestmentDto investment)
         {
             _repository.Add(investment);
         }
 
-        public void Edit(Investment investment)
+        public void Edit(InvestmentDto investment)
         {
             _repository.Edit(investment);
         }
@@ -26,7 +26,7 @@ namespace API_VidiVici.Services
            return await _repository.Get(id);
         }
 
-        public async Task<IEnumerable<Investment>>? GetAll()
+        public async Task<IEnumerable<InvestmentDto>>? GetAll()
         {
             return await _repository.GetAll();
         }

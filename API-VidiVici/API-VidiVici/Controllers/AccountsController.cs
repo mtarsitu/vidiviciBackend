@@ -5,6 +5,9 @@ using System.Security.Claims;
 using API_VidiVici.Model;
 using API_VidiVici.Services;
 using API_VidiVici.DTOs;
+using Microsoft.EntityFrameworkCore;
+using API_VidiVici.data;
+using API_VidiVici.Modifiers;
 
 namespace API_VidiVici.Controllers
 {
@@ -17,10 +20,13 @@ namespace API_VidiVici.Controllers
         private readonly UserManager<User> _userManager;
         private readonly TokenService _tokenService;
         private readonly SignInManager<User> SignInManager;
-        public AccountsController(UserManager<User> userManager, TokenService tokenService, SignInManager<User> signInManager)
+
+        private readonly VidiviciDbContext _context;
+        public AccountsController(UserManager<User> userManager, TokenService tokenService, SignInManager<User> signInManager, VidiviciDbContext context)
         {
             _tokenService = tokenService;
             _userManager = userManager;
+            _context = context;
             SignInManager = signInManager;
 
         }
@@ -65,12 +71,12 @@ namespace API_VidiVici.Controllers
                 return ValidationProblem();
             }
 
-            await _userManager.AddToRoleAsync(user, "Prospect");
+            await _userManager.AddToRoleAsync(user, "Member");
 
             return StatusCode(201);
         }
 
-        //[Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpGet("currentUser")]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
@@ -83,6 +89,7 @@ namespace API_VidiVici.Controllers
             };
         }
 
+        // [Authorize(Roles = "Admin")]
         [HttpPost("logout")]
         public async Task<ActionResult> Logout()
         {
@@ -92,8 +99,29 @@ namespace API_VidiVici.Controllers
                 Response.Cookies.Delete(cookie);
             }
             return Ok("");
-            
         }
+
+        [HttpGet("getUserAndInvestments")]
+        public async Task<ActionResult<User>> GetUserAndInvestments(string username)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            var actualUser = await _context.Users.Include(x=>x.Investments).SingleAsync(x=>x.Id == user.Id);
+
+            
+            // var investments = await _context.Investments
+            // .Include(t=>t.InvestmentType)
+            // .Where(i=>i.ClientId == user.Id)
+            // .ToListAsync();
+            
+            // // List<InvestmentDto> investmentDtos = new List<InvestmentDto>();
+
+            // // foreach(Investment investment in investments){
+            // //     investmentDtos.Add(InvestmentModifier.ToInvestmentDto(investment));
+            // // }
+            
+            return actualUser;
+        }
+        
 
     
     }

@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using API_VidiVici.Model;
+using API_VidiVici.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using API_VidiVici.Services;
 
 namespace API_VidiVici.Controllers
@@ -22,10 +17,17 @@ namespace API_VidiVici.Controllers
             _services = services;
         }
 
-        [HttpGet]
+        [HttpGet("getInvestment")]
         public async  Task<Investment> Get(int id)
         {
             return await _services.Get(id);
         }
+
+        [HttpPost("newInvestment")]
+        public void Add(InvestmentDto investment){
+            _services.Add(investment);
+        }
+
+        
     }
 }

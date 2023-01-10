@@ -17,7 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(x=>x.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -32,14 +32,14 @@ builder.Services.AddCors(cors=>{
     
 });
 
-builder.Services.AddDbContext<VidiviciContext>(options =>
+builder.Services.AddDbContext<VidiviciDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 
 
 
 });
-builder.Services.AddIdentityCore<User>().AddRoles<IdentityRole>().AddSignInManager().AddEntityFrameworkStores<VidiviciContext>();
+builder.Services.AddIdentityCore<User>().AddRoles<IdentityRole>().AddSignInManager().AddEntityFrameworkStores<VidiviciDbContext>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opt =>
@@ -125,7 +125,7 @@ app.MapControllers();
 
 
 using var scope = app.Services.CreateScope();
-var context = scope.ServiceProvider.GetRequiredService<VidiviciContext>();
+var context = scope.ServiceProvider.GetRequiredService<VidiviciDbContext>();
 var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 var userManager = (UserManager<User>)scope.ServiceProvider.GetService(typeof(UserManager<User>));
 
