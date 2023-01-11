@@ -15,7 +15,7 @@ namespace API_VidiVici.DTOs
         public string? Email { get; set; }
         public List<InvestmentDto>? Investments {get;set;}
 
-        public List<InformationDto>? Informations {get;set;}
+        public List<InformationDto>? Informations {get;set;} = new List<InformationDto>();
 
     }
 }

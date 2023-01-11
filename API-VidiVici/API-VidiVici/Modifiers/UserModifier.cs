@@ -12,6 +12,7 @@ namespace API_VidiVici.Modifiers
         public static UserDto ToUserDto(User user)
         {
             return new UserDto {
+                Id = user.Id,
                 Username = user.UserName,
                 UserRole = user.UserRole,
                 FirstName = user.FirstName,

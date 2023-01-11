@@ -25,20 +25,22 @@ function App() {
   console.log(isLogged);
   
   useEffect(()=>{
-    console.log((isLogged));
+    if(loggedUser[0]!=null){
+      
+    }
   });
 
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-        <CssBaseline />  
-        {loggedUser.length==0 &&
+        {!isLogged&&
           <Routes>
           <Route path="/" element={<Login/>} />
         </Routes>
         }
+        <CssBaseline />  
         
-        {loggedUser.length>0  &&
+        {isLogged   &&
           <div className="app">
           <Sidebar isSidebar={isSidebar} />
           <main className="content">

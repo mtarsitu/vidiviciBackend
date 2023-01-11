@@ -12,10 +12,14 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import { useAtom } from "jotai";
+import { isLoggedAtom, loggedUserAtom } from "../../data/dataAtom";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+ 
+
   return (
     <MenuItem
       active={selected === title}
@@ -32,6 +36,8 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 };
 
 const Sidebar = () => {
+  const isLogged = useAtom(isLoggedAtom);
+  const loggedUser = useAtom(loggedUserAtom);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -122,7 +128,7 @@ const Sidebar = () => {
                   Mario Tarsitu
                 </Typography>
                 <Typography variant="h6" color={colors.greenAccent[500]}>
-                  Admin
+                  {loggedUser[0]!=null&& loggedUser[0].userRole}
                 </Typography>
               </Box>
             </Box>
@@ -142,24 +148,24 @@ const Sidebar = () => {
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-              Data
+              Date
             </Typography>
             <Item
-              title="Parteneri"
+              title="Utilizatori"
               to="/parteneri"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Contacts Information"
+              title="Informatii"
               to="/contacts"
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Invoices Balances"
+              title="Fonduri active"
               to="/invoices"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
@@ -171,8 +177,27 @@ const Sidebar = () => {
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-              Pages
+              Actiuni
             </Typography>
+            {/* dakldalksjdklajdakl
+            dakldalksjdklajdakl
+            
+            dasdasdadasadsadadadadakldalksjdklajdakl
+            
+            dasdasdadasadsadadadadakldalksjdklajdakl
+            
+            dasdasdadasadsadadadadakldalksjdklajdakl
+            
+            dasdasdadasadsadadadadakldalksjdklajdakl
+            
+            dasdasdadasadsadadadadakldalksjdklajdakl
+            
+            dasdasdadasadsadadada
+            dasdasdadasadsadadada
+
+            */}
+            { isLogged 
+            &&
             <Item
               title="Inregistreaza user"
               to="/register"
@@ -180,6 +205,7 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+            }
             <Item
               title="Calendar"
               to="/calendar"

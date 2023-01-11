@@ -104,7 +104,7 @@ namespace API_VidiVici.Controllers
             return StatusCode(201);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Investor,Prospect,Employee,Pending,Poweruser")]
         [HttpGet("currentUser")]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {

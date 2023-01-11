@@ -7,6 +7,7 @@ namespace API_VidiVici.Model
 {
     public class UserDto
     {
+        public string? Id{get;set;}
         public string? Username{get;set;}
         public string? UserRole {get;set;}
 

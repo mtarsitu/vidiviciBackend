@@ -6,7 +6,6 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 
 const Register = () => {
@@ -34,7 +33,7 @@ const Register = () => {
 
   return (
     <Box m="20px">
-      <Header title="CREATE USER" subtitle="Create a New User Profile" />
+      <Header title="CREEAZA UTILIZATOR" subtitle="Creaza un nou profil" />
       <Box
         sx={{
           marginTop: 8,
@@ -47,7 +46,7 @@ const Register = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Inregistreaza user
+          Inregistreaza utilizator
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
@@ -64,7 +63,7 @@ const Register = () => {
             required
             fullWidth
             name="password"
-            label="Password"
+            label="Parola"
             type="password"
             id="password"
           />
@@ -76,6 +75,15 @@ const Register = () => {
             label="Email"
             type="email"
             id="email"
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="userRole"
+            label="Rolul utilizatorului"
+            type="userRole"
+            id="userRole"
           />
           <Button
             type="submit"

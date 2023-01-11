@@ -12,17 +12,17 @@ import { useAtom } from "jotai";
 
 export default function SignIn() {
 const [, setIsLogged] = useAtom(isLoggedAtom);
-let test = {
+let user = {
   username: "",
   password: ""
 }
   async function LogInUser(formData) {
     console.log(formData.get("username"));
-    test = {
+    user = {
       username: formData.get("username"),
       password: formData.get("password")
     }
-    console.log(test.username , test.password);
+    // console.log(user.username , user.password);
     let response = await fetch(`http://localhost:5241/Accounts/login`, {
       method: "POST",
       credentials: "include",
@@ -30,7 +30,7 @@ let test = {
         'accept': 'text/plain',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(test),
+      body: JSON.stringify(user),
     });
     if (response.ok) {
       setIsLogged(true);
@@ -74,7 +74,7 @@ let test = {
             id="username"
             label="Username"
             name="username"
-            autoFocus
+            // autoFocus
           />
           <TextField
             margin="normal"

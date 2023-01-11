@@ -13,11 +13,12 @@ const supplierCatId = "2";
 const employeesCatId = "3";
 
 
-export const isLoggedAtom = atom((false));
+export let isLoggedAtom = atom((false));
 export const refreshAtom = atom(false);
 export const entityIdAtom = atom("");
 
-console.log(isLoggedAtom);
+
+
 
 export const loggedUserAtom = atom(async () =>{
   const response = await fetch(baseUrl+'Accounts/currentUser',{
@@ -27,17 +28,21 @@ export const loggedUserAtom = atom(async () =>{
       'accept': 'text/plain'
     }
   });
-  return await response.json();
+  if(response.ok){
+    isLoggedAtom.init = true;
+    return await response.json();
+  }
+  return null;
 });
 
 
 export const entitiesAtom = atom(async (get) => {
   get(refreshAtom);
-  const response = await fetch(allEntitiesUrl, {
+  const response = await fetch(baseUrl+"Accounts/AllUser", {
     method: "GET",
+    credentials: "include",
     headers: {
-      Authorization: "dummy-tokens",
-
+      'accept': "text/plain"
     },
   });
   return await response.json();
@@ -71,7 +76,7 @@ export const entityInformationAtom = atom(async (get) => {
   const id = get(entityIdAtom);
   console.log(id);
   get(refreshAtom);
-  const response = await fetch(entityInformationUrl + id);
+  const response = await fetch(baseUrl  + id);
   return response.json();
 }); 
 
@@ -89,11 +94,15 @@ export const sellTicketsAtom = atom(async (get) => {
 
 
 export const Logout= async()=>{
-  console.log("MERGE");
-  await fetch("http://localhost:5000/logout",{
+  
+  const response = await fetch(baseUrl+"Accounts/logout",{
     method: "POST",
     credentials: "include",
   });
-  window.location  ="/";
+  if(response.ok){
+    window.location  ="/";
+    isLoggedAtom.init = false;
+
+  }
 
 }

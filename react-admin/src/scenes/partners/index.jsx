@@ -11,27 +11,16 @@ const Partners = () => {
   const [infoId, setInfoId] = useState()
   const [partnerName, setPartnerName] = useState();
   const entities = useAtom(entitiesAtom);
+  console.log(entities);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const columns = [
     { field: "id", headerName: "ID" },
-    { field: "name", headerName: "Nume", width: 250 },
-    { field: "nickName", headerName: "Nickname", width: 130 },
-    {
-      field: "Category",
-      headerName: "Categorie",
-      width: 120,
-      // selectableRows: false ,
-      valueGetter: (params) => {
-        let results = [];
-        if (params.row.category.name) {
-          results.push(params.row.category.name);
-        } else {
-          results = ["Unknown"];
-        }
-        return results.join(",");
-      },
-    },
+    { field: "username", headerName: "Username", width: 250 },
+    { field: "userRole", headerName: "Role", width: 130 },
+    { field: "firstName", headerName: "Nume", width: 130 },
+    { field: "lastName", headerName: "Nume de familie", width: 130 },
+    
     {
       field: "actions",
       headerName: "Actiuni",
@@ -53,7 +42,7 @@ const Partners = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = (id) => {
 
-    setPartnerName(entities[0].filter(entity =>  entity.id === id)[0].name);
+    setPartnerName(entities[0].filter(entity =>  entity.id === id)[0].username);
     setInfoId(id);
     setOpen(true)}
    
@@ -61,7 +50,7 @@ const Partners = () => {
 
   return (
     <Box m="20px">
-      <Header title="PARTENERI" subtitle="Administrare parteneri" />
+      <Header title="Utilizatori" subtitle="Administrare utilizatori" />
       <Box
         m="40px 0 0 0"
         height="75vh"
