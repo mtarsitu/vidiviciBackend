@@ -36,14 +36,14 @@ namespace API_VidiVici.Controllers
         }
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+        public async Task<ActionResult<UserLoginDto>> Login(LoginDto loginDto)
         {
             var user = await _userManager.FindByNameAsync(loginDto.Username);
             if (user == null || !await _userManager.CheckPasswordAsync(user, loginDto.Password))
                 return Unauthorized();
             //Request.Cookies.Append()
 
-            var userLogged = new UserDto
+            var userLogged = new UserLoginDto
             {
                 Username = user.UserName,
                 Token = await _tokenService.GenerateToken(user)
@@ -58,8 +58,32 @@ namespace API_VidiVici.Controllers
             return userLogged;
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult> Register(RegisterDto registerDto)
+        {
+            var user = new User { UserName = registerDto.Username, Email = registerDto.Email, UserRole=UserRole.Prospect };
+
+            var result = await _userManager.CreateAsync(user, registerDto.Password);
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(error.Code, error.Description);
+                }
+
+                return ValidationProblem();
+            }
+
+            await _userManager.AddToRoleAsync(user, UserRole.Prospect);
+
+            return StatusCode(201);
+        }
+
+        [Authorize(Roles = "Admin,Poweruser")]    
+        [HttpPost("registerRole")]
+        public async Task<ActionResult> RegisterWithRole(RegisterDto registerDto, string role)
         {
             var user = new User { UserName = registerDto.Username, Email = registerDto.Email };
 
@@ -75,7 +99,7 @@ namespace API_VidiVici.Controllers
                 return ValidationProblem();
             }
 
-            await _userManager.AddToRoleAsync(user, "Member");
+            await _userManager.AddToRoleAsync(user, role);
 
             return StatusCode(201);
         }
@@ -89,11 +113,14 @@ namespace API_VidiVici.Controllers
             return new UserDto
             {
                 Username = user.UserName,
-                Token = await _tokenService.GenerateToken(user)
+                UserRole = user.UserRole,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email
+                
             };
         }
 
-        // [Authorize(Roles = "Admin")]
         [HttpPost("logout")]
         public async Task<ActionResult> Logout()
         {
@@ -106,25 +133,40 @@ namespace API_VidiVici.Controllers
         }
 
         [Authorize(Roles = "Admin,Investor,Employee")]
-       
-
-        [HttpGet("getUserAndInvestments")]
+        [HttpGet("UserAndInvestments")]
         public async Task<ActionResult<InvestorDto>> GetUserAndInvestments(string username)
         {
             var user = await _userManager.FindByNameAsync(username);
             var actualUser = InvestorModifier.GetInvestorDto(user);
             var Investments = await _context.Investments
-            .Include(t=> t.InvestmentType)
+            .Include(t=> t.Fund)
             .Where(x=>x.ClientId == user.Id)
             .ToListAsync();
             actualUser.Investments = new List<InvestmentDto>();
-            
+            var informations = await _context.Informations.Where(x=>x.UserId == user.Id).ToListAsync();
+
             foreach(Investment investment in Investments){
                 actualUser.Investments.Add(InvestmentModifier.ToInvestmentDto(investment));
             }
+
+            foreach(Information information in informations){
+                actualUser.Informations.Add(InformationModifier.ToInformationDto(information));
+            }
             return actualUser;
         }
-        
+
+        [Authorize(Roles = "Poweruser,Admin,Employee")]
+        [HttpGet("AllUser")]
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsers()
+        {
+            List<UserDto> userDtoList = new List<UserDto>();
+            var users = await _userManager.Users.ToListAsync();
+
+            foreach(User user in users){
+                userDtoList.Add(UserModifier.ToUserDto(user));
+            }
+            return userDtoList;
+        }
 
     
     }

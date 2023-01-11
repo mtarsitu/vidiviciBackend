@@ -9,10 +9,14 @@ namespace API_VidiVici.Model
     {
         public int Id{ get; set; }
         public string? ClientId{ get; set; }
+        public double InitialInvestmentAmout {get;set;}
         public DateTime DateCreated { get; set; } = DateTime.UtcNow;
-        public int InvestmentTypeId {get;set;}
+        public int FundId {get;set;} 
+        public bool RateOnFinal{get;set;}
         public User? Client { get; set; }
-        public PrincipalInvestment? InvestmentType{ get; set; }
+        public Fund? Fund{ get; set; }
+
+        
 
     }
 }

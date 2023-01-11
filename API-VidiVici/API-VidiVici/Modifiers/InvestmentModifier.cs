@@ -17,7 +17,7 @@ namespace API_VidiVici.Modifiers
                 Id = item.Id,
                 ClientId = item.ClientId,
                 DateCreated = (DateTime)item.DateCreated,
-                InvestmentType = item.InvestmentType
+                Fund = item.Fund
             };
         }
         public static InvestmentDto ToInvestmentDto(Investment item)
@@ -26,8 +26,9 @@ namespace API_VidiVici.Modifiers
             {
                 Id = item.Id,
                 ClientId = item.Client.Id,
+                InitialInvestmentAmount = item.InitialInvestmentAmout,
                 DateCreated = item.DateCreated,
-                InvestmentType = item.InvestmentType
+                Fund = item.Fund
             };
             
             return  investmentDto;

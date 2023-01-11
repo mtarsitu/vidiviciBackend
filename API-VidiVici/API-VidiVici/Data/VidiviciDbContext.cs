@@ -14,8 +14,10 @@ namespace API_VidiVici.data
         }
 
         public DbSet<Investment>? Investments{get;set;}
-        public DbSet<PrincipalInvestment>? PrincipalInvestments{get;set;}
-         protected override void OnModelCreating(ModelBuilder builder)
+        public DbSet<Fund>? Funds{get;set;}
+        public DbSet<Notification> Notifications {get;set;}
+        public DbSet<Information> Informations {get;set;}
+        protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             builder.Entity<IdentityRole>().HasData(

@@ -32,7 +32,7 @@ namespace API_VidiVici.Repositories.Implementation
         public async Task<Investment?> Get(int id)
         {
             var investment = await _context.Investments
-            .Include(t=>t.InvestmentType)
+            .Include(t=>t.Fund)
             .SingleAsync( x => x.Id == id);
             return  investment;
         }

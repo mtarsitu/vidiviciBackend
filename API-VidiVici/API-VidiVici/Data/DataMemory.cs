@@ -7,21 +7,33 @@ namespace API_VidiVici.Data
    {
 
        
-       public static IEnumerable<PrincipalInvestment> GetPrincipalInvestments()
+       public static IEnumerable<Fund> GetFunds()
        {
-            return new List<PrincipalInvestment>
+            return new List<Fund>
             {
-                new PrincipalInvestment{
+                new Fund{
                     Name = "Anual",
-                    Roi = 7.5,
+                    InterestRate = 7.5,
                     Private = false,
-                    ReturningType = ReturningEnum.Anualy,
+                    ReturningType = ReturningType.Anualy,
                 },
-                new PrincipalInvestment{
+                new Fund{
                     Name = "Semestrial",
-                    Roi = 5.5,
+                    InterestRate = 6.5,
                     Private = false,
-                    ReturningType = ReturningEnum.Montly,
+                    ReturningType = ReturningType.Semestrial,
+                },
+                new Fund{
+                    Name = "Trimestrial",
+                    InterestRate = 5.5,
+                    Private = false,
+                    ReturningType = ReturningType.Trimestial,
+                },
+                new Fund{
+                    Name = "Montly",
+                    InterestRate = 4.5,
+                    Private = false,
+                    ReturningType = ReturningType.Montly,
                 },
             };
        }
@@ -30,29 +42,36 @@ namespace API_VidiVici.Data
            return new List<Investment>
            {
                new Investment{
-                   ClientId= "ff7f411e-1aa2-48a0-af77-6836a5337324",
-                   InvestmentTypeId =1,
+                   ClientId= "702e1932-9213-468a-b8d8-2b31c4c92c7a",
+                   FundId =1,
+                   RateOnFinal=true,
+                   InitialInvestmentAmout= 1000000
 
                },
 
                new Investment{
-                   ClientId= "ff7f411e-1aa2-48a0-af77-6836a5337324",
-                   InvestmentTypeId =1,
+                   ClientId= "702e1932-9213-468a-b8d8-2b31c4c92c7a",
+                   FundId =1,
+                   InitialInvestmentAmout= 2000000
                },
 
                new Investment{
-                   ClientId= "14ef07c0-8cd3-48dd-93ff-5d709c77982f",
-                   InvestmentTypeId =2,
+                   ClientId= "73bfd164-7108-48e1-8d08-279fe8547ee7",
+                   FundId =2,
+                   InitialInvestmentAmout= 3000000
+                   
                },
 
                new Investment{
-                   ClientId= "14ef07c0-8cd3-48dd-93ff-5d709c77982f",
-                   InvestmentTypeId =1,
+                   ClientId= "73bfd164-7108-48e1-8d08-279fe8547ee7",
+                   FundId =1,
+                   InitialInvestmentAmout= 4000000
                },
 
                new Investment{
-                   ClientId= "14ef07c0-8cd3-48dd-93ff-5d709c77982f",
-                   InvestmentTypeId =1,
+                   ClientId= "73bfd164-7108-48e1-8d08-279fe8547ee7",
+                   FundId =4,
+                   InitialInvestmentAmout= 5000000
                },
            };
        }
@@ -64,6 +83,8 @@ namespace API_VidiVici.Data
                     Email = "poweruser@test.com",
                     FirstName = "Power",
                     LastName = "User",
+                    UserRole = UserRole.Poweruser
+                    
                     
                 };
                 await userManager.CreateAsync(poweruser, "Pa$$1234");
@@ -74,7 +95,8 @@ namespace API_VidiVici.Data
                     UserName = "Admin",
                     Email = "admin@test.com",
                     FirstName = "Alex",
-                    LastName = "Dumitru"
+                    LastName = "Dumitru",
+                    UserRole = UserRole.Admin
                     
                 };
                 await userManager.CreateAsync(admin, "Pa$$1234");
@@ -85,7 +107,9 @@ namespace API_VidiVici.Data
                     UserName = "Employee",
                     Email = "employee@test.com",
                     FirstName = "Employee First Name",
-                    LastName = "Employee Last Name"
+                    LastName = "Employee Last Name",
+                    UserRole = UserRole.Employee
+                    
                     
                 };
                 await userManager.CreateAsync(employee, "Pa$$1234");
@@ -96,7 +120,8 @@ namespace API_VidiVici.Data
                     UserName = "Prospect",
                     Email = "prospect@test.com",
                     FirstName = "Prospect First Name",
-                    LastName = "Prospect Last Name"
+                    LastName = "Prospect Last Name",
+                    UserRole = UserRole.Prospect
                     
                 };
                 await userManager.CreateAsync(prospect, "Pa$$1234");
@@ -107,7 +132,8 @@ namespace API_VidiVici.Data
                     UserName = "Pending",
                     Email = "pending@test.com",
                     FirstName = "Pending First Name",
-                    LastName = "Pending Last Name"
+                    LastName = "Pending Last Name",
+                    UserRole = UserRole.Pending
                     
                 };
                 await userManager.CreateAsync(pending, "Pa$$1234");
@@ -118,7 +144,8 @@ namespace API_VidiVici.Data
                     UserName = "Investor",
                     Email = "investor@test.com",
                     FirstName = "Investor First Name",
-                    LastName = "Investor Last Name"
+                    LastName = "Investor Last Name",
+                    UserRole = UserRole.Investor
                     
                 };
                 await userManager.CreateAsync(investor, "Pa$$1234");
@@ -129,12 +156,48 @@ namespace API_VidiVici.Data
                     UserName = "Secondinvestor",
                     Email = "secondinvestor@test.com",
                     FirstName = "Second Investor First Name",
-                    LastName = "Second Investor Last Name"
+                    LastName = "Second Investor Last Name",
+                    UserRole = UserRole.Investor
                     
                 };
                 await userManager.CreateAsync(secondInvestor, "Pa$$1234");
                 await userManager.AddToRoleAsync(secondInvestor,  "Investor" );
        }
 
+        internal static IEnumerable<Information> GetInformations()
+        {
+            return new List<Information>{
+                new Information{
+                    UserId = "702e1932-9213-468a-b8d8-2b31c4c92c7a",
+                    Cnp = "5020116210753",
+                    BirthDate = DateTime.UtcNow,
+                    Address = "Bucuresti, Sos Pipera 61 bl 4 sc 2 et 7 ap 159",
+                    Iban = "RO27RZBR2161724926335584",
+                    Bank = "Raiffeisen Bank",
+                    Cui = "	13919155",
+                    RegComertului = "J40/5251/2001",
+                },
+                 new Information{
+                    UserId = "702e1932-9213-468a-b8d8-2b31c4c92c7a",
+                    Cnp = "5020116210753",
+                    BirthDate = DateTime.UtcNow,
+                    Address = "Iasi, Sos Pipera 61 bl 4 sc 2 et 7 ap 159",
+                    Iban = "RO27RZBR2161724926335584",
+                    Bank = "Raiffeisen Bank",
+                    Cui = "	13919155",
+                    RegComertului = "J40/5251/2001",
+                },
+                 new Information{
+                    UserId = "702e1932-9213-468a-b8d8-2b31c4c92c7a",
+                    Cnp = "5020116210753",
+                    BirthDate = DateTime.UtcNow,
+                    Address = "Cluj, Sos Pipera 61 bl 4 sc 2 et 7 ap 159",
+                    Iban = "RO27RZBR2161724926335584",
+                    Bank = "Raiffeisen Bank",
+                    Cui = "	13919155",
+                    RegComertului = "J40/5251/2001",
+                }
+            };
+        }
     }
 }
