@@ -94,6 +94,14 @@ let user = {
             Sign In
           </Button>
         </Box>
+        <Button
+            href="/register"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Register
+          </Button>
       </Box>
     </Container>
   );

@@ -2,7 +2,7 @@ using API_VidiVici.Model;
 using API_VidiVici.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using API_VidiVici.Services;
-
+using Microsoft.AspNetCore.Authorization;
 namespace API_VidiVici.Controllers
 {
     [ApiController]
@@ -17,15 +17,30 @@ namespace API_VidiVici.Controllers
             _services = services;
         }
 
+        [Authorize(Roles ="Admin,Poweruser,Employee")]
         [HttpGet("getInvestment")]
         public async  Task<Investment> Get(int id)
         {
             return await _services.Get(id);
         }
 
+        [Authorize(Roles ="Admin,Poweruser,Employee")]
+        [HttpGet("getAllInvestment")]
+        public async  Task<IEnumerable<InvestmentDto>> GetAll()
+        {
+            return await _services.GetAll();
+        }
+
+        [Authorize(Roles ="Admin,Poweruser,Employee")]
         [HttpPost("newInvestment")]
         public void Add(InvestmentDto investment){
             _services.Add(investment);
+        }
+
+        [Authorize(Roles ="Admin,Poweruser,Employee")]
+        [HttpPost("editInvestment")]
+        public void Edit(InvestmentDto investment){
+            _services.Edit(investment);
         }
 
         

@@ -6,7 +6,8 @@ import Dashboard from "./scenes/dashboard";
 import Partners from "./scenes/partners";
 import Invoices from "./scenes/invoices";
 import Contacts from "./scenes/contacts";
-import Register from "./scenes/account/index"
+import RoleRegister from "./scenes/account/roleRegister"
+import Register from "./scenes/account/register";
 import { Suspense } from "react";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
@@ -19,16 +20,16 @@ import { isLoggedAtom, loggedUserAtom } from "./data/dataAtom";
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
-  const loggedUser = useAtom(loggedUserAtom);
-  console.log(loggedUser);
+  
+  // console.log(loggedUser);
   const [isLogged,] = useAtom(isLoggedAtom);
   console.log(isLogged);
   
-  useEffect(()=>{
-    if(loggedUser[0]!=null){
+  // useEffect(()=>{
+  //   if(loggedUser[0]!=null){
       
-    }
-  });
+  //   }
+  // });
 
   return (
     <ColorModeContext.Provider value={colorMode}>
@@ -36,6 +37,7 @@ function App() {
         {!isLogged&&
           <Routes>
           <Route path="/" element={<Login/>} />
+          <Route path="/register" element={<Register />} />
         </Routes>
         }
         <CssBaseline />  
@@ -51,8 +53,8 @@ function App() {
                 <Route path="/parteneri" element={<Partners />} />
                 <Route path="/contacts" element={<Contacts />} />
                 <Route path="/invoices" element={<Invoices />} />
+                <Route path="/role-register" element={<RoleRegister />} />
                 <Route path="/register" element={<Register />} />
-
                 <Route path="/calendar" element={<Calendar />} />
               </Routes>
             </Suspense>

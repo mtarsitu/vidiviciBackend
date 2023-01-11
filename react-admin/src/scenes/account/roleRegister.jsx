@@ -8,14 +8,27 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Header from "../../components/Header";
 
-const Register = () => {
+const RoleRegister = () => {
   // const isNonMobile = useMediaQuery("(min-width:600px)");
-
+  let user = {
+    username: "",
+    password: "",
+    userRole:""
+  }
   async function Register(formData) {
-    await fetch(`http://localhost:5000/register`, {
+    user = {
+      username: formData.get("username"),
+      password: formData.get("password"),
+      userRole: formData.get("userRole")
+    }
+    await fetch(`http://localhost:5241/registerRole`, {
       method: "POST",
       credentials: "include",
-      body: formData,
+      headers:{
+        'accept': 'text/plain',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user),
     });
     
     
@@ -99,4 +112,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default RoleRegister;

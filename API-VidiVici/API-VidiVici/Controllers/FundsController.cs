@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using API_VidiVici.Services;
 using API_VidiVici.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API_VidiVici.Controllers
 {
@@ -23,10 +18,29 @@ namespace API_VidiVici.Controllers
             _services = services;
         }
 
-        [HttpGet]
+        [Authorize(Roles ="Admin,Poweruser,Employee")]
+        [HttpGet("getFund")]
         public async Task<Fund> Get(int id)
         {
             return await _services.Get(id);
         }
+        
+        [Authorize(Roles ="Admin,Poweruser,Employee")]
+        [HttpGet("getAll")]
+        public async Task<IEnumerable<Fund>> GetAll(){
+            return await _services.GetAll();
+        }
+
+        [Authorize(Roles ="Admin,Poweruser,Employee")]
+        [HttpPost("editFund")]
+        public void Edit(Fund fund){
+            _services.Edit(fund);
+        }
+        [Authorize(Roles ="Admin,Poweruser,Employee")]
+        [HttpPost("removeFund")]
+        public void Remove(int id){
+            _services.Remove(id);
+        }
+
     }
 }

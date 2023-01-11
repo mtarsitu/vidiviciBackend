@@ -200,7 +200,7 @@ const Sidebar = () => {
             &&
             <Item
               title="Inregistreaza user"
-              to="/register"
+              to="/role-register"
               icon={<PersonOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
