@@ -16,6 +16,9 @@ const Funds = () => {
   return (
     <Box m="20px" >
       <Header title="Fonduri" subtitle="Oportunitati investitii" />
+      
+      <Button variant="contained" sx={{marginLeft:5,marginRight:5, backgroundColor:`neutral.main`}}>Adauga Fond</Button>
+      
       <Box m="20px" sx={{ display:"grid",
       gridTemplateColumns: "repeat(auto-fill, 220px)", //the width of the card 
       justifyContent: "center",
@@ -24,6 +27,7 @@ const Funds = () => {
        "& .MuiPaper-root":{
           width:250
        } }}>
+        
         {funds[0] != null &&
           funds[0].map((fund) => (
             <Card sx={{ minWidth: "150!important", maxWidth: 350, marginBottom: 10, backgroundColor:`${colors.primary[400]}` }}>

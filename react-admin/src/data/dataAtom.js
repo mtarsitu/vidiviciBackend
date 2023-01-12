@@ -15,7 +15,7 @@ const employeesCatId = "3";
 export let isLoggedAtom = atom(false);
 export const refreshAtom = atom(false);
 export const entityIdAtom = atom("");
-
+export const usernameAtom = atom("");
 export const loggedUserAtom = atom(async () => {
   const response = await fetch(baseUrl + "Accounts/currentUser", {
     method: "GET",
@@ -26,12 +26,14 @@ export const loggedUserAtom = atom(async () => {
   });
   if (response.ok) {
     isLoggedAtom.init = true;
+    
     return await response.json();
   }
   return null;
 });
-
+console.log(loggedUserAtom)
 export const fundsAtom = atom(async () => {
+  
   const response = await fetch(baseUrl + "Funds/getAllPublic",{
     method: "GET",
     credentials: "include",
@@ -44,6 +46,22 @@ export const fundsAtom = atom(async () => {
   }
   return null;
 });
+
+export const myFundsAtom = atom(async ()=>{
+  
+  console.log(loggedUserAtom.response);
+  const response = await fetch(baseUrl+"Accounts/UserAndInvestments?username="+"investor",{
+    method: "GET",
+    credentials: "include",
+    headers: {
+      accept: "text/plain",
+    },
+  });
+  if (response.ok){
+    return await response.json();
+  }
+  return null;
+})
 
 export const entitiesAtom = atom(async (get) => {
   get(refreshAtom);
@@ -113,7 +131,8 @@ export const Logout = async () => {
     credentials: "include",
   });
   if (response.ok) {
-    window.location = "/";
     isLoggedAtom.init = false;
+    
+    window.location = "/";
   }
 };

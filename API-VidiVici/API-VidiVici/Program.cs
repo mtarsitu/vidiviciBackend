@@ -36,9 +36,6 @@ builder.Services.AddCors(cors=>{
 builder.Services.AddDbContext<VidiviciDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
-
-
-
 });
 builder.Services.AddIdentityCore<User>().AddRoles<IdentityRole>().AddSignInManager().AddEntityFrameworkStores<VidiviciDbContext>();
 

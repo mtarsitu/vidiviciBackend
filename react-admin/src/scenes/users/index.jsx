@@ -7,7 +7,7 @@ import { entitiesAtom,entityIdAtom } from "../../data/dataAtom";
 import InfoIcon from "@mui/icons-material/Info";
 import { useState } from "react";
 import Information from "./information";
-const Partners = () => {
+const Users = () => {
   const [infoId, setInfoId] = useState();
   const [, setEntityId] = useAtom(entityIdAtom);
   const [partnerName, setPartnerName] = useState();
@@ -65,11 +65,11 @@ const Partners = () => {
           "& .MuiDataGrid-cell": {
             borderBottom: "none",
           },
-          "& .name-column--cell": {
-            color: colors.purpleAccent[300],
-          },
+          // "& .name-column--cell": {
+          //   color: colors.purpleAccent[300],
+          // },
           "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: colors.purpleAccent[700],
+            backgroundColor: colors.blueAccent[700],
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
@@ -77,7 +77,7 @@ const Partners = () => {
           },
           "& .MuiDataGrid-footerContainer": {
             borderTop: "none",
-            backgroundColor: colors.purpleAccent[700],
+            backgroundColor: colors.blueAccent[700],
           },
           "& .MuiCheckbox-root": {
             color: `${colors.purpleAccent[200]} !important`,
@@ -110,7 +110,7 @@ const Partners = () => {
             left: "50%",
             transform: "translate(-50%, -50%)",
             width: "80vw",
-            bgcolor: colors.primary[400],
+            bgcolor: `${colors.blueAccent[700]}`,
             border: "2px solid #000",
             boxShadow: 24,
             borderRadius: "12px",
@@ -127,4 +127,4 @@ const Partners = () => {
   );
 };
 
-export default Partners;
+export default Users;

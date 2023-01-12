@@ -102,7 +102,7 @@ export default function SignIn() {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 3, mb: 2, backgroundColor:`neutral.main` }}
           >
             Sign In
           </Button>
@@ -111,7 +111,7 @@ export default function SignIn() {
           href="/register"
           fullWidth
           variant="contained"
-          sx={{ mt: 3, mb: 2 }}
+          sx={{ mt: 3, mb: 2, backgroundColor:`neutral.main`  }}
         >
           Register
         </Button>

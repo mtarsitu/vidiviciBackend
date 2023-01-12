@@ -121,14 +121,14 @@ const Register = () => {
             id="confirmationPassword"
             onChange={handleConfirmationPass}
             
-            sx={{
-                "& .MuiFormLabel-root": {
-                    color: 'primary.main'
-                },
-                "& .MuiFormLabel-root.Mui-focused": {
-                    color: 'secondary.main'
-                }
-            }}
+            // sx={{
+            //     "& .MuiFormLabel-root": {
+            //         color: 'primary.main'
+            //     },
+            //     "& .MuiFormLabel-root.Mui-focused": {
+            //         color: 'secondary.main'
+            //     }
+            // }}
           />
           <TextField
             margin="normal"
@@ -144,9 +144,17 @@ const Register = () => {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 3, mb: 2, backgroundColor:`neutral.main`  }}
           >
             Register
+          </Button>
+        <Button
+            href="/"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2, backgroundColor:`neutral.main`  }}
+          >
+            Deja inregistrat? Click pentru logare!
           </Button>
         </Box>
       </Box>

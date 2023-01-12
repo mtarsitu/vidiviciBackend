@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
-import Partners from "./scenes/partners";
+import Users from "./scenes/users";
 import Funds from "./scenes/funds";
 import Contacts from "./scenes/contacts";
 import RoleRegister from "./scenes/account/roleRegister"
@@ -15,7 +15,7 @@ import Calendar from "./scenes/calendar/calendar";
 import Login from "./scenes/account/login";
 import { useAtom } from "jotai";
 import { isLoggedAtom, loggedUserAtom } from "./data/dataAtom";
-
+import MyFunds from "./scenes/funds/myFunds";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -23,7 +23,8 @@ function App() {
   const loggedUser = useAtom(loggedUserAtom);
 
   const [isLogged,] = useAtom(isLoggedAtom);
-
+  // const [,setUsername] = useAtom(usernameAtom);
+ 
   
   useEffect(()=>{
     if(isLogged && loggedUser[0]==null){
@@ -50,7 +51,8 @@ function App() {
             <Suspense fallback="LOADING">
               <Routes>
                 <Route path="/dashbord" element={<Dashboard />} />
-                <Route path="/parteneri" element={<Partners />} />
+                <Route path="/parteneri" element={<Users />} />
+                <Route path="/myFunds" element={<MyFunds />} />
                 <Route path="/contacts" element={<Contacts />} />
                 <Route path="/funds" element={<Funds />} />
                 <Route path="/role-register" element={<RoleRegister />} />

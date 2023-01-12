@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
@@ -14,6 +15,7 @@ import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import { useAtom } from "jotai";
 import { isLoggedAtom, loggedUserAtom } from "../../data/dataAtom";
+import { useEffect } from "react";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -41,7 +43,22 @@ const Sidebar = () => {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
+  const [authorize, setAuthorize] = useState(false);
+  const roles = {
+    authorized: ["Admin", "Poweruser", "Employee"],
+    unauthorize: ["Prospect", "Investor", "Pending"],
+  };
+  console.log(authorize);
+  console.log(roles.authorized.includes(loggedUser[0].userRole));
+  useEffect(() => {
+    if (roles.authorized.includes(loggedUser[0].userRole)) {
+      console.log("vine");
+      setAuthorize(true);
+    }
+    // setAuthorize(false);
+  });
 
+  console.log(loggedUser[0].userRole);
   return (
     <Box
       sx={{
@@ -80,7 +97,10 @@ const Sidebar = () => {
                 alignItems="center"
                 ml="15px"
               >
-                <IconButton onClick={() => setIsCollapsed(!isCollapsed)} sx={{marginLeft:"160px"}}>
+                <IconButton
+                  onClick={() => setIsCollapsed(!isCollapsed)}
+                  sx={{ marginLeft: "160px" }}
+                >
                   <MenuOutlinedIcon />
                 </IconButton>
               </Box>
@@ -96,10 +116,10 @@ const Sidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  Techaine
+                  techaine
                 </Typography>
                 <Typography variant="h5" color={colors.purpleAccent[600]}>
-                  VidiVici
+                  REACT ADMIN DASHBOARD
                 </Typography>
               </Box>
               <Divider />
@@ -134,14 +154,15 @@ const Sidebar = () => {
           )}
 
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
-            <Item
-              title="Dashboard"
-              to="/dashboard"
-              icon={<HomeOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-
+            {authorize && (
+              <Item
+                title="Dashboard"
+                to="/dashboard"
+                icon={<HomeOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            )}
             <Typography
               variant="h6"
               color={colors.grey[300]}
@@ -149,6 +170,8 @@ const Sidebar = () => {
             >
               Date
             </Typography>
+            {authorize &&
+            <>
             <Item
               title="Utilizatori"
               to="/parteneri"
@@ -163,6 +186,17 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+            </>
+            }
+            {!authorize &&
+              <Item
+              title="Investitiile mele"
+              to="/myfunds"
+              icon={<AccountBalanceWalletIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            }
             <Item
               title="Fonduri active"
               to="/funds"
@@ -178,24 +212,9 @@ const Sidebar = () => {
             >
               Actiuni
             </Typography>
-            {/* dakldalksjdklajdakl
-            dakldalksjdklajdakl
             
-            dasdasdadasadsadadadadakldalksjdklajdakl
-            
-            dasdasdadasadsadadadadakldalksjdklajdakl
-            
-            dasdasdadasadsadadadadakldalksjdklajdakl
-            
-            dasdasdadasadsadadadadakldalksjdklajdakl
-            
-            dasdasdadasadsadadadadakldalksjdklajdakl
-            
-            dasdasdadasadsadadada
-            dasdasdadasadsadadada
-
-            */}
-            {isLogged && (
+            {authorize && (
+              <>
               <Item
                 title="Inregistreaza user"
                 to="/role-register"
@@ -203,14 +222,15 @@ const Sidebar = () => {
                 selected={selected}
                 setSelected={setSelected}
               />
-            )}
             <Item
-              title="Calendar"
-              to="/calendar"
-              icon={<CalendarTodayOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
+            title="Calendar"
+            to="/calendar"
+            icon={<CalendarTodayOutlinedIcon />}
+            selected={selected}
+            setSelected={setSelected}
             />
+            </>
+            )}
             <Item
               title="FAQ Page"
               to="/faq"

@@ -15,8 +15,6 @@ namespace API_VidiVici.Controllers
     [Route("[controller]")]
     public class AccountsController : Controller
     {
-   
-        
         private readonly UserManager<User> _userManager;
         private readonly TokenService _tokenService;
         private readonly SignInManager<User> SignInManager;
@@ -77,7 +75,6 @@ namespace API_VidiVici.Controllers
 
                 return ValidationProblem();
             }
-
             await _userManager.AddToRoleAsync(user, UserRole.Prospect);
 
             return StatusCode(201);
@@ -140,7 +137,7 @@ namespace API_VidiVici.Controllers
             return Ok("");
         }
 
-        [Authorize(Roles = "Admin,Investor,Employee")]
+        [Authorize(Roles = "Admin,Investor,Employee,Investor")]
         [HttpGet("UserAndInvestments")]
         public async Task<ActionResult<InvestorDto>> GetUserAndInvestments(string username)
         {
