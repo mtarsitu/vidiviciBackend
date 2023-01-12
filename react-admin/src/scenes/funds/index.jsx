@@ -10,7 +10,6 @@ import { fundsAtom } from "../../data/dataAtom";
 
 const Funds = () => {
   const funds = useAtom(fundsAtom);
-  console.log(funds[0]);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -51,7 +50,7 @@ const Funds = () => {
               <CardActions>
                 <Button size="small" sx={{
                   color:`${colors.greenAccent[400]}`
-                }}>Afla mai multe </Button>
+                }}>Aplica la aceasta opurtunitate </Button>
               </CardActions>
             </Card>
           ))}

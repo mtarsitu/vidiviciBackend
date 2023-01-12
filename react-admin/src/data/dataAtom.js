@@ -85,7 +85,13 @@ export const entityInformationAtom = atom(async (get) => {
   const id = get(entityIdAtom);
   console.log(id);
   get(refreshAtom);
-  const response = await fetch(baseUrl + id);
+  const response = await fetch(baseUrl +"Informations/userInformations?id="+id,{
+    method: "GET",
+    credentials: "include",
+    headers: {
+      accept: "text/plain",
+    },
+  });
   return response.json();
 });
 

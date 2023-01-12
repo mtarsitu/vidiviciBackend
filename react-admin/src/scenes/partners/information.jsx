@@ -6,11 +6,12 @@ import { useEffect } from "react";
 import { entityIdAtom, entityInformationAtom } from "../../data/dataAtom";
 
 const Information = ({ props }) => {
+  console.log(props);
   const [, setEntityId] = useAtom(entityIdAtom);
   const entityInformation = useAtom(entityInformationAtom)[0];
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
+  setEntityId(props)
   const headers = [
     ...(entityInformation[0]
       ? Object.entries(entityInformation[0]).map((info) => {
@@ -51,10 +52,6 @@ const Information = ({ props }) => {
 
   const rows = entityInformation;
 
-  useEffect(() => {
-    setEntityId(props);
-    console.log("laa");
-  });
 
   if (entityInformation[0]) {
     return (

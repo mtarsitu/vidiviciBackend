@@ -1,14 +1,15 @@
 import { Box, IconButton, useTheme, Typography, Modal } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid,GridToolbar  } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import { useAtom } from "jotai";
-import { entitiesAtom } from "../../data/dataAtom";
+import { entitiesAtom,entityIdAtom } from "../../data/dataAtom";
 import InfoIcon from "@mui/icons-material/Info";
 import { useState } from "react";
 import Information from "./information";
 const Partners = () => {
   const [infoId, setInfoId] = useState();
+  const [, setEntityId] = useAtom(entityIdAtom);
   const [partnerName, setPartnerName] = useState();
   const entities = useAtom(entitiesAtom);
   console.log(entities);
@@ -43,7 +44,9 @@ const Partners = () => {
     setPartnerName(
       entities[0].filter((entity) => entity.id === id)[0].username
     );
+    console.log(id);
     setInfoId(id);
+    setEntityId(id);
     setOpen(true);
   };
 
@@ -86,8 +89,9 @@ const Partners = () => {
         <DataGrid
           rows={entities[0]}
           columns={columns}
-          pageSize={8}
-          rowsPerPageOptions={[8]}
+          pageSize={7}
+          rowsPerPageOptions={[7]}
+          components={{ Toolbar: GridToolbar }}
           // sx={{
           //   width:"75vw"
           // }}

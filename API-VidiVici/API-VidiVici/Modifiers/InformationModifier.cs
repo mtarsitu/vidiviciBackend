@@ -16,7 +16,7 @@ namespace API_VidiVici.Modifiers
                 UserId = information.UserId,
                 Cnp = information.Cnp,
                 Iban = information.Iban,
-                PhoneNumber = information.User.PhoneNumber,
+                // PhoneNumber = information.User.PhoneNumber,
                 Address = information.Address,
                 Bank = information.Bank,
                 Cui = information.Cui,

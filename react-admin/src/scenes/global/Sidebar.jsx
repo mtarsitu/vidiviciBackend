@@ -80,20 +80,6 @@ const Sidebar = () => {
                 alignItems="center"
                 ml="15px"
               >
-                <img
-                  alt="profile-user"
-                  width="250px"
-                  height="150px"
-                  src={`../../../assets/vidivici-logo.png`}
-                  style={{
-                    cursor: "pointer",
-                    borderRadius: "50%",
-                    position: "absolute",
-                    marginLeft: "-70px",
-                    marginTop:"10px"
-                  }}
-                />
-
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)} sx={{marginLeft:"160px"}}>
                   <MenuOutlinedIcon />
                 </IconButton>
@@ -127,7 +113,7 @@ const Sidebar = () => {
                   alt="profile-user"
                   width="100px"
                   height="100px"
-                  src={`../../assets/techaine-logo.png`}
+                  src={`../../assets/techaine-logo-g.png`}
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
               </Box>

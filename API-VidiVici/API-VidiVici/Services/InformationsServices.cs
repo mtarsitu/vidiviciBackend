@@ -39,5 +39,9 @@ namespace API_VidiVici.Services
         {
             _repository.Remove(id);
         }
+
+        public async Task<IEnumerable<InformationDto?>> GetByUserId(string id){
+            return await _repository.GetByUserId(id);
+        }
     }
 }

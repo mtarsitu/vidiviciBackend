@@ -65,6 +65,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddAuthorization();
+builder.Services.AddScoped<InformationsRepository>();
+builder.Services.AddScoped<InformationsServices>();
 builder.Services.AddScoped<FundsRepository>();
 builder.Services.AddScoped<FundsServices>();
 builder.Services.AddScoped<TokenService>();

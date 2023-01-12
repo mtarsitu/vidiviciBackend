@@ -1,3 +1,4 @@
+
 import { Box, IconButton, useTheme } from "@mui/material";
 import { useContext } from "react";
 import { ColorModeContext, tokens } from "../../theme";
@@ -25,6 +26,19 @@ const Topbar = () => {
         backgroundColor={colors.primary[400]}
         borderRadius="3px"
       >
+        <img
+                  alt="profile-user"
+                  width="250px"
+                  height="150px"
+                  src={`../../../assets/vidivici-logo.png`}
+                  style={{
+                    cursor: "pointer",
+                    borderRadius: "50%",
+                    position: "absolute",
+                    marginLeft: "-70px",
+                    marginTop:"-50px"
+                  }}
+                />
         {/* <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" />
         <IconButton type="button" sx={{ p: 1 }}>
           <SearchIcon />

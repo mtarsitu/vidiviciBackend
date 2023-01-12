@@ -20,17 +20,19 @@ namespace API_VidiVici.Controllers
         private readonly UserManager<User> _userManager;
         private readonly TokenService _tokenService;
         private readonly SignInManager<User> SignInManager;
-
+        private readonly InformationsServices _informationServices;
         private readonly VidiviciDbContext _context;
         public AccountsController(
         UserManager<User> userManager, 
         TokenService tokenService, SignInManager<User> signInManager, 
-        VidiviciDbContext context
+        VidiviciDbContext context,
+        InformationsServices services
         )
         {
             _tokenService = tokenService;
             _userManager = userManager;
             _context = context;
+            _informationServices = services;
             SignInManager = signInManager;
 
         }
@@ -167,9 +169,11 @@ namespace API_VidiVici.Controllers
         {
             List<UserDto> userDtoList = new List<UserDto>();
             var users = await _userManager.Users.ToListAsync();
-
+            
             foreach(User user in users){
+               
                 userDtoList.Add(UserModifier.ToUserDto(user));
+
             }
             return userDtoList;
         }

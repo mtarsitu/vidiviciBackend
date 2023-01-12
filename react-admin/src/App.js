@@ -21,9 +21,9 @@ function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
   const loggedUser = useAtom(loggedUserAtom);
-  console.log(loggedUser);
+
   const [isLogged,] = useAtom(isLoggedAtom);
-  console.log(isLogged);
+
   
   useEffect(()=>{
     if(isLogged && loggedUser[0]==null){

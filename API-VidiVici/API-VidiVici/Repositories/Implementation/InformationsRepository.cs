@@ -35,6 +35,7 @@ namespace API_VidiVici.Repositories.Implementation
             var information = await _context.Informations.SingleAsync( x => x.Id == id);
             return InformationModifier.ToInformationDto(information);
         }
+        
 
         public async Task<IEnumerable<InformationDto>>? GetAll()
         {
@@ -44,6 +45,15 @@ namespace API_VidiVici.Repositories.Implementation
         public void Remove(int id)
         {
             _context.Informations.Remove(_context.Informations.Single(x=>x.Id ==id));
+        }
+        public async Task<IEnumerable<InformationDto?>> GetByUserId(string id)
+        {
+            var informations = await _context.Informations.Where(x=>x.UserId == id).ToListAsync();
+            List<InformationDto> informationDtos = new List<InformationDto>();
+            foreach(Information information in informations){
+                informationDtos.Add(InformationModifier.ToInformationDto(information));
+            }
+            return informationDtos;
         }
     }
 }
