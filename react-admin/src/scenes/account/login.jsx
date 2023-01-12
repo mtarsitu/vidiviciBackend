@@ -11,30 +11,29 @@ import { isLoggedAtom } from "../../data/dataAtom";
 import { useAtom } from "jotai";
 
 export default function SignIn() {
-const [, setIsLogged] = useAtom(isLoggedAtom);
-let user = {
-  username: "",
-  password: ""
-}
+  const [, setIsLogged] = useAtom(isLoggedAtom);
+  let user = {
+    username: "",
+    password: "",
+  };
   async function LogInUser(formData) {
     console.log(formData.get("username"));
     user = {
       username: formData.get("username"),
-      password: formData.get("password")
-    }
+      password: formData.get("password"),
+    };
     // console.log(user.username , user.password);
     let response = await fetch(`http://localhost:5241/Accounts/login`, {
       method: "POST",
       credentials: "include",
-      headers:{
-        'accept': 'text/plain',
-        'Content-Type': 'application/json'
+      headers: {
+        accept: "text/plain",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(user),
     });
     if (response.ok) {
       setIsLogged(true);
-     
     }
     return response.ok;
   }
@@ -53,8 +52,22 @@ let user = {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        marginTop="-80px"
+      >
+        <img
+          alt="profile-user"
+          width="150%"
+          height="150%"
+          src={`../../../assets/vidivici-logo.png`}
+          style={{ cursor: "pointer", borderRadius: "50%" }}
+        />
+      </Box>
+      <Box
         sx={{
-          marginTop: 8,
+          marginTop: -10,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -95,13 +108,13 @@ let user = {
           </Button>
         </Box>
         <Button
-            href="/register"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Register
-          </Button>
+          href="/register"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+        >
+          Register
+        </Button>
       </Box>
     </Container>
   );

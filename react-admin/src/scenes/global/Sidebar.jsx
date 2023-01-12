@@ -18,7 +18,6 @@ import { isLoggedAtom, loggedUserAtom } from "../../data/dataAtom";
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
- 
 
   return (
     <MenuItem
@@ -81,10 +80,21 @@ const Sidebar = () => {
                 alignItems="center"
                 ml="15px"
               >
-                <Typography variant="h5" color={colors.grey[100]}>
-                  VIDI VICI
-                </Typography>
-                <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
+                <img
+                  alt="profile-user"
+                  width="250px"
+                  height="150px"
+                  src={`../../../assets/vidivici-logo.png`}
+                  style={{
+                    cursor: "pointer",
+                    borderRadius: "50%",
+                    position: "absolute",
+                    marginLeft: "-70px",
+                    marginTop:"10px"
+                  }}
+                />
+
+                <IconButton onClick={() => setIsCollapsed(!isCollapsed)} sx={{marginLeft:"160px"}}>
                   <MenuOutlinedIcon />
                 </IconButton>
               </Box>
@@ -92,7 +102,6 @@ const Sidebar = () => {
           </MenuItem>
 
           {!isCollapsed && (
-            
             <Box mb="25px">
               <Box textAlign="center" marginBottom="20px">
                 <Typography
@@ -103,13 +112,17 @@ const Sidebar = () => {
                 >
                   Techaine
                 </Typography>
-                <Typography variant="h5" color={colors.greenAccent[500]}>
+                <Typography variant="h5" color={colors.purpleAccent[600]}>
                   VidiVici
                 </Typography>
-                
               </Box>
-              <Divider/>
-              <Box display="flex" justifyContent="center" alignItems="center" marginTop="20px">
+              <Divider />
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                marginTop="20px"
+              >
                 <img
                   alt="profile-user"
                   width="100px"
@@ -127,8 +140,8 @@ const Sidebar = () => {
                 >
                   Mario Tarsitu
                 </Typography>
-                <Typography variant="h6" color={colors.greenAccent[500]}>
-                  {loggedUser[0]!=null&& loggedUser[0].userRole}
+                <Typography variant="h6" color={colors.purpleAccent[600]}>
+                  {loggedUser[0] != null && loggedUser[0].userRole}
                 </Typography>
               </Box>
             </Box>
@@ -166,7 +179,7 @@ const Sidebar = () => {
             />
             <Item
               title="Fonduri active"
-              to="/invoices"
+              to="/funds"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -196,16 +209,15 @@ const Sidebar = () => {
             dasdasdadasadsadadada
 
             */}
-            { isLogged 
-            &&
-            <Item
-              title="Inregistreaza user"
-              to="/role-register"
-              icon={<PersonOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            }
+            {isLogged && (
+              <Item
+                title="Inregistreaza user"
+                to="/role-register"
+                icon={<PersonOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            )}
             <Item
               title="Calendar"
               to="/calendar"
@@ -220,8 +232,6 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-
-            
           </Box>
         </Menu>
       </ProSidebar>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API_VidiVici.Model;
 using API_VidiVici.Repositories.Implementation;
+
 namespace API_VidiVici.Services
 {
     public class FundsServices : IServices<Fund>
@@ -33,7 +34,11 @@ namespace API_VidiVici.Services
         {
             return await _repository.GetAll();
         }
-
+        public async Task<IEnumerable<Fund>>? GetAllPublic()
+        {
+            return await _repository.GetAllPublic();
+        }
+        
         public void Remove(int id)
         {
             _repository.Remove(id);

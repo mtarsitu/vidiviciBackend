@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
 import Partners from "./scenes/partners";
-import Invoices from "./scenes/invoices";
+import Funds from "./scenes/funds";
 import Contacts from "./scenes/contacts";
 import RoleRegister from "./scenes/account/roleRegister"
 import Register from "./scenes/account/register";
@@ -20,16 +20,16 @@ import { isLoggedAtom, loggedUserAtom } from "./data/dataAtom";
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
-  
-  // console.log(loggedUser);
+  const loggedUser = useAtom(loggedUserAtom);
+  console.log(loggedUser);
   const [isLogged,] = useAtom(isLoggedAtom);
   console.log(isLogged);
   
-  // useEffect(()=>{
-  //   if(loggedUser[0]!=null){
-      
-  //   }
-  // });
+  useEffect(()=>{
+    if(isLogged && loggedUser[0]==null){
+      window.location.reload();
+    }
+  },[isLogged]);
 
   return (
     <ColorModeContext.Provider value={colorMode}>
@@ -52,7 +52,7 @@ function App() {
                 <Route path="/dashbord" element={<Dashboard />} />
                 <Route path="/parteneri" element={<Partners />} />
                 <Route path="/contacts" element={<Contacts />} />
-                <Route path="/invoices" element={<Invoices />} />
+                <Route path="/funds" element={<Funds />} />
                 <Route path="/role-register" element={<RoleRegister />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/calendar" element={<Calendar />} />

@@ -31,6 +31,10 @@ namespace API_VidiVici.Repositories.Implementation
             return await _context.Funds.Where(x=>x.Id ==id).FirstOrDefaultAsync();
         }
 
+        public async Task<IEnumerable<Fund>>? GetAllPublic(){
+            return await _context.Funds.Where(f=> f.Private != true).ToListAsync();
+        }
+
         public async Task<IEnumerable<Fund>>? GetAll()
         {
             return await _context.Funds.ToListAsync();

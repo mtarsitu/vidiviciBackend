@@ -83,9 +83,15 @@ namespace API_VidiVici.Controllers
 
         [Authorize(Roles = "Admin,Poweruser")]    
         [HttpPost("registerRole")]
-        public async Task<ActionResult> RegisterWithRole(RegisterDto registerDto, string role)
+        public async Task<ActionResult> RegisterWithRole(RegisterDto registerDto)
         {
-            var user = new User { UserName = registerDto.Username, Email = registerDto.Email };
+            var userrole = char.ToUpper(registerDto.UserRole.ToLower()[0]) + registerDto.UserRole.Substring(1);
+            var user = new User { 
+                UserName = registerDto.Username,
+                 Email = registerDto.Email, 
+                 FirstName = registerDto.FirstName,
+                 LastName = registerDto.LastName,
+                 UserRole = userrole };
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
 
@@ -99,7 +105,7 @@ namespace API_VidiVici.Controllers
                 return ValidationProblem();
             }
 
-            await _userManager.AddToRoleAsync(user, role);
+            await _userManager.AddToRoleAsync(user, registerDto.UserRole);
 
             return StatusCode(201);
         }

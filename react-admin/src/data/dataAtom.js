@@ -1,4 +1,4 @@
-import { atom} from "jotai";
+import { atom } from "jotai";
 
 const entitiesUrl = `http://localhost:5000/getEntitiesByCategory?categoryId=`;
 const categoriesUrl = `http://localhost:5000/GetAllEntityCategories`;
@@ -6,43 +6,52 @@ const allEntitiesUrl = `http://localhost:5000/getAllEntities`;
 const entityInformationUrl = `http://localhost:5000/getEntityInformationByEntityId?id=`;
 const buyTicketsUrl = `http://localhost:5000/GetBuyTickets`;
 const sellTicketsUrl = `http://localhost:5000/GetSellTickets`;
-const baseUrl = 'http://localhost:5241/';
+const baseUrl = "http://localhost:5241/";
 
 const clientsCatId = "1";
 const supplierCatId = "2";
 const employeesCatId = "3";
 
-
-export let isLoggedAtom = atom((false));
+export let isLoggedAtom = atom(false);
 export const refreshAtom = atom(false);
 export const entityIdAtom = atom("");
 
-
-
-
-export const loggedUserAtom = atom(async () =>{
-  const response = await fetch(baseUrl+'Accounts/currentUser',{
+export const loggedUserAtom = atom(async () => {
+  const response = await fetch(baseUrl + "Accounts/currentUser", {
     method: "GET",
     credentials: "include",
-    headers:{
-      'accept': 'text/plain'
-    }
+    headers: {
+      accept: "text/plain",
+    },
   });
-  if(response.ok){
+  if (response.ok) {
     isLoggedAtom.init = true;
     return await response.json();
   }
   return null;
 });
 
-
-export const entitiesAtom = atom(async (get) => {
-  get(refreshAtom);
-  const response = await fetch(baseUrl+"Accounts/AllUser", {
+export const fundsAtom = atom(async () => {
+  const response = await fetch(baseUrl + "Funds/getAllPublic",{
     method: "GET",
     credentials: "include",
     headers: {
-      'accept': "text/plain"
+      accept: "text/plain",
+    },
+  });
+  if (response.ok){
+    return await response.json();
+  }
+  return null;
+});
+
+export const entitiesAtom = atom(async (get) => {
+  get(refreshAtom);
+  const response = await fetch(baseUrl + "Accounts/AllUser", {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      accept: "text/plain",
     },
   });
   return await response.json();
@@ -76,9 +85,9 @@ export const entityInformationAtom = atom(async (get) => {
   const id = get(entityIdAtom);
   console.log(id);
   get(refreshAtom);
-  const response = await fetch(baseUrl  + id);
+  const response = await fetch(baseUrl + id);
   return response.json();
-}); 
+});
 
 export const buyTicketsAtom = atom(async (get) => {
   get(refreshAtom);
@@ -92,17 +101,13 @@ export const sellTicketsAtom = atom(async (get) => {
   return response.json();
 });
 
-
-export const Logout= async()=>{
-  
-  const response = await fetch(baseUrl+"Accounts/logout",{
+export const Logout = async () => {
+  const response = await fetch(baseUrl + "Accounts/logout", {
     method: "POST",
     credentials: "include",
   });
-  if(response.ok){
-    window.location  ="/";
+  if (response.ok) {
+    window.location = "/";
     isLoggedAtom.init = false;
-
   }
-
-}
+};

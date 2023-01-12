@@ -19,6 +19,7 @@ const Calendar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [currentEvents, setCurrentEvents] = useState([]);
+  console.log(currentEvents);
 
   const handleDateClick = (selected) => {
     const title = prompt("Please enter a new title for your event");
@@ -64,7 +65,7 @@ const Calendar = () => {
               <ListItem
                 key={event.id}
                 sx={{
-                  backgroundColor: colors.greenAccent[500],
+                  backgroundColor: colors.purpleAccent[700],
                   margin: "10px 0",
                   borderRadius: "2px",
                 }}

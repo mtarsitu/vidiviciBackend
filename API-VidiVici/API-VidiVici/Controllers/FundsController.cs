@@ -30,7 +30,11 @@ namespace API_VidiVici.Controllers
         public async Task<IEnumerable<Fund>> GetAll(){
             return await _services.GetAll();
         }
-
+        [Authorize(Roles ="Admin,Poweruser,Employee,Investor,Prospect,Pending")]
+        [HttpGet("getAllPublic")]
+        public async Task<IEnumerable<Fund>> GetAllPublic(){
+            return await _services.GetAllPublic();
+        }
         [Authorize(Roles ="Admin,Poweruser,Employee")]
         [HttpPost("editFund")]
         public void Edit(Fund fund){

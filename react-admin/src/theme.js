@@ -38,6 +38,19 @@ export const tokens = (mode) => ({
           800: "#1e5245",
           900: "#0f2922",
         },
+        purpleAccent: {
+
+          100: "#e0d5df",
+          200: "#c1abc0",
+          300: "#a282a0",
+          400: "#835881",
+          500: "#642e61",
+          600: "#50254e",
+          700: "#3c1c3a",
+          800: "#281227",
+          900: "#140913",
+        },
+
         redAccent: {
           100: "#f8dcdb",
           200: "#f1b9b7",
@@ -95,6 +108,18 @@ export const tokens = (mode) => ({
           800: "#b7ebde",
           900: "#dbf5ee",
         },
+        purpleAccent: {
+
+          100: "#140913",
+          200: "#281227",
+          300: "#3c1c3a",
+          400: "#50254e",
+          500: "#642e61",
+          600: "#835881",
+          700: "#a282a0",
+          800: "#c1abc0",
+          900: "#e0d5df",
+        },
         redAccent: {
           100: "#2c100f",
           200: "#58201e",
@@ -133,7 +158,7 @@ export const themeSettings = (mode) => {
               main: colors.primary[500],
             },
             secondary: {
-              main: colors.greenAccent[500],
+              main: colors.purpleAccent[500],
             },
             neutral: {
               dark: colors.grey[700],
@@ -150,7 +175,7 @@ export const themeSettings = (mode) => {
               main: colors.primary[100],
             },
             secondary: {
-              main: colors.greenAccent[500],
+              main: colors.purpleAccent[500],
             },
             neutral: {
               dark: colors.grey[700],
@@ -212,3 +237,5 @@ export const useMode = () => {
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   return [theme, colorMode];
 };
+
+

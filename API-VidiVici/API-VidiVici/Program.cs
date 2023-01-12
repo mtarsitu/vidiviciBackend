@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using API_VidiVici.data;
 using API_VidiVici.Model;
+
 using API_VidiVici.Services;
 using API_VidiVici.Data;
 
@@ -62,13 +63,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 }
             };
     });
+
 builder.Services.AddAuthorization();
+builder.Services.AddScoped<FundsRepository>();
+builder.Services.AddScoped<FundsServices>();
+builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<InvestmentsServices>();
 builder.Services.AddScoped<InvestementsRepository>();
 builder.Services.AddScoped<UserManager<User>>();
 
 
-builder.Services.AddScoped<TokenService>();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });

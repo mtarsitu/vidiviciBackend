@@ -1,7 +1,7 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-
+import { ColorModeContext, useMode } from "../../theme";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -9,37 +9,48 @@ import Typography from "@mui/material/Typography";
 import Header from "../../components/Header";
 
 const RoleRegister = () => {
+  const [theme, colorMode] = useMode();
   // const isNonMobile = useMediaQuery("(min-width:600px)");
   let user = {
     username: "",
     password: "",
-    userRole:""
-  }
+    email:"",
+    firstName:"",
+    lastName:"",
+    userRole: "",
+  };
   async function Register(formData) {
     user = {
       username: formData.get("username"),
       password: formData.get("password"),
-      userRole: formData.get("userRole")
-    }
-    await fetch(`http://localhost:5241/registerRole`, {
+      email: formData.get("email"),
+      firstName: formData.get("firstName"),
+      lastName: formData.get("lastName"),
+      userRole: formData.get("userRole"),
+    };
+    console.log(user);
+    await fetch(`http://localhost:5241/Accounts/registerRole`, {
       method: "POST",
       credentials: "include",
-      headers:{
-        'accept': 'text/plain',
-        'Content-Type': 'application/json'
+      headers: {
+        accept: "text/plain",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(user),
     });
-    
-    
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    console.log(data);
     console.log({
       username: data.get("username"),
       password: data.get("password"),
+      email: data.get("email"),
+      firstName: data.get("firstName"),
+      lastName: data.get("lastName"),
+      userRole: data.get("userRole"),
     });
     Register(data);
   };
@@ -70,6 +81,19 @@ const RoleRegister = () => {
             label="Username"
             name="username"
             autoFocus
+            sx={{
+              "& .MuiFormLabel-root.Mui-focused": {
+                color: "neutral.main",
+              },
+              "& .MuiOutlinedInput-root": {
+                "&:hover fieldset": {
+                  borderColor: `neutral.main`,
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: `neutral.main`,
+                },
+              },
+            }}
           />
           <TextField
             margin="normal"
@@ -79,6 +103,19 @@ const RoleRegister = () => {
             label="Parola"
             type="password"
             id="password"
+            sx={{
+              "& .MuiFormLabel-root.Mui-focused": {
+                color: "neutral.main",
+              },
+              "& .MuiOutlinedInput-root": {
+                "&:hover fieldset": {
+                  borderColor: `neutral.main`,
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: `neutral.main`,
+                },
+              },
+            }}
           />
           <TextField
             margin="normal"
@@ -88,6 +125,63 @@ const RoleRegister = () => {
             label="Email"
             type="email"
             id="email"
+            sx={{
+              "& .MuiFormLabel-root.Mui-focused": {
+                color: "neutral.main",
+              },
+              "& .MuiOutlinedInput-root": {
+                "&:hover fieldset": {
+                  borderColor: `neutral.main`,
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: `neutral.main`,
+                },
+              },
+            }}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="firstName"
+            label="Prenume"
+            type="text"
+            id="firstName"
+            sx={{
+              "& .MuiFormLabel-root.Mui-focused": {
+                color: "neutral.main",
+              },
+              "& .MuiOutlinedInput-root": {
+                "&:hover fieldset": {
+                  borderColor: `neutral.main`,
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: `neutral.main`,
+                },
+              },
+            }}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="lastName"
+            label="Nume de familie"
+            type="text"
+            id="lastName"
+            sx={{
+              "& .MuiFormLabel-root.Mui-focused": {
+                color: "neutral.main",
+              },
+              "& .MuiOutlinedInput-root": {
+                "&:hover fieldset": {
+                  borderColor: `neutral.main`,
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: `neutral.main`,
+                },
+              },
+            }}
           />
           <TextField
             margin="normal"
@@ -95,8 +189,21 @@ const RoleRegister = () => {
             fullWidth
             name="userRole"
             label="Rolul utilizatorului"
-            type="userRole"
+            type="text"
             id="userRole"
+            sx={{
+              "& .MuiFormLabel-root.Mui-focused": {
+                color: "neutral.main",
+              },
+              "& .MuiOutlinedInput-root": {
+                "&:hover fieldset": {
+                  borderColor: `neutral.main`,
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: `neutral.main`,
+                },
+              },
+            }}
           />
           <Button
             type="submit"
@@ -104,7 +211,7 @@ const RoleRegister = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign In
+            Inregistreaza user nou
           </Button>
         </Box>
       </Box>

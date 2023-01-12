@@ -1,7 +1,7 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -40,7 +40,7 @@ const Register = () => {
 
   const handleConfirmationPass = (e) => {
     setConfirmationPass(e.target.value);
-    if (pass == e.target.value) {
+    if (pass === e.target.value) {
       setValidPass(true);
     } else {
       setValidPass(false);
@@ -62,6 +62,20 @@ const Register = () => {
   return (
     <Box m="20px">
       <Header title="CREEAZA UTILIZATOR" subtitle="Creaza un nou profil" />
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        // marginTop="-190px"
+      >
+        <img
+          alt="profile-user"
+          width="50%"
+          height="50%"
+          src={`../../../assets/vidivici-logo.png`}
+          style={{ cursor: "pointer", borderRadius: "50%", position:"absolute" }}
+        />
+      </Box>
       <Box
         sx={{
           marginTop: 8,

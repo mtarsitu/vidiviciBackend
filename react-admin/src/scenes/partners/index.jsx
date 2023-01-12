@@ -8,7 +8,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import { useState } from "react";
 import Information from "./information";
 const Partners = () => {
-  const [infoId, setInfoId] = useState()
+  const [infoId, setInfoId] = useState();
   const [partnerName, setPartnerName] = useState();
   const entities = useAtom(entitiesAtom);
   console.log(entities);
@@ -20,7 +20,7 @@ const Partners = () => {
     { field: "userRole", headerName: "Role", width: 130 },
     { field: "firstName", headerName: "Nume", width: 130 },
     { field: "lastName", headerName: "Nume de familie", width: 130 },
-    
+
     {
       field: "actions",
       headerName: "Actiuni",
@@ -29,7 +29,7 @@ const Partners = () => {
       renderCell: (row) => {
         return (
           <Box>
-            <IconButton color="inherit" onClick={()=> handleOpen(row.id)}>
+            <IconButton color="inherit" onClick={() => handleOpen(row.id)}>
               <InfoIcon />
             </IconButton>
           </Box>
@@ -38,14 +38,15 @@ const Partners = () => {
     },
   ];
 
-
   const [open, setOpen] = useState(false);
   const handleOpen = (id) => {
-
-    setPartnerName(entities[0].filter(entity =>  entity.id === id)[0].username);
+    setPartnerName(
+      entities[0].filter((entity) => entity.id === id)[0].username
+    );
     setInfoId(id);
-    setOpen(true)}
-   
+    setOpen(true);
+  };
+
   const handleClose = () => setOpen(false);
 
   return (
@@ -62,10 +63,10 @@ const Partners = () => {
             borderBottom: "none",
           },
           "& .name-column--cell": {
-            color: colors.greenAccent[300],
+            color: colors.purpleAccent[300],
           },
           "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: colors.blueAccent[700],
+            backgroundColor: colors.purpleAccent[700],
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
@@ -73,10 +74,10 @@ const Partners = () => {
           },
           "& .MuiDataGrid-footerContainer": {
             borderTop: "none",
-            backgroundColor: colors.blueAccent[700],
+            backgroundColor: colors.purpleAccent[700],
           },
           "& .MuiCheckbox-root": {
-            color: `${colors.greenAccent[200]} !important`,
+            color: `${colors.purpleAccent[200]} !important`,
           },
         }}
       >
@@ -108,17 +109,16 @@ const Partners = () => {
             bgcolor: colors.primary[400],
             border: "2px solid #000",
             boxShadow: 24,
-            borderRadius: '12px',
+            borderRadius: "12px",
             p: 4,
           }}
         >
           <Typography id="modal-modal-title" variant="h3" component="h2">
             Informatii ale partenerului: {partnerName}
           </Typography>
-          <Information props={infoId}/>
+          <Information props={infoId} />
         </Box>
       </Modal>
-      
     </Box>
   );
 };
