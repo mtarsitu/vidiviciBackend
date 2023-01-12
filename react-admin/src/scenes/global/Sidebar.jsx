@@ -49,14 +49,16 @@ const Sidebar = () => {
     unauthorize: ["Prospect", "Investor", "Pending"],
   };
   console.log(authorize);
-
-  // useEffect(() => {
-  //   if (roles.authorized.includes(loggedUser[0].userRole)) {
-  //     console.log("vine");
-  //     setAuthorize(true);
-  //   }
-    // setAuthorize(false);
-  // });
+  console.log(loggedUser[0]);
+  useEffect(() => {
+    
+    if (roles.authorized.includes(loggedUser[0].userRole)) {
+      console.log("vine");
+      setAuthorize(true);
+    }else{
+      setAuthorize(false);
+    }
+  });
 
 
   return (

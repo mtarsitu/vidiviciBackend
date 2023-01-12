@@ -8,13 +8,11 @@ import Button from "@mui/material/Button";
 import { useEffect,useState } from "react";
 
 const MyFunds = ({props}) => {
-    console.log(props,"aiciiiiiii");
   const [myFunds, setMyFunds] = useState({});
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   useEffect( () => {
     fetchData();
-    
   }, []);
   
   const fetchData = async()=>{
@@ -30,10 +28,9 @@ const MyFunds = ({props}) => {
         }
       );
       let data = await response.json();
-      console.log(data);
       setMyFunds(data);
   }
-  console.log(myFunds,"acolooo");
+
   return (
     <Box m="20px">
       <Header title="Investitii" subtitle="investitii personale in fonduri" />
