@@ -5,14 +5,35 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import { useAtom } from "jotai";
-import {  loggedUserAtom, myFundsAtom, usernameAtom } from "../../data/dataAtom";
-import { useEffect } from "react";
-const MyFunds = () => {
-  const myFunds = useAtom(myFundsAtom);
+import { useEffect,useState } from "react";
+
+const MyFunds = ({props}) => {
+    console.log(props,"aiciiiiiii");
+  const [myFunds, setMyFunds] = useState({});
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
+  useEffect( () => {
+    fetchData();
+    
+  }, []);
+  
+  const fetchData = async()=>{
+    let response = await fetch(
+        "http://localhost:5241/Accounts/UserAndInvestments?username=" +
+          `${props}`,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            accept: "text/plain",
+          },
+        }
+      );
+      let data = await response.json();
+      console.log(data);
+      setMyFunds(data);
+  }
+  console.log(myFunds,"acolooo");
   return (
     <Box m="20px">
       <Header title="Investitii" subtitle="investitii personale in fonduri" />
@@ -29,8 +50,8 @@ const MyFunds = () => {
           },
         }}
       >
-        {myFunds[0] != null &&
-          myFunds[0].investments.map((fund) => (
+        {myFunds.investments &&
+          myFunds.investments.map((fund) => (
             <Card
               sx={{
                 minWidth: "150!important",

@@ -16,6 +16,7 @@ export let isLoggedAtom = atom(false);
 export const refreshAtom = atom(false);
 export const entityIdAtom = atom("");
 export const usernameAtom = atom("");
+
 export const loggedUserAtom = atom(async () => {
   const response = await fetch(baseUrl + "Accounts/currentUser", {
     method: "GET",
@@ -26,14 +27,14 @@ export const loggedUserAtom = atom(async () => {
   });
   if (response.ok) {
     isLoggedAtom.init = true;
-    
+    // username = response.header
+    // console.log(response.json());
     return await response.json();
   }
   return null;
 });
-console.log(loggedUserAtom)
+
 export const fundsAtom = atom(async () => {
-  
   const response = await fetch(baseUrl + "Funds/getAllPublic",{
     method: "GET",
     credentials: "include",
@@ -48,9 +49,8 @@ export const fundsAtom = atom(async () => {
 });
 
 export const myFundsAtom = atom(async ()=>{
-  
-  console.log(loggedUserAtom.response);
-  const response = await fetch(baseUrl+"Accounts/UserAndInvestments?username="+"investor",{
+  console.log(usernameAtom);
+  const response = await fetch(baseUrl+"Accounts/UserAndInvestments?username="+usernameAtom,{
     method: "GET",
     credentials: "include",
     headers: {

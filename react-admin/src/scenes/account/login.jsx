@@ -7,11 +7,9 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { isLoggedAtom } from "../../data/dataAtom";
-import { useAtom } from "jotai";
 
 export default function SignIn() {
-  const [, setIsLogged] = useAtom(isLoggedAtom);
+
   let user = {
     username: "",
     password: "",
@@ -22,7 +20,6 @@ export default function SignIn() {
       username: formData.get("username"),
       password: formData.get("password"),
     };
-    // console.log(user.username , user.password);
     let response = await fetch(`http://localhost:5241/Accounts/login`, {
       method: "POST",
       credentials: "include",
@@ -33,7 +30,7 @@ export default function SignIn() {
       body: JSON.stringify(user),
     });
     if (response.ok) {
-      setIsLogged(true);
+      window.location.href = "/dashboard";
     }
     return response.ok;
   }
