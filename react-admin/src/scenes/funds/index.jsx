@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, IconButton,Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import Card from "@mui/material/Card";
@@ -10,6 +10,8 @@ import { allFundsAtom, fundsAtom } from "../../data/dataAtom";
 import QueueIcon from '@mui/icons-material/Queue';
 import { useState } from "react";
 import { useEffect } from "react";
+import EditIcon from "@mui/icons-material/Edit";
+
 const Funds = ({ authorized }) => {
   const [showFunds,setShowFunds] = useState({});
   const funds = useAtom(fundsAtom);
@@ -88,6 +90,12 @@ const Funds = ({ authorized }) => {
                 </Typography>
               </CardContent>
               <CardActions>
+                {authorize? 
+                <IconButton color="inherit" >
+                {/*  */}
+                <EditIcon />
+             
+              </IconButton>:
                 <Button
                   size="small"
                   sx={{
@@ -95,7 +103,7 @@ const Funds = ({ authorized }) => {
                   }}
                 >
                   Aplica la aceasta opurtunitate{" "}
-                </Button>
+                </Button>}
               </CardActions>
             </Card>
           ))}
