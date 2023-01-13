@@ -46,5 +46,11 @@ namespace API_VidiVici.Controllers
             _services.Remove(id);
         }
 
+        [Authorize(Roles ="Admin,Poweruser,Employee")]
+        [HttpPost("addFund")]
+        public void Add(Fund fund){
+            _services.Add(fund);
+        }
+
     }
 }

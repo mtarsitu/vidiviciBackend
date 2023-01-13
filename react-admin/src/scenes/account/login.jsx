@@ -39,11 +39,13 @@ export default function Login({ useratom }) {
       const timeout = ()=>{
         setTimeout(() => {
           window.location.href = "/dashboard";
-        }, 500);
+        }, 1000);
       }
       timeout();
+      return response.ok;
+    }else{
+      toast.warning('Username sau parola gresita')
     }
-    return response.ok;
   }
 
   const handleSubmit = (event) => {
@@ -122,7 +124,7 @@ export default function Login({ useratom }) {
                 Sign In
               </Button>
               <ToastContainer
-                position="top-center"
+                position="bottom-right"
                 autoClose={5000}
                 hideProgressBar={false}
                 newestOnTop={false}

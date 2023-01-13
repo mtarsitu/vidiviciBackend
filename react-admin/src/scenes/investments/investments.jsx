@@ -19,7 +19,7 @@ const Investments = ({useratom})=>{
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const loggedUser = useratom;
-  console.log(investments);
+  
   const columns = [
     { field: "id", headerName: "ID" },
     { field: "dateCreated", headerName: "Data Creare", width: 200 },

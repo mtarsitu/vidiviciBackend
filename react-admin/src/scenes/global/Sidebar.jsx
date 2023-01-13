@@ -13,7 +13,6 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import { useEffect } from "react";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -34,30 +33,14 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-const Sidebar = ({ useratom }) => {
+const Sidebar = ({ useratom  ,authorized}) => {
   const loggedUser = useratom;
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
-  const [authorize, setAuthorize] = useState(false);
-  const roles = {
-    authorized: ["Admin", "Poweruser", "Employee"],
-    unauthorize: ["Prospect", "Investor", "Pending"],
-  };
-  console.log(loggedUser);
-  // console.log(loggedUser[0]);
-  useEffect(() => {
-    if (loggedUser != null) {
-      if (roles.authorized.includes(loggedUser.userRole)) {
-        console.log("vine");
-        setAuthorize(true);
-      } else {
-        setAuthorize(false);
-      }
-    }
-  });
-
+  const authorize= authorized;
+  
   return (
     <>
       {loggedUser != null && (

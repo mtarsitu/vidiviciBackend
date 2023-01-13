@@ -7,30 +7,55 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import { useAtom } from "jotai";
 import { fundsAtom } from "../../data/dataAtom";
-
-const Funds = () => {
+import QueueIcon from '@mui/icons-material/Queue';
+const Funds = ({ authorized }) => {
   const funds = useAtom(fundsAtom);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
+  const authorize = authorized;
   return (
-    <Box m="20px" >
+    <Box m="20px">
       <Header title="Fonduri" subtitle="Oportunitati investitii" />
-      
-      <Button variant="contained" sx={{marginLeft:5,marginRight:5, backgroundColor:`neutral.main`}}>Adauga Fond</Button>
-      
-      <Box m="20px" sx={{ display:"grid",
-      gridTemplateColumns: "repeat(auto-fill, 220px)", //the width of the card 
-      justifyContent: "center",
-      gridGap: "50px",
+      {authorize && (
+        <Box>
+          
+        <Button
+          variant="contained"
+          href="/adauga-fond"
+          sx={{
+            marginLeft: 5,
+            marginRight: 5,
+            backgroundColor: `neutral.main`,
+          }}
+        >
+          <QueueIcon/> &nbsp; Adauga Fond
+        </Button>
+        </Box>
+      )}
+      <Box
+        m="20px"
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, 220px)", //the width of the card
+          justifyContent: "center",
+          gridGap: "50px",
 
-       "& .MuiPaper-root":{
-          width:250
-       } }}>
-        
+          "& .MuiPaper-root": {
+            width: 250,
+          },
+        }}
+      >
         {funds[0] != null &&
           funds[0].map((fund) => (
-            <Card key={fund.id} sx={{ minWidth: "150!important", maxWidth: 350, marginBottom: 10, backgroundColor:`${colors.primary[400]}` }}>
+            <Card
+              key={fund.id}
+              sx={{
+                minWidth: "150!important",
+                maxWidth: 350,
+                marginBottom: 10,
+                backgroundColor: `${colors.primary[400]}`,
+              }}
+            >
               <CardContent>
                 <Typography
                   sx={{ fontSize: 14 }}
@@ -52,13 +77,17 @@ const Funds = () => {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button size="small" sx={{
-                  color:`${colors.greenAccent[400]}`
-                }}>Aplica la aceasta opurtunitate </Button>
+                <Button
+                  size="small"
+                  sx={{
+                    color: `${colors.greenAccent[400]}`,
+                  }}
+                >
+                  Aplica la aceasta opurtunitate{" "}
+                </Button>
               </CardActions>
             </Card>
           ))}
-         
       </Box>
     </Box>
   );

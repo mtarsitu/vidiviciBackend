@@ -7,7 +7,7 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import { useEffect,useState } from "react";
 
-const MyFunds = ({props}) => {
+const MyInvestments = ({props}) => {
   const [myFunds, setMyFunds] = useState({});
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -97,4 +97,4 @@ const MyFunds = ({props}) => {
   );
 };
 
-export default MyFunds;
+export default MyInvestments;

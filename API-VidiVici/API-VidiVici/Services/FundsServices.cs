@@ -17,6 +17,8 @@ namespace API_VidiVici.Services
         }
         public void Add(Fund item)
         {
+            // item.Private = bool.Parse(item.Private);
+
             _repository.Add(item);
         }
 

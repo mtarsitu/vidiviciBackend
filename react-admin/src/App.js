@@ -15,37 +15,41 @@ import Calendar from "./scenes/calendar/calendar";
 import Login from "./scenes/account/login";
 import { useAtom } from "jotai";
 import { loggedUserAtom } from "./data/dataAtom";
-import MyFunds from "./scenes/funds/myFunds";
-import Investments from "./scenes/funds/investments";
-
+import MyInvestments from "./scenes/investments/myInvestments";
+import Investments from "./scenes/investments/investments";
+import AddFund from "./scenes/funds/addFund";
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
   const [isLogged, setIsLogged] = useState(false);
   const loggedUser = useAtom(loggedUserAtom);
+  const [authorize, setAuthorize] = useState(false);
   const [userName, setUserName] = useState("");
-  console.log(loggedUser[0]);
+  const roles = {
+    authorized: ["Admin", "Poweruser", "Employee"],
+    unauthorize: ["Prospect", "Investor", "Pending"],
+  };
+  console.log(authorize,"kkkk");
   useEffect(() => {
     if (loggedUser[0] != null) {
       setIsLogged(true);
       setUserName(loggedUser[0].username)
+      if (roles.authorized.includes(loggedUser[0].userRole)) {
+        setAuthorize(true);
+      } else {
+        setAuthorize(false);
+      }
     }
   }, [isLogged]);
 
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-        {/* {!isLogged && (
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </Routes>
-        )} */}
         <CssBaseline />
 
         {/* {isLogged && ( */}
           <div className="app">
-            <Sidebar isSidebar={isSidebar}  useratom={loggedUser[0]}/>
+            <Sidebar isSidebar={isSidebar}  useratom={loggedUser[0]} authorized={authorize}/>
             <main className="content">
               <Topbar setIsSidebar={setIsSidebar} useratom={loggedUser[0]} />
               <Suspense fallback="LOADING">
@@ -54,13 +58,14 @@ function App() {
                   <Route path="/register" element={<Register />} />
                   <Route path="/dashboard" element={<Dashboard useratom={loggedUser[0]}/>} />
                   <Route path="/parteneri" element={<Users useratom={loggedUser[0]} />} />
-                  <Route path="/myFunds" element={<MyFunds props={userName} />} />
+                  <Route path="/myFunds" element={<MyInvestments props={userName} />} />
                   <Route path="/contacts" element={<Contacts />} />
-                  <Route path="/funds" element={<Funds />} />
+                  <Route path="/funds" element={<Funds authorized={authorize}/>} />
                   <Route path="/role-register" element={<RoleRegister />} />
                   <Route path="/register" element={<Register />} />
                   <Route path="/calendar" element={<Calendar />} />
                   <Route path="/investments" element={<Investments useratom={loggedUser[0]}/>}/>
+                  <Route path="/adauga-fond" element={<AddFund/>} />
                 </Routes>
               </Suspense>
             </main>
