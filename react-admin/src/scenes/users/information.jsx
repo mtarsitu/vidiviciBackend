@@ -6,7 +6,6 @@ import { useEffect } from "react";
 import { entityIdAtom, entityInformationAtom } from "../../data/dataAtom";
 
 const Information = ({ props }) => {
-  console.log(props);
   const [, setEntityId] = useAtom(entityIdAtom);
   const entityInformation = useAtom(entityInformationAtom)[0];
   const theme = useTheme();

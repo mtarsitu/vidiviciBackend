@@ -8,10 +8,11 @@ import InfoIcon from "@mui/icons-material/Info";
 import { useState } from "react";
 import Information from "./information";
 import Unauthorize from "../unauthorize";
-import EditIcon from '@mui/icons-material/Edit';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-import EditUser from "./editUser";
-const Users = ({ useratom }) => {
+import DoneAllIcon from "@mui/icons-material/DoneAll";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import EditIcon from "@mui/icons-material/Edit";
+
+const PendingInvestors = ({ useratom, authorized }) => {
   const [open, setOpen] = useState(false);
   const [infoId, setInfoId] = useState();
   const [, setEntityId] = useAtom(entityIdAtom);
@@ -31,7 +32,7 @@ const Users = ({ useratom }) => {
     {
       field: "actions",
       headerName: "Actiuni",
-      width: 130,
+      width: 170,
       sortable: false,
       renderCell: (row) => {
         return (
@@ -42,9 +43,11 @@ const Users = ({ useratom }) => {
             <IconButton color="inherit">
               <ManageAccountsIcon />
             </IconButton>
-            <IconButton color="inherit"  >
-              {/* onClick={() => <EditUser oldUser={row.row}/>} */}
+            <IconButton color="inherit">
               <EditIcon />
+            </IconButton>
+            <IconButton color="inherit">
+              <DoneAllIcon />
             </IconButton>
           </Box>
         );
@@ -53,9 +56,7 @@ const Users = ({ useratom }) => {
   ];
 
   const handleOpen = (id) => {
-    setPartnerName(
-      users[0].filter((entity) => entity.id === id)[0].username
-    );
+    setPartnerName(users[0].filter((entity) => entity.id === id)[0].username);
     console.log(id);
     setInfoId(id);
     setEntityId(id);
@@ -101,7 +102,9 @@ const Users = ({ useratom }) => {
             {/* //checkboxSelection */}
 
             <DataGrid
-              rows={users[0]}
+              rows={users[0].filter(
+                (investor) => investor.userRole == "Pending"
+              )}
               columns={columns}
               pageSize={7}
               rowsPerPageOptions={[7]}
@@ -147,4 +150,4 @@ const Users = ({ useratom }) => {
   );
 };
 
-export default Users;
+export default PendingInvestors;

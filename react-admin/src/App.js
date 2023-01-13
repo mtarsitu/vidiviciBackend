@@ -18,6 +18,7 @@ import { loggedUserAtom } from "./data/dataAtom";
 import MyInvestments from "./scenes/investments/myInvestments";
 import Investments from "./scenes/investments/investments";
 import AddFund from "./scenes/funds/addFund";
+import PendingInvestors from "./scenes/users/pendingInvestors";
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
@@ -29,7 +30,7 @@ function App() {
     authorized: ["Admin", "Poweruser", "Employee"],
     unauthorize: ["Prospect", "Investor", "Pending"],
   };
-  console.log(authorize,"kkkk");
+ 
   useEffect(() => {
     if (loggedUser[0] != null) {
       setIsLogged(true);
@@ -54,7 +55,8 @@ function App() {
               <Topbar setIsSidebar={setIsSidebar} useratom={loggedUser[0]} />
               <Suspense fallback="LOADING">
                 <Routes>
-                  <Route path="/" element={<Login useratom={loggedUser[0]} />} />
+                  <Route path="/" element= {authorize? <Dashboard useratom={loggedUser[0]}/>:<Login useratom={loggedUser[0]} />} />
+                  
                   <Route path="/register" element={<Register />} />
                   <Route path="/dashboard" element={<Dashboard useratom={loggedUser[0]}/>} />
                   <Route path="/parteneri" element={<Users useratom={loggedUser[0]} />} />
@@ -66,6 +68,7 @@ function App() {
                   <Route path="/calendar" element={<Calendar />} />
                   <Route path="/investments" element={<Investments useratom={loggedUser[0]}/>}/>
                   <Route path="/adauga-fond" element={<AddFund/>} />
+                  <Route path="/useri-in-aprobare" element={<PendingInvestors useratom={loggedUser[0]} authorized={authorize} />} />
                 </Routes>
               </Suspense>
             </main>

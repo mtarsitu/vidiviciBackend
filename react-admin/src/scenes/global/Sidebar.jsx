@@ -13,7 +13,7 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-
+import PendingActionsIcon from "@mui/icons-material/PendingActions";
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -33,14 +33,14 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-const Sidebar = ({ useratom  ,authorized}) => {
+const Sidebar = ({ useratom, authorized }) => {
   const loggedUser = useratom;
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
-  const authorize= authorized;
-  
+  const authorize = authorized;
+
   return (
     <>
       {loggedUser != null && (
@@ -170,27 +170,26 @@ const Sidebar = ({ useratom  ,authorized}) => {
                       selected={selected}
                       setSelected={setSelected}
                     />
+
+
+                    <Item
+                      title="Investitii"
+                      to="/investments"
+                      icon={<AccountBalanceWalletIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
                   </>
                 )}
-                {!authorize && (
-                  <Item
-                    title="Investitiile mele"
-                    to="/myfunds"
-                    icon={<AccountBalanceWalletIcon />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
-                )}
-                {authorize && (
-                  <Item
-                    title="Investitii"
-                    to="/investments"
-                    icon={<AccountBalanceWalletIcon />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
-                )}
-
+                {!authorize&&
+                <Item
+                  title="Investitiile mele"
+                  to="/myfunds"
+                  icon={<AccountBalanceWalletIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+                }
                 <Item
                   title="Fonduri active"
                   to="/funds"
@@ -198,7 +197,15 @@ const Sidebar = ({ useratom  ,authorized}) => {
                   selected={selected}
                   setSelected={setSelected}
                 />
-
+                {authorize && (
+                  <Item
+                    title="Calendar"
+                    to="/calendar"
+                    icon={<CalendarTodayOutlinedIcon />}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+                )}
                 <Typography
                   variant="h6"
                   color={colors.grey[300]}
@@ -206,7 +213,6 @@ const Sidebar = ({ useratom  ,authorized}) => {
                 >
                   Actiuni
                 </Typography>
-
                 {authorize && (
                   <>
                     <Item
@@ -217,9 +223,9 @@ const Sidebar = ({ useratom  ,authorized}) => {
                       setSelected={setSelected}
                     />
                     <Item
-                      title="Calendar"
-                      to="/calendar"
-                      icon={<CalendarTodayOutlinedIcon />}
+                      title="Investitori in aprobare"
+                      to="/useri-in-aprobare"
+                      icon={<PendingActionsIcon />}
                       selected={selected}
                       setSelected={setSelected}
                     />
