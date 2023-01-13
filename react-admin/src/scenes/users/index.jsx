@@ -8,19 +8,21 @@ import InfoIcon from "@mui/icons-material/Info";
 import { useState } from "react";
 import Information from "./information";
 import Unauthorize from "../unauthorize";
-import EditIcon from '@mui/icons-material/Edit';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import EditIcon from "@mui/icons-material/Edit";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import EditUser from "./editUser";
 const Users = ({ useratom }) => {
   const [open, setOpen] = useState(false);
   const [infoId, setInfoId] = useState();
+  const [userEdit, setUserEdit] = useState({});
   const [, setEntityId] = useAtom(entityIdAtom);
   const [partnerName, setPartnerName] = useState();
   const users = useAtom(usersAtom);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const loggedUser = useratom;
-
+  const modalBackground = theme.palette.mode? "dark":"light"
+  console.log(theme.palette.mode);
   const columns = [
     { field: "id", headerName: "ID" },
     { field: "username", headerName: "Username", width: 250 },
@@ -42,8 +44,8 @@ const Users = ({ useratom }) => {
             <IconButton color="inherit">
               <ManageAccountsIcon />
             </IconButton>
-            <IconButton color="inherit"  >
-              {/* onClick={() => <EditUser oldUser={row.row}/>} */}
+            <IconButton color="inherit" onClick={() => handleEdit(row.row)}>
+              {/*  */}
               <EditIcon />
             </IconButton>
           </Box>
@@ -53,9 +55,7 @@ const Users = ({ useratom }) => {
   ];
 
   const handleOpen = (id) => {
-    setPartnerName(
-      users[0].filter((entity) => entity.id === id)[0].username
-    );
+    setPartnerName(users[0].filter((entity) => entity.id === id)[0].username);
     console.log(id);
     setInfoId(id);
     setEntityId(id);
@@ -63,7 +63,10 @@ const Users = ({ useratom }) => {
   };
 
   const handleClose = () => setOpen(false);
-
+  const handleEdit = (u) => {
+    setUserEdit(u);
+  };
+  const handleEditFinish = () => setUserEdit({});
   return (
     <>
       {loggedUser != null ? (
@@ -124,7 +127,7 @@ const Users = ({ useratom }) => {
                 left: "50%",
                 transform: "translate(-50%, -50%)",
                 width: "80vw",
-                bgcolor: `${colors.blueAccent[700]}`,
+                bgcolor: `neutral.${modalBackground}`,
                 border: "2px solid #000",
                 boxShadow: 24,
                 borderRadius: "12px",
@@ -135,6 +138,30 @@ const Users = ({ useratom }) => {
                 Informatii ale partenerului: {partnerName}
               </Typography>
               <Information props={infoId} />
+            </Box>
+          </Modal>
+
+          <Modal
+            open={userEdit.username != undefined}
+            onClose={handleEditFinish}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box
+              sx={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: "80vw",
+                bgcolor: `neutral.${modalBackground}`,
+                border: "2px solid #000",
+                boxShadow: 24,
+                borderRadius: "12px",
+                p: 4,
+              }}
+            >
+              <EditUser oldUser={userEdit} />
             </Box>
           </Modal>
         </Box>

@@ -13,23 +13,22 @@ import { toast, ToastContainer } from "react-toastify";
 const EditUser = ({oldUser}) => {
   console.log(oldUser, "ajksadjhdahda");
     // const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [pass, setPass] = useState("");
-  const [confirmationPass, setConfirmationPass] = useState("");
-  const [validPassword, setValidPass] = useState(false);
+
   let user = {
-    username: "",
-    password: "",
-    email: "",
-    firstName: "",
-    lastName: "",
+    id: oldUser.id,
+    username: oldUser.username,
+    email: oldUser.email,
+    firstName: oldUser.firstName,
+    lastName: oldUser.lastName,
+    userRole: oldUser.userRole,
   };
   async function Register(formData) {
     user = {
       username: formData.get("username"),
-      password: formData.get("password"),
       email: formData.get("email"),
       firstName: formData.get("firstName"),
       lastName: formData.get("lastName"),
+      userRole: formData.get("userRole"),
     };
     const response = await fetch(`http://localhost:5241/Accounts/register`, {
       method: "POST",
@@ -50,21 +49,8 @@ const EditUser = ({oldUser}) => {
       timeout();
     }
   }
-  const handleChangePass = (e) => {
-    console.log(e.target.value);
-    setPass(e.target.value);
-  };
+ 
 
-  const handleConfirmationPass = (e) => {
-    setConfirmationPass(e.target.value);
-    if (pass === e.target.value) {
-      setValidPass(true);
-    } else {
-      setValidPass(false);
-    }
-  };
-
-  console.log(pass, confirmationPass);
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -74,27 +60,14 @@ const EditUser = ({oldUser}) => {
     });
     Register(data);
   };
-  console.log(validPassword);
+
 
   return (
     <Box m="20px">
-      <Header title="CREEAZA UTILIZATOR" subtitle="Creaza un nou profil" />
+      <Header title="Modifica profil" subtitle="modifica profilul unui utilizator" />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          marginTop="-140px"
-        >
-          <img
-            alt="profile-user"
-            width="150%"
-            height="150%"
-            src={`../../../assets/vidivici-logo.png`}
-            style={{ cursor: "pointer", borderRadius: "50%" }}
-          />
-        </Box>
+       
         <Box
           sx={{
             marginTop: -15,
@@ -107,7 +80,7 @@ const EditUser = ({oldUser}) => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Inregistreaza utilizator
+            Modifica utilizator
           </Typography>
           <Box
             component="form"
@@ -123,6 +96,7 @@ const EditUser = ({oldUser}) => {
               label="Username"
               name="username"
               autoFocus
+              defaultValue={user.username}
             />
 
             <TextField
@@ -133,6 +107,7 @@ const EditUser = ({oldUser}) => {
               label="Prenume"
               type="text"
               id="firstName"
+              defaultValue={user.firstName}
               sx={{
                 "& .MuiFormLabel-root.Mui-focused": {
                   color: "neutral.main",
@@ -155,6 +130,7 @@ const EditUser = ({oldUser}) => {
               label="Nume de familie"
               type="text"
               id="lastName"
+              defaultValue={user.lastName}
               sx={{
                 "& .MuiFormLabel-root.Mui-focused": {
                   color: "neutral.main",
@@ -177,35 +153,17 @@ const EditUser = ({oldUser}) => {
               label="Email"
               type="email"
               id="email"
+              defaultValue={user.email}
             />
             <TextField
               margin="normal"
               required
               fullWidth
-              name="password"
-              label="Parola"
-              type="password"
-              id="password"
-              onChange={handleChangePass}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="confirmationPassword"
-              label="Reintrodu Parola"
-              type="password"
-              id="confirmationPassword"
-              onChange={handleConfirmationPass}
-
-              // sx={{
-              //     "& .MuiFormLabel-root": {
-              //         color: 'primary.main'
-              //     },
-              //     "& .MuiFormLabel-root.Mui-focused": {
-              //         color: 'secondary.main'
-              //     }
-              // }}
+              name="userRole"
+              label="Rolul utilizatorului"
+              type="string"
+              id="userRola"
+              defaultValue={user.userRole}
             />
 
             <Button
@@ -214,16 +172,9 @@ const EditUser = ({oldUser}) => {
               variant="contained"
               sx={{ mt: 3, mb: 2, backgroundColor: `neutral.main` }}
             >
-              Register
+             Confirma modificarea pentru {user.username}
             </Button>
-            <Button
-              href="/"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2, backgroundColor: `neutral.main` }}
-            >
-              Deja inregistrat? Click pentru logare!
-            </Button>
+            
             <ToastContainer
               position="top-center"
               autoClose={5000}
