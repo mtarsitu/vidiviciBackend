@@ -50,11 +50,11 @@ const RoleRegister = () => {
   };
 
   return (
-    <Box m="20px">
+    <Box m="20px" >
       <Header title="CREEAZA UTILIZATOR" subtitle="Creaza un nou profil" />
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: -10,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",

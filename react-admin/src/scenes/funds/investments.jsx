@@ -11,7 +11,7 @@ import Unauthorize from "../unauthorize";
 
 
 const Investments = ({useratom})=>{
-    const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const [infoId, setInfoId] = useState();
   const [, setEntityId] = useAtom(entityIdAtom);
   const [partnerName, setPartnerName] = useState();
@@ -19,14 +19,58 @@ const Investments = ({useratom})=>{
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const loggedUser = useratom;
-
+  console.log(investments);
   const columns = [
     { field: "id", headerName: "ID" },
-    { field: "username", headerName: "Username", width: 250 },
-    { field: "userRole", headerName: "Role", width: 130 },
-    { field: "firstName", headerName: "Nume", width: 130 },
-    { field: "lastName", headerName: "Nume de familie", width: 130 },
-
+    { field: "dateCreated", headerName: "Data Creare", width: 200 },
+    { field: "finalPaymentDate", headerName: "Data Finalizare", width: 130 },
+    { field: "initialInvestmentAmount", headerName: "Suma investita", width: 100 },
+    { field: "rateOfInterest", headerName: "Dobanda", width: 80 },
+    { 
+      field: "clientname", 
+      headerName:"Client", 
+      width:300, 
+      renderCell: (row) =>{
+        return(
+          <Box>
+          {row.row.client.firstName} {row.row.client.lastName }
+          </Box>);
+      }
+    },
+    { 
+      field: "fundName", 
+      headerName:"Nume Fond", 
+      width:130, 
+      renderCell: (row) =>{
+        return(
+          <Box>
+          {row.row.fund.name}
+          </Box>);
+      }
+    },
+    { 
+      field: "rate", 
+      headerName:"Dobanda", 
+      width:80, 
+      renderCell: (row) =>{
+        return(
+          <Box>
+          {row.row.fund.interestRate} %
+          </Box>);
+      }
+    },
+    { 
+      field: "private", 
+      headerName:"Privat", 
+      width:80, 
+      renderCell: (row) =>{
+        
+        return(
+          <Box>
+          {row.row.fund.private? "Privat": "Public"} 
+          </Box>);
+      }
+    },
     {
       field: "actions",
       headerName: "Actiuni",
@@ -60,7 +104,7 @@ const Investments = ({useratom})=>{
     <>
       {loggedUser != null ? (
         <Box m="20px">
-          <Header title="Utilizatori" subtitle="Administrare utilizatori" />
+          <Header title="INVESTITII" subtitle="Administrare Investitii" />
           <Box
             m="40px 0 0 0"
             height="75vh"

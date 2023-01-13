@@ -40,7 +40,7 @@ namespace API_VidiVici.Repositories.Implementation
         public async Task<IEnumerable<InvestmentDto>> GetAll()
         {
             List<InvestmentDto> investmentDtos = new List<InvestmentDto>();
-            List<Investment> investments = await _context.Investments.ToListAsync();
+            List<Investment> investments = await _context.Investments.Include(i=>i.Fund).Include(i=>i.Client).ToListAsync();
             foreach(Investment investment in investments ){
                 investmentDtos.Add(InvestmentModifier.ToInvestmentDto(investment));
             }

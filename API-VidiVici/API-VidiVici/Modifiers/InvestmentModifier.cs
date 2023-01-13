@@ -25,10 +25,11 @@ namespace API_VidiVici.Modifiers
             InvestmentDto investmentDto = new InvestmentDto
             {
                 Id = item.Id,
-          
+                ClientId = item.ClientId,
                 InitialInvestmentAmount = item.InitialInvestmentAmout,
                 DateCreated = item.DateCreated,
-                Fund = item.Fund
+                Fund = item.Fund,
+                Client = Modifiers.UserModifier.ToUserDto(item.Client),
             };
             
             return  investmentDto;
