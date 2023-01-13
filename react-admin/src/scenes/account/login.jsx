@@ -8,7 +8,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Unauthorize from "../unauthorize";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login({ useratom }) {
   console.log(useratom);
@@ -34,7 +35,13 @@ export default function Login({ useratom }) {
       body: JSON.stringify(user),
     });
     if (response.ok) {
-      window.location.href = "/dashboard";
+      toast.success("Te-ai logat cu succes!");
+      const timeout = ()=>{
+        setTimeout(() => {
+          window.location.href = "/dashboard";
+        }, 500);
+      }
+      timeout();
     }
     return response.ok;
   }
@@ -114,6 +121,18 @@ export default function Login({ useratom }) {
               >
                 Sign In
               </Button>
+              <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+              />
             </Box>
             <Button
               href="/register"
