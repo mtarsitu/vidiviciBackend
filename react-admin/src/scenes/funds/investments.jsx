@@ -3,18 +3,19 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import { useAtom } from "jotai";
-import { usersAtom, entityIdAtom } from "../../data/dataAtom";
+import { investmentsAtom, entityIdAtom } from "../../data/dataAtom";
 import InfoIcon from "@mui/icons-material/Info";
 import { useState } from "react";
-import Information from "./information";
+
 import Unauthorize from "../unauthorize";
 
-const Users = ({ useratom }) => {
-  const [open, setOpen] = useState(false);
+
+const Investments = ({useratom})=>{
+    const [open, setOpen] = useState(false);
   const [infoId, setInfoId] = useState();
   const [, setEntityId] = useAtom(entityIdAtom);
   const [partnerName, setPartnerName] = useState();
-  const users = useAtom(usersAtom);
+  const investments = useAtom(investmentsAtom);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const loggedUser = useratom;
@@ -45,7 +46,7 @@ const Users = ({ useratom }) => {
 
   const handleOpen = (id) => {
     setPartnerName(
-      users[0].filter((entity) => entity.id === id)[0].username
+      investments[0].filter((entity) => entity.id === id)[0].username
     );
     console.log(id);
     setInfoId(id);
@@ -92,7 +93,7 @@ const Users = ({ useratom }) => {
             {/* //checkboxSelection */}
 
             <DataGrid
-              rows={users[0]}
+              rows={investments[0]}
               columns={columns}
               pageSize={7}
               rowsPerPageOptions={[7]}
@@ -125,7 +126,7 @@ const Users = ({ useratom }) => {
               <Typography id="modal-modal-title" variant="h3" component="h2">
                 Informatii ale partenerului: {partnerName}
               </Typography>
-              <Information props={infoId} />
+              {/* <Information props={infoId} /> */}
             </Box>
           </Modal>
         </Box>
@@ -136,6 +137,6 @@ const Users = ({ useratom }) => {
       )}
     </>
   );
-};
+}
 
-export default Users;
+export default Investments;

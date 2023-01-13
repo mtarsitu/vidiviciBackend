@@ -62,6 +62,7 @@ namespace API_VidiVici.Controllers
         [HttpPost("register")]
         public async Task<ActionResult> Register(RegisterDto registerDto)
         {
+            registerDto.UserRole =UserRole.Prospect;
             var user = new User { UserName = registerDto.Username, Email = registerDto.Email, UserRole=UserRole.Prospect };
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
@@ -75,7 +76,7 @@ namespace API_VidiVici.Controllers
 
                 return ValidationProblem();
             }
-            await _userManager.AddToRoleAsync(user, UserRole.Prospect);
+            await _userManager.AddToRoleAsync(user,registerDto.UserRole );
 
             return StatusCode(201);
         }

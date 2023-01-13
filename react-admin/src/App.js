@@ -16,7 +16,7 @@ import Login from "./scenes/account/login";
 import { useAtom } from "jotai";
 import { loggedUserAtom } from "./data/dataAtom";
 import MyFunds from "./scenes/funds/myFunds";
-import Investments from "./scenes/funds/allFunds";
+import Investments from "./scenes/funds/investments";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -60,7 +60,7 @@ function App() {
                   <Route path="/role-register" element={<RoleRegister />} />
                   <Route path="/register" element={<Register />} />
                   <Route path="/calendar" element={<Calendar />} />
-                  <Route path="/investments" element={<Investments/>}/>
+                  <Route path="/investments" element={<Investments useratom={loggedUser[0]}/>}/>
                 </Routes>
               </Suspense>
             </main>

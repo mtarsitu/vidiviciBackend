@@ -48,7 +48,7 @@ const Sidebar = ({useratom}) => {
     authorized: ["Admin", "Poweruser", "Employee"],
     unauthorize: ["Prospect", "Investor", "Pending"],
   };
-  console.log(authorize);
+  console.log(loggedUser);
   // console.log(loggedUser[0]);
   useEffect(() => {
     if(loggedUser!=null){
@@ -150,7 +150,7 @@ const Sidebar = ({useratom}) => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  Mario Tarsitu
+                  {loggedUser.firstName }&ensp; {loggedUser.lastName}
                 </Typography>
                 <Typography variant="h6" color={colors.purpleAccent[600]}>
                   {loggedUser != null && loggedUser.userRole}

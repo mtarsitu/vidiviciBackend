@@ -35,7 +35,7 @@ export default function Login({ useratom }) {
       body: JSON.stringify(user),
     });
     if (response.ok) {
-      toast.success("Te-ai logat cu succes!");
+      toast.success(`${user.username} Te-ai logat cu succes!`);
       const timeout = ()=>{
         setTimeout(() => {
           window.location.href = "/dashboard";

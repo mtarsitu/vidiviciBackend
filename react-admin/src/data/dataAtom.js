@@ -58,7 +58,7 @@ export const myFundsAtom = atom(async ()=>{
   return null;
 })
 
-export const entitiesAtom = atom(async (get) => {
+export const usersAtom = atom(async (get) => {
   get(refreshAtom);
   const response = await fetch(baseUrl + "Accounts/AllUser", {
     method: "GET",
@@ -85,6 +85,20 @@ export const entityInformationAtom = atom(async (get) => {
   return response.json();
 });
 
+export const investmentsAtom = atom(async (get) =>{
+  get(refreshAtom);
+  const response = await fetch(baseUrl +"Investments/getAllInvestment",{
+    method: "GET",
+    credentials: "include",
+    headers: {
+      accept: "text/plain",
+    },
+  });
+  console.log(response);
+  return response.json();
+
+
+})
 
 
 export const Logout = async () => {
