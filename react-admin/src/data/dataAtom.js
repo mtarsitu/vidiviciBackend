@@ -1,16 +1,9 @@
 import { atom } from "jotai";
 
-const entitiesUrl = `http://localhost:5000/getEntitiesByCategory?categoryId=`;
-const categoriesUrl = `http://localhost:5000/GetAllEntityCategories`;
-const allEntitiesUrl = `http://localhost:5000/getAllEntities`;
-const entityInformationUrl = `http://localhost:5000/getEntityInformationByEntityId?id=`;
-const buyTicketsUrl = `http://localhost:5000/GetBuyTickets`;
-const sellTicketsUrl = `http://localhost:5000/GetSellTickets`;
-const baseUrl = "http://localhost:5241/";
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
-const clientsCatId = "1";
-const supplierCatId = "2";
-const employeesCatId = "3";
+const baseUrl = "http://localhost:5241/";
 
 export let isLoggedAtom = atom(false);
 export const refreshAtom = atom(false);
@@ -31,6 +24,8 @@ export const loggedUserAtom = atom(async () => {
     // console.log(response.json());
     return await response.json();
   }
+  // console.log(response);
+  // toast.error("Error")
   return null;
 });
 
@@ -75,29 +70,6 @@ export const entitiesAtom = atom(async (get) => {
   return await response.json();
 });
 
-export const clientsAtom = atom(async (get) => {
-  get(refreshAtom);
-  const response = await fetch(entitiesUrl + clientsCatId);
-  return await response.json();
-});
-
-export const suppliersAtom = atom(async (get) => {
-  get(refreshAtom);
-  const response = await fetch(entitiesUrl + supplierCatId);
-  return await response.json();
-});
-
-export const employees = atom(async (get) => {
-  get(refreshAtom);
-  const response = await fetch(entitiesUrl + employeesCatId);
-  return await response.json();
-});
-
-export const categoriesAtom = atom(async (get) => {
-  get(refreshAtom);
-  const response = await fetch(categoriesUrl);
-  return await response.json();
-});
 
 export const entityInformationAtom = atom(async (get) => {
   const id = get(entityIdAtom);
@@ -113,17 +85,7 @@ export const entityInformationAtom = atom(async (get) => {
   return response.json();
 });
 
-export const buyTicketsAtom = atom(async (get) => {
-  get(refreshAtom);
-  const response = await fetch(buyTicketsUrl);
-  return response.json();
-});
 
-export const sellTicketsAtom = atom(async (get) => {
-  get(refreshAtom);
-  const response = await fetch(sellTicketsUrl);
-  return response.json();
-});
 
 export const Logout = async () => {
   const response = await fetch(baseUrl + "Accounts/logout", {
@@ -132,7 +94,6 @@ export const Logout = async () => {
   });
   if (response.ok) {
     isLoggedAtom.init = false;
-    
-    window.location = "/";
-  }
+    window.location.href = "/";
+    }
 };

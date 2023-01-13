@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Header from "../../components/Header";
+import { toast, ToastContainer } from "react-toastify";
 
 const RoleRegister = () => {
   const [theme, colorMode] = useMode();
@@ -28,8 +29,7 @@ const RoleRegister = () => {
       lastName: formData.get("lastName"),
       userRole: formData.get("userRole"),
     };
-    console.log(user);
-    await fetch(`http://localhost:5241/Accounts/registerRole`, {
+    const response = await fetch(`http://localhost:5241/Accounts/registerRole`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -38,20 +38,14 @@ const RoleRegister = () => {
       },
       body: JSON.stringify(user),
     });
+    if(response.ok){
+      toast.success("User inregistrat")
+    }
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log(data);
-    console.log({
-      username: data.get("username"),
-      password: data.get("password"),
-      email: data.get("email"),
-      firstName: data.get("firstName"),
-      lastName: data.get("lastName"),
-      userRole: data.get("userRole"),
-    });
     Register(data);
   };
 
@@ -213,6 +207,18 @@ const RoleRegister = () => {
           >
             Inregistreaza user nou
           </Button>
+          <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          />
         </Box>
       </Box>
     </Box>

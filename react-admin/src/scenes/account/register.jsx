@@ -7,6 +7,8 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Header from "../../components/Header";
+import Container from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
 
 const Register = () => {
   const [pass, setPass] = useState("");
@@ -62,23 +64,25 @@ const Register = () => {
   return (
     <Box m="20px">
       <Header title="CREEAZA UTILIZATOR" subtitle="Creaza un nou profil" />
+    <Container component="main" maxWidth="xs">
+    <CssBaseline />
       <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        // marginTop="-190px"
-      >
-        <img
-          alt="profile-user"
-          width="50%"
-          height="50%"
-          src={`../../../assets/vidivici-logo.png`}
-          style={{ cursor: "pointer", borderRadius: "50%", position:"absolute" }}
-        />
-      </Box>
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            marginTop="-140px"
+          >
+            <img
+              alt="profile-user"
+              width="150%"
+              height="150%"
+              src={`../../../assets/vidivici-logo.png`}
+              style={{ cursor: "pointer", borderRadius: "50%" }}
+            />
+          </Box>
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: -15,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -158,6 +162,7 @@ const Register = () => {
           </Button>
         </Box>
       </Box>
+    </Container>
     </Box>
   );
 };

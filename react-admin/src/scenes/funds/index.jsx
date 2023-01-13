@@ -30,7 +30,7 @@ const Funds = () => {
         
         {funds[0] != null &&
           funds[0].map((fund) => (
-            <Card sx={{ minWidth: "150!important", maxWidth: 350, marginBottom: 10, backgroundColor:`${colors.primary[400]}` }}>
+            <Card key={fund.id} sx={{ minWidth: "150!important", maxWidth: 350, marginBottom: 10, backgroundColor:`${colors.primary[400]}` }}>
               <CardContent>
                 <Typography
                   sx={{ fontSize: 14 }}
