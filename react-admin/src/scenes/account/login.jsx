@@ -7,9 +7,13 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import Unauthorize from "../unauthorize";
 
-export default function SignIn() {
 
+export default function Login({ useratom }) {
+  console.log(useratom);
+  const loggedUser = useratom;
+  console.log(loggedUser);
   let user = {
     username: "",
     password: "",
@@ -46,73 +50,86 @@ export default function SignIn() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        marginTop="-80px"
-      >
-        <img
-          alt="profile-user"
-          width="150%"
-          height="150%"
-          src={`../../../assets/vidivici-logo.png`}
-          style={{ cursor: "pointer", borderRadius: "50%" }}
-        />
-      </Box>
-      <Box
-        sx={{
-          marginTop: -10,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="Username"
-            name="username"
-            // autoFocus
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2, backgroundColor:`neutral.main` }}
+    <>
+      {loggedUser == null ? (
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            marginTop="-80px"
           >
-            Sign In
-          </Button>
+            <img
+              alt="profile-user"
+              width="150%"
+              height="150%"
+              src={`../../../assets/vidivici-logo.png`}
+              style={{ cursor: "pointer", borderRadius: "50%" }}
+            />
+          </Box>
+          <Box
+            sx={{
+              marginTop: -10,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{ mt: 1 }}
+            >
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                // autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2, backgroundColor: `neutral.main` }}
+              >
+                Sign In
+              </Button>
+            </Box>
+            <Button
+              href="/register"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2, backgroundColor: `neutral.main` }}
+            >
+              Register
+            </Button>
+          </Box>
+        </Container>
+      ):
+        <Box>
+          <Unauthorize errorMessage={"deja logat"}/>
         </Box>
-        <Button
-          href="/register"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2, backgroundColor:`neutral.main`  }}
-        >
-          Register
-        </Button>
-      </Box>
-    </Container>
+      }
+    </>
   );
 }

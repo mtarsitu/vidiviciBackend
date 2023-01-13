@@ -14,7 +14,7 @@ import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import { useAtom } from "jotai";
-import { isLoggedAtom, loggedUserAtom } from "../../data/dataAtom";
+import { loggedUserAtom } from "../../data/dataAtom";
 import { useEffect } from "react";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -36,9 +36,9 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-const Sidebar = () => {
-  const isLogged = useAtom(isLoggedAtom);
-  const loggedUser = useAtom(loggedUserAtom);
+const Sidebar = ({useratom}) => {
+
+  const loggedUser = useratom;
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -49,19 +49,23 @@ const Sidebar = () => {
     unauthorize: ["Prospect", "Investor", "Pending"],
   };
   console.log(authorize);
-  console.log(loggedUser[0]);
+  // console.log(loggedUser[0]);
   useEffect(() => {
-    
-    if (roles.authorized.includes(loggedUser[0].userRole)) {
-      console.log("vine");
-      setAuthorize(true);
-    }else{
-      setAuthorize(false);
+    if(loggedUser!=null){
+      if (roles.authorized.includes(loggedUser.userRole)) {
+        console.log("vine");
+        setAuthorize(true);
+      }else{
+        setAuthorize(false);
+      }
     }
+    
   });
 
 
   return (
+    <>
+    {loggedUser!=null&&
     <Box
       sx={{
         "& .pro-sidebar-inner": {
@@ -149,7 +153,7 @@ const Sidebar = () => {
                   Mario Tarsitu
                 </Typography>
                 <Typography variant="h6" color={colors.purpleAccent[600]}>
-                  {loggedUser[0] != null && loggedUser[0].userRole}
+                  {loggedUser != null && loggedUser.userRole}
                 </Typography>
               </Box>
             </Box>
@@ -199,6 +203,13 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             }
+             <Item
+              title="Investitii"
+              to="/investments"
+              icon={<AccountBalanceWalletIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
             <Item
               title="Fonduri active"
               to="/funds"
@@ -244,6 +255,8 @@ const Sidebar = () => {
         </Menu>
       </ProSidebar>
     </Box>
+    }
+    </>
   );
 };
 

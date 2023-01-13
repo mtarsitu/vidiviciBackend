@@ -16,6 +16,7 @@ import Login from "./scenes/account/login";
 import { useAtom } from "jotai";
 import { loggedUserAtom } from "./data/dataAtom";
 import MyFunds from "./scenes/funds/myFunds";
+import Investments from "./scenes/funds/allFunds";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -23,7 +24,7 @@ function App() {
   const [isLogged, setIsLogged] = useState(false);
   const loggedUser = useAtom(loggedUserAtom);
   const [userName, setUserName] = useState("");
-
+  console.log(loggedUser[0]);
   useEffect(() => {
     if (loggedUser[0] != null) {
       setIsLogged(true);
@@ -34,34 +35,37 @@ function App() {
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-        {!isLogged && (
+        {/* {!isLogged && (
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Routes>
-        )}
+        )} */}
         <CssBaseline />
 
-        {isLogged && (
+        {/* {isLogged && ( */}
           <div className="app">
-            <Sidebar isSidebar={isSidebar} />
+            <Sidebar isSidebar={isSidebar}  useratom={loggedUser[0]}/>
             <main className="content">
-              <Topbar setIsSidebar={setIsSidebar} />
+              <Topbar setIsSidebar={setIsSidebar} useratom={loggedUser[0]} />
               <Suspense fallback="LOADING">
                 <Routes>
-                  <Route path="/dashbord" element={<Dashboard />} />
-                  <Route path="/parteneri" element={<Users />} />
+                  <Route path="/" element={<Login useratom={loggedUser[0]} />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/dashboard" element={<Dashboard useratom={loggedUser[0]}/>} />
+                  <Route path="/parteneri" element={<Users useratom={loggedUser[0]} />} />
                   <Route path="/myFunds" element={<MyFunds props={userName} />} />
                   <Route path="/contacts" element={<Contacts />} />
                   <Route path="/funds" element={<Funds />} />
                   <Route path="/role-register" element={<RoleRegister />} />
                   <Route path="/register" element={<Register />} />
                   <Route path="/calendar" element={<Calendar />} />
+                  <Route path="/investments" element={<Investments/>}/>
                 </Routes>
               </Suspense>
             </main>
           </div>
-        )}
+        {/* )} */}
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

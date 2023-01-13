@@ -1,15 +1,20 @@
 import { Box, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
+import Unauthorized from "../unauthorize/index";
 
-
-const Dashboard = () => {
+const Dashboard = ({ useratom }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
+  const user = useratom;
+  console.log(user, "dashboard");
   return (
-    <Box m="20px">
-      
-    </Box>
+    <>
+      {user != null ? (
+        <Box m="20px"></Box>
+      ) : (
+        <Unauthorized errorMessage={"Unauthorized"} />
+      )}
+    </>
   );
 };
 
