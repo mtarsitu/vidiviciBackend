@@ -6,13 +6,24 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import { useAtom } from "jotai";
-import { fundsAtom } from "../../data/dataAtom";
+import { allFundsAtom, fundsAtom } from "../../data/dataAtom";
 import QueueIcon from '@mui/icons-material/Queue';
+import { useState } from "react";
+import { useEffect } from "react";
 const Funds = ({ authorized }) => {
+  const [showFunds,setShowFunds] = useState({});
   const funds = useAtom(fundsAtom);
+  const allFunds = useAtom(allFundsAtom);
+  
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const authorize = authorized;
+  console.log(showFunds,"abaabababa");
+  useEffect(()=>{
+    if(authorize){
+      setShowFunds(allFunds[0]);
+    }else setShowFunds(funds[0]);
+  },[]);
   return (
     <Box m="20px">
       <Header title="Fonduri" subtitle="Oportunitati investitii" />
@@ -45,8 +56,8 @@ const Funds = ({ authorized }) => {
           },
         }}
       >
-        {funds[0] != null &&
-          funds[0].map((fund) => (
+        {showFunds.length >0 &&
+          showFunds.map((fund) => (
             <Card
               key={fund.id}
               sx={{

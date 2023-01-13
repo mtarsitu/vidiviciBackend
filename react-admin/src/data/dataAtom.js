@@ -43,6 +43,20 @@ export const fundsAtom = atom(async () => {
   return null;
 });
 
+export const allFundsAtom = atom(async () => {
+  const response = await fetch(baseUrl + "Funds/getAll",{
+    method: "GET",
+    credentials: "include",
+    headers: {
+      accept: "text/plain",
+    },
+  });
+  if (response.ok){
+    return await response.json();
+  }
+  return null;
+});
+
 export const myFundsAtom = atom(async ()=>{
   console.log(usernameAtom);
   const response = await fetch(baseUrl+"Accounts/UserAndInvestments?username="+usernameAtom,{
