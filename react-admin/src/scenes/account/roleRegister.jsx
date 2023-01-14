@@ -1,6 +1,6 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
+import {Button,Modal} from "@mui/material";
 import { ColorModeContext, useMode } from "../../theme";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -9,15 +9,16 @@ import Typography from "@mui/material/Typography";
 import Header from "../../components/Header";
 import { toast, ToastContainer } from "react-toastify";
 
-const RoleRegister = () => {
+const RoleRegister = ({show,setShow}) => {
   const [theme, colorMode] = useMode();
+  const modalBackground = theme.palette.mode? "dark":"light"
   // const isNonMobile = useMediaQuery("(min-width:600px)");
   let user = {
     username: "",
     password: "",
-    email:"",
-    firstName:"",
-    lastName:"",
+    email: "",
+    firstName: "",
+    lastName: "",
     userRole: "",
   };
   async function Register(formData) {
@@ -29,20 +30,25 @@ const RoleRegister = () => {
       lastName: formData.get("lastName"),
       userRole: formData.get("userRole"),
     };
-    const response = await fetch(`http://localhost:5241/Accounts/registerRole`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        accept: "text/plain",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    });
-    if(response.ok){
-      toast.success("User inregistrat")
+    const response = await fetch(
+      `http://localhost:5241/Accounts/registerRole`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          accept: "text/plain",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      }
+    );
+    if (response.ok) {
+      toast.success("User inregistrat");
     }
   }
-
+ const handleClose =()=>{
+  setShow(false);
+ };
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -50,178 +56,205 @@ const RoleRegister = () => {
   };
 
   return (
-    <Box m="20px" >
-      <Header title="CREEAZA UTILIZATOR" subtitle="Creaza un nou profil" />
+    <Modal
+      open={show}
+      onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
       <Box
         sx={{
-          marginTop: -10,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "80vw",
+          bgcolor: `neutral.${modalBackground}`,
+          border: "2px solid #000",
+          boxShadow: 24,
+          borderRadius: "12px",
+          p: 4,
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Inregistreaza utilizator
-        </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="Username"
-            name="username"
-            autoFocus
+        <Box m="20px">
+          <Header title="CREEAZA UTILIZATOR" subtitle="Creaza un nou profil" />
+          <Box
             sx={{
-              "& .MuiFormLabel-root.Mui-focused": {
-                color: "neutral.main",
-              },
-              "& .MuiOutlinedInput-root": {
-                "&:hover fieldset": {
-                  borderColor: `neutral.main`,
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: `neutral.main`,
-                },
-              },
+              marginTop: -10,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Parola"
-            type="password"
-            id="password"
-            sx={{
-              "& .MuiFormLabel-root.Mui-focused": {
-                color: "neutral.main",
-              },
-              "& .MuiOutlinedInput-root": {
-                "&:hover fieldset": {
-                  borderColor: `neutral.main`,
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: `neutral.main`,
-                },
-              },
-            }}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="email"
-            label="Email"
-            type="email"
-            id="email"
-            sx={{
-              "& .MuiFormLabel-root.Mui-focused": {
-                color: "neutral.main",
-              },
-              "& .MuiOutlinedInput-root": {
-                "&:hover fieldset": {
-                  borderColor: `neutral.main`,
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: `neutral.main`,
-                },
-              },
-            }}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="firstName"
-            label="Prenume"
-            type="text"
-            id="firstName"
-            sx={{
-              "& .MuiFormLabel-root.Mui-focused": {
-                color: "neutral.main",
-              },
-              "& .MuiOutlinedInput-root": {
-                "&:hover fieldset": {
-                  borderColor: `neutral.main`,
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: `neutral.main`,
-                },
-              },
-            }}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="lastName"
-            label="Nume de familie"
-            type="text"
-            id="lastName"
-            sx={{
-              "& .MuiFormLabel-root.Mui-focused": {
-                color: "neutral.main",
-              },
-              "& .MuiOutlinedInput-root": {
-                "&:hover fieldset": {
-                  borderColor: `neutral.main`,
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: `neutral.main`,
-                },
-              },
-            }}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="userRole"
-            label="Rolul utilizatorului"
-            type="text"
-            id="userRole"
-            sx={{
-              "& .MuiFormLabel-root.Mui-focused": {
-                color: "neutral.main",
-              },
-              "& .MuiOutlinedInput-root": {
-                "&:hover fieldset": {
-                  borderColor: `neutral.main`,
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: `neutral.main`,
-                },
-              },
-            }}
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
           >
-            Inregistreaza user nou
-          </Button>
-          <ToastContainer
-          position="top-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-          />
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Inregistreaza utilizator
+            </Typography>
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{ mt: 1 }}
+            >
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                autoFocus
+                sx={{
+                  "& .MuiFormLabel-root.Mui-focused": {
+                    color: "neutral.main",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "&:hover fieldset": {
+                      borderColor: `neutral.main`,
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: `neutral.main`,
+                    },
+                  },
+                }}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Parola"
+                type="password"
+                id="password"
+                sx={{
+                  "& .MuiFormLabel-root.Mui-focused": {
+                    color: "neutral.main",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "&:hover fieldset": {
+                      borderColor: `neutral.main`,
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: `neutral.main`,
+                    },
+                  },
+                }}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="email"
+                label="Email"
+                type="email"
+                id="email"
+                sx={{
+                  "& .MuiFormLabel-root.Mui-focused": {
+                    color: "neutral.main",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "&:hover fieldset": {
+                      borderColor: `neutral.main`,
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: `neutral.main`,
+                    },
+                  },
+                }}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="firstName"
+                label="Prenume"
+                type="text"
+                id="firstName"
+                sx={{
+                  "& .MuiFormLabel-root.Mui-focused": {
+                    color: "neutral.main",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "&:hover fieldset": {
+                      borderColor: `neutral.main`,
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: `neutral.main`,
+                    },
+                  },
+                }}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="lastName"
+                label="Nume de familie"
+                type="text"
+                id="lastName"
+                sx={{
+                  "& .MuiFormLabel-root.Mui-focused": {
+                    color: "neutral.main",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "&:hover fieldset": {
+                      borderColor: `neutral.main`,
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: `neutral.main`,
+                    },
+                  },
+                }}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="userRole"
+                label="Rolul utilizatorului"
+                type="text"
+                id="userRole"
+                sx={{
+                  "& .MuiFormLabel-root.Mui-focused": {
+                    color: "neutral.main",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "&:hover fieldset": {
+                      borderColor: `neutral.main`,
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: `neutral.main`,
+                    },
+                  },
+                }}
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Inregistreaza user nou
+              </Button>
+              <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+              />
+            </Box>
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </Modal>
   );
 };
 

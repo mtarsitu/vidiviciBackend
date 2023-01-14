@@ -15,7 +15,7 @@ const Topbar = ({ useratom }) => {
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
   const user = useratom;
-
+  console.log(theme.palette.mode);
   return (
     <>
       {user != null && (
@@ -26,19 +26,35 @@ const Topbar = ({ useratom }) => {
             backgroundColor={colors.primary[400]}
             borderRadius="3px"
           >
-            <img
-              alt="profile-user"
-              width="250px"
-              height="150px"
-              src={`../../../assets/vidivici-logo.png`}
-              style={{
-                cursor: "pointer",
-                borderRadius: "50%",
-                position: "absolute",
-                marginLeft: "-70px",
-                marginTop: "-50px",
-              }}
-            />
+            {theme.palette.mode === "dark" ? (
+              <img
+                alt="profile-user"
+                width="250px"
+                height="150px"
+                src={`../../../assets/vidivici-logo.png`}
+                style={{
+                  cursor: "pointer",
+                  borderRadius: "50%",
+                  position: "absolute",
+                  marginLeft: "-70px",
+                  marginTop: "-50px",
+                }}
+              />
+            ) : (
+              <img
+                alt="profile-user"
+                width="250px"
+                height="150px"
+                src={`../../../assets/logo-inchis.png`}
+                style={{
+                  cursor: "pointer",
+                  borderRadius: "50%",
+                  position: "absolute",
+                  marginLeft: "-70px",
+                  marginTop: "-50px",
+                }}
+              />
+            )}
             {/* <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" />
         <IconButton type="button" sx={{ p: 1 }}>
           <SearchIcon />

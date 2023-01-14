@@ -19,6 +19,8 @@ import MyInvestments from "./scenes/investments/myInvestments";
 import Investments from "./scenes/investments/investments";
 import AddFund from "./scenes/funds/addFund";
 import PendingInvestors from "./scenes/users/pendingInvestors";
+
+
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
@@ -63,7 +65,7 @@ function App() {
                   <Route path="/myFunds" element={<MyInvestments props={userName} />} />
                   <Route path="/contacts" element={<Contacts />} />
                   <Route path="/funds" element={<Funds authorized={authorize}/>} />
-                  <Route path="/role-register" element={<RoleRegister />} />
+                  {/* <Route path="/role-register" element={<RoleRegister />} /> */}
                   <Route path="/register" element={<Register />} />
                   <Route path="/calendar" element={<Calendar />} />
                   <Route path="/investments" element={<Investments useratom={loggedUser[0]}/>}/>
@@ -71,8 +73,10 @@ function App() {
                   <Route path="/useri-in-aprobare" element={<PendingInvestors useratom={loggedUser[0]} authorized={authorize} />} />
                 </Routes>
               </Suspense>
+
             </main>
           </div>
+        
         {/* )} */}
       </ThemeProvider>
     </ColorModeContext.Provider>

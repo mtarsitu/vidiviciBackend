@@ -1,6 +1,7 @@
-import { Box, IconButton, useTheme, Typography, Modal } from "@mui/material";
+import { Box, IconButton, useTheme, Typography, Modal,Button } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
+import QueueIcon from "@mui/icons-material/Queue";
 import Header from "../../components/Header";
 import { useAtom } from "jotai";
 import { usersAtom, entityIdAtom } from "../../data/dataAtom";
@@ -11,8 +12,10 @@ import Unauthorize from "../unauthorize";
 import EditIcon from "@mui/icons-material/Edit";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import EditUser from "./editUser";
+import RoleRegister from "../account/roleRegister";
 const Users = ({ useratom }) => {
   const [open, setOpen] = useState(false);
+  const [newUser, setNewUser] = useState(false);
   const [infoId, setInfoId] = useState();
   const [userEdit, setUserEdit] = useState({});
   const [, setEntityId] = useAtom(entityIdAtom);
@@ -22,7 +25,10 @@ const Users = ({ useratom }) => {
   const colors = tokens(theme.palette.mode);
   const loggedUser = useratom;
   const modalBackground = theme.palette.mode? "dark":"light"
-  console.log(theme.palette.mode);
+  const handleAddUser = ()=>{
+    setNewUser(true);
+  };
+
   const columns = [
     { field: "id", headerName: "ID" },
     { field: "username", headerName: "Username", width: 250 },
@@ -72,6 +78,19 @@ const Users = ({ useratom }) => {
       {loggedUser != null ? (
         <Box m="20px">
           <Header title="Utilizatori" subtitle="Administrare utilizatori" />
+          <Box>
+          <Button
+            variant="contained"
+            onClick={handleAddUser}
+            sx={{
+              marginLeft: 5,
+              marginRight: 5,
+              backgroundColor: `neutral.main`,
+            }}
+          >
+            <QueueIcon /> &nbsp; Adauga User Nou
+          </Button>
+        </Box>
           <Box
             m="40px 0 0 0"
             height="75vh"
@@ -164,6 +183,9 @@ const Users = ({ useratom }) => {
               <EditUser oldUser={userEdit} />
             </Box>
           </Modal>
+          {newUser &&
+            <RoleRegister show={newUser} setShow={setNewUser}/>
+          }
         </Box>
       ) : (
         <Box>

@@ -9,7 +9,7 @@ import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
+// import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
@@ -215,13 +215,13 @@ const Sidebar = ({ useratom, authorized }) => {
                 </Typography>
                 {authorize && (
                   <>
-                    <Item
+                    {/* <Item
                       title="Inregistreaza user"
                       to="/role-register"
                       icon={<PersonOutlinedIcon />}
                       selected={selected}
                       setSelected={setSelected}
-                    />
+                    /> */}
                     <Item
                       title="Investitori in aprobare"
                       to="/useri-in-aprobare"
