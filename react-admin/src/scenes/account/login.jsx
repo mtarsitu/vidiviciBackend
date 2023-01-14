@@ -8,13 +8,13 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Unauthorize from "../unauthorize";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { GoogleLogin } from "react-google-login";
+import { gapi } from "gapi-script";
+import { useEffect } from "react";
 export default function Login({ useratom }) {
-  console.log(useratom);
   const loggedUser = useratom;
-  console.log(loggedUser);
   let user = {
     username: "",
     password: "",
@@ -36,15 +36,15 @@ export default function Login({ useratom }) {
     });
     if (response.ok) {
       toast.success(`${user.username} Te-ai logat cu succes!`);
-      const timeout = ()=>{
+      const timeout = () => {
         setTimeout(() => {
           window.location.href = "/dashboard";
         }, 1000);
-      }
+      };
       timeout();
       return response.ok;
-    }else{
-      toast.warning('Username sau parola gresita')
+    } else {
+      toast.warning("Username sau parola gresita");
     }
   }
 
@@ -57,7 +57,23 @@ export default function Login({ useratom }) {
     });
     LogInUser(data);
   };
-
+  const clientId =
+    "968260556925-a1kdrj4op5s1j2981l3lent1kg397j83.apps.googleusercontent.com";
+  useEffect(() => {
+    const initClient = () => {
+      gapi.client.init({
+        clientId: clientId,
+        scope: "",
+      });
+    };
+    gapi.load("client:auth2", initClient);
+  });
+  const onSuccess = (res) => {
+    console.log("success:", res);
+  };
+  const onFailure = (err) => {
+    console.log("failed:", err);
+  };
   return (
     <>
       {loggedUser == null ? (
@@ -91,6 +107,14 @@ export default function Login({ useratom }) {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
+            <GoogleLogin
+              clientId={clientId}
+              buttonText="Logheaza-te cu Google"
+              onSuccess={onSuccess}
+              onFailure={onFailure}
+              cookiePolicy={"single_host_origin"}
+              isSignedIn={true}
+            />
             <Box
               component="form"
               onSubmit={handleSubmit}
@@ -144,13 +168,14 @@ export default function Login({ useratom }) {
             >
               Register
             </Button>
+            
           </Box>
         </Container>
-      ):
+      ) : (
         <Box>
-          <Unauthorize errorMessage={"deja logat"}/>
+          <Unauthorize errorMessage={"deja logat"} />
         </Box>
-      }
+      )}
     </>
   );
 }

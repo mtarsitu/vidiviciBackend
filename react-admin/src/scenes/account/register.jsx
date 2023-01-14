@@ -1,7 +1,7 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -10,7 +10,12 @@ import Header from "../../components/Header";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import { toast, ToastContainer } from "react-toastify";
+import { GoogleLogin } from "react-google-login";
+import { gapi } from "gapi-script";
+
 const Register = () => {
+  const clientId =
+    "968260556925-a1kdrj4op5s1j2981l3lent1kg397j83.apps.googleusercontent.com";
   const [pass, setPass] = useState("");
   const [confirmationPass, setConfirmationPass] = useState("");
   const [validPassword, setValidPass] = useState(false);
@@ -63,6 +68,21 @@ const Register = () => {
     }
   };
 
+  useEffect(() => {
+    const initClient = () => {
+      gapi.client.init({
+        clientId: clientId,
+        scope: "",
+      });
+    };
+    gapi.load("client:auth2", initClient);
+  });
+  const onSuccess = (res) => {
+    console.log("success:", res);
+  };
+  const onFailure = (err) => {
+    console.log("failed:", err);
+  };
   console.log(pass, confirmationPass);
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -78,6 +98,7 @@ const Register = () => {
   return (
     <Box m="20px">
       <Header title="CREEAZA UTILIZATOR" subtitle="Creaza un nou profil" />
+      
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -94,6 +115,7 @@ const Register = () => {
             style={{ cursor: "pointer", borderRadius: "50%" }}
           />
         </Box>
+          
         <Box
           sx={{
             marginTop: -15,
@@ -108,6 +130,14 @@ const Register = () => {
           <Typography component="h1" variant="h5">
             Inregistreaza utilizator
           </Typography>
+          <GoogleLogin
+              clientId={clientId}
+              buttonText="Inregistreaza-te cu Google"
+              onSuccess={onSuccess}
+              onFailure={onFailure}
+              cookiePolicy={"single_host_origin"}
+              isSignedIn={true}
+            />
           <Box
             component="form"
             onSubmit={handleSubmit}
@@ -215,6 +245,7 @@ const Register = () => {
             >
               Register
             </Button>
+            
             <Button
               href="/"
               fullWidth
