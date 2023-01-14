@@ -2,7 +2,6 @@ import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { useAtom } from "jotai";
-import { useEffect } from "react";
 import { entityIdAtom, entityInformationAtom } from "../../data/dataAtom";
 
 const Information = ({ props }) => {

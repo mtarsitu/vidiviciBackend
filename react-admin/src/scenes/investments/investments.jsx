@@ -6,7 +6,7 @@ import { useAtom } from "jotai";
 import { investmentsAtom, entityIdAtom } from "../../data/dataAtom";
 import InfoIcon from "@mui/icons-material/Info";
 import { useState } from "react";
-
+import EditIcon from "@mui/icons-material/Edit";
 import Unauthorize from "../unauthorize";
 
 
@@ -21,11 +21,7 @@ const Investments = ({useratom})=>{
   const loggedUser = useratom;
   
   const columns = [
-    { field: "id", headerName: "ID" },
-    { field: "dateCreated", headerName: "Data Creare", width: 200 },
-    { field: "finalPaymentDate", headerName: "Data Finalizare", width: 130 },
-    { field: "initialInvestmentAmount", headerName: "Suma investita", width: 100 },
-    { field: "rateOfInterest", headerName: "Dobanda", width: 80 },
+    { field: "id", headerName: "ID",width:50 },
     { 
       field: "clientname", 
       headerName:"Client", 
@@ -37,6 +33,10 @@ const Investments = ({useratom})=>{
           </Box>);
       }
     },
+    { field: "dateCreated", headerName: "Data Creare", width: 200 },
+    { field: "finalPaymentDate", headerName: "Data Finalizare", width: 130 },
+    { field: "initialInvestmentAmount", headerName: "Suma investita", width: 100 },
+    { field: "rateOfInterest", headerName: "Dobanda", width: 80 },
     { 
       field: "fundName", 
       headerName:"Nume Fond", 
@@ -81,6 +81,10 @@ const Investments = ({useratom})=>{
           <Box>
             <IconButton color="inherit" onClick={() => handleOpen(row.id)}>
               <InfoIcon />
+            </IconButton>
+            <IconButton color="inherit" >
+              {/*  */}
+              <EditIcon />
             </IconButton>
           </Box>
         );

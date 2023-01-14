@@ -58,7 +58,7 @@ function App() {
                   <Route path="/" element= {authorize? <Dashboard useratom={loggedUser[0]}/>:<Login useratom={loggedUser[0]} />} />
                   
                   <Route path="/register" element={<Register />} />
-                  <Route path="/dashboard" element={<Dashboard useratom={loggedUser[0]}/>} />
+                  <Route path="/dashboard" element={<Dashboard useratom={loggedUser[0]} authorized={authorize}/>} />
                   <Route path="/parteneri" element={<Users useratom={loggedUser[0]} />} />
                   <Route path="/myFunds" element={<MyInvestments props={userName} />} />
                   <Route path="/contacts" element={<Contacts />} />

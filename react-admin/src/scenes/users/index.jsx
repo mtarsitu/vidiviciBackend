@@ -142,7 +142,7 @@ const Users = ({ useratom }) => {
           </Modal>
 
           <Modal
-            open={userEdit.username != undefined}
+            open={userEdit.username !== undefined}
             onClose={handleEditFinish}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"

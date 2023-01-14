@@ -138,7 +138,7 @@ const Sidebar = ({ useratom, authorized }) => {
               )}
 
               <Box paddingLeft={isCollapsed ? undefined : "10%"}>
-                {authorize && (
+                
                   <Item
                     title="Dashboard"
                     to="/dashboard"
@@ -146,7 +146,7 @@ const Sidebar = ({ useratom, authorized }) => {
                     selected={selected}
                     setSelected={setSelected}
                   />
-                )}
+                
                 <Typography
                   variant="h6"
                   color={colors.grey[300]}

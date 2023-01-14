@@ -103,7 +103,7 @@ const PendingInvestors = ({ useratom, authorized }) => {
 
             <DataGrid
               rows={users[0].filter(
-                (investor) => investor.userRole == "Pending"
+                (investor) => investor.userRole === "Pending"
               )}
               columns={columns}
               pageSize={7}

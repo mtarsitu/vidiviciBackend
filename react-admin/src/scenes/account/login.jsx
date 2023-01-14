@@ -14,6 +14,8 @@ import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
 import { useEffect } from "react";
 export default function Login({ useratom }) {
+  const clientId =
+  "968260556925-a1kdrj4op5s1j2981l3lent1kg397j83.apps.googleusercontent.com";
   const loggedUser = useratom;
   let user = {
     username: "",
@@ -57,8 +59,7 @@ export default function Login({ useratom }) {
     });
     LogInUser(data);
   };
-  const clientId =
-    "968260556925-a1kdrj4op5s1j2981l3lent1kg397j83.apps.googleusercontent.com";
+ 
   useEffect(() => {
     const initClient = () => {
       gapi.client.init({
@@ -104,7 +105,7 @@ export default function Login({ useratom }) {
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5">
+            <Typography component="h1" variant="h5" sx={{marginBottom: 4}}>
               Sign in
             </Typography>
             <GoogleLogin

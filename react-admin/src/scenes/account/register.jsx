@@ -112,7 +112,7 @@ const Register = () => {
             width="150%"
             height="150%"
             src={`../../../assets/vidivici-logo.png`}
-            style={{ cursor: "pointer", borderRadius: "50%" }}
+            style={{ cursor: "pointer", borderRadius: "50%",marginTop:"-80px" }}
           />
         </Box>
           
@@ -127,7 +127,7 @@ const Register = () => {
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" sx={{marginBottom: 4}}>
             Inregistreaza utilizator
           </Typography>
           <GoogleLogin
