@@ -4,7 +4,7 @@ import {Button,Modal} from "@mui/material";
 import { ColorModeContext, useMode } from "../../theme";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Typography from "@mui/material/Typography";
 import Header from "../../components/Header";
 import { toast, ToastContainer } from "react-toastify";
@@ -87,7 +87,7 @@ const RoleRegister = ({show,setShow}) => {
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
+              <PersonAddIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
               Inregistreaza utilizator

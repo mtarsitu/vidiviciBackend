@@ -4,6 +4,7 @@ import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
+import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
@@ -65,11 +66,12 @@ const Sidebar = ({ useratom, authorized }) => {
           }}
         >
           <ProSidebar collapsed={isCollapsed} >
+           
             <Menu iconShape="square">
               {/* LOGO AND MENU ICON */}
               <MenuItem
                 onClick={() => setIsCollapsed(!isCollapsed)}
-                icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
+                icon={isCollapsed ? <MenuOutlinedIcon /> : <MenuOpenIcon sx={{marginLeft:45}}/>}
                 style={{
                   margin: "10px 0 20px 0",
                   color: colors.grey[100],

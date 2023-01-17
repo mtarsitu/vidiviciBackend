@@ -3,7 +3,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import Typography from "@mui/material/Typography";
 import Header from "../../components/Header";
 import Container from "@mui/material/Container";
@@ -60,7 +60,7 @@ const EditUser = ({ oldUser }) => {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
+            <AutoFixHighIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Modifica utilizator
@@ -155,7 +155,7 @@ const EditUser = ({ oldUser }) => {
               variant="contained"
               sx={{ mt: 3, mb: 2, backgroundColor: `neutral.main` }}
             >
-              Confirma modificarea pentru {oldUser.username}
+              Confirma modificarea pentru {oldUser.firstName} - {oldUser.lastName}
             </Button>
 
             <ToastContainer
