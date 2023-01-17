@@ -15,6 +15,20 @@ namespace APIVidiVici.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Applications",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ClientId = table.Column<string>(type: "text", nullable: true),
+                    ApplicationObject = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Applications", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -253,12 +267,12 @@ namespace APIVidiVici.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1f30c000-d904-4f61-aaeb-b1c9275478fa", null, "Prospect", "PROSPECT" },
-                    { "7f19d65b-b1c5-42db-a0ec-a372a8f74b36", null, "Pending", "PENDING" },
-                    { "995b627f-0291-4c76-ba38-f97f72293faf", null, "Poweruser", "POWERUSER" },
-                    { "9f650799-10fc-4dd7-87c7-8ef838a3c0bc", null, "Investor", "INVESTOR" },
-                    { "a872095e-7e65-4463-a622-75d2da7335b3", null, "Employee", "EMPLOYEE" },
-                    { "b29edb6b-64eb-4e74-a3a9-63ca6d3dd94b", null, "Admin", "ADMIN" }
+                    { "4ccd3d22-517d-482f-8ee5-e1ee233c02e3", null, "Pending", "PENDING" },
+                    { "7b9e9c3e-3d80-4cd8-b153-44d6532e2f6b", null, "Admin", "ADMIN" },
+                    { "8d917981-3510-46ab-9bd0-1655e3a48191", null, "Prospect", "PROSPECT" },
+                    { "ba71b3b5-447e-456d-906b-0e9a056c97bd", null, "Employee", "EMPLOYEE" },
+                    { "ce152e19-a998-4fdf-bcd5-c0284f565abb", null, "Poweruser", "POWERUSER" },
+                    { "d1925136-0e30-43ff-b8a5-ceb855dea8af", null, "Investor", "INVESTOR" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -317,6 +331,9 @@ namespace APIVidiVici.Data.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Applications");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 

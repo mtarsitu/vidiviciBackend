@@ -19,7 +19,7 @@ const Investments = ({useratom})=>{
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const loggedUser = useratom;
-  
+  console.log(investments);
   const columns = [
     { field: "id", headerName: "ID",width:50 },
     { 
@@ -33,10 +33,6 @@ const Investments = ({useratom})=>{
           </Box>);
       }
     },
-    { field: "dateCreated", headerName: "Data Creare", width: 200 },
-    { field: "finalPaymentDate", headerName: "Data Finalizare", width: 130 },
-    { field: "initialInvestmentAmount", headerName: "Suma investita", width: 100 },
-    { field: "rateOfInterest", headerName: "Dobanda", width: 80 },
     { 
       field: "fundName", 
       headerName:"Nume Fond", 
@@ -48,9 +44,11 @@ const Investments = ({useratom})=>{
           </Box>);
       }
     },
+    { field: "initialInvestmentAmount", headerName: "Suma investita", width: 100 },
+    { field: "rateOfInterest", headerName: "Dobanda", width: 80 },
     { 
       field: "rate", 
-      headerName:"Dobanda", 
+      headerName:"Dobanda %", 
       width:80, 
       renderCell: (row) =>{
         return(
@@ -59,6 +57,8 @@ const Investments = ({useratom})=>{
           </Box>);
       }
     },
+    { field: "dateCreated", headerName: "Data Creare", width: 200 },
+    { field: "finalPaymentDate", headerName: "Data Finalizare", width: 130 },
     { 
       field: "private", 
       headerName:"Privat", 

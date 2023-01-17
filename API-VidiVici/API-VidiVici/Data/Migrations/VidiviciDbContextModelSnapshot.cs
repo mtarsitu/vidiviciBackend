@@ -22,6 +22,25 @@ namespace APIVidiVici.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("API_VidiVici.Model.Application", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApplicationObject")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ClientId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Applications");
+                });
+
             modelBuilder.Entity("API_VidiVici.Model.Fund", b =>
                 {
                     b.Property<int>("Id")
@@ -245,37 +264,37 @@ namespace APIVidiVici.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "995b627f-0291-4c76-ba38-f97f72293faf",
+                            Id = "ce152e19-a998-4fdf-bcd5-c0284f565abb",
                             Name = "Poweruser",
                             NormalizedName = "POWERUSER"
                         },
                         new
                         {
-                            Id = "b29edb6b-64eb-4e74-a3a9-63ca6d3dd94b",
+                            Id = "7b9e9c3e-3d80-4cd8-b153-44d6532e2f6b",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "a872095e-7e65-4463-a622-75d2da7335b3",
+                            Id = "ba71b3b5-447e-456d-906b-0e9a056c97bd",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "1f30c000-d904-4f61-aaeb-b1c9275478fa",
+                            Id = "8d917981-3510-46ab-9bd0-1655e3a48191",
                             Name = "Prospect",
                             NormalizedName = "PROSPECT"
                         },
                         new
                         {
-                            Id = "7f19d65b-b1c5-42db-a0ec-a372a8f74b36",
+                            Id = "4ccd3d22-517d-482f-8ee5-e1ee233c02e3",
                             Name = "Pending",
                             NormalizedName = "PENDING"
                         },
                         new
                         {
-                            Id = "9f650799-10fc-4dd7-87c7-8ef838a3c0bc",
+                            Id = "d1925136-0e30-43ff-b8a5-ceb855dea8af",
                             Name = "Investor",
                             NormalizedName = "INVESTOR"
                         });

@@ -181,7 +181,7 @@ const Sidebar = ({ useratom, authorized }) => {
                     />
                   </>
                 )}
-                {!authorize&&
+                {!authorize && useratom.userRole !== "Prospect" &&
                 <Item
                   title="Investitiile mele"
                   to="/myfunds"

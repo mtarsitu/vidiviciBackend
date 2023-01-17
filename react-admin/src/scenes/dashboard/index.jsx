@@ -10,15 +10,11 @@ const Dashboard = ({ useratom, authorized }) => {
   const colors = tokens(theme.palette.mode);
   const user = useratom;
   const modalBackground = theme.palette.mode ? "dark" : "light";
-  const [profesionalModal, setProfesionalModa] = useState(false);
-  console.log(modalBackground);
-  const handleOpenModal = () => {
-    setProfesionalModa(true);
-  };
-  const handleCloseModal = () => {
-    setProfesionalModa(false);
-  };
+  const [profesionalModal, setProfesionalModal] = useState(false);
 
+  const handleOpenModal = () => {
+    setProfesionalModal(true);
+  };
   return (
     <>
       {user != null ? (
@@ -36,36 +32,13 @@ const Dashboard = ({ useratom, authorized }) => {
               >
                 <QueueIcon /> &nbsp; Devino investitor profesionist
               </Button>
-              {profesionalModal && (
-                <Modal
-                  open={handleOpenModal}
-                  onClose={handleCloseModal}
-                  aria-labelledby="modal-modal-title"
-                  aria-describedby="modal-modal-description"
-                  sx={{overflow:"scroll",}}
-                >
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      top: "90%",
-                      left: "50%",
-                      transform: "translate(-50%, -50%)",
-                      width: "80vw",
-                      bgcolor: `neutral.${modalBackground}`,
-                      border: "2px solid #000",
-                      boxShadow: 24,
-                      borderRadius: "12px",
-                      p: 4,
-                      
-                    }}
-                  >
-                    <ToProfesional />
-                  </Box>
-                </Modal>
-              )}
+
+              <ToProfesional
+                show={profesionalModal}
+                setShow={setProfesionalModal}
+              />
             </>
           )}
-          
         </Box>
       ) : (
         <Unauthorized errorMessage={"Unauthorized"} />
