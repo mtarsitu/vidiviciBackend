@@ -59,7 +59,7 @@ export const allFundsAtom = atom(async () => {
 
 export const myFundsAtom = atom(async ()=>{
   console.log(usernameAtom);
-  const response = await fetch(baseUrl+"Accounts/UserAndInvestments?username="+usernameAtom,{
+  const response = await fetch(baseUrl+"Admins/UserAndInvestments?username="+usernameAtom,{
     method: "GET",
     credentials: "include",
     headers: {
@@ -74,7 +74,7 @@ export const myFundsAtom = atom(async ()=>{
 
 export const usersAtom = atom(async (get) => {
   get(refreshAtom);
-  const response = await fetch(baseUrl + "Accounts/AllUser", {
+  const response = await fetch(baseUrl + "Admins/AllUser", {
     method: "GET",
     credentials: "include",
     headers: {

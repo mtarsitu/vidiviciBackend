@@ -52,6 +52,12 @@ namespace API_VidiVici.Repositories.Implementation
             _context.Investments.Remove(_context.Investments.Single(x=> x.Id==id));
             _context.SaveChanges();
         }
-
+        public async Task<IEnumerable<Investment>> GetUserInvestment(string id)
+        {
+            return await _context.Investments
+            .Include(t=> t.Fund)
+            .Where(x=>x.ClientId == id)
+            .ToListAsync();
+        }
     }
 }

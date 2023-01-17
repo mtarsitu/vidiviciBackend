@@ -11,7 +11,7 @@ const Dashboard = ({ useratom, authorized }) => {
   const user = useratom;
   const modalBackground = theme.palette.mode ? "dark" : "light";
   const [profesionalModal, setProfesionalModal] = useState(false);
-
+  console.log(user);
   const handleOpenModal = () => {
     setProfesionalModal(true);
   };

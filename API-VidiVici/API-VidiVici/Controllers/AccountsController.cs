@@ -18,19 +18,18 @@ namespace API_VidiVici.Controllers
         private readonly UserManager<User> _userManager;
         private readonly TokenService _tokenService;
         private readonly SignInManager<User> SignInManager;
-        private readonly InformationsServices _informationServices;
         private readonly VidiviciDbContext _context;
+      
         public AccountsController(
         UserManager<User> userManager, 
-        TokenService tokenService, SignInManager<User> signInManager, 
-        VidiviciDbContext context,
-        InformationsServices services
+        TokenService tokenService, 
+        SignInManager<User> signInManager,
+        VidiviciDbContext context
         )
         {
             _tokenService = tokenService;
             _userManager = userManager;
             _context = context;
-            _informationServices = services;
             SignInManager = signInManager;
 
         }
@@ -138,43 +137,28 @@ namespace API_VidiVici.Controllers
             return Ok("");
         }
 
-        [Authorize(Roles = "Admin,Investor,Employee,Investor")]
-        [HttpGet("UserAndInvestments")]
-        public async Task<ActionResult<InvestorDto>> GetUserAndInvestments(string username)
+        [Authorize(Roles ="Admin, Poweruser")]
+        [HttpPost("edit")]
+        public async Task<ActionResult> EditUser(UserDto userDto)
         {
-            var user = await _userManager.FindByNameAsync(username);
-            var actualUser = InvestorModifier.GetInvestorDto(user);
-            var Investments = await _context.Investments
-            .Include(t=> t.Fund)
-            .Where(x=>x.ClientId == user.Id)
-            .ToListAsync();
-            actualUser.Investments = new List<InvestmentDto>();
-            var informations = await _context.Informations.Where(x=>x.UserId == user.Id).ToListAsync();
-
-            foreach(Investment investment in Investments){
-                actualUser.Investments.Add(InvestmentModifier.ToInvestmentDto(investment));
+            var user = await _userManager.FindByIdAsync(userDto.Id);
+            var oldRole =  char.ToUpper(user.UserRole.ToLower()[0]) + user.UserRole.Substring(1);
+            var newRole = char.ToUpper(userDto.UserRole.ToLower()[0]) + userDto.UserRole.Substring(1);
+            if(oldRole != newRole)
+            {
+                await _userManager.RemoveFromRoleAsync(user, oldRole);
+                await _userManager.AddToRoleAsync(user, newRole);   
             }
+            user.UserName = userDto.Username;
+            user.UserRole = newRole;
+            user.FirstName = userDto.FirstName;
+            user.LastName = userDto.LastName;
+            user.Email = userDto.Email;
 
-            foreach(Information information in informations){
-                actualUser.Informations.Add(InformationModifier.ToInformationDto(information));
-            }
-            return actualUser;
+            _userManager.UpdateAsync(user);
+            return Ok();
         }
 
-        [Authorize(Roles = "Poweruser,Admin,Employee")]
-        [HttpGet("AllUser")]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsers()
-        {
-            List<UserDto> userDtoList = new List<UserDto>();
-            var users = await _userManager.Users.ToListAsync();
-            
-            foreach(User user in users){
-               
-                userDtoList.Add(UserModifier.ToUserDto(user));
-
-            }
-            return userDtoList;
-        }
 
     
     }

@@ -9,27 +9,12 @@ import Header from "../../components/Header";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import { toast, ToastContainer } from "react-toastify";
-const EditUser = ({oldUser}) => {
+const EditUser = ({ oldUser }) => {
   console.log(oldUser, "ajksadjhdahda");
-    // const isNonMobile = useMediaQuery("(min-width:600px)");
+  // const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  let user = {
-    id: oldUser.id,
-    username: oldUser.username,
-    email: oldUser.email,
-    firstName: oldUser.firstName,
-    lastName: oldUser.lastName,
-    userRole: oldUser.userRole,
-  };
-  async function Register(formData) {
-    user = {
-      username: formData.get("username"),
-      email: formData.get("email"),
-      firstName: formData.get("firstName"),
-      lastName: formData.get("lastName"),
-      userRole: formData.get("userRole"),
-    };
-    const response = await fetch(`http://localhost:5241/Accounts/register`, {
+  const Register = async (user) => {
+    const response = await fetch(`http://localhost:5241/Accounts/edit`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -47,26 +32,31 @@ const EditUser = ({oldUser}) => {
       };
       timeout();
     }
-  }
- 
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const user = {
+      id: oldUser.id,
       username: data.get("username"),
-      password: data.get("password"),
-    });
-    Register(data);
+      email: data.get("email"),
+      firstName: data.get("firstName"),
+      lastName: data.get("lastName"),
+      userRole: data.get("userRole"),
+    };
+    Register(user);
   };
-
 
   return (
     <Box m="20px">
-      <Header title="Modifica profil" subtitle="modifica profilul unui utilizator" />
+      <Header
+        title="Modifica profil"
+        subtitle="modifica profilul unui utilizator"
+      />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-       
+
         <Box
           sx={{
             marginTop: -15,
@@ -95,7 +85,7 @@ const EditUser = ({oldUser}) => {
               label="Username"
               name="username"
               autoFocus
-              defaultValue={user.username}
+              defaultValue={oldUser.username}
             />
 
             <TextField
@@ -106,7 +96,7 @@ const EditUser = ({oldUser}) => {
               label="Prenume"
               type="text"
               id="firstName"
-              defaultValue={user.firstName}
+              defaultValue={oldUser.firstName}
               sx={{
                 "& .MuiFormLabel-root.Mui-focused": {
                   color: "neutral.main",
@@ -129,7 +119,7 @@ const EditUser = ({oldUser}) => {
               label="Nume de familie"
               type="text"
               id="lastName"
-              defaultValue={user.lastName}
+              defaultValue={oldUser.lastName}
               sx={{
                 "& .MuiFormLabel-root.Mui-focused": {
                   color: "neutral.main",
@@ -152,7 +142,7 @@ const EditUser = ({oldUser}) => {
               label="Email"
               type="email"
               id="email"
-              defaultValue={user.email}
+              defaultValue={oldUser.email}
             />
             <TextField
               margin="normal"
@@ -162,7 +152,7 @@ const EditUser = ({oldUser}) => {
               label="Rolul utilizatorului"
               type="string"
               id="userRola"
-              defaultValue={user.userRole}
+              defaultValue={oldUser.userRole}
             />
 
             <Button
@@ -171,9 +161,9 @@ const EditUser = ({oldUser}) => {
               variant="contained"
               sx={{ mt: 3, mb: 2, backgroundColor: `neutral.main` }}
             >
-             Confirma modificarea pentru {user.username}
+              Confirma modificarea pentru {oldUser.username}
             </Button>
-            
+
             <ToastContainer
               position="top-center"
               autoClose={5000}

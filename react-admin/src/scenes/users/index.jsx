@@ -84,7 +84,7 @@ const Users = ({ useratom }) => {
   return (
     <>
       {loggedUser != null ? (
-        <Box m="20px">
+        <Box m="10px">
           <Header title="Utilizatori" subtitle="Administrare utilizatori" />
           <Box>
             <Button

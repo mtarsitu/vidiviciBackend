@@ -9,11 +9,11 @@ const Information = ({ props }) => {
   const entityInformation = useAtom(entityInformationAtom)[0];
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  setEntityId(props)
+  setEntityId(props);
   const headers = [
     ...(entityInformation[0]
       ? Object.entries(entityInformation[0]).map((info) => {
-          if (info[1] !== null  ) {
+          if (info[1] !== null) {
             if (info[0] === "id") {
               return {
                 field: `${info[0]}`,
@@ -49,7 +49,6 @@ const Information = ({ props }) => {
   });
 
   const rows = entityInformation;
-
 
   if (entityInformation[0]) {
     return (
