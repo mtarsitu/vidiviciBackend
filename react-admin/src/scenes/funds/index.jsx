@@ -33,7 +33,7 @@ const Funds = ({ authorized }) => {
     } else setShowFunds(funds[0]);
   }, []);
   return (
-    <Box m="20px">
+    <Box m="20px" >
       <Header title="Fonduri" subtitle="Oportunitati investitii" />
       {/* for admin to add fund */}
       {authorize && (
@@ -43,9 +43,9 @@ const Funds = ({ authorized }) => {
             variant="contained"
             onClick={handleAddFund}
             sx={{
-              marginLeft: 5,
-              marginRight: 5,
-              backgroundColor: `neutral.main`,
+              marginTop: -15,
+              marginLeft: 25,
+              backgroundColor: colors.purpleAccent[700],
             }}
           >
             <QueueIcon /> &nbsp; Adauga Fond
@@ -53,17 +53,8 @@ const Funds = ({ authorized }) => {
         </Box>
       )}
       <Box
-        m="20px"
-        sx={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, 220px)", //the width of the card
-          justifyContent: "center",
-          gridGap: "50px",
-
-          "& .MuiPaper-root": {
-            width: 250,
-          },
-        }}
+        m="-10px"
+       
       >
         {showFunds.length > 0 &&
           showFunds.map((fund) => (
@@ -71,7 +62,6 @@ const Funds = ({ authorized }) => {
               key={fund.id}
               sx={{
                 minWidth: "150!important",
-                maxWidth: 350,
                 marginBottom: 10,
                 backgroundColor: `${colors.primary[400]}`,
               }}

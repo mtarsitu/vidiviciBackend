@@ -1,21 +1,29 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
+import {
+  Button,
+  Avatar,
+  useTheme,
+  CssBaseline,
+  TextField,
+  Box,
+  Container,
+} from "@mui/material";
+import { tokens } from "../../theme";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
+
 import Unauthorize from "../unauthorize";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
 import { useEffect } from "react";
+
 export default function Login({ useratom }) {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const clientId =
-  "968260556925-a1kdrj4op5s1j2981l3lent1kg397j83.apps.googleusercontent.com";
+    "968260556925-a1kdrj4op5s1j2981l3lent1kg397j83.apps.googleusercontent.com";
   const loggedUser = useratom;
   let user = {
     username: "",
@@ -59,7 +67,7 @@ export default function Login({ useratom }) {
     });
     LogInUser(data);
   };
- 
+
   useEffect(() => {
     const initClient = () => {
       gapi.client.init({
@@ -105,7 +113,7 @@ export default function Login({ useratom }) {
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5" sx={{marginBottom: 4}}>
+            <Typography component="h1" variant="h5" sx={{ marginBottom: 4 }}>
               Sign in
             </Typography>
             <GoogleLogin
@@ -144,7 +152,7 @@ export default function Login({ useratom }) {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2, backgroundColor: `neutral.main` }}
+                sx={{ mt: 3, mb: 2, backgroundColor: colors.purpleAccent[700] }}
               >
                 Sign In
               </Button>
@@ -165,11 +173,10 @@ export default function Login({ useratom }) {
               href="/register"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, backgroundColor: `neutral.main` }}
+              sx={{ mt: 3, mb: 2, backgroundColor: colors.purpleAccent[700] }}
             >
               Register
             </Button>
-            
           </Box>
         </Container>
       ) : (

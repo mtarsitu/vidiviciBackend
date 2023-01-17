@@ -188,7 +188,7 @@ namespace API_VidiVici.Data
                     RegComertului = "J40/5251/2001",
                 },
                  new Information{
-                    UserId = "7b9b5527-eea9-4a9b-b9b1-19b48dfddd60",
+                    UserId = "13743232-b70d-4950-8b37-eb7b763e1099",
                     Cnp = "5020116210753",
                     BirthDate = DateTime.UtcNow,
                     Address = "Cluj, Sos Pipera 61 bl 4 sc 2 et 7 ap 159",

@@ -61,9 +61,10 @@ const Sidebar = ({ useratom, authorized }) => {
             "& .pro-menu-item.active": {
               color: "#6870fa !important",
             },
+            
           }}
         >
-          <ProSidebar collapsed={isCollapsed}>
+          <ProSidebar collapsed={isCollapsed} >
             <Menu iconShape="square">
               {/* LOGO AND MENU ICON */}
               <MenuItem
@@ -102,7 +103,7 @@ const Sidebar = ({ useratom, authorized }) => {
                     >
                       techaine
                     </Typography>
-                    <Typography variant="h5" color={colors.purpleAccent[600]}>
+                    <Typography variant="h5" color={colors.purpleAccent[400]}>
                       REACT ADMIN DASHBOARD
                     </Typography>
                   </Box>
@@ -111,7 +112,7 @@ const Sidebar = ({ useratom, authorized }) => {
                     display="flex"
                     justifyContent="center"
                     alignItems="center"
-                    marginTop="20px"
+                    // marginTop="20px"
                   >
                     <img
                       alt="profile-user"
@@ -130,7 +131,7 @@ const Sidebar = ({ useratom, authorized }) => {
                     >
                       {loggedUser.firstName}&ensp; {loggedUser.lastName}
                     </Typography>
-                    <Typography variant="h6" color={colors.purpleAccent[600]}>
+                    <Typography variant="h6" color={colors.purpleAccent[400]}>
                       {loggedUser != null && loggedUser.userRole}
                     </Typography>
                   </Box>
@@ -138,15 +139,14 @@ const Sidebar = ({ useratom, authorized }) => {
               )}
 
               <Box paddingLeft={isCollapsed ? undefined : "10%"}>
-                
-                  <Item
-                    title="Dashboard"
-                    to="/dashboard"
-                    icon={<HomeOutlinedIcon />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
-                
+                <Item
+                  title="Dashboard"
+                  to="/dashboard"
+                  icon={<HomeOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+
                 <Typography
                   variant="h6"
                   color={colors.grey[300]}
@@ -171,7 +171,6 @@ const Sidebar = ({ useratom, authorized }) => {
                       setSelected={setSelected}
                     />
 
-
                     <Item
                       title="Investitii"
                       to="/investments"
@@ -181,15 +180,15 @@ const Sidebar = ({ useratom, authorized }) => {
                     />
                   </>
                 )}
-                {!authorize && useratom.userRole !== "Prospect" &&
-                <Item
-                  title="Investitiile mele"
-                  to="/myfunds"
-                  icon={<AccountBalanceWalletIcon />}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-                }
+                {!authorize && useratom.userRole !== "Prospect" && (
+                  <Item
+                    title="Investitiile mele"
+                    to="/myfunds"
+                    icon={<AccountBalanceWalletIcon />}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+                )}
                 <Item
                   title="Fonduri active"
                   to="/funds"

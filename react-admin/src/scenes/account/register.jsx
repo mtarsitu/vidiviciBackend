@@ -1,24 +1,23 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
+import {Button,useTheme,Avatar,TextField,Box} from "@mui/material";
 import { useState,useEffect } from "react";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Header from "../../components/Header";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import { toast, ToastContainer } from "react-toastify";
-import { GoogleLogin } from "react-google-login";
+
 import { gapi } from "gapi-script";
+import { tokens } from "../../theme";
 
 const Register = () => {
-  const clientId =
-    "968260556925-a1kdrj4op5s1j2981l3lent1kg397j83.apps.googleusercontent.com";
+
   const [pass, setPass] = useState("");
   const [confirmationPass, setConfirmationPass] = useState("");
   const [validPassword, setValidPass] = useState(false);
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   // const isNonMobile = useMediaQuery("(min-width:600px)");
   let user = {
     username: "",
@@ -68,21 +67,7 @@ const Register = () => {
     }
   };
 
-  useEffect(() => {
-    const initClient = () => {
-      gapi.client.init({
-        clientId: clientId,
-        scope: "",
-      });
-    };
-    gapi.load("client:auth2", initClient);
-  });
-  const onSuccess = (res) => {
-    console.log("success:", res);
-  };
-  const onFailure = (err) => {
-    console.log("failed:", err);
-  };
+
   console.log(pass, confirmationPass);
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -130,14 +115,7 @@ const Register = () => {
           <Typography component="h1" variant="h5" sx={{marginBottom: 4}}>
             Inregistreaza utilizator
           </Typography>
-          <GoogleLogin
-              clientId={clientId}
-              buttonText="Inregistreaza-te cu Google"
-              onSuccess={onSuccess}
-              onFailure={onFailure}
-              cookiePolicy={"single_host_origin"}
-              isSignedIn={true}
-            />
+          
           <Box
             component="form"
             onSubmit={handleSubmit}
@@ -152,6 +130,19 @@ const Register = () => {
               label="Username"
               name="username"
               autoFocus
+              sx={{
+                "& .MuiFormLabel-root.Mui-focused": {
+                  color: "neutral.main",
+                },
+                "& .MuiOutlinedInput-root": {
+                  "&:hover fieldset": {
+                    borderColor: `neutral.main`,
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: `neutral.main`,
+                  },
+                },
+              }}
             />
 
             <TextField
@@ -241,7 +232,7 @@ const Register = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, backgroundColor: `neutral.main` }}
+              sx={{ mt: 3, mb: 2, backgroundColor: colors.purpleAccent[700] }}
             >
               Register
             </Button>
@@ -250,7 +241,7 @@ const Register = () => {
               href="/"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, backgroundColor: `neutral.main` }}
+              sx={{ mt: 3, mb: 2, backgroundColor: colors.purpleAccent[700] }}
             >
               Deja inregistrat? Click pentru logare!
             </Button>

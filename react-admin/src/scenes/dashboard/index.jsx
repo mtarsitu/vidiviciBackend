@@ -27,7 +27,7 @@ const Dashboard = ({ useratom, authorized }) => {
                 sx={{
                   marginLeft: 5,
                   marginRight: 5,
-                  backgroundColor: `neutral.main`,
+                  backgroundColor: colors.purpleAccent[700],
                 }}
               >
                 <QueueIcon /> &nbsp; Devino investitor profesionist
@@ -36,6 +36,7 @@ const Dashboard = ({ useratom, authorized }) => {
               <ToProfesional
                 show={profesionalModal}
                 setShow={setProfesionalModal}
+                user={useratom}
               />
             </>
           )}

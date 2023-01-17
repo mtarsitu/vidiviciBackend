@@ -67,7 +67,7 @@ const Information = ({ props }) => {
             color: colors.greenAccent[300],
           },
           "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: colors.blueAccent[700],
+            backgroundColor: colors.purpleAccent[700],
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
@@ -75,7 +75,7 @@ const Information = ({ props }) => {
           },
           "& .MuiDataGrid-footerContainer": {
             borderTop: "none",
-            backgroundColor: colors.blueAccent[700],
+            backgroundColor: colors.purpleAccent[700],
           },
           "& .MuiCheckbox-root": {
             color: `${colors.greenAccent[200]} !important`,

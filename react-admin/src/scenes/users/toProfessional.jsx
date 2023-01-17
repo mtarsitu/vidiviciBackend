@@ -15,7 +15,18 @@ import { jsPDF } from "jspdf";
 import Checkbox from "@mui/material/Checkbox";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
 import formObject from "../../data/questions";
-const ToProfesional = ({ show, setShow }) => {
+const pdf = new jsPDF();
+const imageObject = {
+  1: null,
+  2: null,
+  3: null,
+  4: null,
+  5: null,
+  6: null,
+  7: null,
+};
+
+const ToProfesional = ({ show, setShow, user }) => {
   const theme = useTheme();
   // const colors = tokens(theme.palette.mode);
   const modalBackground = theme.palette.mode ? "dark" : "light";
@@ -27,19 +38,11 @@ const ToProfesional = ({ show, setShow }) => {
   };
 
   const handleNext = () => {
+    addImageProcess();
     setSection(section + 1);
   };
 
-  const handleSubmit = (event) => {
-    console.log(event.currentTarget);
-    console.log(event.target);
-    event.preventDefault();
-
-    const data = new FormData(event.currentTarget);
-    setSection(1);
-  };
   const handleFormObject = (e) => {
-    console.log(e.control);
     const idList = e.target.id.split("-");
     const checkbox = parseInt(idList[1]);
     const question = parseInt(idList[0]);
@@ -57,21 +60,35 @@ const ToProfesional = ({ show, setShow }) => {
     const secondCheckBox = parseInt(idList[2]);
     formObject[question][checkbox][secondCheckBox] = e.target.value;
   };
-  const printDocument = () => {
-    console.log("aic");
+  const addImageProcess = () => {
     const input = document.querySelector("#divToPrint");
-    console.log(input);
-    html2canvas((input),{
-      scale:0.9
-    }).then((canvas) => {
-      console.log(canvas);
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      pdf.addImage(imgData, "JPEG", 0, 0);
-      // pdf.output('dataurlnewwindow');
-      pdf.save("download.pdf");
-    });
+    html2canvas(input, {
+      scale: 0.9,
+    })
+      .then(async (canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+        imageObject[section] = imgData;
+      })
+      .then(async () => {
+        if (Object.values(imageObject).filter((x) => !!x).length === 7) {
+          await generatePdf();
+          pdf.save("vidvici-chestionar.pdf");
+          setShow(false);
+          setSection(1);
+        }
+      });
   };
+
+  const generatePdf = async () => {
+    for (const [i, img] of Object.entries(imageObject)) {
+      pdf.addImage(img, "pdf", -20, 5, 230, 0);
+
+      if (i !== Object.entries(imageObject).length - 1) {
+        pdf.addPage();
+      }
+    }
+  };
+
   return (
     <>
       {show && (
@@ -97,11 +114,6 @@ const ToProfesional = ({ show, setShow }) => {
             }}
           >
             <Box m="20px" id={"divToPrint"}>
-              <Header
-                title="Chestionar"
-                subtitle="Pentru determinarea tipului de investitor"
-              />
-
               <Container component="main" maxWidth="xs">
                 <Box
                   display="flex"
@@ -145,18 +157,15 @@ const ToProfesional = ({ show, setShow }) => {
                     alignItems: "left",
                   }}
                 >
-                  
-                  <Box
-                    component="form"
-                    onSubmit={handleSubmit}
-                    noValidate
-                    sx={{ mt: 1 }}
-                  >
-                    <div className="mb5">
-                      <button onClick={printDocument}>Print</button>
-                    </div>
+                  <Box component="form" noValidate sx={{ mt: 1 }}>
+                    {/* <div className="mb5">
+                      <button onClick={addImageProcess}>Print</button>
+                    </div> */}
                     {section === 1 && (
                       <>
+                        <Typography component="h1" variant="h5">
+                          Subsemnatul {user.firstName}-{user.lastName}
+                        </Typography>
                         <Typography component="p">
                           1. Cum poate fi caracterizata situatia dumneavoastra
                           financiara din prezent:
@@ -224,8 +233,7 @@ const ToProfesional = ({ show, setShow }) => {
                             control={
                               <Checkbox id="2-4" onClick={handleFormObject} />
                             }
-                            label="Am un venit oarecum cert si sigur;
-              "
+                            label="Am un venit oarecum cert si sigur;"
                           />
                           <FormControlLabel
                             control={
@@ -234,18 +242,6 @@ const ToProfesional = ({ show, setShow }) => {
                             label="Nu, nu am un venit cert si/sau sigur."
                           />
                         </FormGroup>
-                        <Button
-                          onClick={handleNext}
-                          fullWidth
-                          variant="contained"
-                          sx={{ mt: 3, mb: 2, backgroundColor: `neutral.main` }}
-                        >
-                          Next
-                        </Button>
-                      </>
-                    )}
-                    {section === 2 && (
-                      <>
                         <Typography component="p">
                           3. Care este experienta dumneavoastra in realizarea de
                           investitii in societatii de tip start-up-urilor si/sau
@@ -284,7 +280,6 @@ const ToProfesional = ({ show, setShow }) => {
                   "
                           />
                         </FormGroup>
-
                         <Button
                           onClick={handleNext}
                           fullWidth
@@ -295,7 +290,8 @@ const ToProfesional = ({ show, setShow }) => {
                         </Button>
                       </>
                     )}
-                    {section === 3 && (
+
+                    {section === 2 && (
                       <>
                         <Typography component="p">
                           4. Cum este mai important pentru dumneavoastra
@@ -353,18 +349,6 @@ const ToProfesional = ({ show, setShow }) => {
                             label="O investitie sigura care isi prezeva valoarea;"
                           />
                         </FormGroup>
-                        <Button
-                          onClick={handleNext}
-                          fullWidth
-                          variant="contained"
-                          sx={{ mt: 3, mb: 2, backgroundColor: `neutral.main` }}
-                        >
-                          Next
-                        </Button>
-                      </>
-                    )}
-                    {section === 4 && (
-                      <>
                         <Typography component="p">
                           6. Cum credeti ca vi se potriveste urmatorul principiu
                           investitional: imi asum un risc de investitie pe
@@ -438,7 +422,8 @@ const ToProfesional = ({ show, setShow }) => {
                         </Button>
                       </>
                     )}
-                    {section === 5 && (
+
+                    {section === 3 && (
                       <>
                         <Typography component="p">
                           8. Care ar fi masurile pe care le-ati adopta in cazul
@@ -519,7 +504,7 @@ const ToProfesional = ({ show, setShow }) => {
                         </Button>
                       </>
                     )}
-                    {section === 6 && (
+                    {section === 4 && (
                       <>
                         <Typography component="p">
                           10. Ce tip de investitii ati realizat in trecut, in ce
@@ -763,7 +748,7 @@ const ToProfesional = ({ show, setShow }) => {
                         </Button>
                       </>
                     )}
-                    {section === 7 && (
+                    {section === 5 && (
                       <>
                         <Typography component="p">
                           11. Cate tranzactii de investitii realizati in general
@@ -842,18 +827,6 @@ const ToProfesional = ({ show, setShow }) => {
                             label="nu am investit inca o anumita suma;"
                           />
                         </FormGroup>
-                        <Button
-                          onClick={handleNext}
-                          fullWidth
-                          variant="contained"
-                          sx={{ mt: 3, mb: 2, backgroundColor: `neutral.main` }}
-                        >
-                          Next
-                        </Button>
-                      </>
-                    )}
-                    {section === 8 && (
-                      <>
                         <Typography component="p">
                           13. Care este dimensiunea valorica a portofoliului
                           dumneavoastra de investitii, indiferent ca este vorba
@@ -900,6 +873,20 @@ const ToProfesional = ({ show, setShow }) => {
                             label="nu am inca un portofoliu de investitii."
                           />
                         </FormGroup>
+
+                        <Button
+                          onClick={handleNext}
+                          fullWidth
+                          variant="contained"
+                          sx={{ mt: 3, mb: 2, backgroundColor: `neutral.main` }}
+                        >
+                          Next
+                        </Button>
+                      </>
+                    )}
+
+                    {section === 6 && (
+                      <>
                         <Typography component="p">
                           14. Ce suma sunteti dispus(a) sa investiti in actiuni,
                           parti sociale, parti de interes emise de societati
@@ -941,18 +928,6 @@ const ToProfesional = ({ show, setShow }) => {
                             label="mai putin de 10.000 de Euro;"
                           />
                         </FormGroup>
-                        <Button
-                          onClick={handleNext}
-                          fullWidth
-                          variant="contained"
-                          sx={{ mt: 3, mb: 2, backgroundColor: `neutral.main` }}
-                        >
-                          Next
-                        </Button>
-                      </>
-                    )}
-                    {section === 9 && (
-                      <>
                         <Typography component="p">
                           15. Posedati experienta profesionala, prezenta sau
                           trecuta, de cel putin 1 an in materie de investitii
@@ -1024,7 +999,7 @@ const ToProfesional = ({ show, setShow }) => {
                         </Button>
                       </>
                     )}
-                    {section === 10 && (
+                    {section === 7 && (
                       <>
                         <Typography component="p">
                           16. Posedati experienta in mod particular in materie
@@ -1093,10 +1068,13 @@ const ToProfesional = ({ show, setShow }) => {
                             label="nu posed experienta profesionala in niciunul dintre domeniile mentionate."
                           />
                         </FormGroup>
-
+                        <Typography component="h1" variant="h5">
+                          Subsemnatul {user.firstName}-{user.lastName}
+                        </Typography>
                         <Button
                           type="submit"
                           fullWidth
+                          onClick={handleNext}
                           variant="contained"
                           sx={{ mt: 3, mb: 2, backgroundColor: `neutral.main` }}
                         >

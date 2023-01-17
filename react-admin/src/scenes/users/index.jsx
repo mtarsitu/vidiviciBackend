@@ -1,4 +1,11 @@
-import { Box, IconButton, useTheme, Typography, Modal,Button } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  useTheme,
+  Typography,
+  Modal,
+  Button,
+} from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import QueueIcon from "@mui/icons-material/Queue";
@@ -13,6 +20,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import EditUser from "./editUser";
 import RoleRegister from "../account/roleRegister";
+
 const Users = ({ useratom }) => {
   const [open, setOpen] = useState(false);
   const [newUser, setNewUser] = useState(false);
@@ -24,8 +32,8 @@ const Users = ({ useratom }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const loggedUser = useratom;
-  const modalBackground = theme.palette.mode? "dark":"light"
-  const handleAddUser = ()=>{
+  const modalBackground = theme.palette.mode ? "dark" : "light";
+  const handleAddUser = () => {
     setNewUser(true);
   };
 
@@ -79,20 +87,20 @@ const Users = ({ useratom }) => {
         <Box m="20px">
           <Header title="Utilizatori" subtitle="Administrare utilizatori" />
           <Box>
-          <Button
-            variant="contained"
-            onClick={handleAddUser}
-            sx={{
-              marginLeft: 5,
-              marginRight: 5,
-              backgroundColor: `neutral.main`,
-            }}
-          >
-            <QueueIcon /> &nbsp; Adauga User Nou
-          </Button>
-        </Box>
+            <Button
+              variant="contained"
+              onClick={handleAddUser}
+              sx={{
+                marginTop: -15,
+                marginLeft: 25,
+                backgroundColor: colors.purpleAccent[700],
+              }}
+            >
+              <QueueIcon /> &nbsp; Adauga User Nou
+            </Button>
+          </Box>
           <Box
-            m="40px 0 0 0"
+            m="-20px 0 0 0"
             height="75vh"
             sx={{
               "& .MuiDataGrid-root": {
@@ -105,7 +113,7 @@ const Users = ({ useratom }) => {
               //   color: colors.purpleAccent[300],
               // },
               "& .MuiDataGrid-columnHeaders": {
-                backgroundColor: colors.blueAccent[700],
+                backgroundColor: colors.purpleAccent[700],
                 borderBottom: "none",
               },
               "& .MuiDataGrid-virtualScroller": {
@@ -113,10 +121,10 @@ const Users = ({ useratom }) => {
               },
               "& .MuiDataGrid-footerContainer": {
                 borderTop: "none",
-                backgroundColor: colors.blueAccent[700],
+                backgroundColor: colors.purpleAccent[700],
               },
-              "& .MuiCheckbox-root": {
-                color: `${colors.purpleAccent[200]} !important`,
+              "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                color: `${colors.grey[100]} !important`,
               },
             }}
           >
@@ -183,9 +191,7 @@ const Users = ({ useratom }) => {
               <EditUser oldUser={userEdit} />
             </Box>
           </Modal>
-          {newUser &&
-            <RoleRegister show={newUser} setShow={setNewUser}/>
-          }
+          {newUser && <RoleRegister show={newUser} setShow={setNewUser} />}
         </Box>
       ) : (
         <Box>

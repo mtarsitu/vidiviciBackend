@@ -15,7 +15,6 @@ const Topbar = ({ useratom }) => {
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
   const user = useratom;
-  console.log(theme.palette.mode);
   return (
     <>
       {user != null && (

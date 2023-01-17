@@ -1,26 +1,26 @@
-const questionsAnswers = {
-  1: {
-    question:
-      "Cum poate fi caracterizata situatia dumneavoastra financiara din prezent:",
-    answers: {
-      1: "Nu am datorii;",
-      2: "Am un credit ipotecar cu o rata rezonabila;",
-      3: "Am doua sau mai multe credite ipotecare;",
-      4: "Am doua sau mai multe credite ipotecare si alte datorii;",
-      5: "Am alte datorii dar nu am credite ipotecare.",
-    },
-  },
-  2: {
-    question:
-      "Aveti in prezent si preconizati ca veti avea si in viitor un venit cert si sigur provenind de exemplu dintr-o activitate remunerata, din onorarii, din cedarea folosintei unor bunuri, din investitii, din pensii?",
-    answers: {
-      1: "Da, am un venit cert si sigur;",
-      2: "Da, am un venit destul de cert si sigur;",
-      3: "Am un venit oarecum cert si sigur;",
-      4: "Nu, nu am un venit cert si/sau sigur.",
-    },
-  },
-};
+// const questionsAnswers = {
+//   1: {
+//     question:
+//       "Cum poate fi caracterizata situatia dumneavoastra financiara din prezent:",
+//     answers: {
+//       1: "Nu am datorii;",
+//       2: "Am un credit ipotecar cu o rata rezonabila;",
+//       3: "Am doua sau mai multe credite ipotecare;",
+//       4: "Am doua sau mai multe credite ipotecare si alte datorii;",
+//       5: "Am alte datorii dar nu am credite ipotecare.",
+//     },
+//   },
+//   2: {
+//     question:
+//       "Aveti in prezent si preconizati ca veti avea si in viitor un venit cert si sigur provenind de exemplu dintr-o activitate remunerata, din onorarii, din cedarea folosintei unor bunuri, din investitii, din pensii?",
+//     answers: {
+//       1: "Da, am un venit cert si sigur;",
+//       2: "Da, am un venit destul de cert si sigur;",
+//       3: "Am un venit oarecum cert si sigur;",
+//       4: "Nu, nu am un venit cert si/sau sigur.",
+//     },
+//   },
+// };
 
 const formObject = {
   1: { 1: false, 2: false, 3: false, 4: false, 5: false },
