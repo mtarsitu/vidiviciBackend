@@ -13,7 +13,7 @@ const EditUser = ({ oldUser }) => {
   console.log(oldUser, "ajksadjhdahda");
   // const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const Register = async (user) => {
+  const Edit = async (user) => {
     const response = await fetch(`http://localhost:5241/Accounts/edit`, {
       method: "POST",
       credentials: "include",
@@ -24,14 +24,8 @@ const EditUser = ({ oldUser }) => {
       body: JSON.stringify(user),
     });
     if (response.ok) {
-      toast.success("Te-ai inregistrat cu succes!");
-      const timeout = () => {
-        setTimeout(() => {
-          window.location.href = "/";
-        }, 500);
-      };
-      timeout();
-    }
+      toast.success("User editat cu succes!");
+    }else toast.error("Ceva nu a functionat, te rugam sa incerci din nou")
   };
 
   const handleSubmit = (event) => {
@@ -45,7 +39,7 @@ const EditUser = ({ oldUser }) => {
       lastName: data.get("lastName"),
       userRole: data.get("userRole"),
     };
-    Register(user);
+    Edit(user);
   };
 
   return (
