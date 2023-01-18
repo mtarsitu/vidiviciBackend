@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import Header from "../../components/Header";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 import { gapi } from "gapi-script";
 import { tokens } from "../../theme";
@@ -245,18 +245,7 @@ const Register = () => {
             >
               Deja inregistrat? Click pentru logare!
             </Button>
-            <ToastContainer
-              position="top-center"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-            />
+            
           </Box>
         </Box>
       </Container>

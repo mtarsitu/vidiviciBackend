@@ -11,14 +11,14 @@ import {
 import { tokens } from "../../theme";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-
 import Unauthorize from "../unauthorize";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
 import { useEffect } from "react";
-
+import FacebookLogin from "react-facebook-login";
+import styles from "./styles.module.scss"
 export default function Login({ useratom }) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -57,7 +57,30 @@ export default function Login({ useratom }) {
       toast.warning("Username sau parola gresita");
     }
   }
-
+  const ExternalLogin = async (user) => {
+    console.log(user);
+    let response = await fetch(`http://localhost:5241/Accounts/external`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        accept: "text/plain",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+    if (response.ok) {
+      toast.success(`${user.username} Te-ai logat cu succes!`);
+      const timeout = () => {
+        setTimeout(() => {
+          window.location.href = "/dashboard";
+        }, 1000);
+      };
+      timeout();
+      return response.ok;
+    } else {
+      toast.warning("Username sau parola gresita");
+    }
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -77,11 +100,31 @@ export default function Login({ useratom }) {
     };
     gapi.load("client:auth2", initClient);
   });
+
   const onSuccess = (res) => {
-    console.log("success:", res);
+    console.log(res);
+    const externalUser = {
+      firstName: res.profileObj.givenName,
+      lastName: res.profileObj.familyName,
+      email: res.profileObj.email,
+    };
+    ExternalLogin(externalUser);
   };
   const onFailure = (err) => {
     console.log("failed:", err);
+  };
+  const responseFacebook = (response) => {
+    console.log(response);
+    if(response){
+        const fullName = response.name.split(" ");
+        const externalUser = {
+          firstName: fullName[0],
+          lastName: fullName[1],
+          email: fullName[0]+"."+fullName[1]+"@testfacebook.com",
+        };
+        console.log(externalUser);
+        ExternalLogin(externalUser);
+    }
   };
   return (
     <>
@@ -122,7 +165,18 @@ export default function Login({ useratom }) {
               onSuccess={onSuccess}
               onFailure={onFailure}
               cookiePolicy={"single_host_origin"}
-              isSignedIn={true}
+              // isSignedIn={true}
+            />
+            <FacebookLogin
+              appId="2097613670424852"
+              autoLoad={true}
+              textButton="Continua cu facebook"
+              // fields="name,email,picture"
+              // onClick={componentClicked}
+              cssClass={`${styles.facebook}`}
+              callback={responseFacebook}
+              icon="fa-facebook"
+              height="5"
             />
             <Box
               component="form"
@@ -156,18 +210,6 @@ export default function Login({ useratom }) {
               >
                 Sign In
               </Button>
-              <ToastContainer
-                position="bottom-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-              />
             </Box>
             <Button
               href="/register"

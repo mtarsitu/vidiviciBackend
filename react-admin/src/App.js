@@ -6,7 +6,8 @@ import Dashboard from "./scenes/dashboard";
 import Users from "./scenes/users";
 import Funds from "./scenes/funds";
 import Contacts from "./scenes/contacts";
-import RoleRegister from "./scenes/account/roleRegister";
+
+import { ToastContainer } from "react-toastify";
 import Register from "./scenes/account/register";
 import { Suspense } from "react";
 import { CssBaseline, ThemeProvider } from "@mui/material";
@@ -115,7 +116,18 @@ function App() {
             </Suspense>
           </main>
         </div>
-        
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
         {/* )} */}
       </ThemeProvider>
     </ColorModeContext.Provider>

@@ -58,6 +58,38 @@ namespace API_VidiVici.Controllers
         }
 
         [AllowAnonymous]
+        [HttpPost("external")]
+        public async Task<ActionResult<UserLoginDto>> External(ExternalLoginDto externalLoginDto)
+        {
+            var user = await _userManager.FindByEmailAsync(externalLoginDto.Email);
+            if(user == null)
+            {
+                var newUser = new User{
+                    UserName = externalLoginDto.Email, 
+                    FirstName=externalLoginDto.FirstName,
+                    LastName=externalLoginDto.LastName,Email = externalLoginDto.Email, 
+                    UserRole=UserRole.Prospect };
+
+                var result = await _userManager.CreateAsync(newUser);
+                var userLogged = new UserLoginDto{ 
+                    Username = newUser.UserName,
+                    Token = await _tokenService.GenerateToken(newUser)
+                    };
+                await _userManager.AddToRoleAsync(newUser, newUser.UserRole);
+                await _userManager.AddClaimAsync(newUser, new Claim(userLogged.Username,userLogged.Token));
+                
+                Response.Cookies.Append("Token", userLogged.Token, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
+                Response.Cookies.Append("Username", newUser.UserName, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
+                _context.SaveChanges();
+                return userLogged;
+            }
+            var existentUser = new UserLoginDto{ Username = user.UserName, Token = await _tokenService.GenerateToken(user)};
+            Response.Cookies.Append("Token", existentUser.Token, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
+            Response.Cookies.Append("Username", user.UserName, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
+            return existentUser;
+        }
+
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult> Register(RegisterDto registerDto)
         {
@@ -128,11 +160,10 @@ namespace API_VidiVici.Controllers
 
         [HttpPost("logout")]
         public async Task<ActionResult> Logout()
-        {
-             
+        { 
             foreach (var cookie in Request.Cookies.Keys)
             {
-                Response.Cookies.Delete(cookie);
+                 Response.Cookies.Delete(cookie);
             }
             return Ok("");
         }
@@ -156,10 +187,8 @@ namespace API_VidiVici.Controllers
             user.Email = userDto.Email;
 
             _userManager.UpdateAsync(user);
+            _context.SaveChanges();
             return Ok();
         }
-
-
-    
     }
 }

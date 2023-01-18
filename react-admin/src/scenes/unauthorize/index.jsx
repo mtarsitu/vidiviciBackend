@@ -7,18 +7,6 @@ export default function Unauthorize({ errorMessage }) {
   return (
     <div>
       {toast.error(message)}
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </div>
   );
 }

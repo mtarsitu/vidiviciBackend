@@ -8,6 +8,7 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import LogoutIcon from "@mui/icons-material/Logout";
+
 // import SearchIcon from "@mui/icons-material/Search";
 import { Logout } from "../../data/dataAtom";
 const Topbar = ({ useratom }) => {
@@ -25,6 +26,7 @@ const Topbar = ({ useratom }) => {
             backgroundColor={colors.primary[400]}
             borderRadius="3px"
           >
+           
             {theme.palette.mode === "dark" ? (
               <img
                 alt="profile-user"
@@ -59,7 +61,7 @@ const Topbar = ({ useratom }) => {
           <SearchIcon />
         </IconButton> */}
           </Box>
-
+         
           {/* ICONS */}
           <Box display="flex">
             <IconButton onClick={colorMode.toggleColorMode}>

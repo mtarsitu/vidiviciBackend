@@ -267,12 +267,12 @@ namespace APIVidiVici.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "4ccd3d22-517d-482f-8ee5-e1ee233c02e3", null, "Pending", "PENDING" },
-                    { "7b9e9c3e-3d80-4cd8-b153-44d6532e2f6b", null, "Admin", "ADMIN" },
-                    { "8d917981-3510-46ab-9bd0-1655e3a48191", null, "Prospect", "PROSPECT" },
-                    { "ba71b3b5-447e-456d-906b-0e9a056c97bd", null, "Employee", "EMPLOYEE" },
-                    { "ce152e19-a998-4fdf-bcd5-c0284f565abb", null, "Poweruser", "POWERUSER" },
-                    { "d1925136-0e30-43ff-b8a5-ceb855dea8af", null, "Investor", "INVESTOR" }
+                    { "07d8176d-1bbe-4a47-b28f-773c14550e68", null, "Employee", "EMPLOYEE" },
+                    { "9ae1213d-c41b-493a-97e4-83127995813f", null, "Poweruser", "POWERUSER" },
+                    { "9b8332f6-ebf5-4fd5-952d-bc76247ca784", null, "Investor", "INVESTOR" },
+                    { "a2519f5f-5586-4e80-8bd1-886aa6533f8a", null, "Pending", "PENDING" },
+                    { "dfc7ef67-b69e-4c8f-b321-8ea020e0da08", null, "Admin", "ADMIN" },
+                    { "fa8da01b-b20c-45ae-801e-29f99fc74959", null, "Prospect", "PROSPECT" }
                 });
 
             migrationBuilder.CreateIndex(

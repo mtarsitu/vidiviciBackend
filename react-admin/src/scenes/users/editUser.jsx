@@ -8,11 +8,14 @@ import Typography from "@mui/material/Typography";
 import Header from "../../components/Header";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
-import { toast, ToastContainer } from "react-toastify";
+import { toast} from "react-toastify";
+import { refreshAtom } from "../../data/dataAtom";
+import { useState } from "react";
+
 const EditUser = ({ oldUser }) => {
   console.log(oldUser, "ajksadjhdahda");
   // const isNonMobile = useMediaQuery("(min-width:600px)");
-
+  const [refresh, setRefresh] = useState(refreshAtom);
   const Edit = async (user) => {
     const response = await fetch(`http://localhost:5241/Accounts/edit`, {
       method: "POST",
@@ -24,6 +27,7 @@ const EditUser = ({ oldUser }) => {
       body: JSON.stringify(user),
     });
     if (response.ok) {
+      setRefresh(true)
       toast.success("User editat cu succes!");
     }else toast.error("Ceva nu a functionat, te rugam sa incerci din nou")
   };
@@ -158,18 +162,7 @@ const EditUser = ({ oldUser }) => {
               Confirma modificarea pentru {oldUser.firstName} - {oldUser.lastName}
             </Button>
 
-            <ToastContainer
-              position="top-center"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-            />
+           
           </Box>
         </Box>
       </Container>

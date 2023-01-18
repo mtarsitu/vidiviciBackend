@@ -1,8 +1,8 @@
 import { atom } from "jotai";
-
+import { useGoogleLogout } from 'react-google-login'
 // import { ToastContainer, toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
-
+import { gapi } from "gapi-script";
 const baseUrl = "http://localhost:5241/";
 
 export let isLoggedAtom = atom(false);
@@ -10,7 +10,8 @@ export const refreshAtom = atom(false);
 export const entityIdAtom = atom("");
 export const usernameAtom = atom("");
 
-export const loggedUserAtom = atom(async () => {
+export const loggedUserAtom = atom(async (get) =>  {
+  get(refreshAtom);
   const response = await fetch(baseUrl + "Accounts/currentUser", {
     method: "GET",
     credentials: "include",
@@ -123,5 +124,6 @@ export const Logout = async () => {
   if (response.ok) {
     isLoggedAtom.init = false;
     window.location.href = "/";
+    // gapi.auth.signOut();
     }
 };

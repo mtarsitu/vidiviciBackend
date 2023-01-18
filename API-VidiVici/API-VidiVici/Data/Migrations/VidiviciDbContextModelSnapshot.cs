@@ -264,37 +264,37 @@ namespace APIVidiVici.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ce152e19-a998-4fdf-bcd5-c0284f565abb",
+                            Id = "9ae1213d-c41b-493a-97e4-83127995813f",
                             Name = "Poweruser",
                             NormalizedName = "POWERUSER"
                         },
                         new
                         {
-                            Id = "7b9e9c3e-3d80-4cd8-b153-44d6532e2f6b",
+                            Id = "dfc7ef67-b69e-4c8f-b321-8ea020e0da08",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "ba71b3b5-447e-456d-906b-0e9a056c97bd",
+                            Id = "07d8176d-1bbe-4a47-b28f-773c14550e68",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "8d917981-3510-46ab-9bd0-1655e3a48191",
+                            Id = "fa8da01b-b20c-45ae-801e-29f99fc74959",
                             Name = "Prospect",
                             NormalizedName = "PROSPECT"
                         },
                         new
                         {
-                            Id = "4ccd3d22-517d-482f-8ee5-e1ee233c02e3",
+                            Id = "a2519f5f-5586-4e80-8bd1-886aa6533f8a",
                             Name = "Pending",
                             NormalizedName = "PENDING"
                         },
                         new
                         {
-                            Id = "d1925136-0e30-43ff-b8a5-ceb855dea8af",
+                            Id = "9b8332f6-ebf5-4fd5-952d-bc76247ca784",
                             Name = "Investor",
                             NormalizedName = "INVESTOR"
                         });
