@@ -71,17 +71,26 @@ namespace API_VidiVici.Controllers
                     UserRole=UserRole.Prospect };
 
                 var result = await _userManager.CreateAsync(newUser);
-                var userLogged = new UserLoginDto{ 
-                    Username = newUser.UserName,
-                    Token = await _tokenService.GenerateToken(newUser)
-                    };
-                await _userManager.AddToRoleAsync(newUser, newUser.UserRole);
-                await _userManager.AddClaimAsync(newUser, new Claim(userLogged.Username,userLogged.Token));
-                
-                Response.Cookies.Append("Token", userLogged.Token, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
-                Response.Cookies.Append("Username", newUser.UserName, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
-                _context.SaveChanges();
-                return userLogged;
+                if(result.Succeeded){
+                    result = await _userManager.AddToRoleAsync(newUser, newUser.UserRole);
+                    if(result.Succeeded){
+                        var userLogged = new UserLoginDto
+                        { 
+                            Username = newUser.UserName,
+                            Token = await _tokenService.GenerateToken(newUser)
+                        };
+                        if(result.Succeeded)
+                        {
+                            result = await _userManager.AddClaimAsync(newUser, new Claim(userLogged.Username,userLogged.Token));
+                            if(result.Succeeded){
+                                Response.Cookies.Append("Token", userLogged.Token, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
+                                Response.Cookies.Append("Username", newUser.UserName, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
+                                // _context.SaveChanges();
+                                return userLogged;
+                            }
+                        }
+                    }
+                }
             }
             var existentUser = new UserLoginDto{ Username = user.UserName, Token = await _tokenService.GenerateToken(user)};
             Response.Cookies.Append("Token", existentUser.Token, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
@@ -186,7 +195,7 @@ namespace API_VidiVici.Controllers
             user.LastName = userDto.LastName;
             user.Email = userDto.Email;
 
-            _userManager.UpdateAsync(user);
+            await _userManager.UpdateAsync(user);
             _context.SaveChanges();
             return Ok();
         }

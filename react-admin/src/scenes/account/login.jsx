@@ -19,6 +19,7 @@ import { gapi } from "gapi-script";
 import { useEffect } from "react";
 import FacebookLogin from "react-facebook-login";
 import styles from "./styles.module.scss"
+import FacebookIcon from '@mui/icons-material/Facebook';
 export default function Login({ useratom }) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -141,13 +142,13 @@ export default function Login({ useratom }) {
               alt="profile-user"
               width="150%"
               height="150%"
-              src={`../../../assets/vidivici-logo.png`}
+              src={`../../../assets/logo-inchis.png`}
               style={{ cursor: "pointer", borderRadius: "50%" }}
             />
           </Box>
           <Box
             sx={{
-              marginTop: -10,
+              marginTop: -15,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -161,7 +162,7 @@ export default function Login({ useratom }) {
             </Typography>
             <GoogleLogin
               clientId={clientId}
-              buttonText="Logheaza-te cu Google"
+              buttonText="Continua cu Google"
               onSuccess={onSuccess}
               onFailure={onFailure}
               cookiePolicy={"single_host_origin"}
@@ -169,13 +170,13 @@ export default function Login({ useratom }) {
             />
             <FacebookLogin
               appId="2097613670424852"
-              autoLoad={true}
-              textButton="Continua cu facebook"
+              // autoLoad={true}
+              textButton="Continua cu Facebook"
               // fields="name,email,picture"
               // onClick={componentClicked}
               cssClass={`${styles.facebook}`}
               callback={responseFacebook}
-              icon="fa-facebook"
+              icon={<FacebookIcon/>}
               height="5"
             />
             <Box
