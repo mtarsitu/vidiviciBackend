@@ -20,7 +20,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import EditUser from "./editUser";
 import RoleRegister from "../account/roleRegister";
-
+import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
+import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
+import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 const Users = ({ useratom }) => {
   const [open, setOpen] = useState(false);
   const [newUser, setNewUser] = useState(false);
@@ -39,8 +41,38 @@ const Users = ({ useratom }) => {
 
   const columns = [
     { field: "id", headerName: "ID" },
-    { field: "username", headerName: "Username", width: 250 },
-    { field: "userRole", headerName: "Role", width: 130 },
+    { field: "username", headerName: "Username",cellClassName: "username-column--cell", width: 250 },
+    {
+      field: "userRole",
+      headerName: "Role",
+      width: 150,
+      renderCell: ({ row: { userRole } }) => {
+        return (
+          <Box
+            width="80%"
+            m="0 auto"
+            p="5px"
+            display="flex"
+            justifyContent="center"
+            backgroundColor={
+              userRole === "Admin"
+                ? colors.purpleAccent[600]
+                : userRole === "employee"
+                ? colors.purpleAccent[700]
+                : colors.purpleAccent[700]
+            }
+            borderRadius="4px"
+          >
+            {userRole === "Admin" && <AdminPanelSettingsOutlinedIcon />}
+            {userRole === "Employee" && <SecurityOutlinedIcon />}
+            {userRole !=="Admin" && userRole !=="Employee"  && <LockOpenOutlinedIcon />}
+            <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
+              {userRole }
+            </Typography>
+          </Box>
+        );
+      },
+    },
     { field: "firstName", headerName: "Nume", width: 130 },
     { field: "lastName", headerName: "Nume de familie", width: 130 },
 
@@ -109,9 +141,9 @@ const Users = ({ useratom }) => {
               "& .MuiDataGrid-cell": {
                 borderBottom: "none",
               },
-              // "& .name-column--cell": {
-              //   color: colors.purpleAccent[300],
-              // },
+              "& .username-column--cell": {
+                color: colors.greenAccent[300],
+              },
               "& .MuiDataGrid-columnHeaders": {
                 backgroundColor: colors.purpleAccent[700],
                 borderBottom: "none",

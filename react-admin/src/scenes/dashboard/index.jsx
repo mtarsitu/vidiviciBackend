@@ -1,10 +1,11 @@
-import { Box, useTheme, Modal } from "@mui/material";
+import { Box, useTheme, Typography } from "@mui/material";
 import { tokens } from "../../theme";
 import Unauthorized from "../unauthorize/index";
 import Button from "@mui/material/Button";
 import QueueIcon from "@mui/icons-material/Queue";
 import { useState } from "react";
 import ToProfesional from "../users/toProfessional";
+import LineChart from "../../components/LineChart";
 const Dashboard = ({ useratom, authorized }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -19,6 +20,15 @@ const Dashboard = ({ useratom, authorized }) => {
     <>
       {user != null ? (
         <Box m="20px">
+          <Box
+            gridColumn="span 8"
+            gridRow="span 2"
+            backgroundColor={colors.primary[400]}
+          >
+            <Box height="250px" m="-20px 0 0 0">
+              <LineChart isDashboard={true} />
+            </Box>
+          </Box>
           {user.userRole === "Prospect" && (
             <>
               <Button
