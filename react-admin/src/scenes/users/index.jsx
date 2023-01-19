@@ -102,7 +102,7 @@ const Users = ({ useratom }) => {
 
   const handleOpen = (id) => {
     setPartnerName(users[0].filter((entity) => entity.id === id)[0].username);
-    console.log(id);
+   
     setInfoId(id);
     setEntityId(id);
     setOpen(true);

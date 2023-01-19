@@ -10,6 +10,7 @@ export const refreshAtom = atom(false);
 export const entityIdAtom = atom("");
 export const usernameAtom = atom("");
 export const userToLoginAtom = atom({});
+
 export const loggedUserAtom = atom(async (get) => {
   get(refreshAtom);
   const response = await fetch(baseUrl + "Accounts/currentUser", {
@@ -168,7 +169,6 @@ export const investmentsAtom = atom(async (get) => {
       accept: "text/plain",
     },
   });
-  console.log(response);
   return response.json();
 });
 
@@ -183,3 +183,16 @@ export const Logout = async () => {
     // gapi.auth.signOut();
   }
 };
+
+export const TotalInvestmentsAtom = atom(async() =>{
+  const response = await fetch(baseUrl+ "Investments/totalInvestments", {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      accept: "text/plain",
+    },
+  });
+  
+    return response.json();
+  
+});

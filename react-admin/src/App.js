@@ -32,7 +32,7 @@ function App() {
     authorized: ["Admin", "Poweruser", "Employee"],
     unauthorize: ["Prospect", "Investor", "Pending"],
   };
-  console.log(loggedUser);
+
   useEffect(() => {
     if (loggedUser[0] != null) {
       setIsLogged(true);
