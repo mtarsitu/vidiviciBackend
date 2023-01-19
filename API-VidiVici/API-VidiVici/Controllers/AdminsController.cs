@@ -90,7 +90,6 @@ namespace API_VidiVici.Controllers
 
             return Ok();
             }
-            
             return NotFound();
         }
         
