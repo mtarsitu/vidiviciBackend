@@ -23,17 +23,20 @@ namespace API_VidiVici.Controllers
         private readonly UserManager<User> _userManager;
         private readonly InvestmentsServices _investmentsService;
         private readonly InformationsServices _informationsService;
+        private readonly VidiviciDbContext _context;
         public AdminsController(
             ILogger<AdminsController> logger, 
             UserManager<User> userManager,
             InvestmentsServices investmentsServices,
-            InformationsServices informationsServices
+            InformationsServices informationsServices,
+            VidiviciDbContext context
             )
         {
             _logger = logger;
             _userManager = userManager;  
             _investmentsService = investmentsServices;
             _informationsService = informationsServices;
+            _context = context;
         }
 
         [Authorize(Roles = "Admin,Investor,Employee,Investor")]
@@ -69,6 +72,26 @@ namespace API_VidiVici.Controllers
 
             }
             return userDtoList;
+        }
+
+        [Authorize(Roles = "Poweruser,Admin,Employee")]
+        [HttpGet("acceptPending")]
+        public async Task<ActionResult> AcceptPending(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);  
+            if(user!= null)
+            {
+            await _userManager.RemoveFromRoleAsync(user, "Pending");
+            
+            await _userManager.AddToRoleAsync(user, UserRole.Investor);
+            await _userManager.UpdateAsync(user);
+            user.UserRole = UserRole.Investor;
+            _context.SaveChanges();
+
+            return Ok();
+            }
+            
+            return NotFound();
         }
         
     }
