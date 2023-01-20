@@ -20,18 +20,16 @@ const Funds = ({ authorized }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const authorize = authorized;
-  
- console.log(showNew);
+  console.log(showFunds);
+ console.log(showNew,"acum");
   const handleAddFund=()=>{
-    console.log("auci");
     setNew(true);
-    console.log(showNew);
   }
   useEffect(() => {
     if (authorize) {
       setShowFunds(allFunds[0]);
     } else setShowFunds(funds[0]);
-  }, []);
+  }, [showNew]);
   return (
     <Box m="20px" >
       <Header title="Fonduri" subtitle="Oportunitati investitii" />

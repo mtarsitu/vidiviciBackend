@@ -8,44 +8,46 @@ import Typography from "@mui/material/Typography";
 import Header from "../../components/Header";
 import { toast, ToastContainer } from "react-toastify";
 import QueueIcon from "@mui/icons-material/Queue";
-
 import { useMode } from "../../theme";
 import { useAtom } from "jotai";
-import { RegisterFundAtom,newFondAtom,refreshFundsAtom } from "../../data/dataAtom";
-const AddFund = ({show,setShow}) => {
-  const [,setNewFond] = useAtom(newFondAtom);
-  const [RegisterFund, ] = useAtom(RegisterFundAtom);
-  const [theme, colorMode] = useMode();
-  const [refreshFunds,setRefreshFunds] = useAtom(refreshFundsAtom);
+import { newInformationAtom, RegisterInformationAtom } from "../../data/dataAtom";
+
+const AddInformation = ({show,setShow,userId,section,setSection}) => {
+  
+  const [theme, colorMode] = useMode(); 
+  const [,setNewInformation] = useAtom(newInformationAtom);
+  const [RegisterInformation,] = useAtom(RegisterInformationAtom);
   const modalBackground = theme.palette.mode? "dark":"light"
   // const isNonMobile = useMediaQuery("(min-width:600px)");
-  
-  let fond = {
-    name: "",
-    interestRate: "",
-    private: "",
-    returningType: "",
-  };
- 
+
   const handleClose= ()=>{
+
+    if(section!= undefined){setSection(section+1)}
     setShow(false);
   }
   const handleSubmit = (event) => {
     event.preventDefault();
+
     const data = new FormData(event.currentTarget);
-    fond = {
-      name: data.get("name"),
-      interestRate: parseFloat(data.get("interestRate")),
-      private: Boolean(data.get("private")),
-      returningType: data.get("returningType"),
+    const info = {
+      userId: userId,
+      cnp: data.get("cnp"),
+      iban: data.get("iban"),
+      phoneNumber: data.get("phoneNumber"),
+      address: data.get("address"),
+      bank: data.get("bank"),
+      cui: data.get("cui"),
+      regComertului: data.get("regComertului"),
+      birthDate: data.get("birthDate")
     };
-    setNewFond(fond);
-    RegisterFund();
-    setRefreshFunds(!refreshFunds);
+    console.log(info);
+    setNewInformation(info);
     handleClose();
+    RegisterInformation();
+    // setRefreshFunds(!refreshFunds);
   
   };
-  console.log(refreshFunds);
+
   return (
     <Modal
       open={show}
@@ -81,7 +83,7 @@ const AddFund = ({show,setShow}) => {
               <QueueIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Adauga Fond
+              Adauga Informatie
             </Typography>
             <Box
               component="form"
@@ -93,9 +95,9 @@ const AddFund = ({show,setShow}) => {
                 margin="normal"
                 required
                 fullWidth
-                id="name"
-                label="name"
-                name="name"
+                id="cnp"
+                label="CNP"
+                name="cnp"
                 autoFocus
                 sx={{
                   "& .MuiFormLabel-root.Mui-focused": {
@@ -115,10 +117,10 @@ const AddFund = ({show,setShow}) => {
                 margin="normal"
                 required
                 fullWidth
-                name="interestRate"
-                label="Dobanda"
+                name="iban"
+                label="IBAN"
                 type="text"
-                id="interestRate"
+                id="iban"
                 sx={{
                   "& .MuiFormLabel-root.Mui-focused": {
                     color: "neutral.main",
@@ -137,10 +139,10 @@ const AddFund = ({show,setShow}) => {
                 margin="normal"
                 required
                 fullWidth
-                name="private"
-                label="Privat"
+                name="phoneNumber"
+                label="Telefon"
                 type="text"
-                id="private"
+                id="phoneNumber"
                 sx={{
                   "& .MuiFormLabel-root.Mui-focused": {
                     color: "neutral.main",
@@ -159,10 +161,98 @@ const AddFund = ({show,setShow}) => {
                 margin="normal"
                 required
                 fullWidth
-                name="returningType"
-                label="Perioada returnare"
+                name="address"
+                label="Adresa"
                 type="text"
-                id="returningType"
+                id="address"
+                sx={{
+                  "& .MuiFormLabel-root.Mui-focused": {
+                    color: "neutral.main",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "&:hover fieldset": {
+                      borderColor: `neutral.main`,
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: `neutral.main`,
+                    },
+                  },
+                }}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="bank"
+                label="Numele Bancii"
+                type="text"
+                id="bank"
+                sx={{
+                  "& .MuiFormLabel-root.Mui-focused": {
+                    color: "neutral.main",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "&:hover fieldset": {
+                      borderColor: `neutral.main`,
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: `neutral.main`,
+                    },
+                  },
+                }}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="cui"
+                label="Cui Firma"
+                type="text"
+                id="cui"
+                sx={{
+                  "& .MuiFormLabel-root.Mui-focused": {
+                    color: "neutral.main",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "&:hover fieldset": {
+                      borderColor: `neutral.main`,
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: `neutral.main`,
+                    },
+                  },
+                }}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="regComertului"
+                label="Registrul Comertului"
+                type="text"
+                id="regComertului"
+                sx={{
+                  "& .MuiFormLabel-root.Mui-focused": {
+                    color: "neutral.main",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "&:hover fieldset": {
+                      borderColor: `neutral.main`,
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: `neutral.main`,
+                    },
+                  },
+                }}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="birthDate"
+                label="Nascut/a la data de"
+                type="text"
+                id="birthDate"
                 sx={{
                   "& .MuiFormLabel-root.Mui-focused": {
                     color: "neutral.main",
@@ -184,7 +274,7 @@ const AddFund = ({show,setShow}) => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Adauga fond
+                Adauga Informatie
               </Button>
               <ToastContainer
                 position="top-center"
@@ -206,4 +296,4 @@ const AddFund = ({show,setShow}) => {
   );
 };
 
-export default AddFund;
+export default AddInformation;

@@ -8,23 +8,23 @@ import {
 } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
+import EditIcon from "@mui/icons-material/Edit";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
+import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
+import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
+import PendingIcon from '@mui/icons-material/Pending';
+import CreditScoreIcon from '@mui/icons-material/CreditScore';
 import QueueIcon from "@mui/icons-material/Queue";
 import Header from "../../components/Header";
 import { useAtom } from "jotai";
 import { usersAtom, entityIdAtom } from "../../data/dataAtom";
 import InfoIcon from "@mui/icons-material/Info";
 import { useState } from "react";
-import Information from "./information";
+import Information from "../information/information";
 import Unauthorize from "../unauthorize";
-import EditIcon from "@mui/icons-material/Edit";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import EditUser from "./editUser";
 import RoleRegister from "../account/roleRegister";
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
-import PendingIcon from '@mui/icons-material/Pending';
-import CreditScoreIcon from '@mui/icons-material/CreditScore';
 const Users = ({ useratom }) => {
   const [open, setOpen] = useState(false);
   const [newUser, setNewUser] = useState(false);
@@ -179,32 +179,9 @@ const Users = ({ useratom }) => {
               // }}
             />
           </Box>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box
-              sx={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                width: "80vw",
-                bgcolor: `neutral.${modalBackground}`,
-                border: "2px solid #000",
-                boxShadow: 24,
-                borderRadius: "12px",
-                p: 4,
-              }}
-            >
-              <Typography id="modal-modal-title" variant="h3" component="h2">
-                Informatii ale partenerului: {partnerName}
-              </Typography>
-              <Information props={infoId} />
-            </Box>
-          </Modal>
+          
+              <Information props={infoId} partnerName={partnerName} open={open} handleClose={handleClose} />
+           
 
           <Modal
             open={userEdit.username !== undefined}

@@ -17,11 +17,12 @@ namespace API_VidiVici.Modifiers
                 Bank = information.Bank,
                 Cui = information.Cui,
                 RegComertului = information.RegComertului,
-                Salary = information.Salary,
             };
         }
         public static Information ToInformation(InformationDto information)
         {
+            if(information != null && information.UserId!=null && information.BirthDate !=null)
+            {
             return new Information{
                 Id = information.Id,
                 UserId = information.UserId,
@@ -31,8 +32,10 @@ namespace API_VidiVici.Modifiers
                 Bank = information.Bank,
                 Cui = information.Cui,
                 RegComertului = information.RegComertului,
-                Salary = information.Salary,
-            };
+                BirthDate = DateTimeOffset.Parse(information.BirthDate).UtcDateTime
+                };
+            }
+            return new Information();
         }
     }
 }

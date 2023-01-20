@@ -18,9 +18,7 @@ namespace API_VidiVici.Model
         public string? Bank { get; set; }
         public string? Cui { get; set; }
         public string? RegComertului { get; set; }
-        public int? Salary { get; set; }
-    
-        public DateTime? DateEmployedEmployementDate { get; set; } = DateTime.UtcNow;
+        
         public User? User {get;set;}
 
     }

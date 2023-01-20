@@ -6,7 +6,7 @@ import { useAtom } from "jotai";
 import { usersAtom, entityIdAtom } from "../../data/dataAtom";
 import InfoIcon from "@mui/icons-material/Info";
 import { useState } from "react";
-import Information from "./information";
+import Information from "../information/information";
 import Unauthorize from "../unauthorize";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";

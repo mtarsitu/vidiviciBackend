@@ -17,8 +17,7 @@ namespace API_VidiVici.DTOs
 
         public string? Cui { get; set; }
         public string? RegComertului { get; set; }
-        public int? Salary { get; set; }
-        public DateTime BirthDate{get;set;}
+        public string? BirthDate{get;set;}
 
     }
 }

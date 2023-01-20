@@ -7,9 +7,13 @@ const baseUrl = "http://localhost:5241/";
 
 export let isLoggedAtom = atom(false);
 export const refreshAtom = atom(false);
+export const refreshFundsAtom = atom(false);
 export const entityIdAtom = atom("");
 export const usernameAtom = atom("");
 export const userToLoginAtom = atom({});
+export const newFondAtom = atom("");
+export const newInformationAtom = atom("");
+
 
 export const loggedUserAtom = atom(async (get) => {
   get(refreshAtom);
@@ -31,7 +35,8 @@ export const loggedUserAtom = atom(async (get) => {
   return null;
 });
 
-export const fundsAtom = atom(async () => {
+export const fundsAtom = atom(async (get) => {
+  get(refreshFundsAtom);
   const response = await fetch(baseUrl + "Funds/getAllPublic", {
     method: "GET",
     credentials: "include",
@@ -44,6 +49,7 @@ export const fundsAtom = atom(async () => {
   }
   return null;
 });
+
 export const ExternalLoginAtom = atom(async (get) => {
   const userToLogin = get(userToLoginAtom);
   console.log(userToLogin);
@@ -72,6 +78,48 @@ export const ExternalLoginAtom = atom(async (get) => {
   }
 });
 
+export const RegisterFundAtom = atom(async (get) => {
+  const fond = get(newFondAtom);
+  if (Object.keys(fond).length != 0) {
+    const response = await fetch(`http://localhost:5241/Funds/addFund`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        accept: "text/plain",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(fond),
+    });
+    if (response.ok) {
+      toast.success("Fond adaugat cu succes");
+      return response.ok;
+    }
+  }
+  return console.error("dasa");
+});
+
+export const RegisterInformationAtom = atom(async (get)=>{
+  const info = get(newInformationAtom);
+  console.log(info);
+  if (Object.keys(info).length != 0) {
+    const response = await fetch(baseUrl+"Informations/addInformation", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        accept: "text/plain",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(info),
+    });
+    
+    if (response.ok) {
+      toast.success("Informatie adaugat cu succes");
+      return response.ok;
+    }
+  }
+  return console.error("dasa");
+}); 
+
 export const LogInAtom = atom(async (get) => {
   const userToLogin = get(userToLoginAtom);
   let response = await fetch(`http://localhost:5241/Accounts/login`, {
@@ -99,7 +147,8 @@ export const LogInAtom = atom(async (get) => {
   }
 });
 
-export const allFundsAtom = atom(async () => {
+export const allFundsAtom = atom(async (get) => {
+  get(refreshFundsAtom);
   const response = await fetch(baseUrl + "Funds/getAll", {
     method: "GET",
     credentials: "include",
@@ -192,7 +241,7 @@ export const Logout = async () => {
 //       accept: "text/plain",
 //     },
 //   });
-  
+
 //     return response.json();
-  
+
 // });

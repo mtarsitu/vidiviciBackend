@@ -38,8 +38,8 @@ const Dashboard = ({ useratom, authorized }) => {
                 variant="contained"
                 onClick={handleOpenModal}
                 sx={{
-                  marginLeft: 5,
                   marginRight: 5,
+                  marginTop:5,
                   backgroundColor: colors.purpleAccent[700],
                 }}
               >

@@ -237,9 +237,7 @@ namespace APIVidiVici.Data.Migrations
                     Iban = table.Column<string>(type: "text", nullable: true),
                     Bank = table.Column<string>(type: "text", nullable: true),
                     Cui = table.Column<string>(type: "text", nullable: true),
-                    RegComertului = table.Column<string>(type: "text", nullable: true),
-                    Salary = table.Column<int>(type: "integer", nullable: true),
-                    DateEmployedEmployementDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    RegComertului = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -285,12 +283,12 @@ namespace APIVidiVici.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "4200ef6c-9abd-4ab4-bb9c-3f96754abe53", null, "Admin", "ADMIN" },
-                    { "61dd8e74-24d8-42a9-9547-b85ee9e3cf7d", null, "Employee", "EMPLOYEE" },
-                    { "684647a2-aad0-4a42-9942-dac5d0dcc77d", null, "Prospect", "PROSPECT" },
-                    { "8863648b-dab4-4e3c-9bd4-7e5f9368af14", null, "Investor", "INVESTOR" },
-                    { "9665a852-3f58-4a7d-972b-46e7c3698072", null, "Poweruser", "POWERUSER" },
-                    { "a8228d58-9cf6-465e-ae94-d53f43edab4e", null, "Pending", "PENDING" }
+                    { "248cf5e0-5227-4eb5-94dd-d5d8549da9f3", null, "Investor", "INVESTOR" },
+                    { "7c6be9f8-396d-4e3d-8fe8-dcf0f10789fe", null, "Prospect", "PROSPECT" },
+                    { "9b2b792e-1319-4b73-9841-27e91aaca52b", null, "Employee", "EMPLOYEE" },
+                    { "a1d57d9f-5cad-4229-84d5-019f29c760cf", null, "Admin", "ADMIN" },
+                    { "baee7b81-a5a7-4013-a982-9d03311b62dd", null, "Poweruser", "POWERUSER" },
+                    { "cf487583-fe80-47fe-b908-f1daca277db5", null, "Pending", "PENDING" }
                 });
 
             migrationBuilder.CreateIndex(

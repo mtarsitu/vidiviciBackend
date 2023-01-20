@@ -160,6 +160,7 @@ namespace API_VidiVici.Controllers
 
             return new UserDto
             {
+                Id = user.Id,
                 Username = user.UserName,
                 UserRole = user.UserRole,
                 FirstName = user.FirstName,
