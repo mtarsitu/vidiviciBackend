@@ -35,9 +35,15 @@ namespace API_VidiVici.Services
         {
             _repository.Remove(id);
         }
-         public async Task<IEnumerable<Investment>> GetUserInvestment(string id)
+        public async Task<IEnumerable<Investment>> GetUserInvestment(string id)
         {
             return await _repository.GetUserInvestment(id);
         }
+
+        public Task<Double> GetTotalSum()
+        {
+            return _repository.GetTotalSum();
+        }
+
     }
 }

@@ -68,7 +68,8 @@ namespace API_VidiVici.Controllers
                     UserName = externalLoginDto.Email, 
                     FirstName=externalLoginDto.FirstName,
                     LastName=externalLoginDto.LastName,Email = externalLoginDto.Email, 
-                    UserRole=UserRole.Prospect };
+                    UserRole=UserRole.Prospect,
+                    UsedPlatform = externalLoginDto.UsedPlatform };
 
                 var result = await _userManager.CreateAsync(newUser);
                 if(result.Succeeded){
@@ -131,7 +132,8 @@ namespace API_VidiVici.Controllers
                  Email = registerDto.Email, 
                  FirstName = registerDto.FirstName,
                  LastName = registerDto.LastName,
-                 UserRole = userrole };
+                 UserRole = userrole,
+                 UsedPlatform = "vidivici" };
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
 

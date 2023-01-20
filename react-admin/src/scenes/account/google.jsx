@@ -14,6 +14,7 @@ const Google = () => {
       firstName: res.profileObj.givenName,
       lastName: res.profileObj.familyName,
       email: res.profileObj.email,
+      usedPlatform: "google"
     };
 
     setUserToLogin(externalUser);

@@ -23,6 +23,8 @@ import RoleRegister from "../account/roleRegister";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
+import PendingIcon from '@mui/icons-material/Pending';
+import CreditScoreIcon from '@mui/icons-material/CreditScore';
 const Users = ({ useratom }) => {
   const [open, setOpen] = useState(false);
   const [newUser, setNewUser] = useState(false);
@@ -35,6 +37,7 @@ const Users = ({ useratom }) => {
   const colors = tokens(theme.palette.mode);
   const loggedUser = useratom;
   const modalBackground = theme.palette.mode ? "dark" : "light";
+  console.log(users);
   const handleAddUser = () => {
     setNewUser(true);
   };
@@ -42,6 +45,9 @@ const Users = ({ useratom }) => {
   const columns = [
     { field: "id", headerName: "ID" },
     { field: "username", headerName: "Username",cellClassName: "username-column--cell", width: 250 },
+    
+    { field: "firstName", headerName: "Nume", width: 130 },
+    { field: "lastName", headerName: "Nume de familie", width: 130 },
     {
       field: "userRole",
       headerName: "Role",
@@ -65,7 +71,9 @@ const Users = ({ useratom }) => {
           >
             {userRole === "Admin" && <AdminPanelSettingsOutlinedIcon />}
             {userRole === "Employee" && <SecurityOutlinedIcon />}
-            {userRole !=="Admin" && userRole !=="Employee"  && <LockOpenOutlinedIcon />}
+            {userRole === "Pending" && <PendingIcon />}
+            {userRole === "Investor" && <CreditScoreIcon />}
+            {userRole !=="Admin" && userRole !=="Employee" && userRole!=="Pending" && userRole!=="Investor"  && <LockOpenOutlinedIcon />}
             <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
               {userRole }
             </Typography>
@@ -73,9 +81,7 @@ const Users = ({ useratom }) => {
         );
       },
     },
-    { field: "firstName", headerName: "Nume", width: 130 },
-    { field: "lastName", headerName: "Nume de familie", width: 130 },
-
+    {field: "usedPlatform", headerName: "Inregistrat cu", width: 130},
     {
       field: "actions",
       headerName: "Actiuni",
@@ -117,7 +123,7 @@ const Users = ({ useratom }) => {
     <>
       {loggedUser != null ? (
         <Box m="10px">
-          <Header title="Utilizatori" subtitle="Administrare utilizatori" />
+          <Header title="UTILIZATORI" subtitle="Administrare utilizatori" />
           <Box>
             <Button
               variant="contained"

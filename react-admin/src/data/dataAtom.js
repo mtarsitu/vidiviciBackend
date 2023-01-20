@@ -184,15 +184,15 @@ export const Logout = async () => {
   }
 };
 
-export const TotalInvestmentsAtom = atom(async() =>{
-  const response = await fetch(baseUrl+ "Investments/totalInvestments", {
-    method: "GET",
-    credentials: "include",
-    headers: {
-      accept: "text/plain",
-    },
-  });
+// export const TotalInvestmentsAtom = atom(async() =>{
+//   const response = await fetch(baseUrl+ "Investments/totalInvestments", {
+//     method: "GET",
+//     credentials: "include",
+//     headers: {
+//       accept: "text/plain",
+//     },
+//   });
   
-    return response.json();
+//     return response.json();
   
-});
+// });

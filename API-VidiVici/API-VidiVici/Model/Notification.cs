@@ -9,6 +9,8 @@ namespace API_VidiVici.Model
     {
         public int Id{get;set;}
         public DateTime Date {get;set;}
+
+        public string? NotificationType {get;set;}        
         public string? Message{get;set;}
 
     }

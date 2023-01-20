@@ -31,7 +31,7 @@ const Dashboard = ({ useratom, authorized }) => {
       {user != null ? (
         <Box m="20px" sx={{marginTop:-2}}>
          
-          {user.userRole === "Admin" && <AdminDashboard/> }
+          {user.userRole === "Admin" && <AdminDashboard user={user}/> }
           {user.userRole === "Prospect" && (
             <>
               <Button

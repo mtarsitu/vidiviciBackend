@@ -3,7 +3,7 @@ import { tokens } from "../../theme";
 import { mockTransactions } from "../../data/mockData";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import EmailIcon from "@mui/icons-material/Email";
-import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
+import EuroSymbolIcon from "@mui/icons-material/EuroSymbol";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import TrafficIcon from "@mui/icons-material/Traffic";
 import Header from "../../components/Header";
@@ -12,21 +12,42 @@ import GeographyChart from "../../components/GeographyChart";
 import BarChart from "../../components/BarChart";
 import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
-import { TotalInvestmentsAtom } from "../../data/dataAtom";
+import { investmentsAtom, usersAtom } from "../../data/dataAtom";
 import { useAtom } from "jotai";
 
-const AdminDashboard = () => {
+const AdminDashboard = ({ user }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const totalInvestments = useAtom(TotalInvestmentsAtom);
-  console.log(totalInvestments);
+  const users = useAtom(usersAtom)[0];
+  const investments = useAtom(investmentsAtom)[0];
+  const totalSumInvest = investments.reduce(function (acc, investment) {
+    return acc + investment.initialInvestmentAmount;
+  }, 0);
+  const totalInvestors = [
+    ...investments
+      .reduce((a, c) => {
+        a.set(c.clientId, c);
+        return a;
+      }, new Map())
+      .values(),
+  ].length;
+  // const totalUsers = users.filter((obj) => {
+  //   return Object.keys(obj).reduce((acc, curr) => {
+  //     return acc || obj[curr].includes("Investor" || "Pending");
+  //   }, false);
+  // });
+  // console.log(totalUsers);
+
   return (
-    <Box m="20px" >
+    <Box m="20px">
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
+        <Header
+          title="DASHBOARD"
+          subtitle={`Bine ai venit ${user.firstName}`}
+        />
 
-        <Box>
+        {/* <Box>
           <Button
             sx={{
               backgroundColor: colors.blueAccent[700],
@@ -39,14 +60,14 @@ const AdminDashboard = () => {
             <DownloadOutlinedIcon sx={{ mr: "10px" }} />
             Download Reports
           </Button>
-        </Box>
+        </Box> */}
       </Box>
 
       {/* GRID & CHARTS */}
       <Box
         display="grid"
         gridTemplateColumns="repeat(12, 1fr)"
-        gridAutoRows="140px"
+        gridAutoRows="125px"
         gap="20px"
       >
         {/* ROW 1 */}
@@ -77,12 +98,13 @@ const AdminDashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title={totalInvestments[0]}
+            //.replace(/,/g, ".")
+            title={totalSumInvest.toLocaleString()}
             subtitle="Total investitii"
             progress="0.50"
             increase="+21%"
             icon={
-              <PointOfSaleIcon
+              <EuroSymbolIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
@@ -96,8 +118,8 @@ const AdminDashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="32,441"
-            subtitle="New Clients"
+            title={totalInvestors}
+            subtitle="Total investors"
             progress="0.30"
             increase="+5%"
             icon={
@@ -164,7 +186,7 @@ const AdminDashboard = () => {
               </IconButton>
             </Box>
           </Box>
-          <Box height="250px" m="-20px 0 0 0">
+          <Box height="220px" m="-20px 0 0 0">
             <LineChart isDashboard={true} />
           </Box>
         </Box>
@@ -235,7 +257,7 @@ const AdminDashboard = () => {
             alignItems="center"
             mt="25px"
           >
-            <ProgressCircle size="125" />
+            <ProgressCircle size="110" />
             <Typography
               variant="h5"
               color={colors.greenAccent[500]}

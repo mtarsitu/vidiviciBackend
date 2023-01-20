@@ -42,7 +42,7 @@ namespace API_VidiVici.Data
            return new List<Investment>
            {
                new Investment{
-                   ClientId= "f53b4e75-e005-4fb4-ab10-3f97e7b84261",
+                   ClientId= "c0eccffb-15b5-4dc1-9c5a-151735b24c0c",
                    FundId =1,
                    RateOnFinal=true,
                    InitialInvestmentAmout= 1000000
@@ -50,26 +50,26 @@ namespace API_VidiVici.Data
                },
 
                new Investment{
-                   ClientId= "f53b4e75-e005-4fb4-ab10-3f97e7b84261",
+                   ClientId= "c0eccffb-15b5-4dc1-9c5a-151735b24c0c",
                    FundId =1,
                    InitialInvestmentAmout= 2000000
                },
 
                new Investment{
-                   ClientId= "d9d4aee0-cefe-4f43-9c09-3a2f8e6119a5",
+                   ClientId= "46b215bd-934c-489b-b654-a0e4ab5d595a",
                    FundId =2,
                    InitialInvestmentAmout= 3000000
                    
                },
 
                new Investment{
-                   ClientId= "d9d4aee0-cefe-4f43-9c09-3a2f8e6119a5",
+                   ClientId= "46b215bd-934c-489b-b654-a0e4ab5d595a",
                    FundId =1,
                    InitialInvestmentAmout= 4000000
                },
 
                new Investment{
-                   ClientId= "d9d4aee0-cefe-4f43-9c09-3a2f8e6119a5",
+                   ClientId= "46b215bd-934c-489b-b654-a0e4ab5d595a",
                    FundId =4,
                    InitialInvestmentAmout= 5000000
                },
@@ -83,9 +83,8 @@ namespace API_VidiVici.Data
                     Email = "poweruser@test.com",
                     FirstName = "Power",
                     LastName = "User",
-                    UserRole = UserRole.Poweruser
-                    
-                    
+                    UserRole = UserRole.Poweruser,
+                    UsedPlatform = "vidivici"
                 };
                 await userManager.CreateAsync(poweruser, "Pa$$1234");
                 await userManager.AddToRoleAsync(poweruser, "Poweruser");
@@ -96,8 +95,8 @@ namespace API_VidiVici.Data
                     Email = "admin@test.com",
                     FirstName = "Alex",
                     LastName = "Dumitru",
-                    UserRole = UserRole.Admin
-                    
+                    UserRole = UserRole.Admin,
+                    UsedPlatform = "vidivici"
                 };
                 await userManager.CreateAsync(admin, "Pa$$1234");
                 await userManager.AddToRoleAsync(admin,  "Admin" );
@@ -108,9 +107,8 @@ namespace API_VidiVici.Data
                     Email = "employee@test.com",
                     FirstName = "Employee First Name",
                     LastName = "Employee Last Name",
-                    UserRole = UserRole.Employee
-                    
-                    
+                    UserRole = UserRole.Employee,
+                    UsedPlatform = "vidivici"
                 };
                 await userManager.CreateAsync(employee, "Pa$$1234");
                 await userManager.AddToRoleAsync(employee,  "Employee" );
@@ -121,8 +119,8 @@ namespace API_VidiVici.Data
                     Email = "prospect@test.com",
                     FirstName = "Prospect First Name",
                     LastName = "Prospect Last Name",
-                    UserRole = UserRole.Prospect
-                    
+                    UserRole = UserRole.Prospect,
+                    UsedPlatform = "vidivici"
                 };
                 await userManager.CreateAsync(prospect, "Pa$$1234");
                 await userManager.AddToRoleAsync(prospect,  "Prospect" );
@@ -133,8 +131,8 @@ namespace API_VidiVici.Data
                     Email = "pending@test.com",
                     FirstName = "Pending First Name",
                     LastName = "Pending Last Name",
-                    UserRole = UserRole.Pending
-                    
+                    UserRole = UserRole.Pending,
+                    UsedPlatform = "vidici"
                 };
                 await userManager.CreateAsync(pending, "Pa$$1234");
                 await userManager.AddToRoleAsync(pending,  "Pending" );
@@ -145,8 +143,8 @@ namespace API_VidiVici.Data
                     Email = "investor@test.com",
                     FirstName = "Investor First Name",
                     LastName = "Investor Last Name",
-                    UserRole = UserRole.Investor
-                    
+                    UserRole = UserRole.Investor,
+                    UsedPlatform = "vidivici"
                 };
                 await userManager.CreateAsync(investor, "Pa$$1234");
                 await userManager.AddToRoleAsync(investor,  "Investor" );
@@ -157,8 +155,8 @@ namespace API_VidiVici.Data
                     Email = "secondinvestor@test.com",
                     FirstName = "Second Investor First Name",
                     LastName = "Second Investor Last Name",
-                    UserRole = UserRole.Investor
-                    
+                    UserRole = UserRole.Investor,
+                    UsedPlatform = "vidici"
                 };
                 await userManager.CreateAsync(secondInvestor, "Pa$$1234");
                 await userManager.AddToRoleAsync(secondInvestor,  "Investor" );
@@ -168,7 +166,7 @@ namespace API_VidiVici.Data
         {
             return new List<Information>{
                 new Information{
-                    UserId = "f53b4e75-e005-4fb4-ab10-3f97e7b84261",
+                    UserId = "c0eccffb-15b5-4dc1-9c5a-151735b24c0c",
                     Cnp = "5020116210753",
                     BirthDate = DateTime.UtcNow,
                     Address = "Bucuresti, Sos Pipera 61 bl 4 sc 2 et 7 ap 159",
@@ -178,7 +176,7 @@ namespace API_VidiVici.Data
                     RegComertului = "J40/5251/2001",
                 },
                  new Information{
-                    UserId = "f53b4e75-e005-4fb4-ab10-3f97e7b84261",
+                    UserId = "c0eccffb-15b5-4dc1-9c5a-151735b24c0c",
                     Cnp = "5020116210753",
                     BirthDate = DateTime.UtcNow,
                     Address = "Iasi, Sos Pipera 61 bl 4 sc 2 et 7 ap 159",
@@ -188,7 +186,7 @@ namespace API_VidiVici.Data
                     RegComertului = "J40/5251/2001",
                 },
                  new Information{
-                    UserId = "d9d4aee0-cefe-4f43-9c09-3a2f8e6119a5",
+                    UserId = "46b215bd-934c-489b-b654-a0e4ab5d595a",
                     Cnp = "5020116210753",
                     BirthDate = DateTime.UtcNow,
                     Address = "Cluj, Sos Pipera 61 bl 4 sc 2 et 7 ap 159",

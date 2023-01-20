@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace APIVidiVici.Data.Migrations
 {
     [DbContext(typeof(VidiviciDbContext))]
-    [Migration("20230118111048_InitialCreate")]
+    [Migration("20230120081032_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -42,6 +42,28 @@ namespace APIVidiVici.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Applications");
+                });
+
+            modelBuilder.Entity("API_VidiVici.Model.Calendar", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Event")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("EventEnd")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("EventStart")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Calendars");
                 });
 
             modelBuilder.Entity("API_VidiVici.Model.Fund", b =>
@@ -161,6 +183,9 @@ namespace APIVidiVici.Data.Migrations
                     b.Property<string>("Message")
                         .HasColumnType("text");
 
+                    b.Property<string>("NotificationType")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.ToTable("Notifications");
@@ -177,6 +202,9 @@ namespace APIVidiVici.Data.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -219,6 +247,9 @@ namespace APIVidiVici.Data.Migrations
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("UsedPlatform")
+                        .HasColumnType("text");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
@@ -267,37 +298,37 @@ namespace APIVidiVici.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9ae1213d-c41b-493a-97e4-83127995813f",
+                            Id = "9665a852-3f58-4a7d-972b-46e7c3698072",
                             Name = "Poweruser",
                             NormalizedName = "POWERUSER"
                         },
                         new
                         {
-                            Id = "dfc7ef67-b69e-4c8f-b321-8ea020e0da08",
+                            Id = "4200ef6c-9abd-4ab4-bb9c-3f96754abe53",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "07d8176d-1bbe-4a47-b28f-773c14550e68",
+                            Id = "61dd8e74-24d8-42a9-9547-b85ee9e3cf7d",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "fa8da01b-b20c-45ae-801e-29f99fc74959",
+                            Id = "684647a2-aad0-4a42-9942-dac5d0dcc77d",
                             Name = "Prospect",
                             NormalizedName = "PROSPECT"
                         },
                         new
                         {
-                            Id = "a2519f5f-5586-4e80-8bd1-886aa6533f8a",
+                            Id = "a8228d58-9cf6-465e-ae94-d53f43edab4e",
                             Name = "Pending",
                             NormalizedName = "PENDING"
                         },
                         new
                         {
-                            Id = "9b8332f6-ebf5-4fd5-952d-bc76247ca784",
+                            Id = "8863648b-dab4-4e3c-9bd4-7e5f9368af14",
                             Name = "Investor",
                             NormalizedName = "INVESTOR"
                         });

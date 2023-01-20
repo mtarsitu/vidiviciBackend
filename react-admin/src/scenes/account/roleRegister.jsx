@@ -8,8 +8,11 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Typography from "@mui/material/Typography";
 import Header from "../../components/Header";
 import { toast, ToastContainer } from "react-toastify";
+import { refreshAtom } from "../../data/dataAtom";
+import { useAtom } from "jotai";
 
 const RoleRegister = ({show,setShow}) => {
+  const [refresh,setRefresh] = useAtom(refreshAtom); 
   const [theme, colorMode] = useMode();
   const modalBackground = theme.palette.mode? "dark":"light"
   // const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -43,6 +46,8 @@ const RoleRegister = ({show,setShow}) => {
       }
     );
     if (response.ok) {
+      setRefresh(!refresh);
+      setShow(false);
       toast.success("User inregistrat");
     }
   }

@@ -17,7 +17,9 @@ namespace API_VidiVici.Modifiers
                 UserRole = user.UserRole,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Email = user.Email
+                Email = user.Email,
+                UsedPlatform = user.UsedPlatform
+
             };    
         }
     }

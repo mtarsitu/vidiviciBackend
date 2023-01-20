@@ -8,8 +8,7 @@ namespace API_VidiVici.Model
         public string? FirstName{get;set;}
         public string? LastName {get;set;}
         public string? UserRole {get;set;}
-
-       
-        
+        public DateTime DateCreated {get;set;} = DateTime.UtcNow;
+        public string? UsedPlatform {get;set;}
     }
 }

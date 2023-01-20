@@ -43,6 +43,15 @@ namespace API_VidiVici.Controllers
             _services.Edit(investment);
         }
 
+
+        [Authorize(Roles ="Admin,Poweruser,Employee")]
+        [HttpGet("totalInvestments")]
+
+        public Task<double> TotalSum()
+        {
+            return _services.GetTotalSum();
+        }
+        
         
     }
 }

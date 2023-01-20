@@ -16,6 +16,8 @@ namespace API_VidiVici.Model
         public string? LastName {get;set;}
         public string? Email {get;set;}
 
+        public string? UsedPlatform {get;set;}
+
         public IEnumerable<InformationDto?> InformationDtos {get;set;} = new List<InformationDto>();
     }
 }

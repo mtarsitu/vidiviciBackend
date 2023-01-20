@@ -19,20 +19,15 @@ const Register = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   // const isNonMobile = useMediaQuery("(min-width:600px)");
-  let user = {
-    username: "",
-    password: "",
-    email: "",
-    firstName: "",
-    lastName: "",
-  };
+ 
   async function Register(formData) {
-    user = {
+    const user = {
       username: formData.get("username"),
       password: formData.get("password"),
       email: formData.get("email"),
       firstName: formData.get("firstName"),
       lastName: formData.get("lastName"),
+      usedPlatform: "vidivici",
     };
     const response = await fetch(`http://localhost:5241/Accounts/register`, {
       method: "POST",

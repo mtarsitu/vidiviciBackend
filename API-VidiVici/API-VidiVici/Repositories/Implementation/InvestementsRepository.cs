@@ -59,5 +59,16 @@ namespace API_VidiVici.Repositories.Implementation
             .Where(x=>x.ClientId == id)
             .ToListAsync();
         }
+
+        public async Task<double> GetTotalSum()
+        {
+            double total = 0;
+            var investments = await _context.Investments.ToListAsync();
+            foreach(Investment investment in investments)
+            {
+                total += investment.InitialInvestmentAmout;
+            }
+            return total;
+        }
     }
 }

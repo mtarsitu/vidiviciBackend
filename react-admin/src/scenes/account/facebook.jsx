@@ -17,6 +17,7 @@ const Facebook = ()=>{
             firstName: fullName[0],
             lastName: fullName[1],
             email: fullName[0] + "." + fullName[1] + "@testfacebook.com",
+            usedPlatform: "facebook"
           };
           setUserToLogin(externalUser);
           ExternalLogin();

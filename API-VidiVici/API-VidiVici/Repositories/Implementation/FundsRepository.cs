@@ -45,5 +45,7 @@ namespace API_VidiVici.Repositories.Implementation
             _context.Funds.Remove(_context.Funds.Single(x=>x.Id ==id));
             _context.SaveChanges();
         }
+
+        
     }
 }

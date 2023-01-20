@@ -50,6 +50,8 @@ namespace APIVidiVici.Data.Migrations
                     FirstName = table.Column<string>(type: "text", nullable: true),
                     LastName = table.Column<string>(type: "text", nullable: true),
                     UserRole = table.Column<string>(type: "text", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UsedPlatform = table.Column<string>(type: "text", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -68,6 +70,21 @@ namespace APIVidiVici.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Calendars",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    EventStart = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    EventEnd = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Event = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Calendars", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -93,6 +110,7 @@ namespace APIVidiVici.Data.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    NotificationType = table.Column<string>(type: "text", nullable: true),
                     Message = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -267,12 +285,12 @@ namespace APIVidiVici.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "07d8176d-1bbe-4a47-b28f-773c14550e68", null, "Employee", "EMPLOYEE" },
-                    { "9ae1213d-c41b-493a-97e4-83127995813f", null, "Poweruser", "POWERUSER" },
-                    { "9b8332f6-ebf5-4fd5-952d-bc76247ca784", null, "Investor", "INVESTOR" },
-                    { "a2519f5f-5586-4e80-8bd1-886aa6533f8a", null, "Pending", "PENDING" },
-                    { "dfc7ef67-b69e-4c8f-b321-8ea020e0da08", null, "Admin", "ADMIN" },
-                    { "fa8da01b-b20c-45ae-801e-29f99fc74959", null, "Prospect", "PROSPECT" }
+                    { "4200ef6c-9abd-4ab4-bb9c-3f96754abe53", null, "Admin", "ADMIN" },
+                    { "61dd8e74-24d8-42a9-9547-b85ee9e3cf7d", null, "Employee", "EMPLOYEE" },
+                    { "684647a2-aad0-4a42-9942-dac5d0dcc77d", null, "Prospect", "PROSPECT" },
+                    { "8863648b-dab4-4e3c-9bd4-7e5f9368af14", null, "Investor", "INVESTOR" },
+                    { "9665a852-3f58-4a7d-972b-46e7c3698072", null, "Poweruser", "POWERUSER" },
+                    { "a8228d58-9cf6-465e-ae94-d53f43edab4e", null, "Pending", "PENDING" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -348,6 +366,9 @@ namespace APIVidiVici.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Calendars");
 
             migrationBuilder.DropTable(
                 name: "Informations");
