@@ -12,14 +12,14 @@ import { useMode,tokens } from "../../theme";
 import { useAtom } from "jotai";
 import { newInformationAtom, RegisterInformationAtom } from "../../data/dataAtom";
 
-const AddInformation = ({show,setShow,userId,section,setSection,mode}) => {
+const AddInformation = ({show,setShow,userId,section,setSection,mode,colors}) => {
   
-  const [theme, colorMode] = useMode(); 
+
   const [,setNewInformation] = useAtom(newInformationAtom);
   const [RegisterInformation,] = useAtom(RegisterInformationAtom);
 
   // const isNonMobile = useMediaQuery("(min-width:600px)");
-  const colors = tokens(theme.palette.mode);
+  
   const handleClose= ()=>{
 
     if(section!= undefined){setSection(section+1)}
@@ -63,7 +63,7 @@ const AddInformation = ({show,setShow,userId,section,setSection,mode}) => {
           left: "50%",
           transform: "translate(-50%, -50%)",
           width: "80vw",
-          bgcolor: `${mode==="light"? colors.primary[100]:colors.primary[400]}`,
+          bgcolor: `${mode==="light"? colors.primary[900]:colors.primary[400]}`,
           border: "2px solid #000",
           boxShadow: 24,
           borderRadius: "12px",

@@ -26,7 +26,7 @@ import Unauthorize from "../unauthorize";
 import EditUser from "./editUser";
 import RoleRegister from "../account/roleRegister";
 
-const Users = ({ useratom,mode }) => {
+const Users = ({ useratom,mode,colors }) => {
   const [open, setOpen] = useState(false);
   const [newUser, setNewUser] = useState(false);
   const [infoId, setInfoId] = useState();
@@ -34,8 +34,7 @@ const Users = ({ useratom,mode }) => {
   const [, setEntityId] = useAtom(entityIdAtom);
   const [partnerName, setPartnerName] = useState();
   const users = useAtom(usersAtom);
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+
   const loggedUser = useratom;
 
 
@@ -181,7 +180,7 @@ const Users = ({ useratom,mode }) => {
             />
           </Box>
           
-              <Information props={infoId} partnerName={partnerName} open={open} handleClose={handleClose} mode={mode} />
+              <Information props={infoId} partnerName={partnerName} open={open} handleClose={handleClose} mode={mode} colors={colors} />
            
 
 

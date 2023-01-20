@@ -5,12 +5,10 @@ import { useAtom } from "jotai";
 import { entityIdAtom, entityInformationAtom } from "../../data/dataAtom";
 import { useState } from "react";
 import AddInformation from "./addInformation";
-const Information = ({ props, partnerName, open, handleClose, mode }) => {
+const Information = ({ props, partnerName, open, handleClose, mode,colors }) => {
   const [, setEntityId] = useAtom(entityIdAtom);
   const entityInformation = useAtom(entityInformationAtom)[0];
-  const theme = useTheme();
-  const modalBackground = theme.palette.mode ? "dark" : "light";
-  const colors = tokens(theme.palette.mode);
+
   const [newInfo, setNewInfo] = useState(false);
   setEntityId(props);
   const handleAddInfo = () => {setNewInfo(true)};
@@ -47,7 +45,9 @@ const Information = ({ props, partnerName, open, handleClose, mode }) => {
         })
       : ""),
   ];
-
+  const close=()=>{
+    handleClose(false);
+  };
   const columns = headers.filter((element) => {
     return element !== "";
   });
@@ -58,7 +58,7 @@ const Information = ({ props, partnerName, open, handleClose, mode }) => {
     <>
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={close}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -131,7 +131,7 @@ const Information = ({ props, partnerName, open, handleClose, mode }) => {
         </Box>
       </Modal>
 
-      {newInfo && <AddInformation show={newInfo} setShow={setNewInfo} userId={props} mode={mode}/>}
+      {newInfo && <AddInformation show={newInfo} setShow={setNewInfo} userId={props} mode={mode} colors={colors}/>}
     </>
   );
 };

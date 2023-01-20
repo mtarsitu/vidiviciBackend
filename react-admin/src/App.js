@@ -11,7 +11,7 @@ import { ToastContainer } from "react-toastify";
 import Register from "./scenes/account/register";
 import { Suspense } from "react";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { ColorModeContext, useMode } from "./theme";
+import { ColorModeContext, useMode,tokens } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
 import Login from "./scenes/account/login";
 import { useAtom } from "jotai";
@@ -23,6 +23,7 @@ import PendingInvestors from "./scenes/users/pendingInvestors";
 
 function App() {
   const [theme, colorMode] = useMode();
+  const colors = tokens(theme.palette.mode);
   const [isSidebar, setIsSidebar] = useState(true);
   const [isLogged, setIsLogged] = useState(false);
   const loggedUser = useAtom(loggedUserAtom);
@@ -32,7 +33,7 @@ function App() {
     authorized: ["Admin", "Poweruser", "Employee"],
     unauthorize: ["Prospect", "Investor", "Pending"],
   };
- 
+ console.log(colors.primary[900],"app");
   
   useEffect(() => {
     if (loggedUser[0] != null) {
@@ -81,12 +82,13 @@ function App() {
                       useratom={loggedUser[0]}
                       authorized={authorize}
                       mode={theme.palette.mode}
+                      colors={colors}
                     />
                   }
                 />
                 <Route
                   path="/parteneri"
-                  element={<Users useratom={loggedUser[0]} mode={theme.palette.mode} />}
+                  element={<Users useratom={loggedUser[0]} mode={theme.palette.mode} colors={colors}/>}
                 />
                 <Route
                   path="/myFunds"
@@ -102,7 +104,7 @@ function App() {
                 <Route path="/calendar" element={<Calendar />} />
                 <Route
                   path="/investments"
-                  element={<Investments useratom={loggedUser[0]} />}
+                  element={<Investments useratom={loggedUser[0]} mode={theme.palette.mode} colors={colors}/>}
                 />
                 <Route path="/adauga-fond" element={<AddFund />} />
                 <Route
@@ -111,6 +113,8 @@ function App() {
                     <PendingInvestors
                       useratom={loggedUser[0]}
                       authorized={authorize}
+                      mode={theme.palette.mode}
+                      colors={colors}
                     />
                   }
                 />

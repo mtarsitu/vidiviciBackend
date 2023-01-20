@@ -1,6 +1,5 @@
-import { Box, IconButton, useTheme, Typography, Modal } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import { useAtom } from "jotai";
 import { usersAtom, entityIdAtom } from "../../data/dataAtom";
@@ -12,14 +11,12 @@ import DoneAllIcon from "@mui/icons-material/DoneAll";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import EditIcon from "@mui/icons-material/Edit";
 
-const PendingInvestors = ({ useratom, authorized }) => {
+const PendingInvestors = ({ useratom, authorized,mode,colors }) => {
   const [open, setOpen] = useState(false);
   const [infoId, setInfoId] = useState();
   const [, setEntityId] = useAtom(entityIdAtom);
   const [partnerName, setPartnerName] = useState();
   const users = useAtom(usersAtom);
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
   const loggedUser = useratom;
 
   const columns = [
@@ -57,13 +54,11 @@ const PendingInvestors = ({ useratom, authorized }) => {
 
   const handleOpen = (id) => {
     setPartnerName(users[0].filter((entity) => entity.id === id)[0].username);
-    console.log(id);
     setInfoId(id);
     setEntityId(id);
     setOpen(true);
   };
 
-  const handleClose = () => setOpen(false);
 
   return (
     <>
@@ -117,32 +112,8 @@ const PendingInvestors = ({ useratom, authorized }) => {
               // }}
             />
           </Box>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box
-              sx={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                width: "80vw",
-                bgcolor: `${colors.blueAccent[700]}`,
-                border: "2px solid #000",
-                boxShadow: 24,
-                borderRadius: "12px",
-                p: 4,
-              }}
-            >
-              <Typography id="modal-modal-title" variant="h3" component="h2">
-                Informatii ale partenerului: {partnerName}
-              </Typography>
-              <Information props={infoId} />
-            </Box>
-          </Modal>
+
+          <Information props={infoId} partnerName={partnerName} open={open} handleClose={setOpen} mode={mode} colors={colors} />
         </Box>
       ) : (
         <Box>

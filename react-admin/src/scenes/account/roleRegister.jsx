@@ -75,7 +75,7 @@ const RoleRegister = ({show,setShow,mode}) => {
           left: "50%",
           transform: "translate(-50%, -50%)",
           width: "80vw",
-          bgcolor: `${mode==="light"? colors.primary[100]:colors.primary[400]}`,
+          bgcolor: `${mode==="light"? colors.primary[900]:colors.primary[600]}`,
           border: "2px solid #000",
           boxShadow: 24,
           borderRadius: "12px",

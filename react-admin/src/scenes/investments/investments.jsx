@@ -1,75 +1,66 @@
-import { Box, IconButton, useTheme, Typography, Modal } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import { useAtom } from "jotai";
-import { investmentsAtom, entityIdAtom } from "../../data/dataAtom";
+import { investmentsAtom, entityIdAtom, usersAtom } from "../../data/dataAtom";
 import InfoIcon from "@mui/icons-material/Info";
 import { useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import Unauthorize from "../unauthorize";
-
-
-const Investments = ({useratom})=>{
+import Information from "../information/information";
+const Investments = ({ useratom, mode,colors}) => {
   const [open, setOpen] = useState(false);
   const [infoId, setInfoId] = useState();
   const [, setEntityId] = useAtom(entityIdAtom);
   const [partnerName, setPartnerName] = useState();
   const investments = useAtom(investmentsAtom);
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+  const users = useAtom(usersAtom)
   const loggedUser = useratom;
-  console.log(investments);
   const columns = [
-    { field: "id", headerName: "ID",width:50 },
-    { 
-      field: "clientname", 
-      headerName:"Client", 
-      width:300, 
-      renderCell: (row) =>{
-        return(
+    { field: "id", headerName: "ID", width: 50 },
+    {
+      field: "clientname",
+      headerName: "Client",
+      width: 300,
+      renderCell: (row) => {
+        return (
           <Box>
-          {row.row.client.firstName} {row.row.client.lastName }
-          </Box>);
-      }
+            {row.row.client.firstName} {row.row.client.lastName}
+          </Box>
+        );
+      },
     },
-    { 
-      field: "fundName", 
-      headerName:"Nume Fond", 
-      width:130, 
-      renderCell: (row) =>{
-        return(
-          <Box>
-          {row.row.fund.name}
-          </Box>);
-      }
+    {
+      field: "fundName",
+      headerName: "Nume Fond",
+      width: 130,
+      renderCell: (row) => {
+        return <Box>{row.row.fund.name}</Box>;
+      },
     },
-    { field: "initialInvestmentAmount", headerName: "Suma investita", width: 100 },
+    {
+      field: "initialInvestmentAmount",
+      headerName: "Suma investita",
+      width: 100,
+    },
     { field: "rateOfInterest", headerName: "Dobanda", width: 80 },
-    { 
-      field: "rate", 
-      headerName:"Dobanda %", 
-      width:80, 
-      renderCell: (row) =>{
-        return(
-          <Box>
-          {row.row.fund.interestRate} %
-          </Box>);
-      }
+    {
+      field: "rate",
+      headerName: "Dobanda %",
+      width: 80,
+      renderCell: (row) => {
+        return <Box>{row.row.fund.interestRate} %</Box>;
+      },
     },
     { field: "dateCreated", headerName: "Data Creare", width: 200 },
     { field: "finalPaymentDate", headerName: "Data Finalizare", width: 130 },
-    { 
-      field: "private", 
-      headerName:"Privat", 
-      width:80, 
-      renderCell: (row) =>{
-        
-        return(
-          <Box>
-          {row.row.fund.private? "Privat": "Public"} 
-          </Box>);
-      }
+    {
+      field: "private",
+      headerName: "Privat",
+      width: 80,
+      renderCell: (row) => {
+        return <Box>{row.row.fund.private ? "Privat" : "Public"}</Box>;
+      },
     },
     {
       field: "actions",
@@ -79,10 +70,10 @@ const Investments = ({useratom})=>{
       renderCell: (row) => {
         return (
           <Box>
-            <IconButton color="inherit" onClick={() => handleOpen(row.id)}>
+            <IconButton color="inherit" onClick={() => handleOpen(row.row.clientId)}>
               <InfoIcon />
             </IconButton>
-            <IconButton color="inherit" >
+            <IconButton color="inherit">
               {/*  */}
               <EditIcon />
             </IconButton>
@@ -93,8 +84,9 @@ const Investments = ({useratom})=>{
   ];
 
   const handleOpen = (id) => {
+    console.log(id);
     setPartnerName(
-      investments[0].filter((entity) => entity.id === id)[0].username
+      users[0].filter((entity) => entity.id === id)[0].username
     );
     console.log(id);
     setInfoId(id);
@@ -154,32 +146,8 @@ const Investments = ({useratom})=>{
               // }}
             />
           </Box>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box
-              sx={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                width: "80vw",
-                bgcolor: `${colors.blueAccent[700]}`,
-                border: "2px solid #000",
-                boxShadow: 24,
-                borderRadius: "12px",
-                p: 4,
-              }}
-            >
-              <Typography id="modal-modal-title" variant="h3" component="h2">
-                Informatii ale partenerului: {partnerName}
-              </Typography>
-              {/* <Information props={infoId} /> */}
-            </Box>
-          </Modal>
+
+          <Information props={infoId} open={open} partnerName={partnerName} handleClose={handleClose} mode={mode} colors={colors} />
         </Box>
       ) : (
         <Box>
@@ -188,6 +156,6 @@ const Investments = ({useratom})=>{
       )}
     </>
   );
-}
+};
 
 export default Investments;

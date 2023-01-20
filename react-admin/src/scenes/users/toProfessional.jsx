@@ -25,9 +25,8 @@ const imageObject = {
   5: null,
 };
 
-const ToProfesional = ({ show, setShow, user,mode }) => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+const ToProfesional = ({ show, setShow, user,mode,colors }) => {
+
   const date = new Date();
   let [section, setSection] = useState(0);
   // const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -82,7 +81,7 @@ const ToProfesional = ({ show, setShow, user,mode }) => {
         }
       });
   };
-  console.log(section);
+  
   const generatePdf = async () => {
     for (const [i, img] of Object.entries(imageObject)) {
       pdf.addImage(img, "pdf", -45, 5, 300, 0);
@@ -104,6 +103,8 @@ const ToProfesional = ({ show, setShow, user,mode }) => {
               userId={user.id}
               section={section}
               setSection={setSection}
+              mode = {mode}
+              colors = {colors}
             />
           )}
           {section > 0 && (
@@ -121,7 +122,7 @@ const ToProfesional = ({ show, setShow, user,mode }) => {
                   left: "50%",
                   transform: "translate(-50%, -50%)",
                   width: "80vw",
-                  bgcolor: `${mode==="light"? colors.primary[900]:colors.primary[400]}`,
+                  bgcolor: `${mode==="light"? colors.primary[900]:colors.primary[600]}`,
                   border: "2px solid #000",
                   boxShadow: 24,
                   borderRadius: "12px",
@@ -136,7 +137,7 @@ const ToProfesional = ({ show, setShow, user,mode }) => {
                       alignItems="center"
                       marginTop="-40px"
                     >
-                      {theme.palette.mode === "dark" ? (
+                      {mode=== "dark" ? (
                         <img
                           alt="profile-user"
                           width="30%"
