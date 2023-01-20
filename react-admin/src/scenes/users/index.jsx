@@ -25,7 +25,8 @@ import Information from "../information/information";
 import Unauthorize from "../unauthorize";
 import EditUser from "./editUser";
 import RoleRegister from "../account/roleRegister";
-const Users = ({ useratom }) => {
+
+const Users = ({ useratom,mode }) => {
   const [open, setOpen] = useState(false);
   const [newUser, setNewUser] = useState(false);
   const [infoId, setInfoId] = useState();
@@ -36,8 +37,8 @@ const Users = ({ useratom }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const loggedUser = useratom;
-  const modalBackground = theme.palette.mode ? "dark" : "light";
-  console.log(users);
+
+
   const handleAddUser = () => {
     setNewUser(true);
   };
@@ -118,7 +119,7 @@ const Users = ({ useratom }) => {
   const handleEdit = (u) => {
     setUserEdit(u);
   };
-  const handleEditFinish = () => setUserEdit({});
+
   return (
     <>
       {loggedUser != null ? (
@@ -180,33 +181,13 @@ const Users = ({ useratom }) => {
             />
           </Box>
           
-              <Information props={infoId} partnerName={partnerName} open={open} handleClose={handleClose} />
+              <Information props={infoId} partnerName={partnerName} open={open} handleClose={handleClose} mode={mode} />
            
 
-          <Modal
-            open={userEdit.username !== undefined}
-            onClose={handleEditFinish}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box
-              sx={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                width: "80vw",
-                bgcolor: `neutral.${modalBackground}`,
-                border: "2px solid #000",
-                boxShadow: 24,
-                borderRadius: "12px",
-                p: 4,
-              }}
-            >
-              <EditUser oldUser={userEdit} />
-            </Box>
-          </Modal>
-          {newUser && <RoleRegister show={newUser} setShow={setNewUser} />}
+
+              <EditUser oldUser={userEdit} setUserEdit={setUserEdit} mode={mode}/>
+            
+          {newUser && <RoleRegister show={newUser} setShow={setNewUser} mode={mode}/>}
         </Box>
       ) : (
         <Box>

@@ -5,7 +5,7 @@ import { useAtom } from "jotai";
 import { entityIdAtom, entityInformationAtom } from "../../data/dataAtom";
 import { useState } from "react";
 import AddInformation from "./addInformation";
-const Information = ({ props, partnerName, open, handleClose }) => {
+const Information = ({ props, partnerName, open, handleClose, mode }) => {
   const [, setEntityId] = useAtom(entityIdAtom);
   const entityInformation = useAtom(entityInformationAtom)[0];
   const theme = useTheme();
@@ -69,7 +69,7 @@ const Information = ({ props, partnerName, open, handleClose }) => {
             left: "50%",
             transform: "translate(-50%, -50%)",
             width: "80vw",
-            bgcolor: `neutral.${modalBackground}`,
+            bgcolor: mode === "light" ? colors.primary[900] : colors.primary[400],
             border: "2px solid #000",
             boxShadow: 24,
             borderRadius: "12px",
@@ -100,7 +100,7 @@ const Information = ({ props, partnerName, open, handleClose }) => {
               "& .MuiDataGrid-cell": {
                 borderBottom: "none",
               },
-              "& .name-column--cell": {
+              "& .username-column--cell": {
                 color: colors.greenAccent[300],
               },
               "& .MuiDataGrid-columnHeaders": {
@@ -114,8 +114,8 @@ const Information = ({ props, partnerName, open, handleClose }) => {
                 borderTop: "none",
                 backgroundColor: colors.purpleAccent[700],
               },
-              "& .MuiCheckbox-root": {
-                color: `${colors.greenAccent[200]} !important`,
+              "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                color: `${colors.grey[100]} !important`,
               },
             }}
           >
@@ -131,7 +131,7 @@ const Information = ({ props, partnerName, open, handleClose }) => {
         </Box>
       </Modal>
 
-      {newInfo && <AddInformation show={newInfo} setShow={setNewInfo} userId={props} />}
+      {newInfo && <AddInformation show={newInfo} setShow={setNewInfo} userId={props} mode={mode}/>}
     </>
   );
 };

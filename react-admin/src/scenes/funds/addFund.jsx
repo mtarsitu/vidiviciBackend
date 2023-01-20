@@ -9,17 +9,19 @@ import Header from "../../components/Header";
 import { toast, ToastContainer } from "react-toastify";
 import QueueIcon from "@mui/icons-material/Queue";
 
-import { useMode } from "../../theme";
+import { useMode, tokens } from "../../theme";
 import { useAtom } from "jotai";
 import { RegisterFundAtom,newFondAtom,refreshFundsAtom } from "../../data/dataAtom";
-const AddFund = ({show,setShow}) => {
+const AddFund = ({show,setShow,mode}) => {
   const [,setNewFond] = useAtom(newFondAtom);
   const [RegisterFund, ] = useAtom(RegisterFundAtom);
   const [theme, colorMode] = useMode();
+  const colors = tokens(theme.palette.mode);
   const [refreshFunds,setRefreshFunds] = useAtom(refreshFundsAtom);
-  const modalBackground = theme.palette.mode? "dark":"light"
+
+  console.log(mode);
   // const isNonMobile = useMediaQuery("(min-width:600px)");
-  
+  // colors.primary[500]
   let fond = {
     name: "",
     interestRate: "",
@@ -60,7 +62,7 @@ const AddFund = ({show,setShow}) => {
           left: "50%",
           transform: "translate(-50%, -50%)",
           width: "80vw",
-          bgcolor: `neutral.${modalBackground}`,
+          bgcolor: `${mode==="light"? colors.primary[100]:colors.primary[400]}`,
           border: "2px solid #000",
           boxShadow: 24,
           borderRadius: "12px",

@@ -32,7 +32,8 @@ function App() {
     authorized: ["Admin", "Poweruser", "Employee"],
     unauthorize: ["Prospect", "Investor", "Pending"],
   };
-
+ 
+  
   useEffect(() => {
     if (loggedUser[0] != null) {
       setIsLogged(true);
@@ -84,7 +85,7 @@ function App() {
                 />
                 <Route
                   path="/parteneri"
-                  element={<Users useratom={loggedUser[0]} />}
+                  element={<Users useratom={loggedUser[0]} mode={theme.palette.mode} />}
                 />
                 <Route
                   path="/myFunds"
@@ -93,7 +94,7 @@ function App() {
                 <Route path="/contacts" element={<Contacts />} />
                 <Route
                   path="/funds"
-                  element={<Funds authorized={authorize} />}
+                  element={<Funds authorized={authorize} mode={theme.palette.mode} />}
                 />
                 {/* <Route path="/role-register" element={<RoleRegister />} /> */}
                 <Route path="/register" element={<Register />} />

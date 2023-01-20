@@ -12,7 +12,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import AddFund from "./addFund";
-const Funds = ({ authorized }) => {
+const Funds = ({ authorized,mode }) => {
   const [showFunds, setShowFunds] = useState({});
   const funds = useAtom(fundsAtom);
   const allFunds = useAtom(allFundsAtom);
@@ -20,8 +20,7 @@ const Funds = ({ authorized }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const authorize = authorized;
-  console.log(showFunds);
- console.log(showNew,"acum");
+
   const handleAddFund=()=>{
     setNew(true);
   }
@@ -106,7 +105,7 @@ const Funds = ({ authorized }) => {
       </Box>
       {showNew&&
       
-      <AddFund show={showNew} setShow={setNew}/>
+      <AddFund show={showNew} setShow={setNew} mode={mode}/>
       }
     </Box>
   );

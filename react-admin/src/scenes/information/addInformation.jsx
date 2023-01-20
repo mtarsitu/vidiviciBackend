@@ -8,23 +8,24 @@ import Typography from "@mui/material/Typography";
 import Header from "../../components/Header";
 import { toast, ToastContainer } from "react-toastify";
 import QueueIcon from "@mui/icons-material/Queue";
-import { useMode } from "../../theme";
+import { useMode,tokens } from "../../theme";
 import { useAtom } from "jotai";
 import { newInformationAtom, RegisterInformationAtom } from "../../data/dataAtom";
 
-const AddInformation = ({show,setShow,userId,section,setSection}) => {
+const AddInformation = ({show,setShow,userId,section,setSection,mode}) => {
   
   const [theme, colorMode] = useMode(); 
   const [,setNewInformation] = useAtom(newInformationAtom);
   const [RegisterInformation,] = useAtom(RegisterInformationAtom);
-  const modalBackground = theme.palette.mode? "dark":"light"
-  // const isNonMobile = useMediaQuery("(min-width:600px)");
 
+  // const isNonMobile = useMediaQuery("(min-width:600px)");
+  const colors = tokens(theme.palette.mode);
   const handleClose= ()=>{
 
     if(section!= undefined){setSection(section+1)}
     setShow(false);
   }
+  console.log(mode);
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -62,7 +63,7 @@ const AddInformation = ({show,setShow,userId,section,setSection}) => {
           left: "50%",
           transform: "translate(-50%, -50%)",
           width: "80vw",
-          bgcolor: `neutral.${modalBackground}`,
+          bgcolor: `${mode==="light"? colors.primary[100]:colors.primary[400]}`,
           border: "2px solid #000",
           boxShadow: 24,
           borderRadius: "12px",
