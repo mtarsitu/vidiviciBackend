@@ -25,10 +25,9 @@ const imageObject = {
   5: null,
 };
 
-const ToProfesional = ({ show, setShow, user }) => {
+const ToProfesional = ({ show, setShow, user,mode }) => {
   const theme = useTheme();
-  // const colors = tokens(theme.palette.mode);
-  const modalBackground = theme.palette.mode ? "dark" : "light";
+  const colors = tokens(theme.palette.mode);
   const date = new Date();
   let [section, setSection] = useState(0);
   // const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -122,7 +121,7 @@ const ToProfesional = ({ show, setShow, user }) => {
                   left: "50%",
                   transform: "translate(-50%, -50%)",
                   width: "80vw",
-                  bgcolor: `neutral.${modalBackground}`,
+                  bgcolor: `${mode==="light"? colors.primary[900]:colors.primary[400]}`,
                   border: "2px solid #000",
                   boxShadow: 24,
                   borderRadius: "12px",

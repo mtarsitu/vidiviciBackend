@@ -80,6 +80,7 @@ function App() {
                     <Dashboard
                       useratom={loggedUser[0]}
                       authorized={authorize}
+                      mode={theme.palette.mode}
                     />
                   }
                 />

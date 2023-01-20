@@ -7,7 +7,7 @@ import LineChart from "../../components/LineChart";
 import Unauthorized from "../unauthorize/index";
 import { useState } from "react";
 import AdminDashboard from "./adminDashboard";
-const Dashboard = ({ useratom, authorized }) => {
+const Dashboard = ({ useratom, authorized,mode }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const user = useratom;
@@ -50,6 +50,8 @@ const Dashboard = ({ useratom, authorized }) => {
                 show={profesionalModal}
                 setShow={setProfesionalModal}
                 user={useratom}
+                mode= {mode}
+                
               />
             </>
           )}
