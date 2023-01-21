@@ -12,21 +12,16 @@ import { useMode,tokens } from "../../theme";
 import { useAtom } from "jotai";
 import { newInformationAtom, RegisterInformationAtom } from "../../data/dataAtom";
 
-const AddInformation = ({show,setShow,userId,section,setSection,mode,colors}) => {
-  
-
-  const [,setNewInformation] = useAtom(newInformationAtom);
-  const [RegisterInformation,] = useAtom(RegisterInformationAtom);
-
+const AddInformation = ({show,setShow,userId,mode,colors}) => {
+  const [newInformation,setNewInformation] = useAtom(newInformationAtom);
+  const RegisterInformation = useAtom(RegisterInformationAtom);
+ console.log(newInformation);
   // const isNonMobile = useMediaQuery("(min-width:600px)");
   
   const handleClose= ()=>{
-
-    if(section!= undefined){setSection(section+1)}
     setShow(false);
   }
-  console.log(mode);
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
@@ -43,8 +38,14 @@ const AddInformation = ({show,setShow,userId,section,setSection,mode,colors}) =>
     };
     console.log(info);
     setNewInformation(info);
-    handleClose();
-    RegisterInformation();
+    const timeout = ()=> {setTimeout(() => {
+      handleClose();
+    }, 300);}
+    timeout();
+    // console.log(newInformation);
+    
+    // RegisterInformation();
+
     // setRefreshFunds(!refreshFunds);
   
   };

@@ -1,13 +1,13 @@
 import FacebookLogin from "react-facebook-login";
 import styles from "./styles.module.scss";
 import FacebookIcon from "@mui/icons-material/Facebook";
-import { ExternalLoginAtom, userToLoginAtom } from "../../data/dataAtom";
+import { ExternalLoginAtom, userExternalAtom } from "../../data/dataAtom";
 import { useAtom } from "jotai";
 
 const Facebook = ()=>{
     const appId = "2097613670424852";
-    const [,setUserToLogin] = useAtom(userToLoginAtom);
-    const [ExternalLogin,] = useAtom(ExternalLoginAtom);
+    const [,setUserToLogin] = useAtom(userExternalAtom);
+    const ExternalLogin= useAtom(ExternalLoginAtom);
 
     const responseFacebook = (response) => {
         console.log(response);
@@ -20,7 +20,7 @@ const Facebook = ()=>{
             usedPlatform: "facebook"
           };
           setUserToLogin(externalUser);
-          ExternalLogin();
+          
         }
       };
 

@@ -1,24 +1,23 @@
 import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
 import { useEffect } from "react";
-import { ExternalLoginAtom, userToLoginAtom } from "../../data/dataAtom";
+import { ExternalLoginAtom, userExternalAtom } from "../../data/dataAtom";
 import { useAtom } from "jotai";
 const Google = () => {
-    const clientId =
+  const clientId =
     "968260556925-a1kdrj4op5s1j2981l3lent1kg397j83.apps.googleusercontent.com";
-  const [,setUserToLogin] = useAtom(userToLoginAtom);
- const [ExternalLogin,] = useAtom(ExternalLoginAtom);
+  const [, setUserToLogin] = useAtom(userExternalAtom);
+  const ExternalLogin = useAtom(ExternalLoginAtom);
   const onSuccess = (res) => {
     console.log(res);
     const externalUser = {
       firstName: res.profileObj.givenName,
       lastName: res.profileObj.familyName,
       email: res.profileObj.email,
-      usedPlatform: "google"
+      usedPlatform: "google",
     };
 
     setUserToLogin(externalUser);
-    ExternalLogin();
   };
   const onFailure = (err) => {
     console.log("failed:", err);

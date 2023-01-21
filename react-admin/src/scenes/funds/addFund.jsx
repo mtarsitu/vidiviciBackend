@@ -14,7 +14,7 @@ import { useAtom } from "jotai";
 import { RegisterFundAtom,newFondAtom,refreshFundsAtom } from "../../data/dataAtom";
 const AddFund = ({show,setShow,mode}) => {
   const [,setNewFond] = useAtom(newFondAtom);
-  const [RegisterFund, ] = useAtom(RegisterFundAtom);
+  const RegisterFund = useAtom(RegisterFundAtom);
   const [theme, colorMode] = useMode();
   const colors = tokens(theme.palette.mode);
   const [refreshFunds,setRefreshFunds] = useAtom(refreshFundsAtom);
@@ -42,7 +42,6 @@ const AddFund = ({show,setShow,mode}) => {
       returningType: data.get("returningType"),
     };
     setNewFond(fond);
-    RegisterFund();
     setRefreshFunds(!refreshFunds);
     handleClose();
   

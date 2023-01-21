@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace API_VidiVici.Controllers
 {
+    [ApiController]
     [Route("[controller]")]
     public class ApplicationsController : Controller
     {
@@ -34,29 +35,33 @@ namespace API_VidiVici.Controllers
         }
 
         [Authorize(Roles ="Admin,Poweruser,Employee")]
-        [HttpGet("/get")]
+        [HttpGet("get")]
         public async Task<Application> Get(string clientId)
         {
             return await _service.Get(clientId);
         }
 
-        [Authorize(Roles ="Admin,Poweruser,Employee")]
-        [HttpGet("/post")]
-        public async Task<ActionResult> Add(Application application)
+        [Authorize(Roles ="Admin,Poweruser,Employee,Prospect")]
+        [HttpPost("add")]
+        public void Add(Application application)
         {
+            if(application!=null){
+
             _service.Add(application);
-            var user = await _userManager.FindByIdAsync(application.ClientId);
-            if (user!= null)
-            {
-                await _userManager.RemoveFromRoleAsync(user, UserRole.Prospect);
-                
-                await _userManager.AddToRoleAsync(user, UserRole.Pending);
-                await _userManager.UpdateAsync(user);
-                user.UserRole = UserRole.Investor;
-                _context.SaveChanges();
-                return Ok();   
+            _context.SaveChanges();
             }
-            return NotFound();
+            // var user = await _userManager.FindByIdAsync(application.ClientId);
+            // if (user!= null)
+            // {
+            //     await _userManager.RemoveFromRoleAsync(user, UserRole.Prospect);
+                
+            //     await _userManager.AddToRoleAsync(user, UserRole.Pending);
+            //     await _userManager.UpdateAsync(user);
+            //     user.UserRole = UserRole.Pending;
+            //     _context.SaveChanges();
+            //     return Ok();   
+            // }
+            // return Ok();
         }
     }
 }

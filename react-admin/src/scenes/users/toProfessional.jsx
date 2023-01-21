@@ -1,10 +1,8 @@
 import * as React from "react";
 import { Button, Modal } from "@mui/material";
 import { useState } from "react";
-import { tokens } from "../../theme";
-import { Box, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import Header from "../../components/Header";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import FormGroup from "@mui/material/FormGroup";
@@ -16,6 +14,8 @@ import Checkbox from "@mui/material/Checkbox";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
 import formObject from "../../data/questions";
 import AddInformation from "../information/addInformation";
+import { newApplicationAtom, RegisterApplicationAtom } from "../../data/dataAtom";
+import { useAtom } from "jotai";
 const pdf = new jsPDF();
 const imageObject = {
   1: null,
@@ -25,16 +25,18 @@ const imageObject = {
   5: null,
 };
 
-const ToProfesional = ({ show, setShow, user,mode,colors }) => {
-
+const ToProfesional = ({ show, setShow, user, mode, colors }) => {
   const date = new Date();
-  let [section, setSection] = useState(0);
+  const [,setNewApplication] = useAtom(newApplicationAtom);
+  const RegisterApplication = useAtom(RegisterApplicationAtom);
+
+  let [section, setSection] = useState(1);
   // const isNonMobile = useMediaQuery("(min-width:600px)");
   const [newInformation, setNewInformation] = useState(true);
   const handleCloseModal = () => {
     setShow(false);
   };
-  console.log(user);
+  console.log(user.id);
   const handleNext = () => {
     addImageProcess();
     section != Object.keys(imageObject).length
@@ -74,17 +76,19 @@ const ToProfesional = ({ show, setShow, user,mode,colors }) => {
           Object.values(imageObject).filter((x) => !!x).length ===
           Object.keys(imageObject).length
         ) {
+          setNewApplication({clientId:user.id,applicationObject:JSON.stringify(formObject)});
           await generatePdf();
           pdf.save("vidvici-chestionar.pdf");
+
           setShow(false);
           setSection(0);
         }
       });
   };
-  
+
   const generatePdf = async () => {
     for (const [i, img] of Object.entries(imageObject)) {
-      pdf.addImage(img, "pdf", -45, 5, 300, 0);
+      pdf.addImage(img, "pdf", -5, 5, 180, 0);
 
       if (i !== Object.entries(imageObject).length - 1) {
         pdf.addPage();
@@ -96,18 +100,16 @@ const ToProfesional = ({ show, setShow, user,mode,colors }) => {
     <>
       {show && (
         <>
-          {section === 0 && (
+          {section === 1 && newInformation &&(
             <AddInformation
               show={newInformation}
               setShow={setNewInformation}
               userId={user.id}
-              section={section}
-              setSection={setSection}
-              mode = {mode}
-              colors = {colors}
+              mode={mode}
+              colors={colors}
             />
           )}
-          {section > 0 && (
+          {!newInformation && (
             <Modal
               open={show}
               onClose={handleCloseModal}
@@ -122,7 +124,9 @@ const ToProfesional = ({ show, setShow, user,mode,colors }) => {
                   left: "50%",
                   transform: "translate(-50%, -50%)",
                   width: "80vw",
-                  bgcolor: `${mode==="light"? colors.primary[900]:colors.primary[600]}`,
+                  bgcolor: `${
+                    mode === "light" ? colors.primary[900] : colors.primary[600]
+                  }`,
                   border: "2px solid #000",
                   boxShadow: 24,
                   borderRadius: "12px",
@@ -137,7 +141,7 @@ const ToProfesional = ({ show, setShow, user,mode,colors }) => {
                       alignItems="center"
                       marginTop="-40px"
                     >
-                      {mode=== "dark" ? (
+                      {mode === "dark" ? (
                         <img
                           alt="profile-user"
                           width="30%"
@@ -1231,19 +1235,12 @@ const ToProfesional = ({ show, setShow, user,mode,colors }) => {
                               />
                             </FormGroup>
                             <Box m="20px">
-                              <Typography
-                                component="h1"
-                                variant="h5"
-                               
-                              >
+                              <Typography component="h1" variant="h5">
                                 Subsemnatul {user.firstName}-{user.lastName}
                               </Typography>
-                              <Typography
-                                component="h1"
-                                variant="h5"
-                                
-                              >
-                                Data: {date.getDate()}-{date.getMonth()+1}-{date.getFullYear()}
+                              <Typography component="h1" variant="h5">
+                                Data: {date.getDate()}-{date.getMonth() + 1}-
+                                {date.getFullYear()}
                               </Typography>
                             </Box>
                           </>

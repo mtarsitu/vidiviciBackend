@@ -44,7 +44,7 @@ namespace API_VidiVici.Controllers
         }
 
 
-        [Authorize(Roles ="Admin,Poweruser,Employee")]
+        [Authorize(Roles ="Admin,Poweruser,Employee,Prospect,Investor,Pending")]
         [HttpGet("totalInvestments")]
 
         public Task<double> TotalSum()

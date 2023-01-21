@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API_VidiVici.Controllers
 {
+    [ApiController]
     [Route("[controller]")]
     public class AdminsController : Controller
     {

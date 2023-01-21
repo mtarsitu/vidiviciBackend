@@ -33,7 +33,6 @@ function App() {
     authorized: ["Admin", "Poweruser", "Employee"],
     unauthorize: ["Prospect", "Investor", "Pending"],
   };
- console.log(colors.primary[900],"app");
   
   useEffect(() => {
     if (loggedUser[0] != null) {

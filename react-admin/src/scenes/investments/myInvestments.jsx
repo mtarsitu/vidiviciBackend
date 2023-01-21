@@ -17,7 +17,7 @@ const MyInvestments = ({props}) => {
   
   const fetchData = async()=>{
     let response = await fetch(
-        "http://localhost:5241/Accounts/UserAndInvestments?username=" +
+        "http://localhost:5241/Admins/UserAndInvestments?username=" +
           `${props}`,
         {
           method: "GET",

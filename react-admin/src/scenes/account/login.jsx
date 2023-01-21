@@ -23,7 +23,7 @@ export default function Login({ useratom }) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [,setUserToLogin] = useAtom(userToLoginAtom);
-  const [LogIn,] = useAtom(LogInAtom);
+  const LogIn = useAtom(LogInAtom);
   const loggedUser = useratom;
   
   const handleSubmit = (event) => {
@@ -34,7 +34,7 @@ export default function Login({ useratom }) {
       password: data.get("password"),
     };
     setUserToLogin(user);
-    LogIn();
+
   };
 
   
