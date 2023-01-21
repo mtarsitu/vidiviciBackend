@@ -14,7 +14,9 @@ export const userToLoginAtom = atom({});
 export const newFondAtom = atom("");
 export const newInformationAtom = atom("");
 export const newApplicationAtom = atom("");
-export const userExternalAtom =atom("");
+export const userExternalAtom = atom("");
+export const applicationUserIdAtom = atom("");
+
 export const loggedUserAtom = atom(async (get) => {
   get(refreshAtom);
   const response = await fetch(baseUrl + "Accounts/currentUser", {
@@ -26,12 +28,8 @@ export const loggedUserAtom = atom(async (get) => {
   });
   if (response.ok) {
     isLoggedAtom.init = true;
-    // username = response.header
-    // console.log(response.json());
     return await response.json();
   }
-  // console.log(response);
-  // toast.error("Error")
   return null;
 });
 
@@ -52,7 +50,6 @@ export const fundsAtom = atom(async (get) => {
 
 export const ExternalLoginAtom = atom(async (get) => {
   const userToLogin = get(userExternalAtom);
-  
 
   let response = await fetch(`http://localhost:5241/Accounts/external`, {
     method: "POST",
@@ -79,10 +76,10 @@ export const ExternalLoginAtom = atom(async (get) => {
   }
 });
 
-export const RegisterApplicationAtom = atom(async (get)=>{
+export const RegisterApplicationAtom = atom(async (get) => {
   const application = get(newApplicationAtom);
-  if(Object.keys(application).length !=0){
-    const response = await fetch(baseUrl+"Applications/add",{
+  if (Object.keys(application).length != 0) {
+    const response = await fetch(baseUrl + "Applications/add", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -95,14 +92,14 @@ export const RegisterApplicationAtom = atom(async (get)=>{
       toast.success("Inregistrare adaugata cu succes");
       return response.ok;
     }
-    return console.error("Nu a fost adaugata aplicatia")
+    return console.error("Nu a fost adaugata aplicatia");
   }
 });
 
 export const RegisterFundAtom = atom(async (get) => {
   const fond = get(newFondAtom);
   if (Object.keys(fond).length != 0) {
-    const response = await fetch(baseUrl+`Funds/addFund`, {
+    const response = await fetch(baseUrl + `Funds/addFund`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -119,11 +116,11 @@ export const RegisterFundAtom = atom(async (get) => {
   }
 });
 
-export const RegisterInformationAtom = atom(async (get)=>{
+export const RegisterInformationAtom = atom(async (get) => {
   const info = get(newInformationAtom);
   console.log(info);
   if (Object.keys(info).length != 0) {
-    const response = await fetch(baseUrl+"Informations/addInformation", {
+    const response = await fetch(baseUrl + "Informations/addInformation", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -132,15 +129,15 @@ export const RegisterInformationAtom = atom(async (get)=>{
       },
       body: JSON.stringify(info),
     });
-    
+
     if (response.ok) {
       toast.success("Informatie adaugat cu succes");
-      
+
       return response.ok;
     }
     return console.error("Informatia nu a fost adaugata");
   }
-}); 
+});
 
 export const LogInAtom = atom(async (get) => {
   const userToLogin = get(userToLoginAtom);
@@ -196,6 +193,21 @@ export const myFundsAtom = atom(async () => {
       },
     }
   );
+  if (response.ok) {
+    return await response.json();
+  }
+  return null;
+});
+
+export const applicationAtom = atom(async (get) => {
+  const id = get(applicationUserIdAtom);
+  const response = await fetch(baseUrl + `Applications/get?clientId=${id}`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      accept: "text/plain",
+    },
+  });
   if (response.ok) {
     return await response.json();
   }

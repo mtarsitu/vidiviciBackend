@@ -43,25 +43,25 @@ namespace API_VidiVici.Controllers
 
         [Authorize(Roles ="Admin,Poweruser,Employee,Prospect")]
         [HttpPost("add")]
-        public void Add(Application application)
+        public  async Task<ActionResult>  Add(Application application)
         {
             if(application!=null){
 
             _service.Add(application);
             _context.SaveChanges();
             }
-            // var user = await _userManager.FindByIdAsync(application.ClientId);
-            // if (user!= null)
-            // {
-            //     await _userManager.RemoveFromRoleAsync(user, UserRole.Prospect);
+            var user = await _userManager.FindByIdAsync(application.ClientId);
+            if (user!= null)
+            {
+                await _userManager.RemoveFromRoleAsync(user, UserRole.Prospect);
                 
-            //     await _userManager.AddToRoleAsync(user, UserRole.Pending);
-            //     await _userManager.UpdateAsync(user);
-            //     user.UserRole = UserRole.Pending;
-            //     _context.SaveChanges();
-            //     return Ok();   
-            // }
-            // return Ok();
+                await _userManager.AddToRoleAsync(user, UserRole.Pending);
+                await _userManager.UpdateAsync(user);
+                user.UserRole = UserRole.Pending;
+                _context.SaveChanges();
+                return Ok();   
+            }
+            return Ok();
         }
     }
 }

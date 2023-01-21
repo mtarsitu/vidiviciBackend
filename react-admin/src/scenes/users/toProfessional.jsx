@@ -1,20 +1,25 @@
 import * as React from "react";
-import { Button, Modal } from "@mui/material";
 import { useState } from "react";
-import { Box } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import CssBaseline from "@mui/material/CssBaseline";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-// import { toast } from "react-toastify";
+import {
+  Modal,
+  Button,
+  Box,
+  FormControlLabel,
+  FormGroup,
+  Container,
+  CssBaseline,
+  Typography,
+  Checkbox,
+} from "@mui/material";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
-import Checkbox from "@mui/material/Checkbox";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
 import formObject from "../../data/questions";
 import AddInformation from "../information/addInformation";
-import { newApplicationAtom, RegisterApplicationAtom } from "../../data/dataAtom";
+import {
+  newApplicationAtom,
+  RegisterApplicationAtom,
+} from "../../data/dataAtom";
 import { useAtom } from "jotai";
 const pdf = new jsPDF();
 const imageObject = {
@@ -27,7 +32,7 @@ const imageObject = {
 
 const ToProfesional = ({ show, setShow, user, mode, colors }) => {
   const date = new Date();
-  const [,setNewApplication] = useAtom(newApplicationAtom);
+  const [, setNewApplication] = useAtom(newApplicationAtom);
   const RegisterApplication = useAtom(RegisterApplicationAtom);
 
   let [section, setSection] = useState(1);
@@ -76,7 +81,10 @@ const ToProfesional = ({ show, setShow, user, mode, colors }) => {
           Object.values(imageObject).filter((x) => !!x).length ===
           Object.keys(imageObject).length
         ) {
-          setNewApplication({clientId:user.id,applicationObject:JSON.stringify(formObject)});
+          setNewApplication({
+            clientId: user.id,
+            applicationObject: JSON.stringify(formObject),
+          });
           await generatePdf();
           pdf.save("vidvici-chestionar.pdf");
 
@@ -100,7 +108,7 @@ const ToProfesional = ({ show, setShow, user, mode, colors }) => {
     <>
       {show && (
         <>
-          {section === 1 && newInformation &&(
+          {section === 1 && newInformation && (
             <AddInformation
               show={newInformation}
               setShow={setNewInformation}
@@ -1230,7 +1238,12 @@ const ToProfesional = ({ show, setShow, user, mode, colors }) => {
                               </FormGroup>
 
                               <FormControlLabel
-                                control={<Checkbox />}
+                                control={
+                                  <Checkbox
+                                    id="16-3"
+                                    onClick={handleFormObject}
+                                  />
+                                }
                                 label="nu posed experienta profesionala in niciunul dintre domeniile mentionate."
                               />
                             </FormGroup>
