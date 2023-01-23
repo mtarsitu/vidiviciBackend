@@ -26,18 +26,18 @@ import { useAtom } from "jotai";
 const Calendar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [currentEvents, setCurrentEvents] = useState([]);
+  // const [currentEvents, setCurrentEvents] = useState([]);
   const [, setNewEvent] = useAtom(newEventAtom);
   const addNewEvent = useAtom(AddNewEventAtom);
   const [refreshEvents, setRefreshEvents] = useAtom(refreshEventsAtom);
   const events = useAtom(eventsAtom);
-  console.log(events);
-  console.log(currentEvents);
+
+
   const handleDateClick = (selected) => {
     const title = prompt("Please enter a new title for your event");
     const calendarApi = selected.view.calendar;
     calendarApi.unselect();
-    console.log(selected);
+
     if (title) {
       calendarApi.addEvent({
         id: `${selected.dateStr}-${title}`,
@@ -62,6 +62,7 @@ const Calendar = () => {
   };
 
   const handleEventClick = (selected) => {
+    console.log(selected);
     if (
       window.confirm(
         `Are you sure you want to delete the event '${selected.event.title}'`
@@ -73,7 +74,7 @@ const Calendar = () => {
 
   return (
     <Box m="20px">
-      <Header title="Calendar" subtitle="Techaine caledar" />
+      <Header title="Calendar" subtitle="Administreaza Calendar" />
 
       <Box display="flex" justifyContent="space-between">
         {/* CALENDAR SIDEBAR */}
@@ -98,7 +99,7 @@ const Calendar = () => {
                   primary={event.title}
                   secondary={
                     <Typography>
-                      {event.start.toLocaleString()}
+                      {event.start.split("T")[0]}
                     </Typography>
                   }
                 />
@@ -129,7 +130,7 @@ const Calendar = () => {
             dayMaxEvents={true}
             select={handleDateClick}
             eventClick={handleEventClick}
-            eventsSet={(events) => setCurrentEvents(events)}
+            // eventsSet={(events) => setCurrentEvents(events)}
             initialEvents={events[0]}
           />
         </Box>

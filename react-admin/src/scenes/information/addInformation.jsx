@@ -56,11 +56,12 @@ const AddInformation = ({show,setShow,userId,mode,colors}) => {
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      sx={{ overflow: "scroll" }}
     >
       <Box
         sx={{
           position: "absolute",
-          top: "50%",
+          top: "60%",
           left: "50%",
           transform: "translate(-50%, -50%)",
           width: "80vw",
@@ -72,7 +73,7 @@ const AddInformation = ({show,setShow,userId,mode,colors}) => {
         }}
       >
         <Box m="20px">
-          <Header title="Creaza Fond nou" subtitle="Creaza un nou fond" />
+          <Header title="Detalii personale" subtitle="Adauga detalii personale" />
           <Box
             sx={{
               marginTop: -10,
@@ -85,7 +86,7 @@ const AddInformation = ({show,setShow,userId,mode,colors}) => {
               <QueueIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Adauga Informatie
+              Completeaza campurile de mai jos
             </Typography>
             <Box
               component="form"

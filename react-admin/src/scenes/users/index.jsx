@@ -97,15 +97,8 @@ const Users = ({ useratom, mode, colors }) => {
       renderCell: (row) => {
         return (
           <Box>
-            <Tooltip
-              title={
-                <Typography fontSize={15}>
-                  {" "}
-                  Vezi informatii pentru {row.row.username}{" "}
-                </Typography>
-              }
-              placement="right"
-            >
+            <Tooltip title={`Vezi informatii pentru ${row.row.username}`}>
+              {/* placement="right" */}
               <IconButton color="inherit" onClick={() => handleOpen(row.id)}>
                 <InfoIcon />
               </IconButton>
