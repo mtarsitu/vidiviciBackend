@@ -73,18 +73,18 @@ namespace APIVidiVici.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Calendars",
+                name: "Events",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     EventStart = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     EventEnd = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Event = table.Column<string>(type: "text", nullable: true)
+                    EventTitle = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Calendars", x => x.Id);
+                    table.PrimaryKey("PK_Events", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -283,12 +283,12 @@ namespace APIVidiVici.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "06b22f37-2e80-4cf5-ba29-6b10904eabf4", null, "Pending", "PENDING" },
-                    { "31b53162-e3eb-414c-8782-8c723eba62a9", null, "Employee", "EMPLOYEE" },
-                    { "52d5872d-050a-4685-804d-705b3b377a3b", null, "Admin", "ADMIN" },
-                    { "7312c111-cfa1-4cb6-9f16-ae5b617931cc", null, "Investor", "INVESTOR" },
-                    { "c531ee08-22d9-4546-af2d-c6309b967e55", null, "Poweruser", "POWERUSER" },
-                    { "d45f30c2-d8ba-4547-aa2b-0f44d0629c09", null, "Prospect", "PROSPECT" }
+                    { "006ea371-d9cd-4eaa-a647-6b79396f1a56", null, "Pending", "PENDING" },
+                    { "20464915-bd12-4385-bbaa-44ea73ba9953", null, "Poweruser", "POWERUSER" },
+                    { "58661331-3f19-4f3f-90b9-aa6c7252f408", null, "Investor", "INVESTOR" },
+                    { "59a0c308-da80-43d3-b38e-53eee7cda882", null, "Employee", "EMPLOYEE" },
+                    { "61bb7985-4e17-4b47-944d-b998379a5c30", null, "Prospect", "PROSPECT" },
+                    { "75196113-111d-4383-9256-1c07fdeea32f", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -366,7 +366,7 @@ namespace APIVidiVici.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Calendars");
+                name: "Events");
 
             migrationBuilder.DropTable(
                 name: "Informations");

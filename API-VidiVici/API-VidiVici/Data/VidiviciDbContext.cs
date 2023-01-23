@@ -17,7 +17,7 @@ namespace API_VidiVici.data
         public DbSet<Fund>? Funds{get;set;}
         public DbSet<Notification>? Notifications {get;set;}
         public DbSet<Information>? Informations {get;set;}
-        public DbSet<Calendar>? Calendars {get;set;}
+        public DbSet<Event>? Events {get;set;}
         public DbSet<Application>? Applications {get;set;}
         protected override void OnModelCreating(ModelBuilder builder)
         {

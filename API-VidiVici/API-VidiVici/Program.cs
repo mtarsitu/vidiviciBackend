@@ -62,6 +62,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddAuthorization();
+builder.Services.AddScoped<EventRepository>();
+builder.Services.AddScoped<EventService>();
 builder.Services.AddScoped<InformationsRepository>();
 builder.Services.AddScoped<InformationsServices>();
 builder.Services.AddScoped<ApplicationRepository>();

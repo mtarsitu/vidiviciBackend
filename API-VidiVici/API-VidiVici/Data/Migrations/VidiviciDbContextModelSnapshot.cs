@@ -41,7 +41,7 @@ namespace APIVidiVici.Data.Migrations
                     b.ToTable("Applications");
                 });
 
-            modelBuilder.Entity("API_VidiVici.Model.Calendar", b =>
+            modelBuilder.Entity("API_VidiVici.Model.Event", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -49,18 +49,18 @@ namespace APIVidiVici.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Event")
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("EventEnd")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("EventStart")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("EventTitle")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Calendars");
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("API_VidiVici.Model.Fund", b =>
@@ -289,37 +289,37 @@ namespace APIVidiVici.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c531ee08-22d9-4546-af2d-c6309b967e55",
+                            Id = "20464915-bd12-4385-bbaa-44ea73ba9953",
                             Name = "Poweruser",
                             NormalizedName = "POWERUSER"
                         },
                         new
                         {
-                            Id = "52d5872d-050a-4685-804d-705b3b377a3b",
+                            Id = "75196113-111d-4383-9256-1c07fdeea32f",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "31b53162-e3eb-414c-8782-8c723eba62a9",
+                            Id = "59a0c308-da80-43d3-b38e-53eee7cda882",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "d45f30c2-d8ba-4547-aa2b-0f44d0629c09",
+                            Id = "61bb7985-4e17-4b47-944d-b998379a5c30",
                             Name = "Prospect",
                             NormalizedName = "PROSPECT"
                         },
                         new
                         {
-                            Id = "06b22f37-2e80-4cf5-ba29-6b10904eabf4",
+                            Id = "006ea371-d9cd-4eaa-a647-6b79396f1a56",
                             Name = "Pending",
                             NormalizedName = "PENDING"
                         },
                         new
                         {
-                            Id = "7312c111-cfa1-4cb6-9f16-ae5b617931cc",
+                            Id = "58661331-3f19-4f3f-90b9-aa6c7252f408",
                             Name = "Investor",
                             NormalizedName = "INVESTOR"
                         });
