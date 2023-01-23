@@ -9,9 +9,9 @@ namespace API_VidiVici.Model
     {
         public int Id {get;set;}
 
-        public DateTime EventStart {get;set;}
-
-        public DateTime EventEnd {get;set;}
-        public string? EventTitle {get;set;}
+        public string? Title {get;set;}
+        public DateTime Date {get;set;}
+        public DateTime Start {get;set;}
+        public DateTime End {get;set;}
     }
 }

@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FullCalendar, { formatDate } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
+
 import {
   Box,
   List,
@@ -14,13 +15,24 @@ import {
 } from "@mui/material";
 import Header from "../../components/Header";
 import { tokens } from "../../theme";
+import {
+  newEventAtom,
+  refreshEventsAtom,
+  eventsAtom,
+  AddNewEventAtom,
+} from "../../data/events/eventsAtom";
+import { useAtom } from "jotai";
 
 const Calendar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [currentEvents, setCurrentEvents] = useState([]);
+  const [, setNewEvent] = useAtom(newEventAtom);
+  const addNewEvent = useAtom(AddNewEventAtom);
+  const [refreshEvents, setRefreshEvents] = useAtom(refreshEventsAtom);
+  const events = useAtom(eventsAtom);
+  console.log(events);
   console.log(currentEvents);
-
   const handleDateClick = (selected) => {
     const title = prompt("Please enter a new title for your event");
     const calendarApi = selected.view.calendar;
@@ -34,6 +46,18 @@ const Calendar = () => {
         end: selected.endStr,
         allDay: selected.allDay,
       });
+      const timeout1 = setTimeout(() => {
+        setNewEvent({
+          title: title,
+          date: selected.start,
+          start: selected.start,
+          end: selected.end,
+        });
+      }, 100);
+      const timeout = setTimeout(() => {
+        setRefreshEvents(!refreshEvents);
+        setNewEvent("");
+      }, 200);
     }
   };
 
@@ -61,7 +85,7 @@ const Calendar = () => {
         >
           <Typography variant="h5">Events</Typography>
           <List>
-            {currentEvents.map((event) => (
+            {events[0].map((event) => (
               <ListItem
                 key={event.id}
                 sx={{
@@ -74,11 +98,7 @@ const Calendar = () => {
                   primary={event.title}
                   secondary={
                     <Typography>
-                      {/* {formatDate(event.start, {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })} */}
+                      {event.start.toLocaleString()}
                     </Typography>
                   }
                 />
@@ -110,18 +130,7 @@ const Calendar = () => {
             select={handleDateClick}
             eventClick={handleEventClick}
             eventsSet={(events) => setCurrentEvents(events)}
-            initialEvents={[
-              {
-                id: "12315",
-                title: "All-day event",
-                date: "2022-09-14",
-              },
-              {
-                id: "5123",
-                title: "Timed event",
-                date: "2022-09-28",
-              },
-            ]}
+            initialEvents={events[0]}
           />
         </Box>
       </Box>

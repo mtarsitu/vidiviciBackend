@@ -78,9 +78,10 @@ namespace APIVidiVici.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    EventStart = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    EventEnd = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    EventTitle = table.Column<string>(type: "text", nullable: true)
+                    Title = table.Column<string>(type: "text", nullable: true),
+                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Start = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    End = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -283,12 +284,12 @@ namespace APIVidiVici.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "006ea371-d9cd-4eaa-a647-6b79396f1a56", null, "Pending", "PENDING" },
-                    { "20464915-bd12-4385-bbaa-44ea73ba9953", null, "Poweruser", "POWERUSER" },
-                    { "58661331-3f19-4f3f-90b9-aa6c7252f408", null, "Investor", "INVESTOR" },
-                    { "59a0c308-da80-43d3-b38e-53eee7cda882", null, "Employee", "EMPLOYEE" },
-                    { "61bb7985-4e17-4b47-944d-b998379a5c30", null, "Prospect", "PROSPECT" },
-                    { "75196113-111d-4383-9256-1c07fdeea32f", null, "Admin", "ADMIN" }
+                    { "0d882511-6660-40dc-8ff9-b08c8e401b7c", null, "Investor", "INVESTOR" },
+                    { "0fa50271-0a35-476c-99c6-baf34b9f2edc", null, "Pending", "PENDING" },
+                    { "5135f406-9275-45a2-8bdc-4889b8d1b08b", null, "Poweruser", "POWERUSER" },
+                    { "b34d12bd-b155-49fb-af08-d372b7485a6b", null, "Employee", "EMPLOYEE" },
+                    { "b80090c5-d4f4-4b6d-a498-fc2fe585a8ac", null, "Admin", "ADMIN" },
+                    { "bdd86047-e969-4e03-bdad-47d882bc3891", null, "Prospect", "PROSPECT" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -19,7 +19,8 @@ namespace API_VidiVici.Repositories.Implementation
 
         public void Add(Event newEvent)
         {
-            _context?.Events?.Add(newEvent);
+            _context.Events.Add(newEvent);
+            _context.SaveChanges();
         }
 
         public async Task<IEnumerable<Event>> GetAll()

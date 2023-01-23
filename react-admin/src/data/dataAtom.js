@@ -1,8 +1,6 @@
 import { atom } from "jotai";
-import { useGoogleLogout } from "react-google-login";
 import { toast } from "react-toastify";
-// import 'react-toastify/dist/ReactToastify.css';
-import { gapi } from "gapi-script";
+
 const baseUrl = "http://localhost:5241/";
 
 export let isLoggedAtom = atom(false);
