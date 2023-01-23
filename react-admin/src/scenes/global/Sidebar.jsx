@@ -165,13 +165,13 @@ const Sidebar = ({ useratom, authorized }) => {
                       selected={selected}
                       setSelected={setSelected}
                     />
-                    <Item
+                    {/* <Item
                       title="Informatii"
                       to="/contacts"
                       icon={<ContactsOutlinedIcon />}
                       selected={selected}
                       setSelected={setSelected}
-                    />
+                    /> */}
 
                     <Item
                       title="Investitii"

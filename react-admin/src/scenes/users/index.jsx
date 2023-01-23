@@ -1,32 +1,31 @@
-import {
-  Box,
-  IconButton,
-  useTheme,
-  Typography,
-  Modal,
-  Button,
-} from "@mui/material";
+import { Box, IconButton, Typography, Button, Tooltip } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { tokens } from "../../theme";
 import EditIcon from "@mui/icons-material/Edit";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
-import PendingIcon from '@mui/icons-material/Pending';
-import CreditScoreIcon from '@mui/icons-material/CreditScore';
+import PendingIcon from "@mui/icons-material/Pending";
+import CreditScoreIcon from "@mui/icons-material/CreditScore";
 import QueueIcon from "@mui/icons-material/Queue";
 import Header from "../../components/Header";
 import { useAtom } from "jotai";
-import { usersAtom, entityIdAtom } from "../../data/dataAtom";
+import {
+  usersAtom,
+  entityIdAtom,
+  deleteUserAtom,
+  deleteUserIdAtom,
+  refreshAtom,
+} from "../../data/dataAtom";
 import InfoIcon from "@mui/icons-material/Info";
 import { useState } from "react";
 import Information from "../information/information";
 import Unauthorize from "../unauthorize";
 import EditUser from "./editUser";
 import RoleRegister from "../account/roleRegister";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-const Users = ({ useratom,mode,colors }) => {
+const Users = ({ useratom, mode, colors }) => {
   const [open, setOpen] = useState(false);
   const [newUser, setNewUser] = useState(false);
   const [infoId, setInfoId] = useState();
@@ -34,18 +33,23 @@ const Users = ({ useratom,mode,colors }) => {
   const [, setEntityId] = useAtom(entityIdAtom);
   const [partnerName, setPartnerName] = useState();
   const users = useAtom(usersAtom);
-
+  const [, setDeleteUserId] = useAtom(deleteUserIdAtom);
+  const deleteUser = useAtom(deleteUserAtom);
   const loggedUser = useratom;
-
-
+  const [refresh, setRefresh] = useAtom(refreshAtom);
   const handleAddUser = () => {
     setNewUser(true);
   };
 
   const columns = [
     { field: "id", headerName: "ID" },
-    { field: "username", headerName: "Username",cellClassName: "username-column--cell", width: 250 },
-    
+    {
+      field: "username",
+      headerName: "Username",
+      cellClassName: "username-column--cell",
+      width: 250,
+    },
+
     { field: "firstName", headerName: "Nume", width: 130 },
     { field: "lastName", headerName: "Nume de familie", width: 130 },
     {
@@ -73,33 +77,57 @@ const Users = ({ useratom,mode,colors }) => {
             {userRole === "Employee" && <SecurityOutlinedIcon />}
             {userRole === "Pending" && <PendingIcon />}
             {userRole === "Investor" && <CreditScoreIcon />}
-            {userRole !=="Admin" && userRole !=="Employee" && userRole!=="Pending" && userRole!=="Investor"  && <LockOpenOutlinedIcon />}
+            {userRole !== "Admin" &&
+              userRole !== "Employee" &&
+              userRole !== "Pending" &&
+              userRole !== "Investor" && <LockOpenOutlinedIcon />}
             <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-              {userRole }
+              {userRole}
             </Typography>
           </Box>
         );
       },
     },
-    {field: "usedPlatform", headerName: "Inregistrat cu", width: 130},
+    { field: "usedPlatform", headerName: "Inregistrat cu", width: 130 },
     {
       field: "actions",
       headerName: "Actiuni",
-      width: 130,
+      width: 150,
       sortable: false,
       renderCell: (row) => {
         return (
           <Box>
-            <IconButton color="inherit" onClick={() => handleOpen(row.id)}>
-              <InfoIcon />
-            </IconButton>
-            <IconButton color="inherit">
+            <Tooltip
+              title={
+                <Typography fontSize={15}>
+                  {" "}
+                  Vezi informatii pentru {row.row.username}{" "}
+                </Typography>
+              }
+              placement="right"
+            >
+              <IconButton color="inherit" onClick={() => handleOpen(row.id)}>
+                <InfoIcon />
+              </IconButton>
+            </Tooltip>
+            {/* <IconButton color="inherit">
               <ManageAccountsIcon />
-            </IconButton>
-            <IconButton color="inherit" onClick={() => handleEdit(row.row)}>
-              {/*  */}
-              <EditIcon />
-            </IconButton>
+            </IconButton> */}
+            <Tooltip title={`Editeaza user ${row.row.username}`}>
+              <IconButton color="inherit" onClick={() => handleEdit(row.row)}>
+                {/*  */}
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title={`Sterge user ${row.row.username}`}>
+              <IconButton
+                color="inherit"
+                onClick={() => handleDelete(row.row.id)}
+              >
+                {/*  */}
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
           </Box>
         );
       },
@@ -108,7 +136,7 @@ const Users = ({ useratom,mode,colors }) => {
 
   const handleOpen = (id) => {
     setPartnerName(users[0].filter((entity) => entity.id === id)[0].username);
-   
+
     setInfoId(id);
     setEntityId(id);
     setOpen(true);
@@ -117,6 +145,13 @@ const Users = ({ useratom,mode,colors }) => {
   const handleClose = () => setOpen(false);
   const handleEdit = (u) => {
     setUserEdit(u);
+  };
+  const handleDelete = (id) => {
+    setDeleteUserId(id);
+    const timeout = setTimeout(() => {
+      setRefresh(!refresh);
+      setDeleteUserId("");
+    }, 300);
   };
 
   return (
@@ -179,14 +214,21 @@ const Users = ({ useratom,mode,colors }) => {
               // }}
             />
           </Box>
-          
-              <Information props={infoId} partnerName={partnerName} open={open} handleClose={handleClose} mode={mode} colors={colors} />
-           
 
+          <Information
+            props={infoId}
+            partnerName={partnerName}
+            open={open}
+            handleClose={handleClose}
+            mode={mode}
+            colors={colors}
+          />
 
-              <EditUser oldUser={userEdit} setUserEdit={setUserEdit} mode={mode}/>
-            
-          {newUser && <RoleRegister show={newUser} setShow={setNewUser} mode={mode}/>}
+          <EditUser oldUser={userEdit} setUserEdit={setUserEdit} mode={mode} />
+
+          {newUser && (
+            <RoleRegister show={newUser} setShow={setNewUser} mode={mode} />
+          )}
         </Box>
       ) : (
         <Box>

@@ -76,7 +76,7 @@ namespace API_VidiVici.Controllers
         }
 
         [Authorize(Roles = "Poweruser,Admin,Employee")]
-        [HttpGet("acceptPending")]
+        [HttpPost("acceptPending")]
         public async Task<ActionResult> AcceptPending(string id)
         {
             var user = await _userManager.FindByIdAsync(id);  
@@ -93,6 +93,20 @@ namespace API_VidiVici.Controllers
             }
             return NotFound();
         }
-        
+
+        [Authorize(Roles = "Poweruser,Admin,Employee")]
+        [HttpPost("deleteUser")]
+
+        public async Task<ActionResult> Remove(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if(user!= null){
+               var result =  _userManager.DeleteAsync(user);
+               if(result.Result.Succeeded){
+                return Ok();
+               }
+            }
+            return NotFound();
+        }   
     }
 }

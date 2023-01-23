@@ -16,6 +16,8 @@ export const newInformationAtom = atom("");
 export const newApplicationAtom = atom("");
 export const userExternalAtom = atom("");
 export const applicationUserIdAtom = atom("");
+export const acceptPendingIdAtom = atom("");
+export const deleteUserIdAtom = atom("");
 
 export const loggedUserAtom = atom(async (get) => {
   get(refreshAtom);
@@ -48,6 +50,26 @@ export const fundsAtom = atom(async (get) => {
   return null;
 });
 
+export const deleteUserAtom = atom(async (get) => {
+  let id = get(deleteUserIdAtom);
+  console.log(id);
+  if (id) {
+    let response = await fetch(baseUrl + `Admins/deleteUser?id=${id}`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        accept: "text/plain",
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      toast.success("User sters cu success");
+    } else {
+      toast.error("Nu a functionat, te rugam sa incerci din nou");
+    }
+  }
+});
+
 export const ExternalLoginAtom = atom(async (get) => {
   const userToLogin = get(userExternalAtom);
 
@@ -73,6 +95,23 @@ export const ExternalLoginAtom = atom(async (get) => {
     } else {
       toast.warning("Username sau parola gresita");
     }
+  }
+});
+
+export const AcceptPendingAtom = atom(async (get) => {
+  let id = get(acceptPendingIdAtom);
+  if (id.length > 0) {
+    let response = await fetch(baseUrl + `Admins/acceptPending?id=${id}`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        accept: "text/plain",
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      toast.success("Investitor inregistrat cu succces");
+    } else toast.error("Nu a functionat, te rugam sa incerci din nou!");
   }
 });
 
@@ -230,6 +269,7 @@ export const entityInformationAtom = atom(async (get) => {
   const id = get(entityIdAtom);
   console.log(id);
   get(refreshAtom);
+
   const response = await fetch(
     baseUrl + "Informations/userInformations?id=" + id,
     {

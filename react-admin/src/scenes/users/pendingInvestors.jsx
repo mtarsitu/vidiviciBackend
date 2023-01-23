@@ -1,8 +1,16 @@
-import { Box, IconButton } from "@mui/material";
+import { Suspense } from "react";
+import { Box, IconButton, Tooltip } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Header from "../../components/Header";
 import { useAtom } from "jotai";
-import { usersAtom, entityIdAtom,applicationUserIdAtom } from "../../data/dataAtom";
+import {
+  usersAtom,
+  entityIdAtom,
+  applicationUserIdAtom,
+  acceptPendingIdAtom,
+  AcceptPendingAtom,
+  refreshAtom,
+} from "../../data/dataAtom";
 import InfoIcon from "@mui/icons-material/Info";
 import { useState } from "react";
 import Information from "../information/information";
@@ -11,16 +19,19 @@ import DoneAllIcon from "@mui/icons-material/DoneAll";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import EditIcon from "@mui/icons-material/Edit";
 import UserApplication from "../application";
-const PendingInvestors = ({ useratom, authorized,mode,colors }) => {
+
+const PendingInvestors = ({ useratom, authorized, mode, colors }) => {
   const [open, setOpen] = useState(false);
   const [openManage, setOpenManage] = useState(false);
   const [infoId, setInfoId] = useState();
+  const [, setAcceptPendingId] = useAtom(acceptPendingIdAtom);
+  const AcceptPending = useAtom(AcceptPendingAtom);
   const [, setEntityId] = useAtom(entityIdAtom);
-  const [,setApplicationUserId] = useAtom(applicationUserIdAtom)
+  const [, setApplicationUserId] = useAtom(applicationUserIdAtom);
   const [partnerName, setPartnerName] = useState();
   const users = useAtom(usersAtom);
   const loggedUser = useratom;
-
+  const [refresh, setRefresh] = useAtom(refreshAtom);
   const columns = [
     { field: "id", headerName: "ID" },
     { field: "username", headerName: "Username", width: 250 },
@@ -36,18 +47,24 @@ const PendingInvestors = ({ useratom, authorized,mode,colors }) => {
       renderCell: (row) => {
         return (
           <Box>
-            <IconButton color="inherit" onClick={() => handleOpen(row.id)}>
-              <InfoIcon />
-            </IconButton>
-            <IconButton color="inherit"  onClick={() => handleManage(row.id)}>
+            <Tooltip title={`Vezi informatii pentru ${row.row.username}`}>
+              <IconButton color="inherit" onClick={() => handleOpen(row.id)}>
+                <InfoIcon />
+              </IconButton>
+            </Tooltip>
+            <IconButton color="inherit" onClick={() => handleManage(row.id)}>
               <ManageAccountsIcon />
             </IconButton>
-            <IconButton color="inherit">
-              <EditIcon />
-            </IconButton>
-            <IconButton color="inherit">
-              <DoneAllIcon />
-            </IconButton>
+            <Tooltip title={`Editeaza user ${row.row.username}`}>
+              <IconButton color="inherit">
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title={`Accepta investitor ${row.row.username}`}>
+              <IconButton color="inherit" onClick={() => handleAccept(row.id)}>
+                <DoneAllIcon />
+              </IconButton>
+            </Tooltip>
           </Box>
         );
       },
@@ -63,9 +80,16 @@ const PendingInvestors = ({ useratom, authorized,mode,colors }) => {
     setPartnerName(users[0].filter((entity) => entity.id === id)[0].username);
     setInfoId(id);
     setApplicationUserId(id);
-    setOpenManage(true);
+    setOpen(true);
   };
 
+  const handleAccept = (id) => {
+    setAcceptPendingId(id);
+    const timeout = setTimeout(() => {
+      setRefresh(!refresh);
+    }, 300);
+    timeout();
+  };
 
   return (
     <>
@@ -119,8 +143,23 @@ const PendingInvestors = ({ useratom, authorized,mode,colors }) => {
               // }}
             />
           </Box>
-          <Information props={infoId} partnerName={partnerName} open={open} handleClose={setOpen} mode={mode} colors={colors} />
-          {openManage && <UserApplication show={openManage} handleClose={setOpenManage} user={partnerName} mode={mode} colors={colors}/>}
+          <Information
+            props={infoId}
+            partnerName={partnerName}
+            open={open}
+            handleClose={setOpen}
+            mode={mode}
+            colors={colors}
+          />
+          {openManage && (
+            <UserApplication
+              show={openManage}
+              handleClose={setOpenManage}
+              user={partnerName}
+              mode={mode}
+              colors={colors}
+            />
+          )}
         </Box>
       ) : (
         <Box>

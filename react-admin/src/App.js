@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
@@ -9,7 +9,6 @@ import Contacts from "./scenes/contacts";
 
 import { ToastContainer } from "react-toastify";
 import Register from "./scenes/account/register";
-import { Suspense } from "react";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode,tokens } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
@@ -50,7 +49,7 @@ function App() {
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-
+        
         {/* {isLogged && ( */}
         <div className="app">
           <Sidebar
