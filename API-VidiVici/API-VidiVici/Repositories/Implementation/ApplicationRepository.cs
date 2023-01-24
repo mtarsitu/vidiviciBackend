@@ -27,5 +27,11 @@ namespace API_VidiVici.Repositories.Implementation
         {
             return await _context.Applications.SingleAsync(a=>a.ClientId == clientId);
         }
+
+        public void AddDocuments(Documents documents)
+        {
+            _context.Documents.Add(documents);
+            _context.SaveChanges();
+        }
     }
 }

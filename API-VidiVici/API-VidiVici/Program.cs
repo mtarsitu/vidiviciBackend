@@ -27,7 +27,7 @@ string? connString = builder.Configuration.GetConnectionString("DefaultConnectio
 builder.Services.AddCors(cors=>{
     cors.AddPolicy(name: MyAllowSpecificOrigins, policy =>
     {
-        policy.WithOrigins("http://localhost:3000").AllowCredentials();
+        policy.WithOrigins("http://localhost:3000").AllowCredentials().AllowAnyHeader().AllowAnyMethod();
     });
     
     

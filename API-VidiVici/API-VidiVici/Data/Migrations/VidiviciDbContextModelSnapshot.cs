@@ -41,6 +41,30 @@ namespace APIVidiVici.Data.Migrations
                     b.ToTable("Applications");
                 });
 
+            modelBuilder.Entity("API_VidiVici.Model.Documents", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClientId")
+                        .HasColumnType("text");
+
+                    b.Property<byte[]>("IdentityCardData")
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("IdentityCardTitle")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.ToTable("Documents");
+                });
+
             modelBuilder.Entity("API_VidiVici.Model.Event", b =>
                 {
                     b.Property<int>("Id")
@@ -292,37 +316,37 @@ namespace APIVidiVici.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5135f406-9275-45a2-8bdc-4889b8d1b08b",
+                            Id = "052aee5b-fb7a-423c-aeb1-77e55ce88bc9",
                             Name = "Poweruser",
                             NormalizedName = "POWERUSER"
                         },
                         new
                         {
-                            Id = "b80090c5-d4f4-4b6d-a498-fc2fe585a8ac",
+                            Id = "52e46ed8-794f-4364-a373-e33ef2f44f2e",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "b34d12bd-b155-49fb-af08-d372b7485a6b",
+                            Id = "e2798890-1460-4d22-a738-8e340b6129e5",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "bdd86047-e969-4e03-bdad-47d882bc3891",
+                            Id = "3566e682-c68e-4466-8d68-31b869b9632a",
                             Name = "Prospect",
                             NormalizedName = "PROSPECT"
                         },
                         new
                         {
-                            Id = "0fa50271-0a35-476c-99c6-baf34b9f2edc",
+                            Id = "b7070b78-dbc8-4135-9acc-090dcc053ae1",
                             Name = "Pending",
                             NormalizedName = "PENDING"
                         },
                         new
                         {
-                            Id = "0d882511-6660-40dc-8ff9-b08c8e401b7c",
+                            Id = "c1456e83-1202-4090-89dd-fa07ea8e44da",
                             Name = "Investor",
                             NormalizedName = "INVESTOR"
                         });
@@ -432,6 +456,15 @@ namespace APIVidiVici.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("API_VidiVici.Model.Documents", b =>
+                {
+                    b.HasOne("API_VidiVici.Model.User", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId");
+
+                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("API_VidiVici.Model.Information", b =>

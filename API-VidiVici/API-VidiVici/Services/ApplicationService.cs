@@ -26,5 +26,9 @@ namespace API_VidiVici.Services
         return await _repository.Get(clientId);
       }
 
+      public void AddDocuments(Documents documents){
+        _repository.AddDocuments(documents);
+      }
+
     }
 }

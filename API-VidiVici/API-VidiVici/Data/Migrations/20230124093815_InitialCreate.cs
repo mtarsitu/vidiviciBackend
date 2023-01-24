@@ -226,6 +226,26 @@ namespace APIVidiVici.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Documents",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ClientId = table.Column<string>(type: "text", nullable: true),
+                    IdentityCardTitle = table.Column<string>(type: "text", nullable: true),
+                    IdentityCardData = table.Column<byte[]>(type: "bytea", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Documents", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Documents_AspNetUsers_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Informations",
                 columns: table => new
                 {
@@ -284,12 +304,12 @@ namespace APIVidiVici.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "0d882511-6660-40dc-8ff9-b08c8e401b7c", null, "Investor", "INVESTOR" },
-                    { "0fa50271-0a35-476c-99c6-baf34b9f2edc", null, "Pending", "PENDING" },
-                    { "5135f406-9275-45a2-8bdc-4889b8d1b08b", null, "Poweruser", "POWERUSER" },
-                    { "b34d12bd-b155-49fb-af08-d372b7485a6b", null, "Employee", "EMPLOYEE" },
-                    { "b80090c5-d4f4-4b6d-a498-fc2fe585a8ac", null, "Admin", "ADMIN" },
-                    { "bdd86047-e969-4e03-bdad-47d882bc3891", null, "Prospect", "PROSPECT" }
+                    { "052aee5b-fb7a-423c-aeb1-77e55ce88bc9", null, "Poweruser", "POWERUSER" },
+                    { "3566e682-c68e-4466-8d68-31b869b9632a", null, "Prospect", "PROSPECT" },
+                    { "52e46ed8-794f-4364-a373-e33ef2f44f2e", null, "Admin", "ADMIN" },
+                    { "b7070b78-dbc8-4135-9acc-090dcc053ae1", null, "Pending", "PENDING" },
+                    { "c1456e83-1202-4090-89dd-fa07ea8e44da", null, "Investor", "INVESTOR" },
+                    { "e2798890-1460-4d22-a738-8e340b6129e5", null, "Employee", "EMPLOYEE" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -330,6 +350,11 @@ namespace APIVidiVici.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Documents_ClientId",
+                table: "Documents",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Informations_UserId",
                 table: "Informations",
                 column: "UserId");
@@ -365,6 +390,9 @@ namespace APIVidiVici.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Documents");
 
             migrationBuilder.DropTable(
                 name: "Events");

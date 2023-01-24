@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using API_VidiVici.data;
+using API_VidiVici.DTOs;
 using API_VidiVici.Model;
 using API_VidiVici.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -63,5 +64,25 @@ namespace API_VidiVici.Controllers
             }
             return Ok();
         }
+
+        [Authorize(Roles ="Admin,Poweruser,Employee,Prospect")]
+        [HttpPost("addDocuments")]
+        public async void AddDocuments([FromForm]DocumentsDto documentsDto)
+        {
+            if(documentsDto !=null){
+                
+                Documents documents = new Documents {IdentityCardTitle = documentsDto.Title, ClientId=documentsDto.ClientId};
+                byte[] imageData = null;
+                using (var binaryReader = new BinaryReader(documentsDto.Image.OpenReadStream()))
+                {
+                    imageData = binaryReader.ReadBytes((int)documentsDto.Image.Length);
+                }
+                documents.IdentityCardData = imageData;
+                _service.AddDocuments(documents);
+                
+            }
+            // return Ok();
+        }
+
     }
 }

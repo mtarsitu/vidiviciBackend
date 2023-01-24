@@ -19,6 +19,8 @@ namespace API_VidiVici.data
         public DbSet<Information>? Informations {get;set;}
         public DbSet<Event>? Events {get;set;}
         public DbSet<Application>? Applications {get;set;}
+        public DbSet<Documents>? Documents {get;set;}
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
