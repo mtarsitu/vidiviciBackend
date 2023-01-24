@@ -41,7 +41,7 @@ const ToProfesional = ({ show, setShow, user, mode, colors }) => {
   const handleCloseModal = () => {
     setShow(false);
   };
-  console.log(user.id);
+
   const handleNext = () => {
     addImageProcess();
     section != Object.keys(imageObject).length

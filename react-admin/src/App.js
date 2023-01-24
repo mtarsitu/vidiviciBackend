@@ -95,7 +95,7 @@ function App() {
                 <Route path="/contacts" element={<Contacts />} />
                 <Route
                   path="/funds"
-                  element={<Funds authorized={authorize} mode={theme.palette.mode} />}
+                  element={<Funds authorized={authorize} mode={theme.palette.mode} useratom={loggedUser[0]} />}
                 />
                 {/* <Route path="/role-register" element={<RoleRegister />} /> */}
                 <Route path="/register" element={<Register />} />
@@ -104,7 +104,7 @@ function App() {
                   path="/investments"
                   element={<Investments useratom={loggedUser[0]} mode={theme.palette.mode} colors={colors}/>}
                 />
-                <Route path="/adauga-fond" element={<AddFund />} />
+                {/* <Route path="/adauga-fond" element={<AddFund />} /> */}
                 <Route
                   path="/useri-in-aprobare"
                   element={
@@ -121,7 +121,7 @@ function App() {
           </main>
         </div>
         <ToastContainer
-          position="bottom-right"
+          position="top-center"
           autoClose={5000}
           hideProgressBar={false}
           newestOnTop={false}

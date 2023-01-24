@@ -12,7 +12,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import AddFund from "./addFund";
-const Funds = ({ authorized,mode }) => {
+const Funds = ({ authorized,mode,useratom }) => {
   const [showFunds, setShowFunds] = useState({});
   const funds = useAtom(fundsAtom);
   const allFunds = useAtom(allFundsAtom);
@@ -90,6 +90,7 @@ const Funds = ({ authorized,mode }) => {
                     <EditIcon />
                   </IconButton>
                 ) : (
+                  
                   <Button
                     size="small"
                     sx={{

@@ -19,7 +19,6 @@ const AddFund = ({show,setShow,mode}) => {
   const colors = tokens(theme.palette.mode);
   const [refreshFunds,setRefreshFunds] = useAtom(refreshFundsAtom);
 
-  console.log(mode);
   // const isNonMobile = useMediaQuery("(min-width:600px)");
   // colors.primary[500]
   let fond = {
@@ -187,18 +186,8 @@ const AddFund = ({show,setShow,mode}) => {
               >
                 Adauga fond
               </Button>
-              <ToastContainer
-                position="top-center"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-              />
+             
+
             </Box>
           </Box>
         </Box>
