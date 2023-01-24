@@ -33,5 +33,9 @@ namespace API_VidiVici.Repositories.Implementation
             _context.Documents.Add(documents);
             _context.SaveChanges();
         }
+
+        public async Task<Documents> GetDocuments(string id){
+            return await _context.Documents.SingleAsync(d=>d.ClientId == id);
+        }
     }
 }

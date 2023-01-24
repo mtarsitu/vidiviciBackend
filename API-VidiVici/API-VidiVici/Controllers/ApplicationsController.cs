@@ -42,6 +42,12 @@ namespace API_VidiVici.Controllers
             return await _service.Get(clientId);
         }
 
+        [Authorize(Roles ="Admin,Poweruser,Employee")]
+        [HttpGet("getDocuments")]
+        public async Task<Documents> GetDocuments(string clientId){
+            return await _service.GetDocuments(clientId);
+        }
+
         [Authorize(Roles ="Admin,Poweruser,Employee,Prospect")]
         [HttpPost("add")]
         public  async Task<ActionResult>  Add(Application application)
@@ -83,6 +89,8 @@ namespace API_VidiVici.Controllers
             }
             // return Ok();
         }
+
+
 
     }
 }

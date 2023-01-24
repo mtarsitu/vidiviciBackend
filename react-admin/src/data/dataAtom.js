@@ -251,6 +251,24 @@ export const applicationAtom = atom(async (get) => {
   return null;
 });
 
+export const documentsAtom = atom(async (get) => {
+  const id = get(applicationUserIdAtom);
+  const response = await fetch(
+    baseUrl + `Applications/getDocuments?clientId=${id}`,
+    {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        accept: "text/plain",
+      },
+    }
+  );
+  if (response.ok) {
+    return await response.json();
+  }
+  return null;
+});
+
 export const usersAtom = atom(async (get) => {
   get(refreshAtom);
   const response = await fetch(baseUrl + "Admins/AllUser", {

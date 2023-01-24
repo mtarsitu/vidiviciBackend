@@ -18,8 +18,8 @@ import Unauthorize from "../unauthorize";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import EditIcon from "@mui/icons-material/Edit";
-import UserApplication from "../application";
-
+// import UserApplication from "../application/userApplication";
+import VerifyApplication from "../application/verifyApplication";
 const PendingInvestors = ({ useratom, authorized, mode, colors }) => {
   const [open, setOpen] = useState(false);
   const [openManage, setOpenManage] = useState(false);
@@ -94,73 +94,76 @@ const PendingInvestors = ({ useratom, authorized, mode, colors }) => {
   return (
     <>
       {loggedUser != null ? (
-        <Box m="20px">
-          <Header title="Utilizatori" subtitle="Administrare utilizatori" />
-          <Box
-            m="40px 0 0 0"
-            height="75vh"
-            sx={{
-              "& .MuiDataGrid-root": {
-                border: "none",
-              },
-              "& .MuiDataGrid-cell": {
-                borderBottom: "none",
-              },
-              // "& .name-column--cell": {
-              //   color: colors.purpleAccent[300],
-              // },
-              "& .MuiDataGrid-columnHeaders": {
-                backgroundColor: colors.purpleAccent[700],
-                borderBottom: "none",
-              },
-              "& .MuiDataGrid-virtualScroller": {
-                backgroundColor: colors.primary[400],
-              },
-              "& .MuiDataGrid-footerContainer": {
-                borderTop: "none",
-                backgroundColor: colors.purpleAccent[700],
-              },
-              "& .MuiCheckbox-root": {
-                color: `${colors.purpleAccent[200]} !important`,
-              },
-              "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                color: `${colors.grey[100]} !important`,
-              },
-            }}
-          >
-            {/* //checkboxSelection */}
+        <>
+          {!openManage ? (
+            <Box m="20px">
+              <Header title="Utilizatori" subtitle="Administrare utilizatori" />
+              <Box
+                m="40px 0 0 0"
+                height="75vh"
+                sx={{
+                  "& .MuiDataGrid-root": {
+                    border: "none",
+                  },
+                  "& .MuiDataGrid-cell": {
+                    borderBottom: "none",
+                  },
+                  // "& .name-column--cell": {
+                  //   color: colors.purpleAccent[300],
+                  // },
+                  "& .MuiDataGrid-columnHeaders": {
+                    backgroundColor: colors.purpleAccent[700],
+                    borderBottom: "none",
+                  },
+                  "& .MuiDataGrid-virtualScroller": {
+                    backgroundColor: colors.primary[400],
+                  },
+                  "& .MuiDataGrid-footerContainer": {
+                    borderTop: "none",
+                    backgroundColor: colors.purpleAccent[700],
+                  },
+                  "& .MuiCheckbox-root": {
+                    color: `${colors.purpleAccent[200]} !important`,
+                  },
+                  "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                    color: `${colors.grey[100]} !important`,
+                  },
+                }}
+              >
+                {/* //checkboxSelection */}
 
-            <DataGrid
-              rows={users[0].filter(
-                (investor) => investor.userRole === "Pending"
-              )}
-              columns={columns}
-              pageSize={7}
-              rowsPerPageOptions={[7]}
-              components={{ Toolbar: GridToolbar }}
-              // sx={{
-              //   width:"75vw"
-              // }}
-            />
-          </Box>
-          <Information
-            props={infoId}
-            partnerName={partnerName}
-            open={open}
-            handleClose={setOpen}
-            mode={mode}
-            colors={colors}
-          />
-          {openManage && (
-            <UserApplication
+                <DataGrid
+                  rows={users[0].filter(
+                    (investor) => investor.userRole === "Pending"
+                  )}
+                  columns={columns}
+                  pageSize={7}
+                  rowsPerPageOptions={[7]}
+                  components={{ Toolbar: GridToolbar }}
+                  // sx={{
+                  //   width:"75vw"
+                  // }}
+                />
+              </Box>
+              <Information
+                props={infoId}
+                partnerName={partnerName}
+                open={open}
+                handleClose={setOpen}
+                mode={mode}
+                colors={colors}
+              />
+            </Box>
+          ) : (
+            <VerifyApplication
+              setOpenManage={setOpenManage}
               show={openManage}
-              handleClose={setOpenManage}
               user={partnerName}
               mode={mode}
               colors={colors}
             />
           )}
-        </Box>
+        </>
       ) : (
         <Box>
           <Unauthorize errorMessage={"Nu esti autorizat"} />

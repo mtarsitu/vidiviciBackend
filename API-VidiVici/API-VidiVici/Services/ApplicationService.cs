@@ -30,5 +30,9 @@ namespace API_VidiVici.Services
         _repository.AddDocuments(documents);
       }
 
+      public async Task<Documents> GetDocuments(string id)
+      {
+          return await _repository.GetDocuments(id);
+      }
     }
 }
