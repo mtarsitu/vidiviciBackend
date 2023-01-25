@@ -7,10 +7,9 @@ import { useState } from "react";
 import AddInformation from "./addInformation";
 const Information = ({ props, partnerName, open, handleClose, mode,colors }) => {
   const [, setEntityId] = useAtom(entityIdAtom);
-  const entityInformation = useAtom(entityInformationAtom)[0];
-
-  const [newInfo, setNewInfo] = useState(false);
   setEntityId(props);
+  const entityInformation = useAtom(entityInformationAtom)[0];
+  const [newInfo, setNewInfo] = useState(false);
   const handleAddInfo = () => {setNewInfo(true)};
   const headers = [
     ...(entityInformation[0]

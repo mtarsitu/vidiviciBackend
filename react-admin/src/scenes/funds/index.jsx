@@ -24,6 +24,7 @@ const Funds = ({ authorized,mode,useratom }) => {
   const handleAddFund=()=>{
     setNew(true);
   }
+  console.log(allFunds);
   useEffect(() => {
     if (authorize) {
       setShowFunds(allFunds[0]);

@@ -19,14 +19,14 @@ const UserApplication = ({ handleClose, user, mode, colors }) => {
   return (
     <>
       <CssBaseline />
-      <Box m="10px">
+      <Box m="10px" backgroundColor={colors.primary[400]} sx={{maxHeight:"50vh"}}>
         <Header title="Chestionar" />
         <Box
           sx={{
             // marginTop: 10,
             marginLeft: 5,
             maxWidth: "40vw",
-            maxHeight: "70vh",
+            maxHeight: "80%",
             overflow: "scroll",
           }}
         >

@@ -15,7 +15,7 @@ import { newInformationAtom, RegisterInformationAtom } from "../../data/dataAtom
 const AddInformation = ({show,setShow,userId,mode,colors}) => {
   const [newInformation,setNewInformation] = useAtom(newInformationAtom);
   const RegisterInformation = useAtom(RegisterInformationAtom);
- console.log(newInformation);
+  console.log(newInformation);
   // const isNonMobile = useMediaQuery("(min-width:600px)");
   
   const handleClose= ()=>{
@@ -41,7 +41,7 @@ const AddInformation = ({show,setShow,userId,mode,colors}) => {
     const timeout = ()=> {setTimeout(() => {
       handleClose();
     }, 300);}
-    timeout();
+
     // console.log(newInformation);
     
     // RegisterInformation();

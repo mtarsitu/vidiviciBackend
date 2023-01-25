@@ -2,12 +2,12 @@ import { documentsAtom } from "../../data/dataAtom";
 import { useAtom } from "jotai";
 import { Box, ImageList } from "@mui/material";
 import Header from "../../components/Header";
-const UserDocuments = () => {
+const UserDocuments = ({colors}) => {
   const documents = useAtom(documentsAtom);
 
 
   return (
-    <Box m="10px">
+    <Box m="10px" backgroundColor={colors.primary[400]}>
       <Header title="Documente" />
       <ImageList sx={{ width: 500, height: 350 }}>
         <img

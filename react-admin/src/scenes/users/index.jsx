@@ -37,9 +37,6 @@ const Users = ({ useratom, mode, colors }) => {
   const deleteUser = useAtom(deleteUserAtom);
   const loggedUser = useratom;
   const [refresh, setRefresh] = useAtom(refreshAtom);
-  const handleAddUser = () => {
-    setNewUser(true);
-  };
 
   const columns = [
     { field: "id", headerName: "ID" },
@@ -127,6 +124,9 @@ const Users = ({ useratom, mode, colors }) => {
     },
   ];
 
+  const handleAddUser = () => {
+    setNewUser(true);
+  };
   const handleOpen = (id) => {
     setPartnerName(users[0].filter((entity) => entity.id === id)[0].username);
 

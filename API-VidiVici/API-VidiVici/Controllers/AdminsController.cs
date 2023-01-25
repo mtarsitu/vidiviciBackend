@@ -100,7 +100,13 @@ namespace API_VidiVici.Controllers
         public async Task<ActionResult> Remove(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
+            
             if(user!= null){
+                var doc = _context.Documents.Where(d=>d.ClientId ==id);
+                
+                if(doc!= null){
+                    doc.ExecuteDeleteAsync();
+                }
                var result =  _userManager.DeleteAsync(user);
                if(result.Result.Succeeded){
                 return Ok();

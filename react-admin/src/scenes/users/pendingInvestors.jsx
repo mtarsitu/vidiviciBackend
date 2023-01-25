@@ -26,7 +26,6 @@ const PendingInvestors = ({ useratom, authorized, mode, colors }) => {
   const [infoId, setInfoId] = useState();
   const [, setAcceptPendingId] = useAtom(acceptPendingIdAtom);
   const AcceptPending = useAtom(AcceptPendingAtom);
-  const [, setEntityId] = useAtom(entityIdAtom);
   const [, setApplicationUserId] = useAtom(applicationUserIdAtom);
   const [partnerName, setPartnerName] = useState();
   const users = useAtom(usersAtom);
@@ -52,14 +51,16 @@ const PendingInvestors = ({ useratom, authorized, mode, colors }) => {
                 <InfoIcon />
               </IconButton>
             </Tooltip>
+            <Tooltip title={`Verifica aplicatia pentru ${row.row.username}`}>
             <IconButton color="inherit" onClick={() => handleManage(row.id)}>
               <ManageAccountsIcon />
             </IconButton>
-            <Tooltip title={`Editeaza user ${row.row.username}`}>
+            </Tooltip>
+            {/* <Tooltip title={`Editeaza user ${row.row.username}`}>
               <IconButton color="inherit">
                 <EditIcon />
               </IconButton>
-            </Tooltip>
+            </Tooltip> */}
             <Tooltip title={`Accepta investitor ${row.row.username}`}>
               <IconButton color="inherit" onClick={() => handleAccept(row.id)}>
                 <DoneAllIcon />
@@ -161,6 +162,7 @@ const PendingInvestors = ({ useratom, authorized, mode, colors }) => {
               user={partnerName}
               mode={mode}
               colors={colors}
+              id={infoId}
             />
           )}
         </>

@@ -47,6 +47,7 @@ const ToProfesional = ({ show, setShow, user, mode, colors }) => {
     section != Object.keys(imageObject).length
       ? setSection(section + 1)
       : setShow(false);
+
   };
 
   const handleFormObject = (e) => {
@@ -128,7 +129,7 @@ const ToProfesional = ({ show, setShow, user, mode, colors }) => {
               <Box
                 sx={{
                   position: "absolute",
-                  top: "60%",
+                  top: "80%",
                   left: "50%",
                   transform: "translate(-50%, -50%)",
                   width: "80vw",

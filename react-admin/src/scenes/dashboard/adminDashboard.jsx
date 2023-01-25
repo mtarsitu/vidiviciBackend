@@ -23,14 +23,9 @@ const AdminDashboard = ({ user }) => {
   const totalSumInvest = investments.reduce(function (acc, investment) {
     return acc + investment.initialInvestmentAmount;
   }, 0);
-  const totalInvestors = [
-    ...investments
-      .reduce((a, c) => {
-        a.set(c.clientId, c);
-        return a;
-      }, new Map())
-      .values(),
-  ].length;
+
+  const totalInvestors = users.filter((user)=>{return user.userRole === "Investor"}).length;
+
   // const totalUsers = users.filter((obj) => {
   //   return Object.keys(obj).reduce((acc, curr) => {
   //     return acc || obj[curr].includes("Investor" || "Pending");
@@ -200,21 +195,21 @@ const AdminDashboard = ({ user }) => {
             display="flex"
             justifyContent="space-between"
             alignItems="center"
-            borderBottom={`4px solid ${colors.primary[500]}`}
+            borderBottom={`4px solid ${colors.primary[700]}`}
             colors={colors.grey[100]}
             p="15px"
           >
             <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
-              Recent Transactions
+              Investitii recente
             </Typography>
           </Box>
-          {mockTransactions.map((transaction, i) => (
+          {investments.map((investment, i) => (
             <Box
-              key={`${transaction.txId}-${i}`}
+              key={`${investment.id}-${i}`}
               display="flex"
               justifyContent="space-between"
               alignItems="center"
-              borderBottom={`4px solid ${colors.primary[500]}`}
+              borderBottom={`4px solid ${colors.primary[700]}`}
               p="15px"
             >
               <Box>
@@ -223,19 +218,22 @@ const AdminDashboard = ({ user }) => {
                   variant="h5"
                   fontWeight="600"
                 >
-                  {transaction.txId}
+                  <EuroSymbolIcon
+                    sx={{ color: colors.purpleAccent[400], fontSize: "15px" }}
+                  />
+                  {investment.initialInvestmentAmount}
                 </Typography>
                 <Typography color={colors.grey[100]}>
-                  {transaction.user}
+                  {investment.client.firstName}
                 </Typography>
               </Box>
-              <Box color={colors.grey[100]}>{transaction.date}</Box>
+              <Box color={colors.grey[100]}>{investment.dateCreated.split("T")[0]}</Box>
               <Box
                 backgroundColor={colors.greenAccent[500]}
                 p="5px 10px"
                 borderRadius="4px"
               >
-                ${transaction.cost}
+                ${investment.rateOfInterest}
               </Box>
             </Box>
           ))}

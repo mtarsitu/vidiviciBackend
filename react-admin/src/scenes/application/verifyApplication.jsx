@@ -1,10 +1,29 @@
 import { Box, Button } from "@mui/material";
 import UserApplication from "./userApplication";
 import UserDocuments from "./userDocuments";
-const VerifyApplication = ({ show,setOpenManage, user, mode, colors }) => {
+import { acceptPendingIdAtom,refreshAtom,AcceptPendingAtom,entityInformationAtom } from "../../data/dataAtom";
+import { useAtom } from "jotai";
+import { useState } from "react";
+const VerifyApplication = ({ show,setOpenManage, user, mode, colors,id }) => {
+  const [, setAcceptPendingId] = useAtom(acceptPendingIdAtom);
+  const [refresh, setRefresh] = useAtom(refreshAtom);
+  const entityInformation = useAtom(entityInformationAtom)[0];
+  console.log(entityInformation);
+  const userId = useState(id);
+  const AcceptPending = useAtom(AcceptPendingAtom);
   const handleBack = () => {
     setOpenManage(!show);
   };
+  const handleAccept = () => {
+    console.log(userId[0]);
+    setAcceptPendingId(userId[0]);
+    const timeout = setTimeout(() => {
+      setRefresh(!refresh);
+    }, 300);
+    handleBack();
+    
+  };
+
   return (
     <Box>
       <Box m="10px">
@@ -19,7 +38,7 @@ const VerifyApplication = ({ show,setOpenManage, user, mode, colors }) => {
           Inapoi
         </Button>
         <Button
-          onClick={handleBack}
+          onClick={handleAccept}
           variant="contained"
           sx={{
             backgroundColor: colors.purpleAccent[700],
@@ -28,14 +47,14 @@ const VerifyApplication = ({ show,setOpenManage, user, mode, colors }) => {
           Aproba
         </Button>
       </Box>
-      <Box display="flex" justifyContent="space-between">
+      <Box display="flex" justifyContent="space-evenly">
         <UserApplication
           handleClose={setOpenManage}
           user={user}
           mode={mode}
           colors={colors}
         />
-        <UserDocuments />
+        <UserDocuments  colors={colors}/>
       </Box>
     </Box>
   );

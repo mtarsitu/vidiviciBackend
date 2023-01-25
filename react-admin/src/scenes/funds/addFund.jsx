@@ -3,7 +3,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 // import { ColorModeContext, useMode } from "../../theme";
 import TextField from "@mui/material/TextField";
-import {Box,Modal} from "@mui/material";
+import { Box, Modal } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Header from "../../components/Header";
 import { toast, ToastContainer } from "react-toastify";
@@ -11,13 +11,17 @@ import QueueIcon from "@mui/icons-material/Queue";
 
 import { useMode, tokens } from "../../theme";
 import { useAtom } from "jotai";
-import { RegisterFundAtom,newFondAtom,refreshFundsAtom } from "../../data/dataAtom";
-const AddFund = ({show,setShow,mode}) => {
-  const [,setNewFond] = useAtom(newFondAtom);
+import {
+  RegisterFundAtom,
+  newFondAtom,
+  refreshFundsAtom,
+} from "../../data/dataAtom";
+const AddFund = ({ show, setShow, mode }) => {
+  const [, setNewFond] = useAtom(newFondAtom);
   const RegisterFund = useAtom(RegisterFundAtom);
   const [theme, colorMode] = useMode();
   const colors = tokens(theme.palette.mode);
-  const [refreshFunds,setRefreshFunds] = useAtom(refreshFundsAtom);
+  const [refreshFunds, setRefreshFunds] = useAtom(refreshFundsAtom);
 
   // const isNonMobile = useMediaQuery("(min-width:600px)");
   // colors.primary[500]
@@ -27,10 +31,10 @@ const AddFund = ({show,setShow,mode}) => {
     private: "",
     returningType: "",
   };
- 
-  const handleClose= ()=>{
+
+  const handleClose = () => {
     setShow(false);
-  }
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -41,10 +45,14 @@ const AddFund = ({show,setShow,mode}) => {
       returningType: data.get("returningType"),
     };
     setNewFond(fond);
-    setRefreshFunds(!refreshFunds);
-    handleClose();
-  
+    const timeout = () => {
+      setTimeout(() => {
+        setRefreshFunds(!refreshFunds);
+        handleClose();
+      }, 300);
+    };
   };
+  
   console.log(refreshFunds);
   return (
     <Modal
@@ -60,7 +68,9 @@ const AddFund = ({show,setShow,mode}) => {
           left: "50%",
           transform: "translate(-50%, -50%)",
           width: "80vw",
-          bgcolor: `${mode==="light"? colors.primary[900]:colors.primary[600]}`,
+          bgcolor: `${
+            mode === "light" ? colors.primary[900] : colors.primary[600]
+          }`,
           border: "2px solid #000",
           boxShadow: 24,
           borderRadius: "12px",
@@ -186,8 +196,6 @@ const AddFund = ({show,setShow,mode}) => {
               >
                 Adauga fond
               </Button>
-             
-
             </Box>
           </Box>
         </Box>

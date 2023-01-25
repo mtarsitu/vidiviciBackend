@@ -28,6 +28,7 @@ function App() {
   const loggedUser = useAtom(loggedUserAtom);
   const [authorize, setAuthorize] = useState(false);
   const [userName, setUserName] = useState("");
+
   const roles = {
     authorized: ["Admin", "Poweruser", "Employee"],
     unauthorize: ["Prospect", "Investor", "Pending"],
