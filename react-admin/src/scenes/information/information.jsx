@@ -5,12 +5,22 @@ import { useAtom } from "jotai";
 import { entityIdAtom, entityInformationAtom } from "../../data/dataAtom";
 import { useState } from "react";
 import AddInformation from "./addInformation";
-const Information = ({ props, partnerName, open, handleClose, mode,colors }) => {
+import { Suspense } from "react";
+const Information = ({
+  props,
+  partnerName,
+  open,
+  handleClose,
+  mode,
+  colors,
+}) => {
   const [, setEntityId] = useAtom(entityIdAtom);
   setEntityId(props);
   const entityInformation = useAtom(entityInformationAtom)[0];
   const [newInfo, setNewInfo] = useState(false);
-  const handleAddInfo = () => {setNewInfo(true)};
+  const handleAddInfo = () => {
+    setNewInfo(true);
+  };
   const headers = [
     ...(entityInformation[0]
       ? Object.entries(entityInformation[0]).map((info) => {
@@ -44,7 +54,7 @@ const Information = ({ props, partnerName, open, handleClose, mode,colors }) => 
         })
       : ""),
   ];
-  const close=()=>{
+  const close = () => {
     handleClose(false);
   };
   const columns = headers.filter((element) => {
@@ -54,84 +64,93 @@ const Information = ({ props, partnerName, open, handleClose, mode,colors }) => 
   const rows = entityInformation;
 
   return (
-    <>
-      <Modal
-        open={open}
-        onClose={close}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "80vw",
-            bgcolor: mode === "light" ? colors.primary[900] : colors.primary[400],
-            border: "2px solid #000",
-            boxShadow: 24,
-            borderRadius: "12px",
-            p: 4,
-          }}
+      <>
+        <Modal
+          open={open}
+          onClose={close}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
         >
-          <Typography id="modal-modal-title" variant="h3" component="h2">
-            Informatii ale partenerului: {partnerName}
-          </Typography>
-          <Button
-            variant="contained"
-            onClick={handleAddInfo}
-            sx={{
-              marginTop: -5,
-              marginLeft: 55,
-              backgroundColor: colors.purpleAccent[700],
-            }}
-          >
-            Adauga informatie
-          </Button>
           <Box
-            m="40px 0 0 0"
-            height="25vh"
             sx={{
-              "& .MuiDataGrid-root": {
-                border: "none",
-              },
-              "& .MuiDataGrid-cell": {
-                borderBottom: "none",
-              },
-              "& .username-column--cell": {
-                color: colors.greenAccent[300],
-              },
-              "& .MuiDataGrid-columnHeaders": {
-                backgroundColor: colors.purpleAccent[700],
-                borderBottom: "none",
-              },
-              "& .MuiDataGrid-virtualScroller": {
-                backgroundColor: colors.primary[400],
-              },
-              "& .MuiDataGrid-footerContainer": {
-                borderTop: "none",
-                backgroundColor: colors.purpleAccent[700],
-              },
-              "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                color: `${colors.grey[100]} !important`,
-              },
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "80vw",
+              bgcolor:
+                mode === "light" ? colors.primary[900] : colors.primary[400],
+              border: "2px solid #000",
+              boxShadow: 24,
+              borderRadius: "12px",
+              p: 4,
             }}
           >
-            {/* //checkboxSelection */}
+            <Typography id="modal-modal-title" variant="h3" component="h2">
+              Informatii ale partenerului: {partnerName}
+            </Typography>
+            <Button
+              variant="contained"
+              onClick={handleAddInfo}
+              sx={{
+                marginTop: -5,
+                marginLeft: 55,
+                backgroundColor: colors.purpleAccent[700],
+              }}
+            >
+              Adauga informatie
+            </Button>
+            <Box
+              m="40px 0 0 0"
+              height="25vh"
+              sx={{
+                "& .MuiDataGrid-root": {
+                  border: "none",
+                },
+                "& .MuiDataGrid-cell": {
+                  borderBottom: "none",
+                },
+                "& .username-column--cell": {
+                  color: colors.greenAccent[300],
+                },
+                "& .MuiDataGrid-columnHeaders": {
+                  backgroundColor: colors.purpleAccent[700],
+                  borderBottom: "none",
+                },
+                "& .MuiDataGrid-virtualScroller": {
+                  backgroundColor: colors.primary[400],
+                },
+                "& .MuiDataGrid-footerContainer": {
+                  borderTop: "none",
+                  backgroundColor: colors.purpleAccent[700],
+                },
+                "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                  color: `${colors.grey[100]} !important`,
+                },
+              }}
+            >
+              {/* //checkboxSelection */}
 
-            <DataGrid
-              rows={rows}
-              columns={columns}
-              pageSize={2}
-              rowsPerPageOptions={[2]}
-            />
+              <DataGrid
+                rows={rows}
+                columns={columns}
+                pageSize={2}
+                rowsPerPageOptions={[2]}
+              />
+            </Box>
           </Box>
-        </Box>
-      </Modal>
+        </Modal>
 
-      {newInfo && <AddInformation show={newInfo} setShow={setNewInfo} userId={props} mode={mode} colors={colors}/>}
-    </>
+        {newInfo && (
+          <AddInformation
+            show={newInfo}
+            setShow={setNewInfo}
+            userId={props}
+            mode={mode}
+            colors={colors}
+          />
+        )}
+      </>
   );
 };
 

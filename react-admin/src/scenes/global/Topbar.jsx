@@ -36,7 +36,7 @@ const Topbar = ({ useratom }) => {
   };
 
   const user = useratom;
-  if (user != null && user.userRole!="Prospect") {
+  if (user !== null && user.userRole!=="Prospect" && user.userRole!=="Investor" ) {
     setInterval(() => {
       console.log("ceva");
       setNotificationRefresh(!notificationRefresh);
@@ -98,7 +98,7 @@ const Topbar = ({ useratom }) => {
                   <LightModeOutlinedIcon />
                 )}
               </IconButton>
-              {useratom.userRole !== "Prospect" && (
+              {useratom.userRole === "Admin" && (
                 <IconButton
                   onMouseEnter={handleEnter}
                   onMouseLeave={handleClose}
@@ -111,6 +111,7 @@ const Topbar = ({ useratom }) => {
                     open={open}
                     handleClose={handleClose}
                     notifications={notifications[0]}
+                    colors={colors}
                   />
                 </IconButton>
               )}

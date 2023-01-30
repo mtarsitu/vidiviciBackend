@@ -38,13 +38,13 @@ const ToProfesional = ({ show, setShow, user, mode, colors }) => {
   let [section, setSection] = useState(1);
   // const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const handleCloseModal = () => {
-    setShow(false);
-  };
+  // const handleCloseModal = () => {
+  //   setShow(false);
+  // };
 
   const handleNext = () => {
     addImageProcess();
-    section != Object.keys(imageObject).length
+    section !== Object.keys(imageObject).length
       ? setSection(section + 1)
       : setShow(false);
   };
@@ -53,7 +53,7 @@ const ToProfesional = ({ show, setShow, user, mode, colors }) => {
     const idList = e.target.id.split("-");
     const checkbox = parseInt(idList[1]);
     const question = parseInt(idList[0]);
-    if (idList.length == 2) {
+    if (idList.length === 2) {
       formObject[question][checkbox] = e.target.checked;
     } else {
       const secondCheckBox = parseInt(idList[2]);

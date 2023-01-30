@@ -14,7 +14,7 @@ const EditUser = ({ oldUser, setUserEdit,mode }) => {
   const colors = tokens(theme.palette.mode);
 
   // const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [refresh, setRefresh] = useState(refreshAtom);
+  const [, setRefresh] = useState(refreshAtom);
   const Edit = async (user) => {
     const response = await fetch(`http://localhost:5241/Accounts/edit`, {
       method: "POST",

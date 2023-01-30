@@ -16,7 +16,7 @@ import {
 const AddInformation = ({ show, setShow, userId, mode, colors }) => {
   const [, setNewInformation] = useAtom(newInformationAtom);
   const RegisterInformation = useAtom(RegisterInformationAtom);
- console.log(show);
+
   // const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const handleClose = () => {

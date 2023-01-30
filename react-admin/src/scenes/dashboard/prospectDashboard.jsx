@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import StatBox from "../../components/StatBox";
 import ToProfesional from "../application/toProfessional";
 import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
@@ -12,7 +12,7 @@ const ProspectDashboard = ({ colors, useratom, mode }) => {
   const [show, setShow] = useState(false);
   const [showDoc, setshowDoc] = useState(false);
   const [newInformation, setNewInformation] = useState(false);
-  console.log(newInformation);
+
   const handleOpenModal = () => {
     setShow(true);
   };
