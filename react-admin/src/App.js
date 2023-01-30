@@ -65,7 +65,7 @@ function App() {
                 <Route
                   path="/"
                   element={
-                    authorize ? (
+                    loggedUser[0] !== null ? (
                       <Dashboard useratom={loggedUser[0]} />
                     ) : (
                       <Login useratom={loggedUser[0]} />

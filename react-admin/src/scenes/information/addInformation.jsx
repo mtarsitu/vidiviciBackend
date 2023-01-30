@@ -3,24 +3,25 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 // import { ColorModeContext, useMode } from "../../theme";
 import TextField from "@mui/material/TextField";
-import {Box,Modal} from "@mui/material";
+import { Box, Modal } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Header from "../../components/Header";
-import { toast, ToastContainer } from "react-toastify";
 import QueueIcon from "@mui/icons-material/Queue";
-import { useMode,tokens } from "../../theme";
 import { useAtom } from "jotai";
-import { newInformationAtom, RegisterInformationAtom } from "../../data/dataAtom";
+import {
+  newInformationAtom,
+  RegisterInformationAtom,
+} from "../../data/dataAtom";
 
-const AddInformation = ({show,setShow,userId,mode,colors}) => {
-  const [newInformation,setNewInformation] = useAtom(newInformationAtom);
+const AddInformation = ({ show, setShow, userId, mode, colors }) => {
+  const [, setNewInformation] = useAtom(newInformationAtom);
   const RegisterInformation = useAtom(RegisterInformationAtom);
-  console.log(newInformation);
+ console.log(show);
   // const isNonMobile = useMediaQuery("(min-width:600px)");
-  
-  const handleClose= ()=>{
+
+  const handleClose = () => {
     setShow(false);
-  }
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -34,20 +35,13 @@ const AddInformation = ({show,setShow,userId,mode,colors}) => {
       bank: data.get("bank"),
       cui: data.get("cui"),
       regComertului: data.get("regComertului"),
-      birthDate: data.get("birthDate")
+      birthDate: data.get("birthDate"),
     };
     console.log(info);
     setNewInformation(info);
-    const timeout = ()=> {setTimeout(() => {
+    setTimeout(() => {
       handleClose();
-    }, 300);}
-
-    // console.log(newInformation);
-    
-    // RegisterInformation();
-
-    // setRefreshFunds(!refreshFunds);
-  
+    }, 300);
   };
 
   return (
@@ -61,11 +55,13 @@ const AddInformation = ({show,setShow,userId,mode,colors}) => {
       <Box
         sx={{
           position: "absolute",
-          top: "60%",
+          top: "55%",
           left: "50%",
           transform: "translate(-50%, -50%)",
           width: "80vw",
-          bgcolor: `${mode==="light"? colors.primary[900]:colors.primary[400]}`,
+          bgcolor: `${
+            mode === "light" ? colors.primary[900] : colors.primary[400]
+          }`,
           border: "2px solid #000",
           boxShadow: 24,
           borderRadius: "12px",
@@ -73,7 +69,10 @@ const AddInformation = ({show,setShow,userId,mode,colors}) => {
         }}
       >
         <Box m="20px">
-          <Header title="Detalii personale" subtitle="Adauga detalii personale" />
+          <Header
+            title="Detalii personale"
+            subtitle="Adauga detalii personale"
+          />
           <Box
             sx={{
               marginTop: -10,
@@ -277,9 +276,9 @@ const AddInformation = ({show,setShow,userId,mode,colors}) => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Adauga Informatie
+                Adauga Detalii
               </Button>
-              <ToastContainer
+              {/* <ToastContainer
                 position="top-center"
                 autoClose={5000}
                 hideProgressBar={false}
@@ -290,7 +289,7 @@ const AddInformation = ({show,setShow,userId,mode,colors}) => {
                 draggable
                 pauseOnHover
                 theme="light"
-              />
+              /> */}
             </Box>
           </Box>
         </Box>

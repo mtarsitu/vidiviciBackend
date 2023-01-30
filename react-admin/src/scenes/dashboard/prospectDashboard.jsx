@@ -1,13 +1,18 @@
 import { Box, Button, Typography } from "@mui/material";
 import StatBox from "../../components/StatBox";
 import ToProfesional from "../application/toProfessional";
-import QueueIcon from "@mui/icons-material/Queue";
+import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
+import NoteAltIcon from '@mui/icons-material/NoteAlt';
 import Header from "../../components/Header";
 import { useState } from "react";
 import UploadDocuments from "../application/uploadDocuments";
+import AddInformation from "../information/addInformation";
+import InfoIcon from '@mui/icons-material/Info';
 const ProspectDashboard = ({ colors, useratom, mode }) => {
   const [show, setShow] = useState(false);
   const [showDoc, setshowDoc] = useState(false);
+  const [newInformation, setNewInformation] = useState(false);
+  console.log(newInformation);
   const handleOpenModal = () => {
     setShow(true);
   };
@@ -15,6 +20,8 @@ const ProspectDashboard = ({ colors, useratom, mode }) => {
   const handleOpenDocuments = () => {
     setshowDoc(true);
   };
+
+
 
   return (
     <>
@@ -31,7 +38,7 @@ const ProspectDashboard = ({ colors, useratom, mode }) => {
             sx={{ m: "0 0 5px 0" }}
           >
             Legea impune sa devii investitor profesional pentru a putea
-            investii. Pentru a devenit investitor profesional, ai nevoie sa
+            investii. Pentru a devenii investitor profesional, ai nevoie sa
             incarci documentele cerute in pasii urmatori, sa completezi
             formularul cu detalii personale si chestionarul investitorului
             profesional. Poti urma pasii de mai jos apasand butoanele aferente.
@@ -45,12 +52,12 @@ const ProspectDashboard = ({ colors, useratom, mode }) => {
           alignItems="center"
           justifyContent="space-evenly"
         >
-          <Box onClick={handleOpenModal} sx={{ cursor: "pointer" }}>
+          <Box onClick={()=>setNewInformation(true)} sx={{ cursor: "pointer" }}>
             <StatBox
-              title={"Investitor Profesional"}
-              subtitle="Aplica pentru a investii"
+              title={"1. Detalii personale"}
+              subtitle="Adauga detalii"
               icon={
-                <QueueIcon
+                <InfoIcon
                   sx={{ color: colors.purpleAccent[500], fontSize: "26px" }}
                 />
               }
@@ -58,10 +65,21 @@ const ProspectDashboard = ({ colors, useratom, mode }) => {
           </Box>
           <Box onClick={handleOpenDocuments} sx={{ cursor: "pointer" }}>
             <StatBox
-              title={"Documente"}
+              title={"2. Documente"}
               subtitle="Adauga documente necesare"
               icon={
-                <QueueIcon
+                <DocumentScannerIcon
+                  sx={{ color: colors.purpleAccent[500], fontSize: "26px" }}
+                />
+              }
+            />
+          </Box>
+          <Box onClick={handleOpenModal} sx={{ cursor: "pointer" }}>
+            <StatBox
+              title={"3. Formular"}
+              subtitle="Completeaza cu informatii necesare"
+              icon={
+                <NoteAltIcon
                   sx={{ color: colors.purpleAccent[500], fontSize: "26px" }}
                 />
               }
@@ -79,7 +97,13 @@ const ProspectDashboard = ({ colors, useratom, mode }) => {
       >
         <QueueIcon /> &nbsp; Devino investitor profesionist
       </Button> */}
-
+        <AddInformation
+          show={newInformation}
+          setShow={setNewInformation}
+          userId={useratom.id}
+          mode={mode}
+          colors={colors}
+        />
         <ToProfesional
           show={show}
           setShow={setShow}

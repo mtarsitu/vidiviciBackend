@@ -42,7 +42,7 @@ namespace API_VidiVici.Data
            return new List<Investment>
            {
                new Investment{
-                   ClientId= "010487eb-5d17-4b8c-a09b-cdc38cb9a90a",
+                   ClientId= "4247a0ee-19d6-4206-bba0-2561fcae1d81",
                    FundId =1,
                    RateOnFinal=true,
                    InitialInvestmentAmout= 1000000
@@ -50,26 +50,26 @@ namespace API_VidiVici.Data
                },
 
                new Investment{
-                   ClientId= "010487eb-5d17-4b8c-a09b-cdc38cb9a90a",
+                   ClientId= "4247a0ee-19d6-4206-bba0-2561fcae1d81",
                    FundId =1,
                    InitialInvestmentAmout= 2000000
                },
 
                new Investment{
-                   ClientId= "7eec8294-bdfc-40f6-881c-a99ee15beaa1",
+                   ClientId= "da21be78-d672-4275-b16b-4abb564c916c",
                    FundId =2,
                    InitialInvestmentAmout= 3000000
                    
                },
 
                new Investment{
-                   ClientId= "7eec8294-bdfc-40f6-881c-a99ee15beaa1",
+                   ClientId= "da21be78-d672-4275-b16b-4abb564c916c",
                    FundId =1,
                    InitialInvestmentAmout= 4000000
                },
 
                new Investment{
-                   ClientId= "7eec8294-bdfc-40f6-881c-a99ee15beaa1",
+                   ClientId= "da21be78-d672-4275-b16b-4abb564c916c",
                    FundId =4,
                    InitialInvestmentAmout= 5000000
                },
@@ -166,7 +166,7 @@ namespace API_VidiVici.Data
         {
             return new List<Information>{
                 new Information{
-                    UserId = "010487eb-5d17-4b8c-a09b-cdc38cb9a90a",
+                    UserId = "4247a0ee-19d6-4206-bba0-2561fcae1d81",
                     Cnp = "5020116210753",
                     BirthDate = DateTime.UtcNow,
                     Address = "Bucuresti, Sos Pipera 61 bl 4 sc 2 et 7 ap 159",
@@ -176,7 +176,7 @@ namespace API_VidiVici.Data
                     RegComertului = "J40/5251/2001",
                 },
                  new Information{
-                    UserId = "010487eb-5d17-4b8c-a09b-cdc38cb9a90a",
+                    UserId = "4247a0ee-19d6-4206-bba0-2561fcae1d81",
                     Cnp = "5020116210753",
                     BirthDate = DateTime.UtcNow,
                     Address = "Iasi, Sos Pipera 61 bl 4 sc 2 et 7 ap 159",
@@ -186,7 +186,7 @@ namespace API_VidiVici.Data
                     RegComertului = "J40/5251/2001",
                 },
                  new Information{
-                    UserId = "7eec8294-bdfc-40f6-881c-a99ee15beaa1",
+                    UserId = "da21be78-d672-4275-b16b-4abb564c916c",
                     Cnp = "5020116210753",
                     BirthDate = DateTime.UtcNow,
                     Address = "Cluj, Sos Pipera 61 bl 4 sc 2 et 7 ap 159",

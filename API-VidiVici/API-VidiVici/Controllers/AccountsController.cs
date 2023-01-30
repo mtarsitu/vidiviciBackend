@@ -18,18 +18,18 @@ namespace API_VidiVici.Controllers
         private readonly UserManager<User> _userManager;
         private readonly TokenService _tokenService;
         private readonly SignInManager<User> SignInManager;
-        private readonly VidiviciDbContext _context;
+        private readonly NotificationService _notificationService;
       
         public AccountsController(
         UserManager<User> userManager, 
         TokenService tokenService, 
-        SignInManager<User> signInManager,
-        VidiviciDbContext context
+        NotificationService notificationService,
+        SignInManager<User> signInManager
         )
         {
             _tokenService = tokenService;
+            _notificationService = notificationService;
             _userManager = userManager;
-            _context = context;
             SignInManager = signInManager;
 
         }
@@ -104,7 +104,14 @@ namespace API_VidiVici.Controllers
         public async Task<ActionResult> Register(RegisterDto registerDto)
         {
             registerDto.UserRole =UserRole.Prospect;
-            var user = new User { UserName = registerDto.Username, Email = registerDto.Email, UserRole=UserRole.Prospect };
+            var user = new User 
+                { 
+                UserName = registerDto.Username, 
+                Email = registerDto.Email, 
+                FirstName=registerDto.FirstName, 
+                LastName=registerDto.LastName, 
+                UserRole=UserRole.Prospect 
+                };
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
 
@@ -118,7 +125,10 @@ namespace API_VidiVici.Controllers
                 return ValidationProblem();
             }
             await _userManager.AddToRoleAsync(user,registerDto.UserRole );
-
+            _notificationService.Add(new Notification{
+             NotificationType = NotificationsType.NewUser,
+             Message ="Un nou user s-a inregistrat"
+            });
             return StatusCode(201);
         }
 
@@ -199,7 +209,7 @@ namespace API_VidiVici.Controllers
             user.Email = userDto.Email;
 
             await _userManager.UpdateAsync(user);
-            _context.SaveChanges();
+           
             return Ok();
         }
     }

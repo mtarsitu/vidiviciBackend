@@ -88,7 +88,7 @@ namespace API_VidiVici.Controllers
             await _userManager.UpdateAsync(user);
             user.UserRole = UserRole.Investor;
             _context.SaveChanges();
-
+                
             return Ok();
             }
             return NotFound();

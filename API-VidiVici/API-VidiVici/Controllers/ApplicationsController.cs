@@ -22,17 +22,20 @@ namespace API_VidiVici.Controllers
         private readonly ApplicationService _service;
         private readonly UserManager<User> _userManager;
         private readonly VidiviciDbContext _context;
+        private readonly NotificationService _notificationService;
         public ApplicationsController(
             ILogger<ApplicationsController> logger,
             ApplicationService service,
             UserManager<User> userManager,
-            VidiviciDbContext context
+            VidiviciDbContext context,
+            NotificationService notificationService
         )
         {
             _logger = logger;
             _service = service;
             _userManager = userManager;
             _context = context;
+            _notificationService = notificationService;
         }
 
         [Authorize(Roles ="Admin,Poweruser,Employee")]
@@ -66,9 +69,13 @@ namespace API_VidiVici.Controllers
                 await _userManager.UpdateAsync(user);
                 user.UserRole = UserRole.Pending;
                 _context.SaveChanges();
+                _notificationService.Add(new Notification{
+                    NotificationType = NotificationsType.Pending,
+                    Message = $"{user.FirstName} a completat toate documentele, necesita verificare"
+                });
                 return Ok();   
             }
-            return Ok();
+            return NotFound();
         }
 
         [Authorize(Roles ="Admin,Poweruser,Employee,Prospect")]

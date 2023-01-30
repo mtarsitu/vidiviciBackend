@@ -16,7 +16,7 @@ export const userExternalAtom = atom("");
 export const applicationUserIdAtom = atom("");
 export const acceptPendingIdAtom = atom("");
 export const deleteUserIdAtom = atom("");
-
+export const notificationRefreshAtom = atom(false);
 export const loggedUserAtom = atom(async (get) => {
   get(refreshAtom);
   const response = await fetch(baseUrl + "Accounts/currentUser", {
@@ -48,9 +48,30 @@ export const fundsAtom = atom(async (get) => {
   return null;
 });
 
+export const notificationsAtom = atom(async (get) => {
+  get(notificationRefreshAtom);
+  const user = get(loggedUserAtom);
+  if (user != null && user.userRole == "Admin") {
+
+    const response = await fetch(baseUrl + "Notifications/getAll", {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        accept: "text/plain",
+      },
+    });
+    if (response.ok) {
+      let data = await response.json();
+      console.log(data);
+      return data;
+    }
+    return null;
+  }
+});
+
 export const deleteUserAtom = atom(async (get) => {
   let id = get(deleteUserIdAtom);
-  console.log(id);
+
   if (id) {
     let response = await fetch(baseUrl + `Admins/deleteUser?id=${id}`, {
       method: "POST",
@@ -283,7 +304,6 @@ export const usersAtom = atom(async (get) => {
 
 export const entityInformationAtom = atom(async (get) => {
   const id = get(entityIdAtom);
-  console.log(id);
   get(refreshAtom);
 
   const response = await fetch(

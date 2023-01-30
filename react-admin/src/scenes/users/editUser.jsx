@@ -12,7 +12,7 @@ import { tokens } from "../../theme";
 const EditUser = ({ oldUser, setUserEdit,mode }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  console.log(oldUser, "ajksadjhdahda");
+
   // const isNonMobile = useMediaQuery("(min-width:600px)");
   const [refresh, setRefresh] = useState(refreshAtom);
   const Edit = async (user) => {

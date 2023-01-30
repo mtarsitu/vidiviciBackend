@@ -233,7 +233,7 @@ const AdminDashboard = ({ user }) => {
                 p="5px 10px"
                 borderRadius="4px"
               >
-                ${investment.rateOfInterest}
+                €{investment.rateOfInterest}
               </Box>
             </Box>
           ))}
