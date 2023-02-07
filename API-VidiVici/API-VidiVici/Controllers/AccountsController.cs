@@ -110,7 +110,9 @@ namespace API_VidiVici.Controllers
                 Email = registerDto.Email, 
                 FirstName=registerDto.FirstName, 
                 LastName=registerDto.LastName, 
-                UserRole=UserRole.Prospect 
+                UserRole=UserRole.Prospect,
+                UsedPlatform = "vidivici"
+                
                 };
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);

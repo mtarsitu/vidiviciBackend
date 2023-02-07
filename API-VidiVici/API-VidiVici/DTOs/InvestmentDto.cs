@@ -16,8 +16,11 @@ namespace API_VidiVici.DTOs
         public DateTime NextPaymentDate { get {return GetNextPayment();}}
         public DateTime FinalPaymentDate {get{ return GetFinalPaymentDate();}}
         public double RateOfInterest {get{return GetRateOfInterest();}}
-        public UserDto? Client {get;set;}
+        public string? AprovedById {get;set;}
+        public bool Pending {get;set;}
         public bool RateOnFinal {get;set;}
+        public UserDto? Client {get;set;}
+        public UserDto? AprovedBy {get;set;}
         public Fund? Fund { get; set; }
         public List<DateTime> DatesOfPayment {get;set;} = new List<DateTime>();
         private DateTime GetFinalPaymentDate()

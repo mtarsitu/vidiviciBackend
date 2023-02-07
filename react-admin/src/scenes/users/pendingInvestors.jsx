@@ -1,11 +1,10 @@
-import { Suspense } from "react";
+
 import { Box, IconButton, Tooltip } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Header from "../../components/Header";
 import { useAtom } from "jotai";
 import {
   usersAtom,
-  entityIdAtom,
   applicationUserIdAtom,
   acceptPendingIdAtom,
   AcceptPendingAtom,
@@ -17,7 +16,7 @@ import Information from "../information/information";
 import Unauthorize from "../unauthorize";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import EditIcon from "@mui/icons-material/Edit";
+
 // import UserApplication from "../application/userApplication";
 import VerifyApplication from "../application/verifyApplication";
 const PendingInvestors = ({ useratom, authorized, mode, colors }) => {
@@ -25,7 +24,7 @@ const PendingInvestors = ({ useratom, authorized, mode, colors }) => {
   const [openManage, setOpenManage] = useState(false);
   const [infoId, setInfoId] = useState();
   const [, setAcceptPendingId] = useAtom(acceptPendingIdAtom);
-  const AcceptPending = useAtom(AcceptPendingAtom);
+  useAtom(AcceptPendingAtom);
   const [, setApplicationUserId] = useAtom(applicationUserIdAtom);
   const [partnerName, setPartnerName] = useState();
   const users = useAtom(usersAtom);

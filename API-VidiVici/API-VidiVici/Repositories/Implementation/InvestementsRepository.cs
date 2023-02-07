@@ -17,15 +17,15 @@ namespace API_VidiVici.Repositories.Implementation
         {
             _context = context;
         }
-        public void Add(InvestmentDto item)
+        public void Add(Investment item)
         {
-            _context.Investments?.Add(InvestmentModifier.ToInvestment(item));
+            _context.Investments?.Add(item);
             _context.SaveChanges();
         }
 
-        public void Edit(InvestmentDto item)
+        public void Edit(Investment item)
         {
-            _context.Investments?.Update(InvestmentModifier.ToInvestment(item));
+            _context.Investments?.Update(item);
             _context.SaveChanges();
         }
 
@@ -40,7 +40,11 @@ namespace API_VidiVici.Repositories.Implementation
         public async Task<IEnumerable<InvestmentDto>> GetAll()
         {
             List<InvestmentDto> investmentDtos = new List<InvestmentDto>();
-            List<Investment> investments = await _context.Investments.Include(i=>i.Fund).Include(i=>i.Client).ToListAsync();
+            List<Investment> investments = await _context.Investments
+            .Where(i=>i.Pending != true)
+            .Include(i=>i.Fund)
+            .Include(i=>i.Client)
+            .ToListAsync();
             foreach(Investment investment in investments ){
                 investmentDtos.Add(InvestmentModifier.ToInvestmentDto(investment));
             }
@@ -69,6 +73,21 @@ namespace API_VidiVici.Repositories.Implementation
                 total += investment.InitialInvestmentAmout;
             }
             return total;
+        }
+
+        public async Task<IEnumerable<InvestmentDto>> GetPending()
+        {
+            List<InvestmentDto> investmentDtos = new List<InvestmentDto>();
+            List<Investment> investments = await _context.Investments
+            .Where(i=>i.Pending == true)
+            .Include(i=>i.Fund)
+            .Include(i=>i.Client)
+            .ToListAsync();
+            foreach(Investment investment in investments ){
+                investmentDtos.Add(InvestmentModifier.ToInvestmentDto(investment));
+            }
+            return investmentDtos;
+
         }
     }
 }

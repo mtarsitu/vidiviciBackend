@@ -1,11 +1,9 @@
-import { Box, useTheme, Modal, Typography, Button } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import { tokens } from "../../theme";
+import { Box, Modal, Typography, Button } from "@mui/material";
 import { useAtom } from "jotai";
-import { entityIdAtom, entityInformationAtom } from "../../data/dataAtom";
+import { entityIdAtom, entityInformationAtom,refreshAtom } from "../../data/dataAtom";
 import { useState } from "react";
 import AddInformation from "./addInformation";
-import { Suspense } from "react";
+
 const Information = ({
   props,
   partnerName,
@@ -18,78 +16,46 @@ const Information = ({
   setEntityId(props);
   const entityInformation = useAtom(entityInformationAtom)[0];
   const [newInfo, setNewInfo] = useState(false);
+  const [refresh,setRefresh] = useAtom(refreshAtom);
   const handleAddInfo = () => {
     setNewInfo(true);
   };
-  const headers = [
-    ...(entityInformation[0]
-      ? Object.entries(entityInformation[0]).map((info) => {
-          if (info[1] !== null) {
-            if (info[0] === "id") {
-              return {
-                field: `${info[0]}`,
-                headerName: `${info[0]}`,
-                width: 40,
-              };
-            } else if (
-              info[0] === "entityId" ||
-              info[0] === "salary" ||
-              info[0] === "regComertului" ||
-              info[0] === "validContractDays" ||
-              info[0] === "quantity"
-            ) {
-              return {
-                field: `${info[0]}`,
-                headerName: `${info[0]}`,
-                width: 80,
-              };
-            }
-            return {
-              field: `${info[0]}`,
-              headerName: `${info[0]}`,
-              width: 200,
-            };
-          }
-          return "";
-        })
-      : ""),
-  ];
   const close = () => {
     handleClose(false);
   };
-  const columns = headers.filter((element) => {
-    return element !== "";
-  });
+  const refreshNow = ()=>{
+    setRefresh(!refresh);
+  };
 
-  const rows = entityInformation;
 
   return (
-      <>
-        <Modal
-          open={open}
-          onClose={close}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
+    <>
+      <Modal
+        open={open}
+        onClose={close}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "80vw",
+            bgcolor:
+              mode === "light" ? colors.primary[900] : colors.primary[400],
+            border: "2px solid #000",
+            boxShadow: 24,
+            borderRadius: "12px",
+            p: 4,
+          }}
         >
-          <Box
-            sx={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "80vw",
-              bgcolor:
-                mode === "light" ? colors.primary[900] : colors.primary[400],
-              border: "2px solid #000",
-              boxShadow: 24,
-              borderRadius: "12px",
-              p: 4,
-            }}
-          >
-            <Typography id="modal-modal-title" variant="h3" component="h2">
-              Informatii ale partenerului: {partnerName}
-            </Typography>
-            <Button
+          <Typography id="modal-modal-title" variant="h3" component="h2">
+            Informatii ale partenerului: {partnerName}
+          </Typography>
+          {entityInformation[0]===undefined&&
+          <Button
               variant="contained"
               onClick={handleAddInfo}
               sx={{
@@ -99,58 +65,84 @@ const Information = ({
               }}
             >
               Adauga informatie
-            </Button>
-            <Box
-              m="40px 0 0 0"
-              height="25vh"
-              sx={{
-                "& .MuiDataGrid-root": {
-                  border: "none",
-                },
-                "& .MuiDataGrid-cell": {
-                  borderBottom: "none",
-                },
-                "& .username-column--cell": {
-                  color: colors.greenAccent[300],
-                },
-                "& .MuiDataGrid-columnHeaders": {
-                  backgroundColor: colors.purpleAccent[700],
-                  borderBottom: "none",
-                },
-                "& .MuiDataGrid-virtualScroller": {
-                  backgroundColor: colors.primary[400],
-                },
-                "& .MuiDataGrid-footerContainer": {
-                  borderTop: "none",
-                  backgroundColor: colors.purpleAccent[700],
-                },
-                "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                  color: `${colors.grey[100]} !important`,
-                },
-              }}
-            >
-              {/* //checkboxSelection */}
+            </Button>}
 
-              <DataGrid
-                rows={rows}
-                columns={columns}
-                pageSize={2}
-                rowsPerPageOptions={[2]}
-              />
-            </Box>
+          <Box
+            m="40px 0 0 0"
+            height="25vh"
+            sx={{
+              "& .MuiDataGrid-root": {
+                border: "none",
+              },
+              "& .MuiDataGrid-cell": {
+                borderBottom: "none",
+              },
+              "& .username-column--cell": {
+                color: colors.greenAccent[300],
+              },
+              "& .MuiDataGrid-columnHeaders": {
+                backgroundColor: colors.purpleAccent[700],
+                borderBottom: "none",
+              },
+              "& .MuiDataGrid-virtualScroller": {
+                backgroundColor: colors.primary[400],
+              },
+              "& .MuiDataGrid-footerContainer": {
+                borderTop: "none",
+                backgroundColor: colors.purpleAccent[700],
+              },
+              "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                color: `${colors.grey[100]} !important`,
+              },
+            }}
+          >
+            {entityInformation[0] !== undefined ? (
+              <>
+                <Typography id="modal-modal-title" variant="h3" component="h2">
+                  Cnp: {entityInformation[0].cnp}
+                </Typography>
+                <Typography id="modal-modal-title" variant="h3" component="h2">
+                  Zi de nastere: {entityInformation[0].birthDate}
+                </Typography>
+                <Typography id="modal-modal-title" variant="h3" component="h2">
+                  Adresa: {entityInformation[0].address}
+                </Typography>
+                <Typography id="modal-modal-title" variant="h3" component="h2">
+                  Telefon: {entityInformation[0].phoneNumber}
+                </Typography>
+                <Typography id="modal-modal-title" variant="h3" component="h2">
+                  Banca: {entityInformation[0].bank}
+                </Typography>
+                <Typography id="modal-modal-title" variant="h3" component="h2">
+                  Cont bancar: {entityInformation[0].iban}
+                </Typography>
+                <Typography id="modal-modal-title" variant="h3" component="h2">
+                  Cui Firma: {entityInformation[0].cui}
+                </Typography>
+                <Typography id="modal-modal-title" variant="h3" component="h2">
+                  Reg Comertului: {entityInformation[0].regComertului}
+                </Typography>
+              </>
+            ) : (
+              <>
+                {newInfo && (
+                  <AddInformation
+                    show={newInfo}
+                    setShow={setNewInfo}
+                    userId={props}
+                    mode={mode}
+                    colors={colors}
+                    refresh = {refreshNow}
+                  />
+                )}
+              </>
+            )}
+
+            {/* //checkboxSelection */}
           </Box>
-        </Modal>
-
-        {newInfo && (
-          <AddInformation
-            show={newInfo}
-            setShow={setNewInfo}
-            userId={props}
-            mode={mode}
-            colors={colors}
-          />
-        )}
-      </>
+        </Box>
+      </Modal>
+    </>
   );
 };
 

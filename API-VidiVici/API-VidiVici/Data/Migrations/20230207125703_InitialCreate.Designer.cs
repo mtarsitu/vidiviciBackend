@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace APIVidiVici.Data.Migrations
 {
     [DbContext(typeof(VidiviciDbContext))]
-    [Migration("20230127081726_InitialCreate")]
+    [Migration("20230207125703_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -132,9 +132,6 @@ namespace APIVidiVici.Data.Migrations
                     b.Property<string>("Bank")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("Cnp")
                         .HasColumnType("text");
 
@@ -142,6 +139,9 @@ namespace APIVidiVici.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Iban")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
 
                     b.Property<string>("RegComertului")
@@ -166,6 +166,9 @@ namespace APIVidiVici.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AprovedById")
+                        .HasColumnType("text");
+
                     b.Property<string>("ClientId")
                         .HasColumnType("text");
 
@@ -178,10 +181,15 @@ namespace APIVidiVici.Data.Migrations
                     b.Property<double>("InitialInvestmentAmout")
                         .HasColumnType("double precision");
 
+                    b.Property<bool>("Pending")
+                        .HasColumnType("boolean");
+
                     b.Property<bool>("RateOnFinal")
                         .HasColumnType("boolean");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AprovedById");
 
                     b.HasIndex("ClientId");
 
@@ -219,6 +227,9 @@ namespace APIVidiVici.Data.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
+
+                    b.Property<string>("AprovedById")
+                        .HasColumnType("text");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -281,6 +292,8 @@ namespace APIVidiVici.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AprovedById");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -319,37 +332,37 @@ namespace APIVidiVici.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1a4ab048-c925-4a6f-8824-2789950d1bed",
+                            Id = "5d203fef-f357-48f4-a1fc-4fae9bfd9595",
                             Name = "Poweruser",
                             NormalizedName = "POWERUSER"
                         },
                         new
                         {
-                            Id = "93a83186-47d0-4b7b-b8c2-aa80e14bbcab",
+                            Id = "6a0a6178-5644-49b9-9417-afc41a319d71",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "7ca97be5-abe5-4f6e-97d8-369bb0505fdb",
+                            Id = "b8bbcbcb-a1f3-440f-9b43-95fdb1cb391e",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "d32ae535-2b3e-4fcf-8e51-def5b5bfc75c",
+                            Id = "621bc023-d9f1-462c-8e20-9e2c2f914b65",
                             Name = "Prospect",
                             NormalizedName = "PROSPECT"
                         },
                         new
                         {
-                            Id = "56b03a3f-2052-485e-8414-ab567a17c958",
+                            Id = "5efc5f3f-d108-4079-bb26-97a5643a1071",
                             Name = "Pending",
                             NormalizedName = "PENDING"
                         },
                         new
                         {
-                            Id = "b2abd5c9-7b36-491d-b791-c204232732aa",
+                            Id = "3c64f706-7473-43de-8d91-8ffc7b5460d5",
                             Name = "Investor",
                             NormalizedName = "INVESTOR"
                         });
@@ -465,7 +478,8 @@ namespace APIVidiVici.Data.Migrations
                 {
                     b.HasOne("API_VidiVici.Model.User", "Client")
                         .WithMany()
-                        .HasForeignKey("ClientId");
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Client");
                 });
@@ -483,9 +497,14 @@ namespace APIVidiVici.Data.Migrations
 
             modelBuilder.Entity("API_VidiVici.Model.Investment", b =>
                 {
+                    b.HasOne("API_VidiVici.Model.User", "AprovedBy")
+                        .WithMany()
+                        .HasForeignKey("AprovedById");
+
                     b.HasOne("API_VidiVici.Model.User", "Client")
                         .WithMany()
-                        .HasForeignKey("ClientId");
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("API_VidiVici.Model.Fund", "Fund")
                         .WithMany()
@@ -493,9 +512,20 @@ namespace APIVidiVici.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("AprovedBy");
+
                     b.Navigation("Client");
 
                     b.Navigation("Fund");
+                });
+
+            modelBuilder.Entity("API_VidiVici.Model.User", b =>
+                {
+                    b.HasOne("API_VidiVici.Model.User", "AprovedBy")
+                        .WithMany()
+                        .HasForeignKey("AprovedById");
+
+                    b.Navigation("AprovedBy");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -6,7 +6,6 @@ import TextField from "@mui/material/TextField";
 import { Box, Modal } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Header from "../../components/Header";
-import { toast, ToastContainer } from "react-toastify";
 import QueueIcon from "@mui/icons-material/Queue";
 
 import { useMode, tokens } from "../../theme";
@@ -18,8 +17,8 @@ import {
 } from "../../data/dataAtom";
 const AddFund = ({ show, setShow, mode }) => {
   const [, setNewFond] = useAtom(newFondAtom);
-  const RegisterFund = useAtom(RegisterFundAtom);
-  const [theme, colorMode] = useMode();
+  useAtom(RegisterFundAtom);
+  const [theme] = useMode();
   const colors = tokens(theme.palette.mode);
   const [refreshFunds, setRefreshFunds] = useAtom(refreshFundsAtom);
 
@@ -45,15 +44,13 @@ const AddFund = ({ show, setShow, mode }) => {
       returningType: data.get("returningType"),
     };
     setNewFond(fond);
-    const timeout = () => {
-      setTimeout(() => {
-        setRefreshFunds(!refreshFunds);
-        handleClose();
-      }, 300);
-    };
+
+    setTimeout(() => {
+      setRefreshFunds(!refreshFunds);
+      handleClose();
+    }, 300);
   };
-  
-  console.log(refreshFunds);
+
   return (
     <Modal
       open={show}

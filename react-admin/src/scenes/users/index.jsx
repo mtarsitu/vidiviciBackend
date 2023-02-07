@@ -1,7 +1,6 @@
 import { Box, IconButton, Typography, Button, Tooltip } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import EditIcon from "@mui/icons-material/Edit";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
@@ -34,7 +33,7 @@ const Users = ({ useratom, mode, colors }) => {
   const [partnerName, setPartnerName] = useState();
   const users = useAtom(usersAtom);
   const [, setDeleteUserId] = useAtom(deleteUserIdAtom);
-  const deleteUser = useAtom(deleteUserAtom);
+  useAtom(deleteUserAtom);
   const loggedUser = useratom;
   const [refresh, setRefresh] = useAtom(refreshAtom);
 
@@ -141,7 +140,7 @@ const Users = ({ useratom, mode, colors }) => {
   };
   const handleDelete = (id) => {
     setDeleteUserId(id);
-    const timeout = setTimeout(() => {
+    setTimeout(() => {
       setRefresh(!refresh);
       setDeleteUserId("");
     }, 300);

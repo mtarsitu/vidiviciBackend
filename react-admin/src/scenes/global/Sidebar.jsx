@@ -15,6 +15,7 @@ import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
+import PendingIcon from '@mui/icons-material/Pending';
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -230,6 +231,13 @@ const Sidebar = ({ useratom, authorized }) => {
                       selected={selected}
                       setSelected={setSelected}
                     />
+                    <Item
+                      title="Investitii in asteptare"
+                      to="/investitii-in-asteptare"
+                      icon={<PendingIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                    />/
                   </>
                 )}
                 <Item

@@ -16,8 +16,10 @@ namespace API_VidiVici.Modifiers
             {
                 Id = item.Id,
                 ClientId = item.ClientId,
+                AprovedById = item.AprovedById,
                 DateCreated = (DateTime)item.DateCreated,
-                Fund = item.Fund
+                Fund = item.Fund,
+                Pending = item.Pending
             };
         }
         public static InvestmentDto ToInvestmentDto(Investment item)
@@ -33,6 +35,18 @@ namespace API_VidiVici.Modifiers
             };
             
             return  investmentDto;
+        }
+
+        public static Investment NewToInvestment(NewInvestmentDto investmentDto)
+        {
+            return new Investment
+            {
+                ClientId = investmentDto.ClientId,
+                InitialInvestmentAmout = investmentDto.InitialInvestmentAmount,
+                FundId = investmentDto.FundId,
+                RateOnFinal = false,
+                Pending = true
+            };
         }
     }
 }

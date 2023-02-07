@@ -38,10 +38,8 @@ const Topbar = ({ useratom }) => {
   const user = useratom;
   if (user !== null && user.userRole!=="Prospect" && user.userRole!=="Investor" ) {
     setInterval(() => {
-      console.log("ceva");
       setNotificationRefresh(!notificationRefresh);
-      console.log(notificationRefresh);
-    }, 100000);
+    }, 1000000);
   }
   return (
     <>

@@ -1,13 +1,11 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import {Button,Modal} from "@mui/material";
+
+import {Button,Modal,Box,Typography,Avatar} from "@mui/material";
 import { ColorModeContext, useMode,tokens } from "../../theme";
 import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import Typography from "@mui/material/Typography";
 import Header from "../../components/Header";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { refreshAtom } from "../../data/dataAtom";
 import { useAtom } from "jotai";
 
@@ -244,18 +242,7 @@ const RoleRegister = ({show,setShow,mode}) => {
               >
                 Inregistreaza user nou
               </Button>
-              <ToastContainer
-                position="top-center"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-              />
+             
             </Box>
           </Box>
         </Box>

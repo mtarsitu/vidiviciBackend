@@ -1,4 +1,4 @@
-import { atom } from "jotai";
+import { atom, useSetAtom } from "jotai";
 import { toast } from "react-toastify";
 
 const baseUrl = "http://localhost:5241/";
@@ -17,6 +17,7 @@ export const applicationUserIdAtom = atom("");
 export const acceptPendingIdAtom = atom("");
 export const deleteUserIdAtom = atom("");
 export const notificationRefreshAtom = atom(false);
+export const investmentAprovedAtom = atom("");
 export const loggedUserAtom = atom(async (get) => {
   get(refreshAtom);
   const response = await fetch(baseUrl + "Accounts/currentUser", {
@@ -27,7 +28,7 @@ export const loggedUserAtom = atom(async (get) => {
     },
   });
   if (response.ok) {
-    isLoggedAtom.init = true;
+    // isLoggedAtom.init = true;
     return await response.json();
   }
   return null;
@@ -51,8 +52,7 @@ export const fundsAtom = atom(async (get) => {
 export const notificationsAtom = atom(async (get) => {
   get(notificationRefreshAtom);
   const user = get(loggedUserAtom);
-  if (user != null && user.userRole == "Admin") {
-
+  if (user !== null && user.userRole === "Admin") {
     const response = await fetch(baseUrl + "Notifications/getAll", {
       method: "GET",
       credentials: "include",
@@ -62,7 +62,6 @@ export const notificationsAtom = atom(async (get) => {
     });
     if (response.ok) {
       let data = await response.json();
-      console.log(data);
       return data;
     }
     return null;
@@ -91,17 +90,17 @@ export const deleteUserAtom = atom(async (get) => {
 
 export const ExternalLoginAtom = atom(async (get) => {
   const userToLogin = get(userExternalAtom);
+  if (Object.keys(userToLogin).length !== 0) {
+    let response = await fetch(`http://localhost:5241/Accounts/external`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        accept: "text/plain",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userToLogin),
+    });
 
-  let response = await fetch(`http://localhost:5241/Accounts/external`, {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      accept: "text/plain",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(userToLogin),
-  });
-  if (Object.keys(userToLogin).length != 0) {
     if (response.ok) {
       toast.success(`${userToLogin.firstName} Te-ai logat cu succes!`);
       const timeout = () => {
@@ -136,7 +135,7 @@ export const AcceptPendingAtom = atom(async (get) => {
 
 export const RegisterApplicationAtom = atom(async (get) => {
   const application = get(newApplicationAtom);
-  if (Object.keys(application).length != 0) {
+  if (Object.keys(application).length !== 0) {
     const response = await fetch(baseUrl + "Applications/add", {
       method: "POST",
       credentials: "include",
@@ -156,7 +155,7 @@ export const RegisterApplicationAtom = atom(async (get) => {
 
 export const RegisterFundAtom = atom(async (get) => {
   const fond = get(newFondAtom);
-  if (Object.keys(fond).length != 0) {
+  if (Object.keys(fond).length !== 0) {
     const response = await fetch(baseUrl + `Funds/addFund`, {
       method: "POST",
       credentials: "include",
@@ -176,8 +175,8 @@ export const RegisterFundAtom = atom(async (get) => {
 
 export const RegisterInformationAtom = atom(async (get) => {
   const info = get(newInformationAtom);
-  console.log(info);
-  if (Object.keys(info).length != 0) {
+
+  if (Object.keys(info).length !== 0) {
     const response = await fetch(baseUrl + "Informations/addInformation", {
       method: "POST",
       credentials: "include",
@@ -189,7 +188,7 @@ export const RegisterInformationAtom = atom(async (get) => {
     });
 
     if (response.ok) {
-      toast.success("Informatie adaugat cu succes");
+      toast.success("Informatie adaugata cu succes");
 
       return response.ok;
     }
@@ -199,27 +198,29 @@ export const RegisterInformationAtom = atom(async (get) => {
 
 export const LogInAtom = atom(async (get) => {
   const userToLogin = get(userToLoginAtom);
-  let response = await fetch(`http://localhost:5241/Accounts/login`, {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      accept: "text/plain",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(userToLogin),
-  });
-  if (Object.keys(userToLogin).length != 0) {
-    if (response.ok) {
-      toast.success(`${userToLogin.username} Te-ai logat cu succes!`);
-      const timeout = () => {
-        setTimeout(() => {
-          window.location.href = "/dashboard";
-        }, 1000);
-      };
-      timeout();
-      return response.ok;
-    } else {
-      toast.warning("Username sau parola gresita aici");
+  if (Object.keys(userToLogin).length !== 0) {
+    let response = await fetch(`http://localhost:5241/Accounts/login`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        accept: "text/plain",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userToLogin),
+    });
+    if (Object.keys(userToLogin).length !== 0) {
+      if (response.ok) {
+        toast.success(`${userToLogin.username} Te-ai logat cu succes!`);
+        const timeout = () => {
+          setTimeout(() => {
+            window.location.href = "/dashboard";
+          }, 1000);
+        };
+        timeout();
+        return response.ok;
+      } else {
+        toast.warning("Username sau parola gresita aici");
+      }
     }
   }
 });
@@ -239,10 +240,11 @@ export const allFundsAtom = atom(async (get) => {
   return null;
 });
 
-export const myFundsAtom = atom(async () => {
-  console.log(usernameAtom);
+export const myFundsAtom = atom(async (get) => {
+  const name = get(usernameAtom);
+  console.log(name);
   const response = await fetch(
-    baseUrl + "Admins/UserAndInvestments?username=" + usernameAtom,
+    baseUrl + "Investments/UserAndInvestments?username=" + name,
     {
       method: "GET",
       credentials: "include",
@@ -319,9 +321,40 @@ export const entityInformationAtom = atom(async (get) => {
   return response.json();
 });
 
+export const aproveInvestmentAtom = atom(async (get) => {
+  const aproved = get(investmentAprovedAtom);
+  console.log(aproved);
+  if (aproved!=="") {
+    console.log(aproved, "data atom");
+    const response = await fetch(baseUrl + `Investments/aproveInvestment?id=${aproved}`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        accept: "text/plain",
+      },
+      
+    });
+    if (response.ok) {
+      toast.success("Aprobat cu succes");
+    }
+  }
+});
+
 export const investmentsAtom = atom(async (get) => {
   get(refreshAtom);
   const response = await fetch(baseUrl + "Investments/getAllInvestment", {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      accept: "text/plain",
+    },
+  });
+  return response.json();
+});
+
+export const pendingInvestmentsAtom = atom(async (get) => {
+  get(refreshAtom);
+  const response = await fetch(baseUrl + "Investments/pendingInvestments", {
     method: "GET",
     credentials: "include",
     headers: {

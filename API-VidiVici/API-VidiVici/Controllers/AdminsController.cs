@@ -40,25 +40,6 @@ namespace API_VidiVici.Controllers
             _context = context;
         }
 
-        [Authorize(Roles = "Admin,Investor,Employee,Investor")]
-        [HttpGet("UserAndInvestments")]
-        public async Task<ActionResult<InvestorDto>> GetUserAndInvestments(string username)
-        {
-            var user = await _userManager.FindByNameAsync(username);
-            var actualUser = InvestorModifier.GetInvestorDto(user);
-            var Investments = await _investmentsService.GetUserInvestment(user.Id);
-            var informations = await _informationsService.GetByUserId(user.Id);
-            actualUser.Investments = new List<InvestmentDto>();
-            
-            foreach(Investment investment in Investments){
-                actualUser.Investments.Add(InvestmentModifier.ToInvestmentDto(investment));
-            }
-
-            foreach(InformationDto? informationDto in informations){
-                actualUser?.Informations?.Add(informationDto);
-            }
-            return actualUser;
-        }
 
         [Authorize(Roles = "Poweruser,Admin,Employee")]
         [HttpGet("AllUser")]
@@ -79,11 +60,12 @@ namespace API_VidiVici.Controllers
         [HttpPost("acceptPending")]
         public async Task<ActionResult> AcceptPending(string id)
         {
-            var user = await _userManager.FindByIdAsync(id);  
+            var user = await _userManager.FindByIdAsync(id); 
+            var employee = await _userManager.FindByNameAsync(User.Identity.Name);
             if(user!= null)
             {
             await _userManager.RemoveFromRoleAsync(user, "Pending");
-            
+            user.AprovedById = employee.Id;
             await _userManager.AddToRoleAsync(user, UserRole.Investor);
             await _userManager.UpdateAsync(user);
             user.UserRole = UserRole.Investor;
@@ -102,11 +84,11 @@ namespace API_VidiVici.Controllers
             var user = await _userManager.FindByIdAsync(id);
             
             if(user!= null){
-                var doc = _context.Documents.Where(d=>d.ClientId ==id);
+                // var doc = _context.Documents.Where(d=>d.ClientId ==id);
                 
-                if(doc!= null){
-                    doc.ExecuteDeleteAsync();
-                }
+                // if(doc!= null){
+                //     await doc.ExecuteDeleteAsync();
+                // }
                var result =  _userManager.DeleteAsync(user);
                if(result.Result.Succeeded){
                 return Ok();

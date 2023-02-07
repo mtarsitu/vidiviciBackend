@@ -42,36 +42,37 @@ namespace API_VidiVici.Data
            return new List<Investment>
            {
                new Investment{
-                   ClientId= "4247a0ee-19d6-4206-bba0-2561fcae1d81",
+                   ClientId= "1a4ccdcf-52b8-4e4b-a2e4-f7d50fe85d53",
                    FundId =1,
                    RateOnFinal=true,
-                   InitialInvestmentAmout= 1000000
-
+                   InitialInvestmentAmout= 1000000,
+                   Pending = false
                },
 
                new Investment{
-                   ClientId= "4247a0ee-19d6-4206-bba0-2561fcae1d81",
+                   ClientId= "1a4ccdcf-52b8-4e4b-a2e4-f7d50fe85d53",
                    FundId =1,
-                   InitialInvestmentAmout= 2000000
+                   InitialInvestmentAmout= 2000000,
+                   Pending = false
                },
 
                new Investment{
-                   ClientId= "da21be78-d672-4275-b16b-4abb564c916c",
+                   ClientId= "8e3c9897-ab5b-4370-beea-fb8d216047e3",
                    FundId =2,
-                   InitialInvestmentAmout= 3000000
-                   
+                   InitialInvestmentAmout= 3000000,
+                   Pending = false
                },
-
                new Investment{
-                   ClientId= "da21be78-d672-4275-b16b-4abb564c916c",
+                   ClientId= "8e3c9897-ab5b-4370-beea-fb8d216047e3",
                    FundId =1,
-                   InitialInvestmentAmout= 4000000
+                   InitialInvestmentAmout= 4000000,
+                   Pending = false
                },
-
                new Investment{
-                   ClientId= "da21be78-d672-4275-b16b-4abb564c916c",
+                   ClientId= "8e3c9897-ab5b-4370-beea-fb8d216047e3",
                    FundId =4,
-                   InitialInvestmentAmout= 5000000
+                   InitialInvestmentAmout= 5000000,
+                   Pending = false
                },
            };
        }
@@ -85,6 +86,7 @@ namespace API_VidiVici.Data
                     LastName = "User",
                     UserRole = UserRole.Poweruser,
                     UsedPlatform = "vidivici"
+
                 };
                 await userManager.CreateAsync(poweruser, "Pa$$1234");
                 await userManager.AddToRoleAsync(poweruser, "Poweruser");
@@ -166,34 +168,34 @@ namespace API_VidiVici.Data
         {
             return new List<Information>{
                 new Information{
-                    UserId = "4247a0ee-19d6-4206-bba0-2561fcae1d81",
+                    UserId = "8e3c9897-ab5b-4370-beea-fb8d216047e3",
                     Cnp = "5020116210753",
-                    BirthDate = DateTime.UtcNow,
                     Address = "Bucuresti, Sos Pipera 61 bl 4 sc 2 et 7 ap 159",
                     Iban = "RO27RZBR2161724926335584",
                     Bank = "Raiffeisen Bank",
                     Cui = "	13919155",
                     RegComertului = "J40/5251/2001",
+                    PhoneNumber = "0730112111"
                 },
                  new Information{
-                    UserId = "4247a0ee-19d6-4206-bba0-2561fcae1d81",
+                    UserId = "1a4ccdcf-52b8-4e4b-a2e4-f7d50fe85d53",
                     Cnp = "5020116210753",
-                    BirthDate = DateTime.UtcNow,
                     Address = "Iasi, Sos Pipera 61 bl 4 sc 2 et 7 ap 159",
                     Iban = "RO27RZBR2161724926335584",
                     Bank = "Raiffeisen Bank",
                     Cui = "	13919155",
                     RegComertului = "J40/5251/2001",
+                    PhoneNumber = "0730112111"
                 },
                  new Information{
-                    UserId = "da21be78-d672-4275-b16b-4abb564c916c",
+                    UserId = "2fdff4ff-35a6-4501-9532-8e7b7bb7c31c",
                     Cnp = "5020116210753",
-                    BirthDate = DateTime.UtcNow,
                     Address = "Cluj, Sos Pipera 61 bl 4 sc 2 et 7 ap 159",
                     Iban = "RO27RZBR2161724926335584",
                     Bank = "Raiffeisen Bank",
                     Cui = "	13919155",
                     RegComertului = "J40/5251/2001",
+                    PhoneNumber = "0730112111"
                 }
             };
         }

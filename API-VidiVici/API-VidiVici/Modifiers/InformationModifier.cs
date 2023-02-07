@@ -12,7 +12,8 @@ namespace API_VidiVici.Modifiers
                 UserId = information.UserId,
                 Cnp = information.Cnp,
                 Iban = information.Iban,
-                // PhoneNumber = information.User.PhoneNumber,
+                BirthDate = information.BirthDate,
+                PhoneNumber = information.PhoneNumber,
                 Address = information.Address,
                 Bank = information.Bank,
                 Cui = information.Cui,
@@ -21,18 +22,19 @@ namespace API_VidiVici.Modifiers
         }
         public static Information ToInformation(InformationDto information)
         {
-            if(information != null && information.UserId!=null && information.BirthDate !=null)
+            if(information != null && information.UserId!=null)
             {
             return new Information{
                 Id = information.Id,
                 UserId = information.UserId,
                 Cnp = information.Cnp,
                 Iban = information.Iban,
+                PhoneNumber = information.PhoneNumber,
                 Address = information.Address,
                 Bank = information.Bank,
                 Cui = information.Cui,
-                RegComertului = information.RegComertului,
-                BirthDate = DateTimeOffset.Parse(information.BirthDate).UtcDateTime
+                RegComertului = information.RegComertului
+
                 };
             }
             return new Information();

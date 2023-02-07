@@ -13,14 +13,14 @@ import {
   RegisterInformationAtom,
 } from "../../data/dataAtom";
 
-const AddInformation = ({ show, setShow, userId, mode, colors }) => {
+const AddInformation = ({ show, setShow, userId, mode, colors,refresh }) => {
   const [, setNewInformation] = useAtom(newInformationAtom);
-  const RegisterInformation = useAtom(RegisterInformationAtom);
-
-  // const isNonMobile = useMediaQuery("(min-width:600px)");
+  useAtom(RegisterInformationAtom);
 
   const handleClose = () => {
     setShow(false);
+    console.log(show)
+    refresh();
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -35,7 +35,6 @@ const AddInformation = ({ show, setShow, userId, mode, colors }) => {
       bank: data.get("bank"),
       cui: data.get("cui"),
       regComertului: data.get("regComertului"),
-      birthDate: data.get("birthDate"),
     };
     console.log(info);
     setNewInformation(info);
@@ -247,28 +246,7 @@ const AddInformation = ({ show, setShow, userId, mode, colors }) => {
                   },
                 }}
               />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="birthDate"
-                label="Nascut/a la data de"
-                type="text"
-                id="birthDate"
-                sx={{
-                  "& .MuiFormLabel-root.Mui-focused": {
-                    color: "neutral.main",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "&:hover fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                  },
-                }}
-              />
+              
 
               <Button
                 type="submit"
@@ -278,18 +256,6 @@ const AddInformation = ({ show, setShow, userId, mode, colors }) => {
               >
                 Adauga Detalii
               </Button>
-              {/* <ToastContainer
-                position="top-center"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-              /> */}
             </Box>
           </Box>
         </Box>

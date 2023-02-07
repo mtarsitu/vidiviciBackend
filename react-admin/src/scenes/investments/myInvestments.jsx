@@ -5,95 +5,84 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import { useEffect,useState } from "react";
-
-const MyInvestments = ({props}) => {
-  const [myFunds, setMyFunds] = useState({});
+import { usernameAtom, myFundsAtom } from "../../data/dataAtom";
+import { useAtom } from "jotai";
+const MyInvestments = ({ useratom }) => {
+  // const [myFunds, setMyFunds] = useState({});
+  // const [loading, setLoading] = useState(false);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  useEffect( () => {
-    fetchData();
-  }, []);
-  
-  const fetchData = async()=>{
-    let response = await fetch(
-        "http://localhost:5241/Admins/UserAndInvestments?username=" +
-          `${props}`,
-        {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            accept: "text/plain",
-          },
-        }
-      );
-      let data = await response.json();
-      setMyFunds(data);
-  }
+  const [, setUsername] = useAtom(usernameAtom);
+  setUsername(useratom.username);
+  const myFunds = useAtom(myFundsAtom)[0];
+
 
   return (
-    <Box m="20px">
-      <Header title="Investitii" subtitle="investitii personale in fonduri" />
-      <Box
-        m="20px"
-        sx={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, 220px)", //the width of the card
-          justifyContent: "center",
-          gridGap: "50px",
+    <>
+      <Box m="20px">
+        <Header title="Investitii" subtitle="investitii personale in fonduri" />
+        <Box
+          m="20px"
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, 220px)", //the width of the card
+            justifyContent: "center",
+            gridGap: "50px",
 
-          "& .MuiPaper-root": {
-            width: 250,
-          },
-        }}
-      >
-        {myFunds.investments &&
-          myFunds.investments.map((fund) => (
-            <Card
-              sx={{
-                minWidth: "150!important",
-                maxWidth: 350,
-                marginBottom: 10,
-                backgroundColor: `${colors.primary[400]}`,
-              }}
-            >
-              <CardContent>
-                <Typography
-                  sx={{ fontSize: 14 }}
-                  color="text.secondary"
-                  gutterBottom
-                >
-                  {fund.fund.name}
-                </Typography>
-                <Typography variant="h5" component="div">
-                  Dobanda in procente {fund.fund.interestRate}
-                </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  Suma initiala investita {fund.initialInvestmentAmount}
-                </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  Data initiala a investitiei {fund.dateCreated}
-                </Typography>
-                <Typography variant="body2">
-                  Urmatoarea zi de plata {fund.nextPaymentDate}
-                  <br />
-                  Dobanda {fund.rateOfInterest}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button
-                  size="small"
-                  sx={{
-                    color: `${colors.greenAccent[400]}`,
-                  }}
-                >
-                  Vezi detalii{" "}
-                </Button>
-              </CardActions>
-            </Card>
-          ))}
+            "& .MuiPaper-root": {
+              width: 250,
+            },
+          }}
+        >
+          {myFunds.investments &&
+            myFunds.investments.map((fund) => (
+              <Card
+                sx={{
+                  minWidth: "150!important",
+                  maxWidth: 350,
+                  marginBottom: 10,
+                  backgroundColor: `${colors.primary[400]}`,
+                }}
+                key={fund.id+"personalInvestment"}
+              >
+                <CardContent>
+                  <Typography
+                    sx={{ fontSize: 14 }}
+                    color="text.secondary"
+                    gutterBottom
+                  >
+                    {fund.fund.name}
+                  </Typography>
+                  <Typography variant="h5" component="div">
+                    Dobanda in procente {fund.fund.interestRate}
+                  </Typography>
+                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                    Suma initiala investita {fund.initialInvestmentAmount}
+                  </Typography>
+                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                    Data initiala a investitiei {fund.dateCreated}
+                  </Typography>
+                  <Typography variant="body2">
+                    Urmatoarea zi de plata {fund.nextPaymentDate}
+                    <br />
+                    Dobanda {fund.rateOfInterest}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button
+                    size="small"
+                    sx={{
+                      color: `${colors.greenAccent[400]}`,
+                    }}
+                  >
+                    Vezi detalii{" "}
+                  </Button>
+                </CardActions>
+              </Card>
+            ))}
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 };
 

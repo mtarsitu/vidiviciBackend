@@ -23,7 +23,11 @@ namespace API_VidiVici.data
         
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Investment>().HasOne(i=>i.Client).WithMany().HasForeignKey(d=>d.ClientId).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<Documents>().HasOne(i=>i.Client).WithMany().HasForeignKey(d=>d.ClientId).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<Information>().HasOne(i=>i.User).WithMany().HasForeignKey(d=>d.UserId).OnDelete(DeleteBehavior.Cascade);
             base.OnModelCreating(builder);
+            // builder.Entity<Documents>().HasOne(d=>d.Client).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<IdentityRole>().HasData(
                 new IdentityRole { Name = "Poweruser", NormalizedName = "POWERUSER" },
                 new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" },
@@ -31,6 +35,7 @@ namespace API_VidiVici.data
                 new IdentityRole { Name = "Prospect", NormalizedName = "PROSPECT" },
                 new IdentityRole { Name = "Pending", NormalizedName = "PENDING" },
                 new IdentityRole { Name = "Investor", NormalizedName = "INVESTOR" });
+            
         }
         
     }

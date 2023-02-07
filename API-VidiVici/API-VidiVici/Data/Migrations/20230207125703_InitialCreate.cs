@@ -52,6 +52,7 @@ namespace APIVidiVici.Data.Migrations
                     UserRole = table.Column<string>(type: "text", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UsedPlatform = table.Column<string>(type: "text", nullable: true),
+                    AprovedById = table.Column<string>(type: "text", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -70,6 +71,11 @@ namespace APIVidiVici.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_AspNetUsers_AprovedById",
+                        column: x => x.AprovedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -242,7 +248,8 @@ namespace APIVidiVici.Data.Migrations
                         name: "FK_Documents_AspNetUsers_ClientId",
                         column: x => x.ClientId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -253,12 +260,12 @@ namespace APIVidiVici.Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<string>(type: "text", nullable: false),
                     Cnp = table.Column<string>(type: "text", nullable: true),
-                    BirthDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Address = table.Column<string>(type: "text", nullable: true),
                     Iban = table.Column<string>(type: "text", nullable: true),
                     Bank = table.Column<string>(type: "text", nullable: true),
                     Cui = table.Column<string>(type: "text", nullable: true),
-                    RegComertului = table.Column<string>(type: "text", nullable: true)
+                    RegComertului = table.Column<string>(type: "text", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -281,16 +288,24 @@ namespace APIVidiVici.Data.Migrations
                     InitialInvestmentAmout = table.Column<double>(type: "double precision", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     FundId = table.Column<int>(type: "integer", nullable: false),
-                    RateOnFinal = table.Column<bool>(type: "boolean", nullable: false)
+                    RateOnFinal = table.Column<bool>(type: "boolean", nullable: false),
+                    Pending = table.Column<bool>(type: "boolean", nullable: false),
+                    AprovedById = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Investments", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Investments_AspNetUsers_AprovedById",
+                        column: x => x.AprovedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_Investments_AspNetUsers_ClientId",
                         column: x => x.ClientId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Investments_Funds_FundId",
                         column: x => x.FundId,
@@ -304,12 +319,12 @@ namespace APIVidiVici.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1a4ab048-c925-4a6f-8824-2789950d1bed", null, "Poweruser", "POWERUSER" },
-                    { "56b03a3f-2052-485e-8414-ab567a17c958", null, "Pending", "PENDING" },
-                    { "7ca97be5-abe5-4f6e-97d8-369bb0505fdb", null, "Employee", "EMPLOYEE" },
-                    { "93a83186-47d0-4b7b-b8c2-aa80e14bbcab", null, "Admin", "ADMIN" },
-                    { "b2abd5c9-7b36-491d-b791-c204232732aa", null, "Investor", "INVESTOR" },
-                    { "d32ae535-2b3e-4fcf-8e51-def5b5bfc75c", null, "Prospect", "PROSPECT" }
+                    { "3c64f706-7473-43de-8d91-8ffc7b5460d5", null, "Investor", "INVESTOR" },
+                    { "5d203fef-f357-48f4-a1fc-4fae9bfd9595", null, "Poweruser", "POWERUSER" },
+                    { "5efc5f3f-d108-4079-bb26-97a5643a1071", null, "Pending", "PENDING" },
+                    { "621bc023-d9f1-462c-8e20-9e2c2f914b65", null, "Prospect", "PROSPECT" },
+                    { "6a0a6178-5644-49b9-9417-afc41a319d71", null, "Admin", "ADMIN" },
+                    { "b8bbcbcb-a1f3-440f-9b43-95fdb1cb391e", null, "Employee", "EMPLOYEE" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -344,6 +359,11 @@ namespace APIVidiVici.Data.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_AprovedById",
+                table: "AspNetUsers",
+                column: "AprovedById");
+
+            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -358,6 +378,11 @@ namespace APIVidiVici.Data.Migrations
                 name: "IX_Informations_UserId",
                 table: "Informations",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Investments_AprovedById",
+                table: "Investments",
+                column: "AprovedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Investments_ClientId",

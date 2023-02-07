@@ -17,7 +17,7 @@ import { useAtom } from "jotai";
 import { loggedUserAtom } from "./data/dataAtom";
 import MyInvestments from "./scenes/investments/myInvestments";
 import Investments from "./scenes/investments/investments";
-import AddFund from "./scenes/funds/addFund";
+import PendingInvestment from "./scenes/investments/pendingInvestments";
 import PendingInvestors from "./scenes/users/pendingInvestors";
 
 function App() {
@@ -91,7 +91,7 @@ function App() {
                 />
                 <Route
                   path="/myFunds"
-                  element={<MyInvestments props={userName} />}
+                  element={<MyInvestments useratom={loggedUser[0]} />}
                 />
                 <Route path="/contacts" element={<Contacts />} />
                 <Route
@@ -110,6 +110,17 @@ function App() {
                   path="/useri-in-aprobare"
                   element={
                     <PendingInvestors
+                      useratom={loggedUser[0]}
+                      authorized={authorize}
+                      mode={theme.palette.mode}
+                      colors={colors}
+                    />
+                  }
+                />
+                <Route
+                  path="/investitii-in-asteptare"
+                  element={
+                    <PendingInvestment
                       useratom={loggedUser[0]}
                       authorized={authorize}
                       mode={theme.palette.mode}

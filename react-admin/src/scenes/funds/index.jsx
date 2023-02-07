@@ -1,18 +1,19 @@
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, IconButton, Typography, useTheme,Button  } from "@mui/material";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import { useAtom } from "jotai";
 import { allFundsAtom, fundsAtom } from "../../data/dataAtom";
 import QueueIcon from "@mui/icons-material/Queue";
-import { useState } from "react";
-import { useEffect } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import AddFund from "./addFund";
+import { useEffect,useState } from "react";
+import NewInvestment from "../investments/newInvestment";
 const Funds = ({ authorized,mode,useratom }) => {
+  const [newInvestmentModal,setNewInvestmentModal] = useState(false);
+  const [fundId,setFundId] = useState('');
   const [showFunds, setShowFunds] = useState({});
   const funds = useAtom(fundsAtom);
   const allFunds = useAtom(allFundsAtom);
@@ -20,11 +21,15 @@ const Funds = ({ authorized,mode,useratom }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const authorize = authorized;
-
+  const handleApply =(id)=>{
+    console.log(id);
+    setFundId(id);
+    setNewInvestmentModal(true);
+  };
   const handleAddFund=()=>{
     setNew(true);
   }
-  console.log(allFunds);
+
   useEffect(() => {
     if (authorize) {
       setShowFunds(allFunds[0]);
@@ -97,6 +102,7 @@ const Funds = ({ authorized,mode,useratom }) => {
                     sx={{
                       color: `${colors.greenAccent[400]}`,
                     }}
+                    onClick={()=>handleApply(fund.id)}
                   >
                     Aplica la aceasta opurtunitate{" "}
                   </Button>
@@ -109,6 +115,9 @@ const Funds = ({ authorized,mode,useratom }) => {
       
       <AddFund show={showNew} setShow={setNew} mode={mode}/>
       }
+     
+        <NewInvestment show={newInvestmentModal} setShow={setNewInvestmentModal} fund={fundId} useratom={useratom} mode={mode}/>
+   
     </Box>
   );
 };

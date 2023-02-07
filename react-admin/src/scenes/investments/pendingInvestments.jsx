@@ -1,21 +1,26 @@
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton,Tooltip } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Header from "../../components/Header";
 import { useAtom } from "jotai";
-import { investmentsAtom, entityIdAtom, usersAtom } from "../../data/dataAtom";
+import { pendingInvestmentsAtom, investmentAprovedAtom, usersAtom,refreshAtom,entityIdAtom ,aproveInvestmentAtom} from "../../data/dataAtom";
 import InfoIcon from "@mui/icons-material/Info";
 import { useState } from "react";
-import EditIcon from "@mui/icons-material/Edit";
+
 import Unauthorize from "../unauthorize";
 import Information from "../information/information";
-const Investments = ({ useratom, mode,colors}) => {
+import DoneAllIcon from "@mui/icons-material/DoneAll";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+const PendingInvestment = ({ useratom, authorized, mode, colors }) => {
   const [open, setOpen] = useState(false);
   const [infoId, setInfoId] = useState();
-  const [, setEntityId] = useAtom(entityIdAtom);
+  const [, setInvestmentAproved] = useAtom(investmentAprovedAtom);
+  const [,setEntityId] = useAtom(entityIdAtom);
+  useAtom(aproveInvestmentAtom);
   const [partnerName, setPartnerName] = useState();
-  const investments = useAtom(investmentsAtom);
-  const users = useAtom(usersAtom)
+  const investments = useAtom(pendingInvestmentsAtom);
+  const users = useAtom(usersAtom);
   const loggedUser = useratom;
+  const [refresh, setRefresh] = useAtom(refreshAtom);
   const columns = [
     { field: "id", headerName: "ID", width: 50 },
     {
@@ -68,15 +73,32 @@ const Investments = ({ useratom, mode,colors}) => {
       width: 130,
       sortable: false,
       renderCell: (row) => {
+
         return (
           <Box>
-            <IconButton color="inherit" onClick={() => handleOpen(row.row.clientId)}>
+            <Tooltip title={`Vezi informatii pentru ${row.row.client.username}`}>
+            <IconButton
+              color="inherit"
+              onClick={() => handleOpen(row.row.clientId)}
+            >
               <InfoIcon />
             </IconButton>
-            <IconButton color="inherit">
-              {/*  */}
-              <EditIcon />
+            </Tooltip>
+            <Tooltip title={`Verifica aplicatia pentru ${row.row.username}`}>
+            <IconButton color="inherit" >
+              <ManageAccountsIcon />
             </IconButton>
+            </Tooltip>
+            {/* <Tooltip title={`Editeaza user ${row.row.username}`}>
+              <IconButton color="inherit">
+                <EditIcon />
+              </IconButton>
+            </Tooltip> */}
+            <Tooltip title={`Accepta investitor ${row.row.username}`}>
+              <IconButton color="inherit" onClick={() => handleAccept(row.row.id)} >
+                <DoneAllIcon />
+              </IconButton>
+            </Tooltip>
           </Box>
         );
       },
@@ -84,21 +106,26 @@ const Investments = ({ useratom, mode,colors}) => {
   ];
 
   const handleOpen = (id) => {
-    setPartnerName(
-      users[0].filter((entity) => entity.id === id)[0].username
-    );
+    setPartnerName(users[0].filter((entity) => entity.id === id)[0].username);
     setInfoId(id);
     setEntityId(id);
     setOpen(true);
   };
 
   const handleClose = () => setOpen(false);
+  const handleAccept = (investment) => {
 
+    setInvestmentAproved(investment);
+    setTimeout(() => {
+      setRefresh(!refresh);
+    }, 300);
+    
+  };
   return (
     <>
       {loggedUser != null ? (
         <Box m="10px">
-          <Header title="INVESTITII" subtitle="Administrare Investitii" />
+          <Header title="INVESTITII IN ASTEPTARE" subtitle="Administrare Investitii" />
           <Box
             m="20px 0 0 0"
             height="75vh"
@@ -145,7 +172,14 @@ const Investments = ({ useratom, mode,colors}) => {
             />
           </Box>
 
-          <Information props={infoId} open={open} partnerName={partnerName} handleClose={handleClose} mode={mode} colors={colors} />
+          <Information
+            props={infoId}
+            open={open}
+            partnerName={partnerName}
+            handleClose={handleClose}
+            mode={mode}
+            colors={colors}
+          />
         </Box>
       ) : (
         <Box>
@@ -156,4 +190,4 @@ const Investments = ({ useratom, mode,colors}) => {
   );
 };
 
-export default Investments;
+export default PendingInvestment;
