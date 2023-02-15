@@ -1,10 +1,16 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import UserApplication from "./userApplication";
 import UserDocuments from "./userDocuments";
-import { acceptPendingIdAtom,refreshAtom,AcceptPendingAtom,entityInformationAtom } from "../../data/dataAtom";
+import VerifyInformation from "../information/verifyInformation";
+import {
+  acceptPendingIdAtom,
+  refreshAtom,
+  AcceptPendingAtom,
+  entityInformationAtom,
+} from "../../data/dataAtom";
 import { useAtom } from "jotai";
 import { useState } from "react";
-const VerifyApplication = ({ show,setOpenManage, user, mode, colors,id }) => {
+const VerifyApplication = ({ show, setOpenManage, user, mode, colors, id }) => {
   const [, setAcceptPendingId] = useAtom(acceptPendingIdAtom);
   const [refresh, setRefresh] = useAtom(refreshAtom);
   const entityInformation = useAtom(entityInformationAtom)[0];
@@ -21,7 +27,6 @@ const VerifyApplication = ({ show,setOpenManage, user, mode, colors,id }) => {
       setRefresh(!refresh);
     }, 300);
     handleBack();
-    
   };
 
   return (
@@ -32,7 +37,7 @@ const VerifyApplication = ({ show,setOpenManage, user, mode, colors,id }) => {
           variant="contained"
           sx={{
             backgroundColor: colors.purpleAccent[700],
-            marginRight:5
+            marginRight: 5,
           }}
         >
           Inapoi
@@ -47,6 +52,7 @@ const VerifyApplication = ({ show,setOpenManage, user, mode, colors,id }) => {
           Aproba
         </Button>
       </Box>
+        <VerifyInformation mode={mode} colors={colors} id={id} user={user}/>
       <Box display="flex" justifyContent="space-evenly">
         <UserApplication
           handleClose={setOpenManage}
@@ -54,7 +60,9 @@ const VerifyApplication = ({ show,setOpenManage, user, mode, colors,id }) => {
           mode={mode}
           colors={colors}
         />
-        <UserDocuments  colors={colors}/>
+
+        <UserDocuments colors={colors} />
+
       </Box>
     </Box>
   );

@@ -5,9 +5,6 @@ using System.Security.Claims;
 using API_VidiVici.Model;
 using API_VidiVici.Services;
 using API_VidiVici.DTOs;
-using Microsoft.EntityFrameworkCore;
-using API_VidiVici.data;
-using API_VidiVici.Modifiers;
 
 namespace API_VidiVici.Controllers
 {
@@ -187,9 +184,9 @@ namespace API_VidiVici.Controllers
         { 
             foreach (var cookie in Request.Cookies.Keys)
             {
-                 Response.Cookies.Delete(cookie);
+                Response.Cookies.Delete(cookie);
             }
-            return Ok("");
+            return  Ok("");
         }
 
         [Authorize(Roles ="Admin, Poweruser")]

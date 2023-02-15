@@ -38,8 +38,9 @@ const Topbar = ({ useratom }) => {
   const user = useratom;
   if (user !== null && user.userRole!=="Prospect" && user.userRole!=="Investor" ) {
     setInterval(() => {
+      
       setNotificationRefresh(!notificationRefresh);
-    }, 1000000);
+    }, 10000);
   }
   return (
     <>

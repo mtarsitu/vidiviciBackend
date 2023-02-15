@@ -16,6 +16,7 @@ const Investments = ({ useratom, mode,colors}) => {
   const investments = useAtom(investmentsAtom);
   const users = useAtom(usersAtom)
   const loggedUser = useratom;
+  console.log(investments);
   const columns = [
     { field: "id", headerName: "ID", width: 50 },
     {
@@ -52,8 +53,15 @@ const Investments = ({ useratom, mode,colors}) => {
         return <Box>{row.row.fund.interestRate} %</Box>;
       },
     },
-    { field: "dateCreated", headerName: "Data Creare", width: 200 },
-    { field: "finalPaymentDate", headerName: "Data Finalizare", width: 130 },
+    { field: "dateCreated", headerName: "Data Creare", width: 100,renderCell:(row) =>{
+      return row.row.dateCreated.split("T")[0]
+    } },
+    { field: "nextPaymentDate", headerName: "Urmatoarea zi de plata", width: 130,renderCell:(row) =>{
+      return row.row.dateCreated.split("T")[0]
+    }  },
+    { field: "finalPaymentDate", headerName: "Data Finalizare", width: 100,renderCell:(row) =>{
+      return row.row.dateCreated.split("T")[0]
+    }  },
     {
       field: "private",
       headerName: "Privat",

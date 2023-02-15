@@ -7,7 +7,7 @@ const UserDocuments = ({colors}) => {
 
 
   return (
-    <Box m="10px" backgroundColor={colors.primary[400]}>
+    <Box m="10px" backgroundColor={colors.primary[400]} maxHeight="55vh">
       <Header title="Documente" />
       <ImageList sx={{ width: 500, height: 350 }}>
         <img
