@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.SqlServer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
 using API_VidiVici.Repositories.Implementation;
@@ -61,7 +60,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     return Task.CompletedTask;
                 }
             };
-    });
+    }).AddCookie();
 
 
 builder.Services.AddAuthorization();

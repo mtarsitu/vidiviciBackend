@@ -86,7 +86,7 @@ const Calendar = () => {
         >
           <Typography variant="h5">Events</Typography>
           <List>
-            {events[0].map((event) => (
+            {events[0] != null && events[0].map((event) => (
               <ListItem
                 key={event.id}
                 sx={{

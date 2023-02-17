@@ -41,8 +41,9 @@ namespace API_VidiVici.Data
        {
            return new List<Investment>
            {
+            
                new Investment{
-                   ClientId= "1a4ccdcf-52b8-4e4b-a2e4-f7d50fe85d53",
+                   ClientId= "d334b907-68cf-4363-bc80-55d15b0acfc9",
                    FundId =1,
                    RateOnFinal=true,
                    InitialInvestmentAmout= 1000000,
@@ -50,26 +51,26 @@ namespace API_VidiVici.Data
                },
 
                new Investment{
-                   ClientId= "1a4ccdcf-52b8-4e4b-a2e4-f7d50fe85d53",
+                   ClientId= "d334b907-68cf-4363-bc80-55d15b0acfc9",
                    FundId =1,
                    InitialInvestmentAmout= 2000000,
                    Pending = false
                },
 
                new Investment{
-                   ClientId= "8e3c9897-ab5b-4370-beea-fb8d216047e3",
+                   ClientId= "88fed27d-c7ec-42a5-a643-4fa1173f3749",
                    FundId =2,
                    InitialInvestmentAmout= 3000000,
                    Pending = false
                },
                new Investment{
-                   ClientId= "8e3c9897-ab5b-4370-beea-fb8d216047e3",
+                   ClientId= "88fed27d-c7ec-42a5-a643-4fa1173f3749",
                    FundId =1,
                    InitialInvestmentAmout= 4000000,
                    Pending = false
                },
                new Investment{
-                   ClientId= "8e3c9897-ab5b-4370-beea-fb8d216047e3",
+                   ClientId= "88fed27d-c7ec-42a5-a643-4fa1173f3749",
                    FundId =4,
                    InitialInvestmentAmout= 5000000,
                    Pending = false
@@ -168,7 +169,7 @@ namespace API_VidiVici.Data
         {
             return new List<Information>{
                 new Information{
-                    UserId = "8e3c9897-ab5b-4370-beea-fb8d216047e3",
+                    UserId = "88fed27d-c7ec-42a5-a643-4fa1173f3749",
                     Cnp = "5020116210753",
                     Address = "Bucuresti, Sos Pipera 61 bl 4 sc 2 et 7 ap 159",
                     Iban = "RO27RZBR2161724926335584",
@@ -177,8 +178,9 @@ namespace API_VidiVici.Data
                     RegComertului = "J40/5251/2001",
                     PhoneNumber = "0730112111"
                 },
+                
                  new Information{
-                    UserId = "1a4ccdcf-52b8-4e4b-a2e4-f7d50fe85d53",
+                    UserId = "d334b907-68cf-4363-bc80-55d15b0acfc9",
                     Cnp = "5020116210753",
                     Address = "Iasi, Sos Pipera 61 bl 4 sc 2 et 7 ap 159",
                     Iban = "RO27RZBR2161724926335584",
@@ -187,8 +189,9 @@ namespace API_VidiVici.Data
                     RegComertului = "J40/5251/2001",
                     PhoneNumber = "0730112111"
                 },
+                
                  new Information{
-                    UserId = "2fdff4ff-35a6-4501-9532-8e7b7bb7c31c",
+                    UserId = "0bb00a56-48cb-40d9-85d4-094189612346",
                     Cnp = "5020116210753",
                     Address = "Cluj, Sos Pipera 61 bl 4 sc 2 et 7 ap 159",
                     Iban = "RO27RZBR2161724926335584",
