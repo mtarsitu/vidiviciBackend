@@ -1,7 +1,7 @@
 import { atom, useSetAtom } from "jotai";
 import { toast } from "react-toastify";
 
-const baseUrl = "http://localhost:5241/";
+const baseUrl = "https://vidivici.azurewebsites.net/";
 
 export let isLoggedAtom = atom(false);
 export const refreshAtom = atom(false);
@@ -91,7 +91,7 @@ export const deleteUserAtom = atom(async (get) => {
 export const ExternalLoginAtom = atom(async (get) => {
   const userToLogin = get(userExternalAtom);
   if (Object.keys(userToLogin).length !== 0) {
-    let response = await fetch(`http://localhost:5241/Accounts/external`, {
+    let response = await fetch(`https://vidivici.azurewebsites.net/Accounts/external`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -199,7 +199,7 @@ export const RegisterInformationAtom = atom(async (get) => {
 export const LogInAtom = atom(async (get) => {
   const userToLogin = get(userToLoginAtom);
   if (Object.keys(userToLogin).length !== 0) {
-    let response = await fetch(`http://localhost:5241/Accounts/login`, {
+    let response = await fetch(`https://vidivici.azurewebsites.net/Accounts/login`, {
       method: "POST",
       credentials: "include",
       headers: {
