@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.SqlServer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
 using API_VidiVici.Repositories.Implementation;
 
@@ -24,18 +24,19 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 string? connString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddCors(cors=>{
+
+
+builder.Services.AddCors(cors => {
     cors.AddPolicy(name: MyAllowSpecificOrigins, policy =>
     {
-        policy.WithOrigins("http://localhost:3000").AllowCredentials().AllowAnyHeader().AllowAnyMethod();
+        policy.WithOrigins("http://localhost:3000", "https://vidivici-frontend.azurewebsites.net/").AllowCredentials().AllowAnyHeader().AllowAnyMethod();
     });
-    
-    
-});
 
+
+});
 builder.Services.AddDbContext<VidiviciDbContext>(options =>
 {
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     
 });
 builder.Services.AddIdentityCore<User>().AddRoles<IdentityRole>().AddSignInManager().AddEntityFrameworkStores<VidiviciDbContext>();
@@ -113,28 +114,26 @@ builder.Services.AddSwaggerGen(c =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-
 app.UseHttpsRedirection();
+app.UseRouting();
 
 //app.MapPost("/security/createToken");
 
 app.UseCors(opt =>
 {
-    opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");
+    opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000", "https://vidivici-frontend.azurewebsites.net/") ;
 });
-
 app.UseAuthentication();
 app.UseAuthorization();
 //adasa
 app.MapControllers();
 
-
+System.Diagnostics.Trace.TraceInformation("Service started now"+ DateTime.Now.ToString());
 using var scope = app.Services.CreateScope();
 var context = scope.ServiceProvider.GetRequiredService<VidiviciDbContext>();
 var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();

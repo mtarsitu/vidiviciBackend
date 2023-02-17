@@ -1,7 +1,7 @@
 import { atom } from "jotai";
 import { toast } from "react-toastify";
 
-const baseUrl = "http://localhost:5241/Events/";
+const baseUrl = "https://vidivici.azurewebsites.net/Events/";
 
 export const newEventAtom = atom("");
 export const refreshEventsAtom = atom(false);
@@ -11,6 +11,7 @@ export const eventsAtom = atom(async (get) => {
   const response = await fetch(baseUrl + "getAll", {
     method: "GET",
     credentials: "include",
+    mode: "no-cors",
     headers: {
       accept: "text/plain",
     },
