@@ -20,7 +20,7 @@ const AddInformation = ({ show, setShow, userId, mode, colors,refresh }) => {
   const handleClose = () => {
     setShow(false);
     console.log(show)
-    
+    refresh;
   };
   const handleSubmit = async (event) => {
     event.preventDefault();

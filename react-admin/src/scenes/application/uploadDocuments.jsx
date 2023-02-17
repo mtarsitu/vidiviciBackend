@@ -30,7 +30,7 @@ const UploadDocuments = ({ show, setShow, mode, colors,user }) => {
 
   const upload= async (form)=>{
     const response = await fetch(
-        "http://localhost:5241/Applications/addDocuments",
+        "https://vidivici.azurewebsites.net/Applications/addDocuments",
         {
           method: "POST",
           credentials:"include",
