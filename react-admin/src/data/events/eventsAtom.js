@@ -11,11 +11,11 @@ export const eventsAtom = atom(async (get) => {
   const response = await fetch(baseUrl + "getAll", {
     method: "GET",
     credentials: "include",
-    mode: "no-cors",
     headers: {
       accept: "text/plain",
     },
   });
+  console.log(response);
   if (response.ok) {
     return await response.json();
   }
