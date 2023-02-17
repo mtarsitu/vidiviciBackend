@@ -1,45 +1,58 @@
-import { GoogleLogin } from "react-google-login";
-import { gapi } from "gapi-script";
+import { UserAuth } from "../../data/AuthContext";
+import { GoogleButton } from "react-google-button";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { ExternalLoginAtom, userExternalAtom } from "../../data/dataAtom";
+import { refreshAtom } from "../../data/dataAtom";
 import { useAtom } from "jotai";
 const Google = () => {
-  const clientId =
-    "990551574724-vuu0qq3193v2l5rgnndhnep4c6q7kcri.apps.googleusercontent.com";
-  const [, setUserToLogin] = useAtom(userExternalAtom);
-  useAtom(ExternalLoginAtom);
-  const onSuccess = (res) => {
-    console.log(res);
-    const externalUser = {
-      firstName: res.profileObj.givenName,
-      lastName: res.profileObj.familyName,
-      email: res.profileObj.email,
-      usedPlatform: "google",
-    };
+  const { googleSignIn, user } = UserAuth();
+  const navigate = useNavigate();
+  const [refresh, setRefresh] = useAtom(refreshAtom);
+  // console.log(user);
+  const signIn = async () => {
+    let response = await fetch(
+      `https://vidivici.azurewebsites.net/Accounts/external`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          accept: "text/plain",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName: user.displayName.split(" ")[0],
+          lastName: user.displayName.split(" ")[1],
+          email: user.email,
+          usedPlatform: "Google"
+        }),
+      }
+    );
 
-    setUserToLogin(externalUser);
+    if (response.ok) {
+      setRefresh(!refresh);
+      toast.success(`${user.displayName} Te-ai logat cu succes!`);
+      navigate("/dashboard");
+    }
   };
-  const onFailure = (err) => {
-    console.log("failed:", err);
+  const handleGoogleSignIn = async () => {
+    try {
+      let result = await googleSignIn();
+      if (result.ok) {
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   useEffect(() => {
-    const initClient = () => {
-      gapi.client.init({
-        clientId: clientId,
-        scope: "",
-      });
-    };
-    gapi.load("client:auth2", initClient);
-  });
+    if (user != null) {
+      signIn();
+    }
+  }, [user]);
   return (
-    <GoogleLogin
-      clientId={clientId}
-      buttonText="Continua cu Google"
-      onSuccess={onSuccess}
-      onFailure={onFailure}
-      cookiePolicy={"single_host_origin"}
-      // isSignedIn={true}
-    />
+    <>
+      <GoogleButton onClick={handleGoogleSignIn} />
+    </>
   );
 };
 

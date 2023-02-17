@@ -7,7 +7,7 @@ import Header from "../../components/Header";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import { toast } from "react-toastify";
-
+import { baseUrl } from "../../data/dataAtom";
 import { tokens } from "../../theme";
 
 const Register = () => {
@@ -29,7 +29,7 @@ const Register = () => {
       usedPlatform: "vidivici",
     };
     console.log(user);
-    const response = await fetch(`https://vidivici.azurewebsites.net/Accounts/register`, {
+    const response = await fetch(baseUrl+`Accounts/register`, {
       method: "POST",
       credentials: "include",
       headers: {

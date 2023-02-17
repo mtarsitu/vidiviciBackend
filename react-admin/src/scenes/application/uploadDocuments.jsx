@@ -4,7 +4,7 @@ import Header from "../../components/Header";
 import QueueIcon from "@mui/icons-material/Queue";
 import { useState } from "react";
 import { toast } from "react-toastify";
-
+import { baseUrl } from "../../data/dataAtom";
 const UploadDocuments = ({ show, setShow, mode, colors, user }) => {
   const [files, setFiles] = useState({ identityCard: "" });
 
@@ -29,7 +29,7 @@ const UploadDocuments = ({ show, setShow, mode, colors, user }) => {
 
   const upload = async (form) => {
     const response = await fetch(
-      "https://vidivici.azurewebsites.net/Applications/addDocuments",
+      baseUrl+"Applications/addDocuments",
       {
         method: "POST",
         credentials: "include",

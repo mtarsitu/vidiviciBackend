@@ -10,45 +10,48 @@ import QueueIcon from "@mui/icons-material/Queue";
 
 import { useMode, tokens } from "../../theme";
 import { useAtom } from "jotai";
-import {
-  RegisterFundAtom,
-  newFondAtom,
-  refreshFundsAtom,
-} from "../../data/dataAtom";
+import { refreshFundsAtom,baseUrl } from "../../data/dataAtom";
+import { toast } from "react-toastify";
 const AddFund = ({ show, setShow, mode }) => {
-  const [, setNewFond] = useAtom(newFondAtom);
-  useAtom(RegisterFundAtom);
   const [theme] = useMode();
   const colors = tokens(theme.palette.mode);
   const [refreshFunds, setRefreshFunds] = useAtom(refreshFundsAtom);
 
   // const isNonMobile = useMediaQuery("(min-width:600px)");
   // colors.primary[500]
-  let fond = {
-    name: "",
-    interestRate: "",
-    private: "",
-    returningType: "",
-  };
 
   const handleClose = () => {
     setShow(false);
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    fond = {
+    let fund = {
       name: data.get("name"),
       interestRate: parseFloat(data.get("interestRate")),
       private: Boolean(data.get("private")),
       returningType: data.get("returningType"),
     };
-    setNewFond(fond);
+    registerFund(fund);
+  };
 
-    setTimeout(() => {
+  const registerFund = async (fund) => {
+    const response = await fetch(baseUrl + `Funds/addFund`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        accept: "text/plain",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(fund),
+    });
+    if (response.ok) {
+      toast.success("Fond adaugat cu succes");
       setRefreshFunds(!refreshFunds);
-      handleClose();
-    }, 300);
+    } else {
+      toast.error("Nu a fost adaugat fondul");
+    }
   };
 
   return (

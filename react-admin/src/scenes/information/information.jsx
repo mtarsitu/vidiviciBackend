@@ -1,6 +1,6 @@
 import { Box, Modal, Typography, Button } from "@mui/material";
 import { useAtom } from "jotai";
-import { entityIdAtom, entityInformationAtom,refreshAtom } from "../../data/dataAtom";
+import { entityIdAtom, entityInformationAtom } from "../../data/dataAtom";
 import { useState } from "react";
 import AddInformation from "./addInformation";
 
@@ -16,16 +16,14 @@ const Information = ({
   setEntityId(props);
   const entityInformation = useAtom(entityInformationAtom)[0];
   const [newInfo, setNewInfo] = useState(false);
-  const [refresh,setRefresh] = useAtom(refreshAtom);
+
   const handleAddInfo = () => {
     setNewInfo(true);
   };
   const close = () => {
     handleClose(false);
   };
-  const refreshNow = ()=>{
-    setRefresh(!refresh);
-  };
+ 
 
 
   return (
@@ -132,7 +130,6 @@ const Information = ({
                     userId={props}
                     mode={mode}
                     colors={colors}
-                    refresh = {refreshNow}
                   />
                 )}
               </>

@@ -11,13 +11,21 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import {
   notificationsAtom,
   notificationRefreshAtom,
+  baseUrl,
+  refreshAtom,
 } from "../../data/dataAtom";
 import Notifications from "../notifications/notifications";
 import { useAtom } from "jotai";
 // import SearchIcon from "@mui/icons-material/Search";
-import { Logout } from "../../data/dataAtom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { UserAuth } from "../../data/AuthContext";
+
 const Topbar = ({ useratom }) => {
+  const { logOut } = UserAuth();
+  const navigate = useNavigate();
+  const [refresh, setRefresh] = useAtom(refreshAtom);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const theme = useTheme();
@@ -34,18 +42,37 @@ const Topbar = ({ useratom }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleLogout = async () => {
+    try {
+      let response = await fetch(baseUrl + "Accounts/logout", {
+        method: "POST",
+        credentials: "include",
+      });
 
-  const user = useratom;
-  if (user !== null && user.userRole!=="Prospect" && user.userRole!=="Investor" ) {
+      toast.success(`${useratom.username}Te-ai delogat cu succes!`);
+
+      await logOut();
+
+      setRefresh(!refresh);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  if (
+    useratom !== null &&
+    useratom.userRole !== "Prospect" &&
+    useratom.userRole !== "Investor"
+  ) {
     setInterval(() => {
-      
       setNotificationRefresh(!notificationRefresh);
-    }, 1000*60*5);
+    }, 1000 * 60 * 5);
   }
   return (
     <>
       <>
-        {user != null && (
+        {useratom != null && (
           <Box display="flex" justifyContent="space-between" p={2}>
             {/* SEARCH BAR */}
             <Box
@@ -120,11 +147,7 @@ const Topbar = ({ useratom }) => {
               <IconButton>
                 <PersonOutlinedIcon />
               </IconButton>
-              <IconButton
-                onClick={() => {
-                  Logout();
-                }}
-              >
+              <IconButton onClick={handleLogout}>
                 <LogoutIcon />
               </IconButton>
             </Box>

@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Header from "../../components/Header";
 import { toast } from "react-toastify";
-import { refreshAtom } from "../../data/dataAtom";
+import { refreshAtom,baseUrl } from "../../data/dataAtom";
 import { useAtom } from "jotai";
 
 const RoleRegister = ({show,setShow,mode}) => {
@@ -33,7 +33,7 @@ const RoleRegister = ({show,setShow,mode}) => {
       userRole: formData.get("userRole"),
     };
     const response = await fetch(
-      `https://vidivici.azurewebsites.net/Accounts/registerRole`,
+      baseUrl+`Accounts/registerRole`,
       {
         method: "POST",
         credentials: "include",

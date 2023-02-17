@@ -6,8 +6,8 @@ import { useAtom } from "jotai";
 
 const Facebook = ()=>{
     const appId = "2097613670424852";
-    const [,setUserToLogin] = useAtom(userExternalAtom);
-    useAtom(ExternalLoginAtom);
+    // const [,setUserToLogin] = useAtom(userExternalAtom);
+    // useAtom(ExternalLoginAtom);
 
     const responseFacebook = (response) => {
         console.log(response);
@@ -19,7 +19,7 @@ const Facebook = ()=>{
             email: fullName[0] + "." + fullName[1] + "@testfacebook.com",
             usedPlatform: "facebook"
           };
-          setUserToLogin(externalUser);
+          // setUserToLogin(externalUser);
           
         }
       };

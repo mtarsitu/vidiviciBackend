@@ -23,6 +23,8 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "file-saver": "^2.0.5",
+    "firebase": "^9.17.1",
+    "firebase-tools": "^11.23.1",
     "gapi-script": "^1.2.0",
     "html2canvas": "^1.4.1",
     "jotai": "^1.13.0",
@@ -32,6 +34,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-facebook-login": "^4.1.1",
+    "react-google-button": "^0.7.2",
     "react-google-login": "^5.2.2",
     "react-mui-dropzone": "^4.0.6",
     "react-pro-sidebar": "^0.7.1",
@@ -41,7 +44,6 @@
     "sass": "^1.57.1",
     "web-vitals": "^2.1.4"
   },
-
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -54,7 +56,6 @@
       "react-app/jest"
     ]
   },
-  
   "browserslist": {
     "production": [
       ">0.2%",

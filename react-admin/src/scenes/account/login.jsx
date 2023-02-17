@@ -1,4 +1,5 @@
 import * as React from "react";
+import Google from "./google";
 import {
   Button,
   Avatar,
@@ -14,17 +15,22 @@ import Typography from "@mui/material/Typography";
 import Unauthorize from "../unauthorize";
 import "react-toastify/dist/ReactToastify.css";
 // import { useEffect } from "react";
-import Google from "./google";
+
 import Facebook from "./facebook";
-import { LogInAtom, userToLoginAtom } from "../../data/dataAtom";
+import { refreshAtom, baseUrl } from "../../data/dataAtom";
 import { useAtom } from "jotai";
+
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 export default function Login({ useratom }) {
+  const loggedUser = useratom;
+  const navigate = useNavigate();
+  
+  
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [,setUserToLogin] = useAtom(userToLoginAtom);
-  useAtom(LogInAtom);
-  const loggedUser = useratom;
-  
+  const [refresh, setRefresh] = useAtom(refreshAtom);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -32,11 +38,32 @@ export default function Login({ useratom }) {
       username: data.get("username"),
       password: data.get("password"),
     };
-    setUserToLogin(user);
+    singIn(user);
+  };
+  const singIn = async (user) => {
+    try {
+      let response = await fetch(baseUrl + `Accounts/login`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          accept: "text/plain",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+      if (response.ok) {
+        toast.success(`${user.username} Te-ai logat cu succes!`);
+        setRefresh(!refresh);
 
+        navigate("/dashboard");
+      } else {
+        toast.warning("Username sau parola gresita aici");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  
   return (
     <>
       {loggedUser == null ? (
@@ -70,8 +97,8 @@ export default function Login({ useratom }) {
             <Typography component="h1" variant="h5" sx={{ marginBottom: 4 }}>
               Sign in
             </Typography>
-            <Google />
-            <Facebook/>
+            <Google/>
+            <Facebook />
             <Box
               component="form"
               onSubmit={handleSubmit}

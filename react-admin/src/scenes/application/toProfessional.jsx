@@ -15,12 +15,9 @@ import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
 import formObject from "../../data/questions";
-
-import {
-  newApplicationAtom,
-  RegisterApplicationAtom,
-} from "../../data/dataAtom";
+import { baseUrl } from "../../data/dataAtom";
 import { useAtom } from "jotai";
+import { toast } from "react-toastify";
 const pdf = new jsPDF();
 const imageObject = {
   1: null,
@@ -32,15 +29,10 @@ const imageObject = {
 
 const ToProfesional = ({ show, setShow, user, mode, colors }) => {
   const date = new Date();
-  const [, setNewApplication] = useAtom(newApplicationAtom);
-  useAtom(RegisterApplicationAtom);
+  // const [, setNewApplication] = useAtom(newApplicationAtom);
+  // useAtom(RegisterApplicationAtom);
 
   let [section, setSection] = useState(1);
-  // const isNonMobile = useMediaQuery("(min-width:600px)");
-
-  // const handleCloseModal = () => {
-  //   setShow(false);
-  // };
 
   const handleNext = () => {
     addImageProcess();
@@ -81,17 +73,34 @@ const ToProfesional = ({ show, setShow, user, mode, colors }) => {
           Object.values(imageObject).filter((x) => !!x).length ===
           Object.keys(imageObject).length
         ) {
-          setNewApplication({
+          registerForm({
             clientId: user.id,
             applicationObject: JSON.stringify(formObject),
           });
           await generatePdf();
-          pdf.save("vidvici-chestionar.pdf");
+          // pdf.save("vidvici-chestionar.pdf");
 
           setShow(false);
           setSection(0);
         }
       });
+  };
+
+  const registerForm = async (details) => {
+    const response = await fetch(baseUrl + "Applications/add", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        accept: "text/plain",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(details),
+    });
+    if (response.ok) {
+      toast.success("Inregistrare adaugata cu succes");
+    } else {
+      toast.error(console.error("Nu a fost adaugata aplicatia"));
+    }
   };
 
   const generatePdf = async () => {

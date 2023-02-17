@@ -8,18 +8,14 @@ import Typography from "@mui/material/Typography";
 import Header from "../../components/Header";
 import QueueIcon from "@mui/icons-material/Queue";
 import { useAtom } from "jotai";
-import {
-  newInformationAtom,
-  RegisterInformationAtom,
-} from "../../data/dataAtom";
+import { toast } from "react-toastify";
+import { refreshAtom,baseUrl } from "../../data/dataAtom";
 
-const AddInformation = ({ show, setShow, userId, mode, colors,refresh }) => {
-  const [, setNewInformation] = useAtom(newInformationAtom);
-  useAtom(RegisterInformationAtom);
-
+const AddInformation = ({ show, setShow, userId, mode, colors }) => {
+  const [refresh,setRefresh] = useAtom(refreshAtom);
   const handleClose = () => {
     setShow(false);
-    console.log(show)
+    console.log(show);
     refresh();
   };
   const handleSubmit = async (event) => {
@@ -36,11 +32,27 @@ const AddInformation = ({ show, setShow, userId, mode, colors,refresh }) => {
       cui: data.get("cui"),
       regComertului: data.get("regComertului"),
     };
-    console.log(info);
-    setNewInformation(info);
-    setTimeout(() => {
-      handleClose();
-    }, 300);
+    registerInfo(info);
+    handleClose();
+  };
+
+  const registerInfo = async (info) => {
+    const response = await fetch(baseUrl + "Informations/addInformation", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        accept: "text/plain",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(info),
+    });
+
+    if (response.ok) {
+      setRefresh(!refresh);  
+      toast.success("Informatie adaugata cu succes");
+    } else {
+      toast.error("Informatia nu a fost adaugata");
+    }
   };
 
   return (
@@ -246,7 +258,6 @@ const AddInformation = ({ show, setShow, userId, mode, colors,refresh }) => {
                   },
                 }}
               />
-              
 
               <Button
                 type="submit"
