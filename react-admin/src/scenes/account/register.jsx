@@ -30,7 +30,7 @@ const Register = () => {
       usedPlatform: "vidivici",
     };
     console.log(user);
-    const response = await fetch(`http://localhost:5241/Accounts/register`, {
+    const response = await fetch(`https://vidivici.azurewebsites.net/Accounts/register`, {
       method: "POST",
       credentials: "include",
       headers: {

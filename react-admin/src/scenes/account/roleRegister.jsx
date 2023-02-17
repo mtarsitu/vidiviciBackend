@@ -33,7 +33,7 @@ const RoleRegister = ({show,setShow,mode}) => {
       userRole: formData.get("userRole"),
     };
     const response = await fetch(
-      `http://localhost:5241/Accounts/registerRole`,
+      `https://vidivici.azurewebsites.net/Accounts/registerRole`,
       {
         method: "POST",
         credentials: "include",
