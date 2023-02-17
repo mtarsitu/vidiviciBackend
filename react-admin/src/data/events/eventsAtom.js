@@ -15,7 +15,6 @@ export const eventsAtom = atom(async (get) => {
       accept: "text/plain",
     },
   });
-  console.log(response);
   if (response.ok) {
     return await response.json();
   }

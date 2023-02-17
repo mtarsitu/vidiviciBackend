@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import FullCalendar, { formatDate } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -31,7 +30,6 @@ const Calendar = () => {
   const addNewEvent = useAtom(AddNewEventAtom);
   const [refreshEvents, setRefreshEvents] = useAtom(refreshEventsAtom);
   const events = useAtom(eventsAtom);
-  console.log(events);
 
   const handleDateClick = (selected) => {
     const title = prompt("Please enter a new title for your event");
