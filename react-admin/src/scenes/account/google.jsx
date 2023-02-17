@@ -5,7 +5,7 @@ import { ExternalLoginAtom, userExternalAtom } from "../../data/dataAtom";
 import { useAtom } from "jotai";
 const Google = () => {
   const clientId =
-    "968260556925-a1kdrj4op5s1j2981l3lent1kg397j83.apps.googleusercontent.com";
+    "990551574724-vuu0qq3193v2l5rgnndhnep4c6q7kcri.apps.googleusercontent.com";
   const [, setUserToLogin] = useAtom(userExternalAtom);
   useAtom(ExternalLoginAtom);
   const onSuccess = (res) => {
