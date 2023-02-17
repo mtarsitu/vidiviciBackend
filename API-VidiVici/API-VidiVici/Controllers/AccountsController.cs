@@ -47,9 +47,9 @@ namespace API_VidiVici.Controllers
             await _userManager.AddClaimAsync(user, new Claim(loginDto.Username, userLogged.Token));
 
             //var signInStatus = await SignInManager.PasswordSignInAsync(user, loginDto.Password, true, lockoutOnFailure: false);
-            Response.Cookies.Append("Token", userLogged.Token, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
-            Response.Cookies.Append("Username", user.UserName, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
-            //Response.Cookies.Append("X-Refresh-Token", user.RefreshToken, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
+            Response.Cookies.Append("Token", userLogged.Token, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None,Secure });
+            Response.Cookies.Append("Username", user.UserName, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None,Secure });
+            //Response.Cookies.Append("X-Refresh-Token", user.RefreshToken, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None,Secure });
 
             return userLogged;
         }
@@ -81,8 +81,8 @@ namespace API_VidiVici.Controllers
                         {
                             result = await _userManager.AddClaimAsync(newUser, new Claim(userLogged.Username,userLogged.Token));
                             if(result.Succeeded){
-                                Response.Cookies.Append("Token", userLogged.Token, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
-                                Response.Cookies.Append("Username", newUser.UserName, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
+                                Response.Cookies.Append("Token", userLogged.Token, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None,Secure });
+                                Response.Cookies.Append("Username", newUser.UserName, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None,Secure });
                                 // _context.SaveChanges();
                                 return userLogged;
                             }
@@ -91,8 +91,8 @@ namespace API_VidiVici.Controllers
                 }
             }
             var existentUser = new UserLoginDto{ Username = user.UserName, Token = await _tokenService.GenerateToken(user)};
-            Response.Cookies.Append("Token", existentUser.Token, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
-            Response.Cookies.Append("Username", user.UserName, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
+            Response.Cookies.Append("Token", existentUser.Token, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None,Secure });
+            Response.Cookies.Append("Username", user.UserName, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None,Secure });
             return existentUser;
         }
 
