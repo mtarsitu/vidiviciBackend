@@ -5,10 +5,8 @@ import QueueIcon from "@mui/icons-material/Queue";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-const UploadDocuments = ({ show, setShow, mode, colors,user }) => {
-
+const UploadDocuments = ({ show, setShow, mode, colors, user }) => {
   const [files, setFiles] = useState({ identityCard: "" });
-
 
   const handleClose = () => {
     setShow(false);
@@ -19,29 +17,31 @@ const UploadDocuments = ({ show, setShow, mode, colors,user }) => {
     // setShow(false);
     setFiles({ identityCard: file });
   };
-  const setForm =  () => {
+  const setForm = () => {
     const formData = new FormData();
 
-    formData.append("clientId",user.id);
+    formData.append("clientId", user.id);
     formData.append("title", files.identityCard[0].name);
-    formData.append("image",files.identityCard[0]);
+    formData.append("image", files.identityCard[0]);
     upload(formData);
     setShow(false);
   };
 
-  const upload= async (form)=>{
+  const upload = async (form) => {
     const response = await fetch(
-        "https://vidivici.azurewebsites.net/Applications/addDocuments",
-        {
-          method: "POST",
-          credentials:"include",
-          body:form
-        }
-      );
-    if(response.ok){
+      "https://vidivici.azurewebsites.net/Applications/addDocuments",
+      {
+        method: "POST",
+        credentials: "include",
+        body: form,
+      }
+    );
+    if (response.ok) {
       toast.success("Documente adaugate cu succes!");
-    }toast.error("Nu au fost adaugate");
-  }
+    } else {
+      toast.error("Nu au fost adaugate");
+    }
+  };
   return (
     <Modal
       open={show}
