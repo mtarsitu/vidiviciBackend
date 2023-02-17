@@ -40,7 +40,7 @@ const Topbar = ({ useratom }) => {
     setInterval(() => {
       
       setNotificationRefresh(!notificationRefresh);
-    }, 10000);
+    }, 1000*60*5);
   }
   return (
     <>

@@ -31,7 +31,7 @@ const Calendar = () => {
   const addNewEvent = useAtom(AddNewEventAtom);
   const [refreshEvents, setRefreshEvents] = useAtom(refreshEventsAtom);
   const events = useAtom(eventsAtom);
-
+  console.log(events);
 
   const handleDateClick = (selected) => {
     const title = prompt("Please enter a new title for your event");
