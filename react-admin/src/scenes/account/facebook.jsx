@@ -1,8 +1,7 @@
 import FacebookLogin from "react-facebook-login";
 import styles from "./styles.module.scss";
 import FacebookIcon from "@mui/icons-material/Facebook";
-import { ExternalLoginAtom, userExternalAtom } from "../../data/dataAtom";
-import { useAtom } from "jotai";
+
 
 const Facebook = ()=>{
     const appId = "2097613670424852";

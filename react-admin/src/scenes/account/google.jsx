@@ -38,8 +38,6 @@ const Google = () => {
   const handleGoogleSignIn = async () => {
     try {
       let result = await googleSignIn();
-      if (result.ok) {
-      }
     } catch (error) {
       console.log(error);
     }
