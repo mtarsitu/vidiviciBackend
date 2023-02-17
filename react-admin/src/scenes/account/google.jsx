@@ -7,7 +7,7 @@ const Google = () => {
   const clientId =
     "968260556925-a1kdrj4op5s1j2981l3lent1kg397j83.apps.googleusercontent.com";
   const [, setUserToLogin] = useAtom(userExternalAtom);
-  const ExternalLogin = useAtom(ExternalLoginAtom);
+  useAtom(ExternalLoginAtom);
   const onSuccess = (res) => {
     console.log(res);
     const externalUser = {

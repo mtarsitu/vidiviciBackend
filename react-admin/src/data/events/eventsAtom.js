@@ -23,7 +23,7 @@ export const eventsAtom = atom(async (get) => {
 
 export const AddNewEventAtom = atom(async (get) => {
   let event = get(newEventAtom);
-  if (Object.keys(event).length != 0) {
+  if (Object.keys(event).length !== 0) {
     const response = await fetch(baseUrl + "add", {
       method: "POST",
       credentials: "include",

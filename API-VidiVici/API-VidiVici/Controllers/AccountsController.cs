@@ -6,6 +6,7 @@ using API_VidiVici.Model;
 using API_VidiVici.Services;
 using API_VidiVici.DTOs;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace API_VidiVici.Controllers
 {
@@ -17,7 +18,7 @@ namespace API_VidiVici.Controllers
         private readonly TokenService _tokenService;
         private readonly SignInManager<User> SignInManager;
         private readonly NotificationService _notificationService;
-      
+
         public AccountsController(
         UserManager<User> userManager, 
         TokenService tokenService, 
@@ -29,6 +30,7 @@ namespace API_VidiVici.Controllers
             _notificationService = notificationService;
             _userManager = userManager;
             SignInManager = signInManager;
+
 
         }
         [AllowAnonymous]
@@ -183,11 +185,20 @@ namespace API_VidiVici.Controllers
 
         [HttpPost("logout")]
         public async Task<ActionResult> Logout()
-        { 
-            foreach (var cookie in Request.Cookies.Keys)
+        {
+            
+            Response.Cookies.Delete("Token", new CookieOptions 
             {
-                Response.Cookies.Delete(cookie);
-            }
+                HttpOnly = true,
+                SameSite = SameSiteMode.None,
+                Secure = true
+            });
+             Response.Cookies.Delete("Username", new CookieOptions 
+            {
+                HttpOnly = true,
+                SameSite = SameSiteMode.None,
+                Secure = true
+            });
             return  Ok("");
         }
 

@@ -3,6 +3,7 @@ import { Button, Modal, Box, Avatar, Typography } from "@mui/material";
 import Header from "../../components/Header";
 import QueueIcon from "@mui/icons-material/Queue";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const UploadDocuments = ({ show, setShow, mode, colors,user }) => {
 
@@ -37,6 +38,9 @@ const UploadDocuments = ({ show, setShow, mode, colors,user }) => {
           body:form
         }
       );
+    if(response.ok){
+      toast.success("Documente adaugate cu succes!");
+    }toast.error("Nu au fost adaugate");
   }
   return (
     <Modal

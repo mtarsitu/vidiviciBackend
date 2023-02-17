@@ -1,4 +1,4 @@
-import { atom, useSetAtom } from "jotai";
+import { atom } from "jotai";
 import { toast } from "react-toastify";
 
 const baseUrl = "https://vidivici.azurewebsites.net/";

@@ -12,7 +12,6 @@ import { tokens } from "../../theme";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Unauthorize from "../unauthorize";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import { useEffect } from "react";
 import Google from "./google";
@@ -23,7 +22,7 @@ export default function Login({ useratom }) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [,setUserToLogin] = useAtom(userToLoginAtom);
-  const LogIn = useAtom(LogInAtom);
+  useAtom(LogInAtom);
   const loggedUser = useratom;
   
   const handleSubmit = (event) => {

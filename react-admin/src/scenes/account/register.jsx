@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Button,useTheme,Avatar,TextField,Box} from "@mui/material";
-import { useState,useEffect } from "react";
+import { useState } from "react";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Header from "../../components/Header";
@@ -8,7 +8,6 @@ import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import { toast } from "react-toastify";
 
-import { gapi } from "gapi-script";
 import { tokens } from "../../theme";
 
 const Register = () => {

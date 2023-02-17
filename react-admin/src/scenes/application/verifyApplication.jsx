@@ -1,4 +1,4 @@
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import UserApplication from "./userApplication";
 import UserDocuments from "./userDocuments";
 import VerifyInformation from "../information/verifyInformation";
@@ -16,14 +16,14 @@ const VerifyApplication = ({ show, setOpenManage, user, mode, colors, id }) => {
   const entityInformation = useAtom(entityInformationAtom)[0];
   console.log(entityInformation);
   const userId = useState(id);
-  const AcceptPending = useAtom(AcceptPendingAtom);
+  useAtom(AcceptPendingAtom);
   const handleBack = () => {
     setOpenManage(!show);
   };
   const handleAccept = () => {
     console.log(userId[0]);
     setAcceptPendingId(userId[0]);
-    const timeout = setTimeout(() => {
+    setTimeout(() => {
       setRefresh(!refresh);
     }, 300);
     handleBack();

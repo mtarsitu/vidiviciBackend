@@ -33,7 +33,7 @@ const imageObject = {
 const ToProfesional = ({ show, setShow, user, mode, colors }) => {
   const date = new Date();
   const [, setNewApplication] = useAtom(newApplicationAtom);
-  const RegisterApplication = useAtom(RegisterApplicationAtom);
+  useAtom(RegisterApplicationAtom);
 
   let [section, setSection] = useState(1);
   // const isNonMobile = useMediaQuery("(min-width:600px)");

@@ -6,7 +6,7 @@ import ProgressCircle from "./ProgressCircle";
 const StatBox = ({ title, subtitle, icon, progress, increase,graph }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const showProgress = graph ==true? true:false;
+const showProgress = graph ===true? true:false;
 
   return (
     <Box width="100%" m="0 30px">

@@ -7,7 +7,7 @@ import { useAtom } from "jotai";
 const Facebook = ()=>{
     const appId = "2097613670424852";
     const [,setUserToLogin] = useAtom(userExternalAtom);
-    const ExternalLogin= useAtom(ExternalLoginAtom);
+    useAtom(ExternalLoginAtom);
 
     const responseFacebook = (response) => {
         console.log(response);

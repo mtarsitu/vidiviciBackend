@@ -1,4 +1,4 @@
-import FullCalendar, { formatDate } from "@fullcalendar/react";
+import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -27,7 +27,7 @@ const Calendar = () => {
   const colors = tokens(theme.palette.mode);
   // const [currentEvents, setCurrentEvents] = useState([]);
   const [, setNewEvent] = useAtom(newEventAtom);
-  const addNewEvent = useAtom(AddNewEventAtom);
+  useAtom(AddNewEventAtom);
   const [refreshEvents, setRefreshEvents] = useAtom(refreshEventsAtom);
   const events = useAtom(eventsAtom);
 
@@ -44,7 +44,7 @@ const Calendar = () => {
         end: selected.endStr,
         allDay: selected.allDay,
       });
-      const timeout1 = setTimeout(() => {
+      setTimeout(() => {
         setNewEvent({
           title: title,
           date: selected.start,
@@ -52,7 +52,7 @@ const Calendar = () => {
           end: selected.end,
         });
       }, 100);
-      const timeout = setTimeout(() => {
+      setTimeout(() => {
         setRefreshEvents(!refreshEvents);
         setNewEvent("");
       }, 200);
