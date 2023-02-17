@@ -81,16 +81,16 @@ namespace API_VidiVici.Controllers
                             Username = newUser.UserName,
                             Token = await _tokenService.GenerateToken(newUser)
                         };
-                        if(result.Succeeded)
-                        {
+                            var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                             result = await _userManager.AddClaimAsync(newUser, new Claim(userLogged.Username,userLogged.Token));
-                            if(result.Succeeded){
+                            if(result.Succeeded)
+                            {
                                 Response.Cookies.Append("Token", userLogged.Token, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None, Secure=true });
                                 Response.Cookies.Append("Username", newUser.UserName, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None, Secure=true });
                                 // _context.SaveChanges();
                                 return userLogged;
                             }
-                        }
+                        
                     }
                 }
             }

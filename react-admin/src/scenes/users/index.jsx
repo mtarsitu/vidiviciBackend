@@ -25,6 +25,7 @@ import RoleRegister from "../account/roleRegister";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const Users = ({ useratom, mode, colors }) => {
+  const [openEdit, setOpenEdit] = useState(false);
   const [open, setOpen] = useState(false);
   const [newUser, setNewUser] = useState(false);
   const [infoId, setInfoId] = useState();
@@ -128,7 +129,6 @@ const Users = ({ useratom, mode, colors }) => {
   };
   const handleOpen = (id) => {
     setPartnerName(users[0].filter((entity) => entity.id === id)[0].username);
-
     setInfoId(id);
     setEntityId(id);
     setOpen(true);
@@ -137,6 +137,7 @@ const Users = ({ useratom, mode, colors }) => {
   const handleClose = () => setOpen(false);
   const handleEdit = (u) => {
     setUserEdit(u);
+    setOpenEdit(true);
   };
   const handleDelete = (id) => {
     setDeleteUserId(id);
@@ -216,7 +217,13 @@ const Users = ({ useratom, mode, colors }) => {
             colors={colors}
           />
 
-          <EditUser oldUser={userEdit} setUserEdit={setUserEdit} mode={mode} />
+          <EditUser
+            oldUser={userEdit}
+            setUserEdit={setUserEdit}
+            mode={mode}
+            show={openEdit}
+            setShow={setOpenEdit}
+          />
 
           {newUser && (
             <RoleRegister show={newUser} setShow={setNewUser} mode={mode} />

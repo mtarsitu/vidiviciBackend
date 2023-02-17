@@ -1,22 +1,27 @@
 import * as React from "react";
-import {Button,Modal,Avatar,Box,TextField,useTheme} from "@mui/material";
+import { Button, Modal, Avatar, Box, TextField, useTheme } from "@mui/material";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import Typography from "@mui/material/Typography";
 import Header from "../../components/Header";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import { toast } from "react-toastify";
-import { refreshAtom } from "../../data/dataAtom";
-import { useState } from "react";
+import { baseUrl,refreshAtom } from "../../data/dataAtom";
+import { useAtom } from "jotai";
 import { tokens } from "../../theme";
-const EditUser = ({ oldUser, setUserEdit,mode }) => {
+const EditUser = ({
+  oldUser,
+  setUserEdit,
+  mode,
+  show,
+  setShow,
+}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
+  const [refresh,setRefresh] = useAtom(refreshAtom);
   // const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [, setRefresh] = useState(refreshAtom);
   const Edit = async (user) => {
-    const response = await fetch(`http://localhost:5241/Accounts/edit`, {
+    const response = await fetch(baseUrl + `Accounts/edit`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -26,11 +31,14 @@ const EditUser = ({ oldUser, setUserEdit,mode }) => {
       body: JSON.stringify(user),
     });
     if (response.ok) {
-      setRefresh(true);
+      setRefresh(!refresh);
       toast.success("User editat cu succes!");
     } else toast.error("Ceva nu a functionat, te rugam sa incerci din nou");
   };
-  const handleEditFinish = () => setUserEdit({});
+  const handleEditFinish = () => {
+    setUserEdit({});
+    setShow(false);
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -43,11 +51,12 @@ const EditUser = ({ oldUser, setUserEdit,mode }) => {
       userRole: data.get("userRole"),
     };
     Edit(user);
+    handleEditFinish();
   };
 
   return (
     <Modal
-      open={oldUser.username !== undefined}
+      open={show}
       onClose={handleEditFinish}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
