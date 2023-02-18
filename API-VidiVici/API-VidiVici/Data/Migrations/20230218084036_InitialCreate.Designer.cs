@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_VidiVici.Data.Migrations
 {
     [DbContext(typeof(VidiviciDbContext))]
-    [Migration("20230217091333_InitialCreate")]
+    [Migration("20230218084036_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -334,37 +334,37 @@ namespace API_VidiVici.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f4950cb1-484e-4712-aa07-27ccf28cc3b8",
+                            Id = "b95f71c8-fafc-4c3c-aa82-3dbf3a96775a",
                             Name = "Poweruser",
                             NormalizedName = "POWERUSER"
                         },
                         new
                         {
-                            Id = "c9230fd8-5322-45cb-8e9f-e2dd9f74edcc",
+                            Id = "2871c599-935e-4be4-9202-22f3a285adcb",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "06f62985-b06a-4b29-b51b-e7730347e37c",
+                            Id = "6d3554ac-8064-4769-9755-2aa5bc3c9d61",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "b84c9a42-1701-4d21-867d-bcc21b11aa24",
+                            Id = "9f02e4bd-89fb-4261-99f4-f4e331344709",
                             Name = "Prospect",
                             NormalizedName = "PROSPECT"
                         },
                         new
                         {
-                            Id = "7e5447f2-d8a3-4d0c-9a8d-fd23913f58da",
+                            Id = "453efe3b-5b2f-4829-8c73-b2fdc1d5fca5",
                             Name = "Pending",
                             NormalizedName = "PENDING"
                         },
                         new
                         {
-                            Id = "72e4e801-aa10-4a30-a6e4-d5ed3bafc32b",
+                            Id = "dff2d481-f56f-4378-9a0c-3421f95882f7",
                             Name = "Investor",
                             NormalizedName = "INVESTOR"
                         });

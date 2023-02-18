@@ -4,7 +4,7 @@
     "windowsAuthentication": true,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://vidivici.azurewebsites.net;http://localhost:7204",
+      "applicationUrl": "http://localhost:7204",
       "sslPort": 44333
     }
   },
@@ -13,7 +13,7 @@
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "http://vidivici.azurewebsites.net;http://localhost:7204",
+      "applicationUrl": "http://localhost:7204",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
