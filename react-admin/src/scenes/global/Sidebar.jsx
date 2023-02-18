@@ -4,7 +4,7 @@ import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
-import MenuOpenIcon from '@mui/icons-material/MenuOpen';
+import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
@@ -14,7 +14,7 @@ import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
-import PendingIcon from '@mui/icons-material/Pending';
+import PendingIcon from "@mui/icons-material/Pending";
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -62,16 +62,20 @@ const Sidebar = ({ useratom, authorized }) => {
             "& .pro-menu-item.active": {
               color: "#6870fa !important",
             },
-            
           }}
         >
-          <ProSidebar collapsed={isCollapsed} >
-           
+          <ProSidebar collapsed={isCollapsed}>
             <Menu iconShape="square">
               {/* LOGO AND MENU ICON */}
               <MenuItem
                 onClick={() => setIsCollapsed(!isCollapsed)}
-                icon={isCollapsed ? <MenuOutlinedIcon /> : <MenuOpenIcon sx={{marginLeft:45}}/>}
+                icon={
+                  isCollapsed ? (
+                    <MenuOutlinedIcon />
+                  ) : (
+                    <MenuOpenIcon sx={{ marginLeft: 45 }} />
+                  )
+                }
                 style={{
                   margin: "10px 0 20px 0",
                   color: colors.grey[100],
@@ -148,7 +152,7 @@ const Sidebar = ({ useratom, authorized }) => {
                   selected={selected}
                   setSelected={setSelected}
                 />
-
+                
                 <Typography
                   variant="h6"
                   color={colors.grey[300]}
@@ -183,21 +187,23 @@ const Sidebar = ({ useratom, authorized }) => {
                   </>
                 )}
                 {!authorize && useratom.userRole !== "Prospect" && (
-                  <Item
-                    title="Investitiile mele"
-                    to="/myfunds"
-                    icon={<AccountBalanceWalletIcon />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
+                  <>
+                    <Item
+                      title="Investitiile mele"
+                      to="/myfunds"
+                      icon={<AccountBalanceWalletIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                    <Item
+                      title="Fonduri active"
+                      to="/funds"
+                      icon={<ReceiptOutlinedIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                  </>
                 )}
-                <Item
-                  title="Fonduri active"
-                  to="/funds"
-                  icon={<ReceiptOutlinedIcon />}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
                 {authorize && (
                   <Item
                     title="Calendar"
@@ -236,7 +242,8 @@ const Sidebar = ({ useratom, authorized }) => {
                       icon={<PendingIcon />}
                       selected={selected}
                       setSelected={setSelected}
-                    />/
+                    />
+                    /
                   </>
                 )}
                 <Item

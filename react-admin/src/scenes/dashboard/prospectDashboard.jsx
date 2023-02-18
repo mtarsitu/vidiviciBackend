@@ -73,6 +73,7 @@ const ProspectDashboard = ({ colors, useratom, mode }) => {
               }
             />
           </Box>
+         
           {/* <Box onClick={handleOpenModal} sx={{ cursor: "pointer" }}>
             <StatBox
               title={"3. Formular"}
