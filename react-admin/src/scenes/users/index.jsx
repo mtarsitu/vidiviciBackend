@@ -17,16 +17,20 @@ import {
   refreshAtom,
 } from "../../data/dataAtom";
 import InfoIcon from "@mui/icons-material/Info";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Information from "../information/information";
 import Unauthorize from "../unauthorize";
 import EditUser from "./editUser";
 import RoleRegister from "../account/roleRegister";
 import DeleteIcon from "@mui/icons-material/Delete";
+import AlertDialog from "../../components/confirmationsDialog";
 
 const Users = ({ useratom, mode, colors }) => {
   const [openEdit, setOpenEdit] = useState(false);
   const [open, setOpen] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [confirmedAlert, setConfirmedAlert] = useState(false);
+  const [userId, setUserId] = useState();
   const [newUser, setNewUser] = useState(false);
   const [infoId, setInfoId] = useState();
   const [userEdit, setUserEdit] = useState({});
@@ -114,7 +118,6 @@ const Users = ({ useratom, mode, colors }) => {
                 color="inherit"
                 onClick={() => handleDelete(row.row.id)}
               >
-                {/*  */}
                 <DeleteIcon />
               </IconButton>
             </Tooltip>
@@ -140,12 +143,22 @@ const Users = ({ useratom, mode, colors }) => {
     setOpenEdit(true);
   };
   const handleDelete = (id) => {
-    setDeleteUserId(id);
-    setTimeout(() => {
-      setRefresh(!refresh);
-      setDeleteUserId("");
-    }, 300);
+    setOpenAlert(true);
+    console.log(confirmedAlert);
+    setUserId(id);
   };
+  console.log(confirmedAlert, "siii", openAlert);
+  useEffect(() => {
+    setOpenAlert(false);
+    if (confirmedAlert) {
+      setDeleteUserId(userId);
+      setTimeout(() => {
+        setRefresh(!refresh);
+        setDeleteUserId("");
+      }, 300);
+      setConfirmedAlert(false);
+    }
+  }, [confirmedAlert]);
 
   return (
     <>
@@ -224,7 +237,14 @@ const Users = ({ useratom, mode, colors }) => {
             show={openEdit}
             setShow={setOpenEdit}
           />
-
+          {openAlert && (
+            <AlertDialog
+              setConfirmed={setConfirmedAlert}
+              open={openAlert}
+              setOpen={setOpenAlert}
+              message={"Esti sigur ca vrei sa stergi acest user?"}
+            />
+          )}
           {newUser && (
             <RoleRegister show={newUser} setShow={setNewUser} mode={mode} />
           )}

@@ -161,7 +161,7 @@ const AdminDashboard = ({ user }) => {
                 fontWeight="600"
                 color={colors.grey[100]}
               >
-                Revenue Generated
+                Total vanzari
               </Typography>
               <Typography
                 variant="h3"
@@ -245,7 +245,7 @@ const AdminDashboard = ({ user }) => {
           p="30px"
         >
           <Typography variant="h5" fontWeight="600">
-            Campaign
+            Campanie
           </Typography>
           <Box
             display="flex"
@@ -259,9 +259,9 @@ const AdminDashboard = ({ user }) => {
               color={colors.greenAccent[500]}
               sx={{ mt: "15px" }}
             >
-              $48,352 revenue generated
+              $48,352 generati
             </Typography>
-            <Typography>Includes extra misc expenditures and costs</Typography>
+            <Typography>Include mai multe detalii</Typography>
           </Box>
         </Box>
         <Box
@@ -274,7 +274,7 @@ const AdminDashboard = ({ user }) => {
             fontWeight="600"
             sx={{ padding: "30px 30px 0 30px" }}
           >
-            Sales Quantity
+            Vanzari
           </Typography>
           <Box height="250px" mt="-20px">
             <BarChart isDashboard={true} />
@@ -291,7 +291,7 @@ const AdminDashboard = ({ user }) => {
             fontWeight="600"
             sx={{ marginBottom: "15px" }}
           >
-            Geography Based Traffic
+            More to be added
           </Typography>
           <Box height="200px">
             
