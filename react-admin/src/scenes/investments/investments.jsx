@@ -57,10 +57,10 @@ const Investments = ({ useratom, mode,colors}) => {
       return row.row.dateCreated.split("T")[0]
     } },
     { field: "nextPaymentDate", headerName: "Urmatoarea zi de plata", width: 130,renderCell:(row) =>{
-      return row.row.dateCreated.split("T")[0]
+      return row.row.datesOfPayment[0].split("T")[0]
     }  },
     { field: "finalPaymentDate", headerName: "Data Finalizare", width: 100,renderCell:(row) =>{
-      return row.row.dateCreated.split("T")[0]
+      return row.row.finalPaymentDate.split("T")[0]
     }  },
     {
       field: "private",

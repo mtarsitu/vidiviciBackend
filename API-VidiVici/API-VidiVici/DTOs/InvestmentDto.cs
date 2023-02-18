@@ -60,7 +60,7 @@ namespace API_VidiVici.DTOs
             }else if(Fund.ReturningType == "Semestrial" && !this.RateOnFinal)
             {
                 for(int i=0; i<=3;i++){
-                    DatesOfPayment.Add(DateCreated.AddDays(i*daysOfSemester));
+                    DatesOfPayment.Add(DateCreated.AddDays((i+1)*daysOfSemester));
                 }
                 if(this.LastPayment!= DateTime.Parse("0001-01-01T00:00:00"))
                 {   
@@ -72,7 +72,7 @@ namespace API_VidiVici.DTOs
             }else if (Fund.ReturningType =="Trimestial" && !this.RateOnFinal)
             {
                 for(int i=0; i<=4;i++){
-                    DatesOfPayment.Add(DateCreated.AddDays(i*daysOfTrimester));
+                    DatesOfPayment.Add(DateCreated.AddDays((i+1)*daysOfTrimester));
                 }
                 if(this.LastPayment!= DateTime.Parse("0001-01-01T00:00:00"))
                 {
@@ -83,7 +83,7 @@ namespace API_VidiVici.DTOs
                 }
             }else{
                 for(int i=0; i<=12;i++){
-                    DatesOfPayment.Add(DateCreated.AddMonths(i));
+                    DatesOfPayment.Add(DateCreated.AddMonths(i+1));
                 }
                 if(this.LastPayment!= DateTime.Parse("0001-01-01T00:00:00"))
                 {
