@@ -34,7 +34,7 @@ function App() {
     authorized: ["Admin", "Poweruser", "Employee"],
     unauthorize: ["Prospect", "Investor", "Pending"],
   };
-
+  console.log(loggedUser[0]);
   useEffect(() => {
     if (loggedUser[0] != null) {
       setIsLogged(true);
@@ -45,7 +45,7 @@ function App() {
         setAuthorize(false);
       }
     }
-  }, [isLogged]);
+  }, [loggedUser]);
 
   return (
     <ColorModeContext.Provider value={colorMode}>

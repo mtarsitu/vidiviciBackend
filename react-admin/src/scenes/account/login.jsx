@@ -25,8 +25,7 @@ import { useNavigate } from "react-router-dom";
 export default function Login({ useratom }) {
   const loggedUser = useratom;
   const navigate = useNavigate();
-  
-  
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [refresh, setRefresh] = useAtom(refreshAtom);
@@ -97,7 +96,7 @@ export default function Login({ useratom }) {
             <Typography component="h1" variant="h5" sx={{ marginBottom: 4 }}>
               Sign in
             </Typography>
-            <Google/>
+            <Google />
             <Facebook />
             <Box
               component="form"
