@@ -43,20 +43,20 @@ const PartnerDetails = ({ colors }) => {
           color: colors[i],
           data: [
             {
-              x: "Profit",
-              y: allDetails[i].profit,
-            },
-            {
-              x: "Datorii",
-              y: allDetails[i].debths,
+              x: "Ebitda",
+              y: allDetails[i].ebitda,
             },
             {
               x: "Active imobilizate",
               y: allDetails[i].fixedAssets,
             },
             {
-              x: "Ebitda",
-              y: allDetails[i].ebitda,
+              x: "Datorii",
+              y: allDetails[i].debths,
+            },
+            {
+              x: "Profit",
+              y: allDetails[i].profit,
             },
           ],
         };
