@@ -10,13 +10,13 @@ import {
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import Header from "../../components/Header";
 import { toast } from "react-toastify";
-
+import { baseUrl } from "../../data/dataAtom";
 const NewInvestment = ({ show, setShow, fund, useratom, mode }) => {
   const [theme,] = useMode();
   const colors = tokens(theme.palette.mode);
 
   const Register = async (form) => {
-    const response = await fetch("http://localhost:5241/Investments/add", {
+    const response = await fetch(baseUrl+"Investments/add", {
       method: "POST",
       credentials: "include",
       body: form,

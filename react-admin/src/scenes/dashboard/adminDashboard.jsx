@@ -12,7 +12,7 @@ import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
 import { investmentsAtom, usersAtom } from "../../data/dataAtom";
 import { useAtom } from "jotai";
-
+import { mockLineData as data } from "../../data/mockData";
 const AdminDashboard = ({ user }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -180,7 +180,7 @@ const AdminDashboard = ({ user }) => {
             </Box>
           </Box>
           <Box height="220px" m="-20px 0 0 0">
-            <LineChart isDashboard={true} />
+            <LineChart isDashboard={true} data={data} />
           </Box>
         </Box>
         <Box

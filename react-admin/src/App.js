@@ -20,8 +20,11 @@ import Investments from "./scenes/investments/investments";
 import PendingInvestment from "./scenes/investments/pendingInvestments";
 import PendingInvestors from "./scenes/users/pendingInvestors";
 import { AuthContextProvider } from "./data/AuthContext";
+import Partners from "./scenes/partners/partners";
+import PartnerDetails from "./scenes/partners/partnerDetails";
 
 function App() {
+
   const [theme, colorMode] = useMode();
   const colors = tokens(theme.palette.mode);
   const [isSidebar, setIsSidebar] = useState(true);
@@ -111,9 +114,24 @@ function App() {
                       />
                     }
                   />
+                  <Route
+                    path="/partneri"
+                    element={
+                      <Partners
+                        authorized={authorize}
+                        mode={theme.palette.mode}
+                        useratom={loggedUser[0]}
+                      />
+                    }
+                  />
                   {/* <Route path="/role-register" element={<RoleRegister />} /> */}
                   <Route path="/register" element={<Register />} />
                   <Route path="/calendar" element={<Calendar />} />
+    
+                  <Route
+                    path="/detalii-companie"
+                    element={<PartnerDetails colors={colors} />}
+                  />
                   <Route
                     path="/investments"
                     element={

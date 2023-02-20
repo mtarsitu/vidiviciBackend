@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 import { toast } from "react-toastify";
-export const baseUrl = "https://vidivici.azurewebsites.net/";
+export const baseUrl = "http://localhost:7204/";
 
 export let isLoggedAtom = atom(false);
 export const refreshAtom = atom(false);

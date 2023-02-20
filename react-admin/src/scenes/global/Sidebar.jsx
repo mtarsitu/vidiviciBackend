@@ -7,6 +7,7 @@ import { tokens } from "../../theme";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import BusinessIcon from "@mui/icons-material/Business";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 // import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
@@ -152,7 +153,7 @@ const Sidebar = ({ useratom, authorized }) => {
                   selected={selected}
                   setSelected={setSelected}
                 />
-                
+
                 <Typography
                   variant="h6"
                   color={colors.grey[300]}
@@ -185,6 +186,15 @@ const Sidebar = ({ useratom, authorized }) => {
                       setSelected={setSelected}
                     />
                   </>
+                )}
+                {useratom.userRole !== "Prospect" && (
+                  <Item
+                    title="Companii in care investim"
+                    to="/partneri"
+                    icon={<BusinessIcon />}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
                 )}
                 {!authorize && useratom.userRole !== "Prospect" && (
                   <>
