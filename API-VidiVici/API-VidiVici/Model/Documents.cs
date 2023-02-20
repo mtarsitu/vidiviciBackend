@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace API_VidiVici.Model
 {
-    public class Documents
+    public class Documents:BaseEntity
     {
-        public int Id {get;set;}
+       
 
         public string? ClientId {get;set;}
         public string? IdentityCardTitle { get; set; }

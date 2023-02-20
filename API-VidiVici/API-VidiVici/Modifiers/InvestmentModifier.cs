@@ -43,6 +43,7 @@ namespace API_VidiVici.Modifiers
             {
                 ClientId = investmentDto.ClientId,
                 InitialInvestmentAmout = investmentDto.InitialInvestmentAmount,
+                DateAproved = DateTime.UtcNow,
                 FundId = investmentDto.FundId,
                 RateOnFinal = false,
                 Pending = true

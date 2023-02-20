@@ -112,6 +112,7 @@ const UploadDocuments = ({ show, setShow, mode, colors, user }) => {
             >
               Inregistreaza documente
             </Button>
+            
           </Box>
         </Box>
       </Box>

@@ -12,6 +12,7 @@ namespace API_VidiVici.DTOs
         public string? ClientId { get; set; }
         public double InitialInvestmentAmount {get;set;}
         public DateTime DateCreated {get; set;}
+        public DateTime DateAproved {get;set;}
         public DateTime LastPayment {get;set;}
         public DateTime NextPaymentDate { get {return GetNextPayment();}}
         public DateTime FinalPaymentDate {get{ return GetFinalPaymentDate();}}
@@ -25,15 +26,16 @@ namespace API_VidiVici.DTOs
         public List<DateTime> DatesOfPayment {get;set;} = new List<DateTime>();
         private DateTime GetFinalPaymentDate()
         {
+        
             if(Fund.ReturningType == "Anualy"){
-                return this.DateCreated.AddYears(1);
+                return this.DateAproved.AddYears(1);
             }
             else if(Fund.ReturningType == "Semestrial"){
-                return this.DateCreated.AddDays(16*7);
+                return this.DateAproved.AddDays(16*7);
             }
             else if(Fund.ReturningType == "Trimestrial"){
-                return this.DateCreated.AddDays(13*7);
-            }else return this.DateCreated.AddMonths(1);
+                return this.DateAproved.AddDays(13*7);
+            }else return this.DateAproved.AddMonths(1);
         }
 
 
@@ -54,42 +56,42 @@ namespace API_VidiVici.DTOs
             if(Fund.ReturningType == "Anualy")
             {
                 RateOnFinal = true;
-                DatesOfPayment.Add(DateCreated.AddYears(1));
-                return DateCreated.AddYears(1);
+                DatesOfPayment.Add(DateAproved.AddYears(1));
+                return DateAproved.AddYears(1);
 
             }else if(Fund.ReturningType == "Semestrial" && !this.RateOnFinal)
             {
                 for(int i=0; i<=3;i++){
-                    DatesOfPayment.Add(DateCreated.AddDays((i+1)*daysOfSemester));
+                    DatesOfPayment.Add(DateAproved.AddDays((i+1)*daysOfSemester));
                 }
                 if(this.LastPayment!= DateTime.Parse("0001-01-01T00:00:00"))
                 {   
                     return this.LastPayment.AddDays(daysOfSemester);
                 }else{
-                    LastPayment = DateCreated.AddDays(daysOfSemester);
+                    LastPayment = DateAproved.AddDays(daysOfSemester);
                     return LastPayment;
                 }
             }else if (Fund.ReturningType =="Trimestial" && !this.RateOnFinal)
             {
                 for(int i=0; i<=4;i++){
-                    DatesOfPayment.Add(DateCreated.AddDays((i+1)*daysOfTrimester));
+                    DatesOfPayment.Add(DateAproved.AddDays((i+1)*daysOfTrimester));
                 }
                 if(this.LastPayment!= DateTime.Parse("0001-01-01T00:00:00"))
                 {
                     return LastPayment.AddDays(daysOfTrimester);
                 }else{
-                    LastPayment = DateCreated.AddDays(daysOfTrimester);
+                    LastPayment = DateAproved.AddDays(daysOfTrimester);
                     return LastPayment;
                 }
             }else{
                 for(int i=0; i<=12;i++){
-                    DatesOfPayment.Add(DateCreated.AddMonths(i+1));
+                    DatesOfPayment.Add(DateAproved.AddMonths(i+1));
                 }
                 if(this.LastPayment!= DateTime.Parse("0001-01-01T00:00:00"))
                 {
                     return LastPayment.AddMonths(1);
                 }else{
-                    LastPayment = DateCreated.AddMonths(1);
+                    LastPayment = DateAproved.AddMonths(1);
                     return LastPayment;
                 }
             }

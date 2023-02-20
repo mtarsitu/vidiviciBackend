@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace API_VidiVici.Model
 {
-    public class Information
+    public class Information:BaseEntity
     {
-        public int Id { get; set; }
         public string UserId { get; set; }
 
         public string? Cnp {get;set;}

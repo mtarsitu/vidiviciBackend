@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace API_VidiVici.Model
 {
-    public class Notification
+    public class Notification:BaseEntity
     {
-        public int Id{get;set;}
+
         public DateTime Date {get;set;} = DateTime.UtcNow;
 
         public string? NotificationType {get;set;}        

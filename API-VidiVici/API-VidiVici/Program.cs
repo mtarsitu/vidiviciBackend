@@ -64,6 +64,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 
 builder.Services.AddAuthorization();
+builder.Services.AddScoped<PartnerRepository>();
+builder.Services.AddScoped<PartnersService>();
+builder.Services.AddScoped<PartnersDetailsRepository>();
+builder.Services.AddScoped<PartnersDetailsService>();
 builder.Services.AddScoped<NotificationRepository>();
 builder.Services.AddScoped<NotificationService>();
 builder.Services.AddScoped<EventRepository>();

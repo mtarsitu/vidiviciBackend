@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace API_VidiVici.Model
 {
-    public class Fund
+    public class Fund: BaseEntity
     {
-        public int Id { get; set;}
+       
         public string? Name { get; set; }
         public double InterestRate { get; set; }
         public bool Private{ get; set; }

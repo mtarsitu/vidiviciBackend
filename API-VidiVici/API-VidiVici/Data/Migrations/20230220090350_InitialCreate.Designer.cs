@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_VidiVici.Data.Migrations
 {
     [DbContext(typeof(VidiviciDbContext))]
-    [Migration("20230218084036_InitialCreate")]
+    [Migration("20230220090350_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -172,6 +172,9 @@ namespace API_VidiVici.Data.Migrations
                     b.Property<string>("ClientId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateTime?>("DateAproved")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
@@ -218,6 +221,67 @@ namespace API_VidiVici.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Notifications");
+                });
+
+            modelBuilder.Entity("API_VidiVici.Model.Partner", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Logo")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("LogoTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Partners");
+                });
+
+            modelBuilder.Entity("API_VidiVici.Model.PartnersDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("Debths")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Earnings")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Ebitda")
+                        .HasColumnType("float");
+
+                    b.Property<double>("FixedAssets")
+                        .HasColumnType("float");
+
+                    b.Property<int>("PartnerId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Profit")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PartnerId");
+
+                    b.ToTable("PartnersDetails");
                 });
 
             modelBuilder.Entity("API_VidiVici.Model.User", b =>
@@ -334,37 +398,37 @@ namespace API_VidiVici.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b95f71c8-fafc-4c3c-aa82-3dbf3a96775a",
+                            Id = "adbecfd8-4427-4542-9600-82776976e4fe",
                             Name = "Poweruser",
                             NormalizedName = "POWERUSER"
                         },
                         new
                         {
-                            Id = "2871c599-935e-4be4-9202-22f3a285adcb",
+                            Id = "abd50699-7607-4645-91ef-4d5a0bfc84f4",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "6d3554ac-8064-4769-9755-2aa5bc3c9d61",
+                            Id = "d86e660a-f8b8-43df-97e2-fbb16f6142b2",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "9f02e4bd-89fb-4261-99f4-f4e331344709",
+                            Id = "448c91f2-d6d8-47e6-8abe-4d01e4c5558e",
                             Name = "Prospect",
                             NormalizedName = "PROSPECT"
                         },
                         new
                         {
-                            Id = "453efe3b-5b2f-4829-8c73-b2fdc1d5fca5",
+                            Id = "6d5a7480-1287-40ba-b62d-867eaff9bbc0",
                             Name = "Pending",
                             NormalizedName = "PENDING"
                         },
                         new
                         {
-                            Id = "dff2d481-f56f-4378-9a0c-3421f95882f7",
+                            Id = "0ca84827-caaf-45c3-a90c-dac9e6e77ce1",
                             Name = "Investor",
                             NormalizedName = "INVESTOR"
                         });
@@ -519,6 +583,17 @@ namespace API_VidiVici.Data.Migrations
                     b.Navigation("Client");
 
                     b.Navigation("Fund");
+                });
+
+            modelBuilder.Entity("API_VidiVici.Model.PartnersDetails", b =>
+                {
+                    b.HasOne("API_VidiVici.Model.Partner", "Partner")
+                        .WithMany()
+                        .HasForeignKey("PartnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Partner");
                 });
 
             modelBuilder.Entity("API_VidiVici.Model.User", b =>

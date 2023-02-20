@@ -125,6 +125,22 @@ namespace API_VidiVici.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Partners",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LogoTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Logo = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Partners", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -286,6 +302,7 @@ namespace API_VidiVici.Data.Migrations
                     ClientId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     InitialInvestmentAmout = table.Column<double>(type: "float", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateAproved = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FundId = table.Column<int>(type: "int", nullable: false),
                     RateOnFinal = table.Column<bool>(type: "bit", nullable: false),
                     Pending = table.Column<bool>(type: "bit", nullable: false),
@@ -313,17 +330,42 @@ namespace API_VidiVici.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PartnersDetails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PartnerId = table.Column<int>(type: "int", nullable: false),
+                    Year = table.Column<int>(type: "int", nullable: false),
+                    Profit = table.Column<double>(type: "float", nullable: false),
+                    Debths = table.Column<double>(type: "float", nullable: false),
+                    Earnings = table.Column<double>(type: "float", nullable: false),
+                    Ebitda = table.Column<double>(type: "float", nullable: false),
+                    FixedAssets = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PartnersDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PartnersDetails_Partners_PartnerId",
+                        column: x => x.PartnerId,
+                        principalTable: "Partners",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "2871c599-935e-4be4-9202-22f3a285adcb", null, "Admin", "ADMIN" },
-                    { "453efe3b-5b2f-4829-8c73-b2fdc1d5fca5", null, "Pending", "PENDING" },
-                    { "6d3554ac-8064-4769-9755-2aa5bc3c9d61", null, "Employee", "EMPLOYEE" },
-                    { "9f02e4bd-89fb-4261-99f4-f4e331344709", null, "Prospect", "PROSPECT" },
-                    { "b95f71c8-fafc-4c3c-aa82-3dbf3a96775a", null, "Poweruser", "POWERUSER" },
-                    { "dff2d481-f56f-4378-9a0c-3421f95882f7", null, "Investor", "INVESTOR" }
+                    { "0ca84827-caaf-45c3-a90c-dac9e6e77ce1", null, "Investor", "INVESTOR" },
+                    { "448c91f2-d6d8-47e6-8abe-4d01e4c5558e", null, "Prospect", "PROSPECT" },
+                    { "6d5a7480-1287-40ba-b62d-867eaff9bbc0", null, "Pending", "PENDING" },
+                    { "abd50699-7607-4645-91ef-4d5a0bfc84f4", null, "Admin", "ADMIN" },
+                    { "adbecfd8-4427-4542-9600-82776976e4fe", null, "Poweruser", "POWERUSER" },
+                    { "d86e660a-f8b8-43df-97e2-fbb16f6142b2", null, "Employee", "EMPLOYEE" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -394,6 +436,11 @@ namespace API_VidiVici.Data.Migrations
                 name: "IX_Investments_FundId",
                 table: "Investments",
                 column: "FundId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PartnersDetails_PartnerId",
+                table: "PartnersDetails",
+                column: "PartnerId");
         }
 
         /// <inheritdoc />
@@ -433,6 +480,9 @@ namespace API_VidiVici.Data.Migrations
                 name: "Notifications");
 
             migrationBuilder.DropTable(
+                name: "PartnersDetails");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -440,6 +490,9 @@ namespace API_VidiVici.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Funds");
+
+            migrationBuilder.DropTable(
+                name: "Partners");
         }
     }
 }
