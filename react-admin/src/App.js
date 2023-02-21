@@ -28,10 +28,10 @@ function App() {
   const [theme, colorMode] = useMode();
   const colors = tokens(theme.palette.mode);
   const [isSidebar, setIsSidebar] = useState(true);
-  const [isLogged, setIsLogged] = useState(false);
+
   const loggedUser = useAtom(loggedUserAtom);
   const [authorize, setAuthorize] = useState(false);
-  const [userName, setUserName] = useState("");
+
 
   const roles = {
     authorized: ["Admin", "Poweruser", "Employee"],
@@ -40,8 +40,6 @@ function App() {
 
   useEffect(() => {
     if (loggedUser[0] != null) {
-      setIsLogged(true);
-      setUserName(loggedUser[0].username);
       if (roles.authorized.includes(loggedUser[0].userRole)) {
         setAuthorize(true);
       } else {

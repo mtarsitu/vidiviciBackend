@@ -1,8 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import StatBox from "../../components/StatBox";
-import ToProfesional from "../application/toProfessional";
 import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
-import NoteAltIcon from "@mui/icons-material/NoteAlt";
 import Header from "../../components/Header";
 import { useState } from "react";
 import UploadDocuments from "../application/uploadDocuments";
@@ -10,7 +8,7 @@ import AddInformation from "../information/addInformation";
 import InfoIcon from "@mui/icons-material/Info";
 import AddPhoneNumber from "../users/addPhoneNumber";
 import ConfirmSms from "../account/confirmSms";
-
+import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 const ProspectDashboard = ({ colors, useratom, mode }) => {
   
   const [showDoc, setshowDoc] = useState(false);
@@ -58,7 +56,7 @@ const ProspectDashboard = ({ colors, useratom, mode }) => {
                 title={"1. Numar de telefon"}
                 subtitle="Adauga si valideaza numar telefon"
                 icon={
-                  <InfoIcon
+                  <PhoneIphoneIcon
                     sx={{ color: colors.purpleAccent[500], fontSize: "26px" }}
                   />
                 }

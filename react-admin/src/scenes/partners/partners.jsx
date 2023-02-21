@@ -15,7 +15,6 @@ import AddPartner from "./addPartner";
 import AddPartnerDetails from "./addPartnerDetails";
 import { useNavigate } from "react-router-dom";
 import {
-  partnerIdDetails,
   partnerAtom,
 } from "../../data/partners/partnersAtom";
 import { useAtom } from "jotai";

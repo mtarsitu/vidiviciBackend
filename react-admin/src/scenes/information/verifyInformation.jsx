@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+
 import { baseUrl } from "../../data/dataAtom";
 const VerifyInformation = ({ colors, id, partnerName }) => {
   const [entityInformation, setEntityInformation] = useState();
@@ -77,7 +77,7 @@ const VerifyInformation = ({ colors, id, partnerName }) => {
                   Cnp: {entityInformation[0].cnp}
                 </Typography>
                 <Typography id="modal-modal-title" variant="h3" component="h2">
-                  Zi de nastere: {entityInformation[0].birthDate}
+                  Zi de nastere: {entityInformation[0].birthDate.split("T")[0]}
                 </Typography>
                 <Typography id="modal-modal-title" variant="h3" component="h2">
                   Adresa: {entityInformation[0].address}

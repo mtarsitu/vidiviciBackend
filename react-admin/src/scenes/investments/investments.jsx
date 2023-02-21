@@ -2,7 +2,7 @@ import { Box, IconButton } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Header from "../../components/Header";
 import { useAtom } from "jotai";
-import { investmentsAtom, entityIdAtom, usersAtom } from "../../data/dataAtom";
+import { investmentsAtom, entityIdAtom } from "../../data/dataAtom";
 import InfoIcon from "@mui/icons-material/Info";
 import { useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
@@ -14,7 +14,6 @@ const Investments = ({ useratom, mode, colors }) => {
   const [, setEntityId] = useAtom(entityIdAtom);
   const [partnerName, setPartnerName] = useState();
   const investments = useAtom(investmentsAtom);
-  const users = useAtom(usersAtom);
   const loggedUser = useratom;
   const columns = [
     { field: "id", headerName: "ID", width: 50 },

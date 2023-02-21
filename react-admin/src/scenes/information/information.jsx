@@ -127,7 +127,7 @@ const Information = ({
                     variant="h3"
                     component="h2"
                   >
-                    Zi de nastere: {entityInformation[0].birthDate}
+                    Zi de nastere: {entityInformation[0].birthDate.split("T")[0]}
                   </Typography>
                   <Typography
                     id="modal-modal-title"

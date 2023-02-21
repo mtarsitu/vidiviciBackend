@@ -6,10 +6,8 @@ import Header from "../../components/Header";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import { toast } from "react-toastify";
-import { baseUrl,refreshAtom } from "../../data/dataAtom";
-import { useAtom } from "jotai";
+import { baseUrl } from "../../data/dataAtom";
 import { tokens } from "../../theme";
-import { useState } from "react";
 
 
 const AddPhoneNumber = ({show, setShow, showConfirm,setConfirm,mode}) => {

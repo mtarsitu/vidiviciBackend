@@ -18,7 +18,6 @@ const PendingInvestment = ({ useratom, authorized, mode, colors }) => {
   useAtom(aproveInvestmentAtom);
   const [partnerName, setPartnerName] = useState();
   const investments = useAtom(pendingInvestmentsAtom);
-  const users = useAtom(usersAtom);
   const loggedUser = useratom;
   const [refresh, setRefresh] = useAtom(refreshAtom);
   const columns = [

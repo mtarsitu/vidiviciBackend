@@ -13,7 +13,6 @@ import { useState } from "react";
 const VerifyApplication = ({ show, setOpenManage, user, mode, colors, id,partnerName }) => {
   const [, setAcceptPendingId] = useAtom(acceptPendingIdAtom);
   const [refresh, setRefresh] = useAtom(refreshAtom);
-  const entityInformation = useAtom(entityInformationAtom)[0];
 
   const userId = useState(id);
   useAtom(AcceptPendingAtom);
