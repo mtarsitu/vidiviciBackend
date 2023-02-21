@@ -1,26 +1,42 @@
 import { Box, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { baseUrl } from "../../data/dataAtom";
+const VerifyInformation = ({ colors, id, partnerName }) => {
+  const [entityInformation, setEntityInformation] = useState();
+  const GetEntityInformation = async () => {
+    const response = await fetch(
+      baseUrl + "Informations/userInformations?id=" + id,
+      {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          accept: "text/plain",
+        },
+      }
+    );
+    if (response.ok) {
+      let data = await response.json();
+      setEntityInformation(data);
+    }
+  };
 
-import { entityInformationAtom, entityIdAtom } from "../../data/dataAtom";
-import { useAtom } from "jotai";
+  useEffect(() => {
+    GetEntityInformation();
+  },[id]);
 
-const VerifyInformation = ({ colors, id, user }) => {
-  const [, setEntityId] = useAtom(entityIdAtom);
-  console.log(user);
-  const entityInformation = useAtom(entityInformationAtom)[0];
-  setEntityId(id);
-  console.log(entityInformation);
   return (
     <>
-      {entityInformation[0] && (
+      {entityInformation && partnerName != null && (
         <Box
           m="20px"
           backgroundColor={colors.primary[400]}
           sx={{ maxHeight: "35vh" }}
         >
           <Box>
-            <Typography id="modal-modal-title" variant="h3" component="h2" >
+            <Typography id="modal-modal-title" variant="h3" component="h2">
               Informatii ale partenerului:&nbsp;
-              {user}
+              {partnerName.username}
             </Typography>
 
             <Box
@@ -47,9 +63,7 @@ const VerifyInformation = ({ colors, id, user }) => {
                   borderTop: "none",
                   backgroundColor: colors.purpleAccent[700],
                 },
-                "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                  color: `${colors.grey[100]} !important`,
-                },
+               
                 display: "flex",
                 "align-content": " center",
                 "align-items": " center",
@@ -63,13 +77,16 @@ const VerifyInformation = ({ colors, id, user }) => {
                   Cnp: {entityInformation[0].cnp}
                 </Typography>
                 <Typography id="modal-modal-title" variant="h3" component="h2">
-                  Zi de nastere: {entityInformation[0].birthDate.split("T")[0]}
+                  Zi de nastere: {entityInformation[0].birthDate}
                 </Typography>
                 <Typography id="modal-modal-title" variant="h3" component="h2">
                   Adresa: {entityInformation[0].address}
                 </Typography>
                 <Typography id="modal-modal-title" variant="h3" component="h2">
-                  Telefon: {entityInformation[0].phoneNumber}
+                  Telefon:{" "}
+                  {partnerName.phoneNumber == null
+                    ? "nu a fost introdus"
+                    : partnerName.phoneNumber}
                 </Typography>
               </Box>
               <Box marginTop={-8}>
@@ -81,9 +98,6 @@ const VerifyInformation = ({ colors, id, user }) => {
                 </Typography>
                 <Typography id="modal-modal-title" variant="h3" component="h2">
                   Cui Firma: {entityInformation[0].cui}
-                </Typography>
-                <Typography id="modal-modal-title" variant="h3" component="h2">
-                  Reg Comertului: {entityInformation[0].regComertului}
                 </Typography>
               </Box>
 

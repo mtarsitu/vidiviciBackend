@@ -1,5 +1,5 @@
 import { Box, Button } from "@mui/material";
-import UserApplication from "./userApplication";
+
 import UserDocuments from "./userDocuments";
 import VerifyInformation from "../information/verifyInformation";
 import {
@@ -10,18 +10,18 @@ import {
 } from "../../data/dataAtom";
 import { useAtom } from "jotai";
 import { useState } from "react";
-const VerifyApplication = ({ show, setOpenManage, user, mode, colors, id }) => {
+const VerifyApplication = ({ show, setOpenManage, user, mode, colors, id,partnerName }) => {
   const [, setAcceptPendingId] = useAtom(acceptPendingIdAtom);
   const [refresh, setRefresh] = useAtom(refreshAtom);
   const entityInformation = useAtom(entityInformationAtom)[0];
-  console.log(entityInformation);
+
   const userId = useState(id);
   useAtom(AcceptPendingAtom);
   const handleBack = () => {
     setOpenManage(!show);
   };
   const handleAccept = () => {
-    console.log(userId[0]);
+    // console.log(userId[0]);
     setAcceptPendingId(userId[0]);
     setTimeout(() => {
       setRefresh(!refresh);
@@ -52,7 +52,7 @@ const VerifyApplication = ({ show, setOpenManage, user, mode, colors, id }) => {
           Aproba
         </Button>
       </Box>
-        <VerifyInformation mode={mode} colors={colors} id={id} user={user}/>
+        <VerifyInformation mode={mode} colors={colors} id={id} user={user} partnerName={partnerName}/>
       <Box display="flex" justifyContent="space-evenly">
         {/* <UserApplication
           handleClose={setOpenManage}

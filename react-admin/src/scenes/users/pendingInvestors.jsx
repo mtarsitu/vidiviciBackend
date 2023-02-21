@@ -45,13 +45,13 @@ const PendingInvestors = ({ useratom, authorized, mode, colors }) => {
       renderCell: (row) => {
         return (
           <Box>
-            <Tooltip title={`Vezi informatii pentru ${row.row.username}`}>
-              <IconButton color="inherit" onClick={() => handleOpen(row.id)}>
+            <Tooltip title={`Vezi informatii pentru ${row.row}`}>
+              <IconButton color="inherit" onClick={() => handleOpen(row.row)}>
                 <InfoIcon />
               </IconButton>
             </Tooltip>
             <Tooltip title={`Verifica aplicatia pentru ${row.row.username}`}>
-            <IconButton color="inherit" onClick={() => handleManage(row.id)}>
+            <IconButton color="inherit" onClick={() => handleManage(row.row)}>
               <ManageAccountsIcon />
             </IconButton>
             </Tooltip>
@@ -70,16 +70,17 @@ const PendingInvestors = ({ useratom, authorized, mode, colors }) => {
       },
     },
   ];
-  const handleManage = (id) => {
-    setPartnerName(users[0].filter((entity) => entity.id === id)[0].username);
-    setInfoId(id);
-    setApplicationUserId(id);
+  const handleManage = (user) => {
+
+    setPartnerName(user);
+    setInfoId(user.id);
+    setApplicationUserId(user.id);
     setOpenManage(true);
   };
-  const handleOpen = (id) => {
-    setPartnerName(users[0].filter((entity) => entity.id === id)[0].username);
-    setInfoId(id);
-    setApplicationUserId(id);
+  const handleOpen = (user) => {
+    setPartnerName(user);
+    setInfoId(user.id);
+    setApplicationUserId(user.id);
     setOpen(true);
   };
 
@@ -158,7 +159,7 @@ const PendingInvestors = ({ useratom, authorized, mode, colors }) => {
             <VerifyApplication
               setOpenManage={setOpenManage}
               show={openManage}
-              user={partnerName}
+              partnerName={partnerName}
               mode={mode}
               colors={colors}
               id={infoId}

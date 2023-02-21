@@ -100,7 +100,7 @@ const Users = ({ useratom, mode, colors }) => {
           <Box>
             <Tooltip title={`Vezi informatii pentru ${row.row.username}`}>
               {/* placement="right" */}
-              <IconButton color="inherit" onClick={() => handleOpen(row.id)}>
+              <IconButton color="inherit" onClick={() => handleOpen(row.row)}>
                 <InfoIcon />
               </IconButton>
             </Tooltip>
@@ -130,10 +130,11 @@ const Users = ({ useratom, mode, colors }) => {
   const handleAddUser = () => {
     setNewUser(true);
   };
-  const handleOpen = (id) => {
-    setPartnerName(users[0].filter((entity) => entity.id === id)[0].username);
-    setInfoId(id);
-    setEntityId(id);
+  const handleOpen = (user) => {
+
+    setPartnerName(user);
+    setInfoId(user.id);
+    setEntityId(user.id);
     setOpen(true);
   };
 
@@ -144,10 +145,9 @@ const Users = ({ useratom, mode, colors }) => {
   };
   const handleDelete = (id) => {
     setOpenAlert(true);
-    console.log(confirmedAlert);
     setUserId(id);
   };
-  console.log(confirmedAlert, "siii", openAlert);
+
   useEffect(() => {
     setOpenAlert(false);
     if (confirmedAlert) {

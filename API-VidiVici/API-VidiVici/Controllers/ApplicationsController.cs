@@ -76,8 +76,9 @@ namespace API_VidiVici.Controllers
 
         [Authorize(Roles ="Admin,Poweruser,Employee,Prospect")]
         [HttpPost("addDocuments")]
-        public async void AddDocuments([FromForm]DocumentsDto documentsDto)
+        public async Task<ActionResult> AddDocuments([FromForm]DocumentsDto documentsDto)
         {
+            var user = await _userManager.FindByIdAsync(documentsDto.ClientId);
             if(documentsDto !=null){
                 
                 Documents documents = new Documents {IdentityCardTitle = documentsDto.Title, ClientId=documentsDto.ClientId};
@@ -90,6 +91,21 @@ namespace API_VidiVici.Controllers
                 _service.AddDocuments(documents);
                 
             }
+            if (user!= null)
+            {
+                await _userManager.RemoveFromRoleAsync(user, UserRole.Prospect);
+                
+                await _userManager.AddToRoleAsync(user, UserRole.Pending);
+                await _userManager.UpdateAsync(user);
+                user.UserRole = UserRole.Pending;
+                _context.SaveChanges();
+                _notificationService.Add(new Notification{
+                    NotificationType = NotificationsType.Pending,
+                    Message = $"{user.FirstName} a completat toate documentele, necesita verificare"
+                });
+                return Ok();   
+            }
+            return NotFound();
             // return Ok();
         }
 

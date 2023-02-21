@@ -79,7 +79,7 @@ const PendingInvestment = ({ useratom, authorized, mode, colors }) => {
             <Tooltip title={`Vezi informatii pentru ${row.row.client.username}`}>
             <IconButton
               color="inherit"
-              onClick={() => handleOpen(row.row.clientId)}
+              onClick={() => handleOpen(row.row)}
             >
               <InfoIcon />
             </IconButton>
@@ -105,10 +105,11 @@ const PendingInvestment = ({ useratom, authorized, mode, colors }) => {
     },
   ];
 
-  const handleOpen = (id) => {
-    setPartnerName(users[0].filter((entity) => entity.id === id)[0].username);
-    setInfoId(id);
-    setEntityId(id);
+  const handleOpen = (user) => {
+    console.log(user);
+    setPartnerName(user);
+    setInfoId(user.clientId);
+    setEntityId(user.clientId);
     setOpen(true);
   };
 

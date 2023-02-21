@@ -8,15 +8,14 @@ import { useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import Unauthorize from "../unauthorize";
 import Information from "../information/information";
-const Investments = ({ useratom, mode,colors}) => {
+const Investments = ({ useratom, mode, colors }) => {
   const [open, setOpen] = useState(false);
   const [infoId, setInfoId] = useState();
   const [, setEntityId] = useAtom(entityIdAtom);
   const [partnerName, setPartnerName] = useState();
   const investments = useAtom(investmentsAtom);
-  const users = useAtom(usersAtom)
+  const users = useAtom(usersAtom);
   const loggedUser = useratom;
-  console.log(investments);
   const columns = [
     { field: "id", headerName: "ID", width: 50 },
     {
@@ -53,15 +52,30 @@ const Investments = ({ useratom, mode,colors}) => {
         return <Box>{row.row.fund.interestRate} %</Box>;
       },
     },
-    { field: "dateCreated", headerName: "Data Creare", width: 100,renderCell:(row) =>{
-      return row.row.dateCreated.split("T")[0]
-    } },
-    { field: "nextPaymentDate", headerName: "Urmatoarea zi de plata", width: 130,renderCell:(row) =>{
-      return row.row.datesOfPayment[0].split("T")[0]
-    }  },
-    { field: "finalPaymentDate", headerName: "Data Finalizare", width: 100,renderCell:(row) =>{
-      return row.row.finalPaymentDate.split("T")[0]
-    }  },
+    {
+      field: "dateCreated",
+      headerName: "Data Creare",
+      width: 100,
+      renderCell: (row) => {
+        return row.row.dateCreated.split("T")[0];
+      },
+    },
+    {
+      field: "nextPaymentDate",
+      headerName: "Urmatoarea zi de plata",
+      width: 130,
+      renderCell: (row) => {
+        return row.row.datesOfPayment[0].split("T")[0];
+      },
+    },
+    {
+      field: "finalPaymentDate",
+      headerName: "Data Finalizare",
+      width: 100,
+      renderCell: (row) => {
+        return row.row.finalPaymentDate.split("T")[0];
+      },
+    },
     {
       field: "private",
       headerName: "Privat",
@@ -78,7 +92,7 @@ const Investments = ({ useratom, mode,colors}) => {
       renderCell: (row) => {
         return (
           <Box>
-            <IconButton color="inherit" onClick={() => handleOpen(row.row.clientId)}>
+            <IconButton color="inherit" onClick={() => handleOpen(row.row)}>
               <InfoIcon />
             </IconButton>
             <IconButton color="inherit">
@@ -91,12 +105,10 @@ const Investments = ({ useratom, mode,colors}) => {
     },
   ];
 
-  const handleOpen = (id) => {
-    setPartnerName(
-      users[0].filter((entity) => entity.id === id)[0].username
-    );
-    setInfoId(id);
-    setEntityId(id);
+  const handleOpen = (user) => {
+    setPartnerName(user);
+    setInfoId(user.clientId);
+    setEntityId(user.clientId);
     setOpen(true);
   };
 
@@ -153,7 +165,14 @@ const Investments = ({ useratom, mode,colors}) => {
             />
           </Box>
 
-          <Information props={infoId} open={open} partnerName={partnerName} handleClose={handleClose} mode={mode} colors={colors} />
+          <Information
+            props={infoId}
+            open={open}
+            partnerName={partnerName}
+            handleClose={handleClose}
+            mode={mode}
+            colors={colors}
+          />
         </Box>
       ) : (
         <Box>

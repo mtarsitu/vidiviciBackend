@@ -34,7 +34,7 @@ const NewInvestment = ({ show, setShow, fund, useratom, mode }) => {
     data.append("initialInvestmentAmount", event.currentTarget[0].value);
     data.append("fundId", fund);
 
-    console.log(data.get("initialInvestmentAmount"));
+
     Register(data);
   };
   const handleClose = () => {
