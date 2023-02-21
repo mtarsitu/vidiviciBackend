@@ -84,9 +84,9 @@ const Partners = ({ authorized, mode, useratom }) => {
               <Card
                 key={partner.id}
                 sx={{
-                  maxHeight: 400,
-                  minWidth: 400,
-                  maxWidth: 400,
+                  maxHeight: 450,
+                  minWidth: 450,
+                  maxWidth: 450,
                   marginBottom: 10,
                   backgroundColor: `${colors.primary[400]}`,
                 }}
@@ -94,7 +94,7 @@ const Partners = ({ authorized, mode, useratom }) => {
                 <CardContent sx={{ marginLeft: 10 }}>
                   <img
                     src={`data:image/png;base64,${partner.logo}`}
-                    width="100"
+                    width="250"
                     height="120"
                     alt="documentul utilizatorului"
                   />
@@ -105,7 +105,7 @@ const Partners = ({ authorized, mode, useratom }) => {
                   </Typography>
                 </CardContent>
 
-                <CardContent sx={{ height: 100 }}>
+                <CardContent sx={{ height: 150, overflow:"scroll"}}>
                   <Typography
                     sx={{ fontSize: 14 }}
                     color="text.secondary"
