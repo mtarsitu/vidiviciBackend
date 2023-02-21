@@ -73,7 +73,6 @@ const PartnerDetails = ({ colors }) => {
       cellClassName: "username-column--cell",
       width: 150,
     },
-
     { field: "fixedAssets", headerName: "Active imobilizate", width: 150 },
     { field: "earnings", headerName: "Cifra de afaceri", width: 150 },
     { field: "debths", headerName: "Datorii", width: 150 },

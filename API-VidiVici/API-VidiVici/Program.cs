@@ -56,7 +56,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             {
                 OnMessageReceived = context =>
                 {
-                    context.Token = context.Request.Cookies["Token"];
+                    context.Token = context.Request.Cookies["X-Authorization-token"];
                     return Task.CompletedTask;
                 }
             };
@@ -66,6 +66,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<PartnerRepository>();
 builder.Services.AddScoped<PartnersService>();
+builder.Services.AddScoped<TwoFactorServices>();
 builder.Services.AddScoped<PartnersDetailsRepository>();
 builder.Services.AddScoped<PartnersDetailsService>();
 builder.Services.AddScoped<NotificationRepository>();

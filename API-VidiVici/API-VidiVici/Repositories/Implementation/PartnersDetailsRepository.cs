@@ -38,5 +38,10 @@ namespace API_VidiVici.Repositories.Implementation
             _context.PartnersDetails.Remove(_context.PartnersDetails.Single(x=>x.Id == id));
             _context.SaveChanges();
         }
+
+        internal async Task<IEnumerable<PartnersDetails>> GetDetails(int id)
+        {
+            return await _context.PartnersDetails.Where(x=>x.PartnerId == id).ToListAsync();
+        }
     }
 }

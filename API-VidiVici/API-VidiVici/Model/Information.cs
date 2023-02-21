@@ -16,8 +16,6 @@ namespace API_VidiVici.Model
         public string? Iban { get; set; }
         public string? Bank { get; set; }
         public string? Cui { get; set; }
-        public string? RegComertului { get; set; }
-        public string? PhoneNumber {get;set;}
         public User? User {get;set;}
          private DateTime? GetBirthDate()
         {

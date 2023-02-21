@@ -21,8 +21,8 @@ namespace API_VidiVici.Controllers
         }
 
         [Authorize(Roles ="Admin,Poweruser,Employee")]
-        [HttpPost("addPartner")]
-        public async void AddPartner([FromForm] PartnersDetails partnerDetails)
+        [HttpPost("addDetails")]
+        public async void AddDetails([FromForm] PartnersDetails partnerDetails)
         {
             _service.Add(partnerDetails);
         }
@@ -33,5 +33,13 @@ namespace API_VidiVici.Controllers
         {
             return await _service.GetAll();
         }
+
+         [Authorize(Roles ="Admin,Poweruser,Employee,Investor")]
+        [HttpGet("getDetails")]
+        public async Task<IEnumerable<PartnersDetails>> GetDetails(int id)
+        {
+            return await _service.GetDetails(id);
+        }
+
     }
 }

@@ -138,12 +138,6 @@ namespace API_VidiVici.Data.Migrations
                     b.Property<string>("Iban")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RegComertului")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -169,7 +163,7 @@ namespace API_VidiVici.Data.Migrations
                     b.Property<string>("ClientId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime?>("DateAproved")
+                    b.Property<DateTime>("DateAproved")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateCreated")
@@ -395,37 +389,37 @@ namespace API_VidiVici.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "adbecfd8-4427-4542-9600-82776976e4fe",
+                            Id = "895aeef6-025c-420a-b743-fd012c95db2b",
                             Name = "Poweruser",
                             NormalizedName = "POWERUSER"
                         },
                         new
                         {
-                            Id = "abd50699-7607-4645-91ef-4d5a0bfc84f4",
+                            Id = "37c30c4d-4c97-4f6e-ba9a-5de325d10dc0",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "d86e660a-f8b8-43df-97e2-fbb16f6142b2",
+                            Id = "0b3cb33c-563b-4fcf-a243-6d5fd040466b",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "448c91f2-d6d8-47e6-8abe-4d01e4c5558e",
+                            Id = "ae3b8a0a-f20a-45a9-a1ef-72806eaa594b",
                             Name = "Prospect",
                             NormalizedName = "PROSPECT"
                         },
                         new
                         {
-                            Id = "6d5a7480-1287-40ba-b62d-867eaff9bbc0",
+                            Id = "79167bd8-fbbc-4b3e-aeeb-e477ece34db5",
                             Name = "Pending",
                             NormalizedName = "PENDING"
                         },
                         new
                         {
-                            Id = "0ca84827-caaf-45c3-a90c-dac9e6e77ce1",
+                            Id = "ad8e5f58-44e6-4f7a-8685-0265b8bbe9e1",
                             Name = "Investor",
                             NormalizedName = "INVESTOR"
                         });

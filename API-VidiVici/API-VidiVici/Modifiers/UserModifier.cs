@@ -20,6 +20,8 @@ namespace API_VidiVici.Modifiers
                 Email = user.Email,
                 UsedPlatform = user.UsedPlatform,
                 AprovedBy = user.AprovedById,
+                PhoneNumber = user.PhoneNumber
+                
 
             };    
         }

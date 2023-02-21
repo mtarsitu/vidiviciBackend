@@ -39,5 +39,10 @@ namespace API_VidiVici.Services
         {
             _repository.GetAll();
         }
+
+        internal async Task<IEnumerable<PartnersDetails>> GetDetails(int id)
+        {
+            return await _repository.GetDetails(id);
+        }
     }
 }

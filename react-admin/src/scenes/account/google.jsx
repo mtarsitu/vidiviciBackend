@@ -2,17 +2,20 @@ import { UserAuth } from "../../data/AuthContext";
 import { GoogleButton } from "react-google-button";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { refreshAtom } from "../../data/dataAtom";
 import { useAtom } from "jotai";
+import { baseUrl } from "../../data/dataAtom";
+import ConfirmSms from "./confirmSms";
 const Google = () => {
   const { googleSignIn, user } = UserAuth();
+  const [showConfirmSms,setConfirmSms] = useState(false);
   const navigate = useNavigate();
   const [refresh, setRefresh] = useAtom(refreshAtom);
   // console.log(user);
   const signIn = async () => {
     let response = await fetch(
-      `https://vidivici.azurewebsites.net/Accounts/external`,
+      baseUrl+`Accounts/external`,
       {
         method: "POST",
         credentials: "include",
@@ -33,6 +36,8 @@ const Google = () => {
       setRefresh(!refresh);
       toast.success(`${user.displayName} Te-ai logat cu succes!`);
       navigate("/dashboard");
+    }else if(response.status == "409"){
+      setConfirmSms(true);
     }
   };
   const handleGoogleSignIn = async () => {
@@ -50,6 +55,7 @@ const Google = () => {
   return (
     <>
       <GoogleButton onClick={handleGoogleSignIn} />
+      <ConfirmSms show={showConfirmSms} setShow={setConfirmSms}/>
     </>
   );
 };

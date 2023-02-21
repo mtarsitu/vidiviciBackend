@@ -24,11 +24,7 @@ const EditUser = ({
     const response = await fetch(baseUrl + `Accounts/edit`, {
       method: "POST",
       credentials: "include",
-      headers: {
-        accept: "text/plain",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
+      body: user,
     });
     if (response.ok) {
       setRefresh(!refresh);
@@ -42,15 +38,8 @@ const EditUser = ({
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const user = {
-      id: oldUser.id,
-      username: data.get("username"),
-      email: data.get("email"),
-      firstName: data.get("firstName"),
-      lastName: data.get("lastName"),
-      userRole: data.get("userRole"),
-    };
-    Edit(user);
+    
+    Edit(data);
     handleEditFinish();
   };
 

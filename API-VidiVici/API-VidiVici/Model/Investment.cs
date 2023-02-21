@@ -11,7 +11,7 @@ namespace API_VidiVici.Model
         public string? ClientId{ get; set; }
         public double InitialInvestmentAmout {get;set;}
         public DateTime DateCreated { get; set; } = DateTime.UtcNow;
-        public DateTime? DateAproved {get;set;} 
+        public DateTime DateAproved {get;set;} 
         public int FundId {get;set;} 
         public bool RateOnFinal{get;set;}
         public bool Pending {get;set;}

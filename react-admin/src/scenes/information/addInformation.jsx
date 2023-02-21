@@ -22,17 +22,8 @@ const AddInformation = ({ show, setShow, userId, mode, colors }) => {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
-    const info = {
-      userId: userId,
-      cnp: data.get("cnp"),
-      iban: data.get("iban"),
-      phoneNumber: data.get("phoneNumber"),
-      address: data.get("address"),
-      bank: data.get("bank"),
-      cui: data.get("cui"),
-      regComertului: data.get("regComertului"),
-    };
-    registerInfo(info);
+    
+    registerInfo(data);
     handleClose();
   };
 
@@ -40,11 +31,7 @@ const AddInformation = ({ show, setShow, userId, mode, colors }) => {
     const response = await fetch(baseUrl + "Informations/addInformation", {
       method: "POST",
       credentials: "include",
-      headers: {
-        accept: "text/plain",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(info),
+      body: info,
     });
 
     if (response.ok) {
@@ -130,6 +117,28 @@ const AddInformation = ({ show, setShow, userId, mode, colors }) => {
                 margin="normal"
                 required
                 fullWidth
+                name="address"
+                label="Adresa"
+                type="text"
+                id="address"
+                sx={{
+                  "& .MuiFormLabel-root.Mui-focused": {
+                    color: "neutral.main",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "&:hover fieldset": {
+                      borderColor: `neutral.main`,
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: `neutral.main`,
+                    },
+                  },
+                }}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
                 name="iban"
                 label="IBAN"
                 type="text"
@@ -148,7 +157,7 @@ const AddInformation = ({ show, setShow, userId, mode, colors }) => {
                   },
                 }}
               />
-              <TextField
+              {/* <TextField
                 margin="normal"
                 required
                 fullWidth
@@ -169,29 +178,8 @@ const AddInformation = ({ show, setShow, userId, mode, colors }) => {
                     },
                   },
                 }}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="address"
-                label="Adresa"
-                type="text"
-                id="address"
-                sx={{
-                  "& .MuiFormLabel-root.Mui-focused": {
-                    color: "neutral.main",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "&:hover fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                  },
-                }}
-              />
+              /> */}
+              
               <TextField
                 margin="normal"
                 required
@@ -236,28 +224,7 @@ const AddInformation = ({ show, setShow, userId, mode, colors }) => {
                   },
                 }}
               />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="regComertului"
-                label="Registrul Comertului"
-                type="text"
-                id="regComertului"
-                sx={{
-                  "& .MuiFormLabel-root.Mui-focused": {
-                    color: "neutral.main",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "&:hover fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                  },
-                }}
-              />
+             
 
               <Button
                 type="submit"

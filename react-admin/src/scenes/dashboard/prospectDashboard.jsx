@@ -8,14 +8,16 @@ import { useState } from "react";
 import UploadDocuments from "../application/uploadDocuments";
 import AddInformation from "../information/addInformation";
 import InfoIcon from "@mui/icons-material/Info";
+import AddPhoneNumber from "../users/addPhoneNumber";
+import ConfirmSms from "../account/confirmSms";
+
 const ProspectDashboard = ({ colors, useratom, mode }) => {
-  const [show, setShow] = useState(false);
+  
   const [showDoc, setshowDoc] = useState(false);
   const [newInformation, setNewInformation] = useState(false);
+  const [showAddPhone, setShowAddPhone] = useState(false);
+  const [showConfirmSms, setShowConfirmSms] = useState(false);
 
-  const handleOpenModal = () => {
-    setShow(true);
-  };
 
   const handleOpenDocuments = () => {
     setshowDoc(true);
@@ -32,7 +34,6 @@ const ProspectDashboard = ({ colors, useratom, mode }) => {
           <Typography
             variant="h4"
             color={colors.grey[100]}
-            
             sx={{ m: "0 0 5px 0" }}
           >
             Aceasta platforma este dedicata actionarilor Vidi Vici Investmets
@@ -48,12 +49,28 @@ const ProspectDashboard = ({ colors, useratom, mode }) => {
           alignItems="center"
           justifyContent="space-evenly"
         >
+          {!useratom.phoneNumberConfirmed && (
+            <Box
+              onClick={() => setShowAddPhone(true)}
+              sx={{ cursor: "pointer" }}
+            >
+              <StatBox
+                title={"1. Numar de telefon"}
+                subtitle="Adauga si valideaza numar telefon"
+                icon={
+                  <InfoIcon
+                    sx={{ color: colors.purpleAccent[500], fontSize: "26px" }}
+                  />
+                }
+              />
+            </Box>
+          )}
           <Box
             onClick={() => setNewInformation(true)}
             sx={{ cursor: "pointer" }}
           >
             <StatBox
-              title={"1. Detalii personale"}
+              title={"2. Detalii personale"}
               subtitle="Adauga detalii"
               icon={
                 <InfoIcon
@@ -64,7 +81,7 @@ const ProspectDashboard = ({ colors, useratom, mode }) => {
           </Box>
           <Box onClick={handleOpenDocuments} sx={{ cursor: "pointer" }}>
             <StatBox
-              title={"2. Documente"}
+              title={"3. Documente"}
               subtitle="Adauga documente necesare"
               icon={
                 <DocumentScannerIcon
@@ -73,7 +90,7 @@ const ProspectDashboard = ({ colors, useratom, mode }) => {
               }
             />
           </Box>
-         
+
           {/* <Box onClick={handleOpenModal} sx={{ cursor: "pointer" }}>
             <StatBox
               title={"3. Formular"}
@@ -118,6 +135,14 @@ const ProspectDashboard = ({ colors, useratom, mode }) => {
           colors={colors}
           user={useratom}
         />
+        <AddPhoneNumber
+          show={showAddPhone}
+          setShow={setShowAddPhone}
+          showConfirm={showConfirmSms}
+          setConfirm={setShowConfirmSms}
+          mode={mode}
+        />
+        <ConfirmSms show={showConfirmSms} setShow={setShowConfirmSms} mode={mode} />
       </Box>
     </>
   );

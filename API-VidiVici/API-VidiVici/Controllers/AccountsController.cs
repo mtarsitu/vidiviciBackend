@@ -6,7 +6,7 @@ using API_VidiVici.Model;
 using API_VidiVici.Services;
 using API_VidiVici.DTOs;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
+
 
 namespace API_VidiVici.Controllers
 {
@@ -18,30 +18,35 @@ namespace API_VidiVici.Controllers
         private readonly TokenService _tokenService;
         private readonly SignInManager<User> SignInManager;
         private readonly NotificationService _notificationService;
+        private readonly TwoFactorServices _twoFactorService;
+        private static string twoFactorPin;
+        private static UserLoginDto userToPassTwoFactor;
 
         public AccountsController(
         UserManager<User> userManager, 
         TokenService tokenService, 
         NotificationService notificationService,
-        SignInManager<User> signInManager
+        SignInManager<User> signInManager,
+        TwoFactorServices twoFactorService
         )
         {
             _tokenService = tokenService;
             _notificationService = notificationService;
             _userManager = userManager;
+            _twoFactorService = twoFactorService;
             SignInManager = signInManager;
+            
 
 
         }
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<ActionResult<UserLoginDto>> Login(LoginDto loginDto)
+        public async Task<ActionResult> Login(LoginDto loginDto)
         {
             var user = await _userManager.FindByNameAsync(loginDto.Username);
             if (user == null || !await _userManager.CheckPasswordAsync(user, loginDto.Password))
                 return Unauthorized();
             //Request.Cookies.Append()
-
             var userLogged = new UserLoginDto
             {
                 Username = user.UserName,
@@ -49,13 +54,23 @@ namespace API_VidiVici.Controllers
             };
             var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
             await _userManager.AddClaimAsync(user, new Claim(loginDto.Username, userLogged.Token));
-
-            //var signInStatus = await SignInManager.PasswordSignInAsync(user, loginDto.Password, true, lockoutOnFailure: false);
-            Response.Cookies.Append("Token", userLogged.Token, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None, Secure=true });
-            Response.Cookies.Append("Username", user.UserName, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None, Secure=true });
-            //Response.Cookies.Append("X-Refresh-Token", user.RefreshToken, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None, Secure=true });
-
-            return userLogged;
+            if(!user.TwoFactorEnabled)
+            {
+                //var signInStatus = await SignInManager.PasswordSignInAsync(user, loginDto.Password, true, lockoutOnFailure: false);
+                Response.Cookies.Append("X-Authorization-token", userLogged.Token, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None, Secure=true });
+                // Response.Cookies.Append("Username", user.UserName, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None, Secure=true });
+                //Response.Cookies.Append("X-Refresh-Token", user.RefreshToken, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None, Secure=true });
+            }else {
+                Random generator = new Random();
+                twoFactorPin = generator.Next(0,1000000).ToString("D6");
+                var result = await  _twoFactorService.SendTwoFactorCode(user.PhoneNumber.ToString(),twoFactorPin);
+                if(result == "Success")
+                {
+                    userToPassTwoFactor = userLogged;
+                    return StatusCode(409);
+                }      
+            }
+            return Ok();
         }
 
         [AllowAnonymous]
@@ -85,18 +100,38 @@ namespace API_VidiVici.Controllers
                             result = await _userManager.AddClaimAsync(newUser, new Claim(userLogged.Username,userLogged.Token));
                             if(result.Succeeded)
                             {
-                                Response.Cookies.Append("Token", userLogged.Token, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None, Secure=true });
-                                Response.Cookies.Append("Username", newUser.UserName, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None, Secure=true });
+                                Response.Cookies.Append("X-Authorization-token", userLogged.Token, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None, Secure=true });
+                                // Response.Cookies.Append("Username", newUser.UserName, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None, Secure=true });
                                 // _context.SaveChanges();
                                 return userLogged;
                             }
                         
                     }
                 }
+            _notificationService.Add(new Notification{
+             NotificationType = NotificationsType.NewUser,
+             Message ="Un nou user s-a inregistrat"
+            });
             }
             var existentUser = new UserLoginDto{ Username = user.UserName, Token = await _tokenService.GenerateToken(user)};
-            Response.Cookies.Append("Token", existentUser.Token, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None, Secure=true });
-            Response.Cookies.Append("Username", user.UserName, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None, Secure=true });
+            if(!user.TwoFactorEnabled)
+            {
+                //var signInStatus = await SignInManager.PasswordSignInAsync(user, loginDto.Password, true, lockoutOnFailure: false);
+                Response.Cookies.Append("X-Authorization-token", existentUser.Token, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None, Secure=true });
+                // Response.Cookies.Append("Username", user.UserName, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None, Secure=true });
+                //Response.Cookies.Append("X-Refresh-Token", user.RefreshToken, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None, Secure=true });
+            }else {
+                Random generator = new Random();
+                twoFactorPin = generator.Next(0,1000000).ToString("D6");
+                var result = await  _twoFactorService.SendTwoFactorCode(user.PhoneNumber.ToString(),twoFactorPin);
+                if(result == "Success")
+                {
+                    userToPassTwoFactor = existentUser;
+                    return StatusCode(409);
+                }      
+            }
+            // Response.Cookies.Append("X-Authorization-token", existentUser.Token, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None, Secure=true });
+            // Response.Cookies.Append("Username", user.UserName, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None, Secure=true });
             return existentUser;
         }
 
@@ -178,8 +213,8 @@ namespace API_VidiVici.Controllers
                 UserRole = user.UserRole,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Email = user.Email
-                
+                Email = user.Email,
+                PhoneNumberConfirmed= user.PhoneNumberConfirmed 
             };
         }
 
@@ -187,18 +222,13 @@ namespace API_VidiVici.Controllers
         public async Task<ActionResult> Logout()
         {
             
-            Response.Cookies.Delete("Token", new CookieOptions 
+            Response.Cookies.Delete("X-Authorization-token", new CookieOptions 
             {
                 HttpOnly = true,
                 SameSite = SameSiteMode.None,
                 Secure = true
             });
-             Response.Cookies.Delete("Username", new CookieOptions 
-            {
-                HttpOnly = true,
-                SameSite = SameSiteMode.None,
-                Secure = true
-            });
+             
             return  Ok("");
         }
 
@@ -223,6 +253,45 @@ namespace API_VidiVici.Controllers
             await _userManager.UpdateAsync(user);
            
             return Ok();
+        }
+
+
+        [AllowAnonymous]
+        [HttpPost("twoFactor")]
+        public async Task<ActionResult> VerifyTwoFactor([FromForm]string smsPin)
+        {
+            var user = await _userManager.FindByNameAsync(userToPassTwoFactor.Username);
+            
+            if(smsPin == twoFactorPin)
+            {
+                if(!user.TwoFactorEnabled )
+                {
+                    user.TwoFactorEnabled = true;
+                    await _userManager.UpdateAsync(user);
+                }
+                if(Request.Cookies["X-Authorization-token"]==null){
+                Response.Cookies.Append("X-Authorization-token", userToPassTwoFactor.Token, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None, Secure=true });}
+                return Ok();
+            }
+            return Unauthorized();
+        }
+
+        [Authorize(Roles = "Admin,Investor,Prospect,Employee,Pending,Poweruser")]
+        [HttpPost("enableTwoFactor")]
+        public async Task<ActionResult> EnableTwoFactor([FromForm]string phoneNumber)
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            user.PhoneNumber = phoneNumber;
+            await _userManager.UpdateAsync(user);
+            Random generator = new Random();
+            twoFactorPin = generator.Next(0,1000000).ToString("D6");
+            var result = await  _twoFactorService.SendTwoFactorCode(user.PhoneNumber.ToString(),twoFactorPin);
+            if(result == "Success")
+            {
+                
+                return Ok();
+            } 
+            return NotFound();     
         }
     }
 }

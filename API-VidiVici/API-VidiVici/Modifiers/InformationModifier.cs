@@ -12,12 +12,10 @@ namespace API_VidiVici.Modifiers
                 UserId = information.UserId,
                 Cnp = information.Cnp,
                 Iban = information.Iban,
-                BirthDate = information.BirthDate,
-                PhoneNumber = information.PhoneNumber,
+                BirthDate = information.BirthDate,   
                 Address = information.Address,
                 Bank = information.Bank,
-                Cui = information.Cui,
-                RegComertului = information.RegComertului,
+                Cui = information.Cui
             };
         }
         public static Information ToInformation(InformationDto information)
@@ -29,11 +27,9 @@ namespace API_VidiVici.Modifiers
                 UserId = information.UserId,
                 Cnp = information.Cnp,
                 Iban = information.Iban,
-                PhoneNumber = information.PhoneNumber,
                 Address = information.Address,
                 Bank = information.Bank,
-                Cui = information.Cui,
-                RegComertului = information.RegComertului
+                Cui = information.Cui
 
                 };
             }

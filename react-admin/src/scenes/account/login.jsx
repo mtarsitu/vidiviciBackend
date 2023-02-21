@@ -19,9 +19,10 @@ import "react-toastify/dist/ReactToastify.css";
 import Facebook from "./facebook";
 import { refreshAtom, baseUrl } from "../../data/dataAtom";
 import { useAtom } from "jotai";
-
+import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import ConfirmSms from "./confirmSms";
 export default function Login({ useratom }) {
   const loggedUser = useratom;
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ export default function Login({ useratom }) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [refresh, setRefresh] = useAtom(refreshAtom);
-
+  const [showConfirmSms, setShowConfirmSms] = useState(false);
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -50,12 +51,13 @@ export default function Login({ useratom }) {
         },
         body: JSON.stringify(user),
       });
+      console.log(response.status);
       if (response.ok) {
         toast.success(`${user.username} Te-ai logat cu succes!`);
         setRefresh(!refresh);
 
         navigate("/dashboard");
-      } else {
+      } else if (response.status == "409"){setShowConfirmSms(true)}else {
         toast.warning("Username sau parola gresita aici");
       }
     } catch (error) {
@@ -139,6 +141,7 @@ export default function Login({ useratom }) {
             >
               Register
             </Button>
+            <ConfirmSms show={showConfirmSms} setShow={setShowConfirmSms} />
           </Box>
         </Container>
       ) : (

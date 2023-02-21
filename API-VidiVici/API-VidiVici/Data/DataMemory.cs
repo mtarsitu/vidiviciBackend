@@ -44,7 +44,7 @@ namespace API_VidiVici.Data
             
                new Investment{
                     DateAproved = DateTime.UtcNow,
-                    ClientId= "3ecb3359-4a7b-4d70-81e7-e9e4d27bbf32",
+                    ClientId= "36bce7cf-a265-41a9-a9af-1fbeafa3318b",
                     FundId =1,
                     RateOnFinal=true,
                     InitialInvestmentAmout= 1000000,
@@ -53,7 +53,7 @@ namespace API_VidiVici.Data
 
                new Investment{
                     DateAproved = DateTime.UtcNow,
-                    ClientId= "3ecb3359-4a7b-4d70-81e7-e9e4d27bbf32",
+                    ClientId= "36bce7cf-a265-41a9-a9af-1fbeafa3318b",
                     FundId =1,
                     InitialInvestmentAmout= 2000000,
                     Pending = false
@@ -62,21 +62,21 @@ namespace API_VidiVici.Data
 
                new Investment{
                     DateAproved = DateTime.UtcNow,
-                    ClientId= "c2608396-be08-4884-aa7c-ca1a0d952f71",
+                    ClientId= "bfa8a9ec-5568-4fdf-83db-bfa901e9eb06",
                     FundId =2,
                     InitialInvestmentAmout= 3000000,
                     Pending = false
                },
                new Investment{
                     DateAproved = DateTime.UtcNow,
-                    ClientId= "c2608396-be08-4884-aa7c-ca1a0d952f71",
+                    ClientId= "bfa8a9ec-5568-4fdf-83db-bfa901e9eb06",
                     FundId =1,
                     InitialInvestmentAmout= 4000000,
                     Pending = false
                },
                new Investment{
                     DateAproved = DateTime.UtcNow,
-                    ClientId= "c2608396-be08-4884-aa7c-ca1a0d952f71",
+                    ClientId= "bfa8a9ec-5568-4fdf-83db-bfa901e9eb06",
                     FundId =4,
                     InitialInvestmentAmout= 5000000,
                     Pending = false
@@ -175,36 +175,30 @@ namespace API_VidiVici.Data
         {
             return new List<Information>{
                 new Information{
-                    UserId = "c2608396-be08-4884-aa7c-ca1a0d952f71",
+                    UserId = "bfa8a9ec-5568-4fdf-83db-bfa901e9eb06",
                     Cnp = "5020116210753",
                     Address = "Bucuresti, Sos Pipera 61 bl 4 sc 2 et 7 ap 159",
                     Iban = "RO27RZBR2161724926335584",
                     Bank = "Raiffeisen Bank",
-                    Cui = "	13919155",
-                    RegComertului = "J40/5251/2001",
-                    PhoneNumber = "0730112111"
+                    Cui = "	13919155"
                 },
                 
                  new Information{
-                    UserId = "3ecb3359-4a7b-4d70-81e7-e9e4d27bbf32",
+                    UserId = "36bce7cf-a265-41a9-a9af-1fbeafa3318b",
                     Cnp = "5020116210753",
                     Address = "Iasi, Sos Pipera 61 bl 4 sc 2 et 7 ap 159",
                     Iban = "RO27RZBR2161724926335584",
                     Bank = "Raiffeisen Bank",
-                    Cui = "	13919155",
-                    RegComertului = "J40/5251/2001",
-                    PhoneNumber = "0730112111"
+                    Cui = "	13919155"
                 },
                 
                  new Information{
-                    UserId = "5e57c4cf-b7f7-462b-afee-5b8f33d37222",
+                    UserId = "834618a9-1824-41d4-9b2a-468716b85d15",
                     Cnp = "5020116210753",
                     Address = "Cluj, Sos Pipera 61 bl 4 sc 2 et 7 ap 159",
                     Iban = "RO27RZBR2161724926335584",
                     Bank = "Raiffeisen Bank",
-                    Cui = "	13919155",
-                    RegComertului = "J40/5251/2001",
-                    PhoneNumber = "0730112111"
+                    Cui = "	13919155"
                 }
             };
         }

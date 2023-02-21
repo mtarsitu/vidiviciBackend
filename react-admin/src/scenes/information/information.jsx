@@ -105,9 +105,9 @@ const Information = ({
                 <Typography id="modal-modal-title" variant="h3" component="h2">
                   Adresa: {entityInformation[0].address}
                 </Typography>
-                <Typography id="modal-modal-title" variant="h3" component="h2">
+                {/* <Typography id="modal-modal-title" variant="h3" component="h2">
                   Telefon: {entityInformation[0].phoneNumber}
-                </Typography>
+                </Typography> */}
                 <Typography id="modal-modal-title" variant="h3" component="h2">
                   Banca: {entityInformation[0].bank}
                 </Typography>
@@ -117,9 +117,7 @@ const Information = ({
                 <Typography id="modal-modal-title" variant="h3" component="h2">
                   Cui Firma: {entityInformation[0].cui}
                 </Typography>
-                <Typography id="modal-modal-title" variant="h3" component="h2">
-                  Reg Comertului: {entityInformation[0].regComertului}
-                </Typography>
+                
               </>
             ) : (
               <>

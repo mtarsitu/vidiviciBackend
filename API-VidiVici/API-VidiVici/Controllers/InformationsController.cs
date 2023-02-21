@@ -32,7 +32,7 @@ namespace API_VidiVici.Controllers
 
         [Authorize(Roles = "Admin,Investor,Prospect,Employee,Pending,Poweruser")]
         [HttpPost("addInformation")]
-        public  void AddInformation(InformationDto informationDto)
+        public  void AddInformation([FromForm] InformationDto informationDto)
         {
             Information information = InformationModifier.ToInformation(informationDto);
             _services.Add(information);

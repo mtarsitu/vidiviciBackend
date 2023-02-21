@@ -106,6 +106,7 @@ namespace API_VidiVici.Controllers
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             var investment = await _services.Get(id);
             investment.Pending = false;
+            investment.DateAproved = DateTime.UtcNow;
             investment.AprovedById = user.Id;
             _services.Edit(investment);
 
