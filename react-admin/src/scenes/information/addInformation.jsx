@@ -22,7 +22,7 @@ const AddInformation = ({ show, setShow, userId, mode, colors }) => {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
-    
+    data.append("userId",userId)
     registerInfo(data);
     handleClose();
   };

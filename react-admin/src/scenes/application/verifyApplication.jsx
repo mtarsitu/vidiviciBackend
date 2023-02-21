@@ -54,12 +54,12 @@ const VerifyApplication = ({ show, setOpenManage, user, mode, colors, id }) => {
       </Box>
         <VerifyInformation mode={mode} colors={colors} id={id} user={user}/>
       <Box display="flex" justifyContent="space-evenly">
-        <UserApplication
+        {/* <UserApplication
           handleClose={setOpenManage}
           user={user}
           mode={mode}
           colors={colors}
-        />
+        /> */}
 
         <UserDocuments colors={colors} />
 

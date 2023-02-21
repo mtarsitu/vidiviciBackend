@@ -94,8 +94,8 @@ const Partners = ({ authorized, mode, useratom }) => {
                 <CardContent sx={{ marginLeft: 10 }}>
                   <img
                     src={`data:image/png;base64,${partner.logo}`}
-                    width="250"
-                    height="120"
+                    width="130"
+                    height="130"
                     alt="documentul utilizatorului"
                   />
                 </CardContent>
