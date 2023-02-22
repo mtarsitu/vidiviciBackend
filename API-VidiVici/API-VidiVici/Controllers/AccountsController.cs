@@ -41,7 +41,7 @@ namespace API_VidiVici.Controllers
         }
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<ActionResult> Login(LoginDto loginDto)
+        public async Task<ActionResult> Login([FromForm]LoginDto loginDto)
         {
             var user = await _userManager.FindByNameAsync(loginDto.Username);
             if (user == null || !await _userManager.CheckPasswordAsync(user, loginDto.Password))

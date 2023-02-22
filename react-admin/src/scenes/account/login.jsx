@@ -23,6 +23,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import ConfirmSms from "./confirmSms";
+import { requests } from "../../data/dataAtom";
 export default function Login({ useratom }) {
   const loggedUser = useratom;
   const navigate = useNavigate();
@@ -34,30 +35,18 @@ export default function Login({ useratom }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const user = {
-      username: data.get("username"),
-      password: data.get("password"),
-    };
-    singIn(user);
+    singIn(data);
   };
   const singIn = async (user) => {
     try {
-      let response = await fetch(baseUrl + `Accounts/login`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          accept: "text/plain",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
-      });
-      console.log(response.status);
+      let response = await requests.Post(`Accounts/login`,user)
       if (response.ok) {
         toast.success(`${user.username} Te-ai logat cu succes!`);
         setRefresh(!refresh);
-
         navigate("/dashboard");
-      } else if (response.status == "409"){setShowConfirmSms(true)}else {
+      } else if (response.status === 409) {
+        setShowConfirmSms(true);
+      } else {
         toast.warning("Username sau parola gresita aici");
       }
     } catch (error) {

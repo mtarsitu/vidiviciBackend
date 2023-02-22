@@ -9,7 +9,7 @@ import QueueIcon from "@mui/icons-material/Queue";
 import { useMode, tokens } from "../../theme";
 import { baseUrl } from "../../data/dataAtom";
 import { toast } from "react-toastify";
-
+import { requests } from "../../data/dataAtom";
 const AddPartnerDetails = ({
   id,
   show,
@@ -34,11 +34,7 @@ const AddPartnerDetails = ({
   };
 
   const registerPartnerDetails = async (form) => {
-    const response = await fetch(baseUrl + `PartnerDetails/addDetails`, {
-      method: "POST",
-      credentials: "include",
-      body: form,
-    });
+    const response = await requests.Post(`PartnerDetails/addDetails`, form);
     if (response.ok) {
       toast.success("Informatii adaugate cu succes");
       setRefresh(!refresh);

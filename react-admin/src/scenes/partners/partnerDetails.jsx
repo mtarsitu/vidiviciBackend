@@ -7,26 +7,18 @@ import { baseUrl } from "../../data/dataAtom";
 import { DataGrid } from "@mui/x-data-grid";
 import LineChart from "../../components/LineChart";
 import { tokens } from "../../theme";
-
+import { requests } from "../../data/dataAtom";
 const PartnerDetails = ({ colors }) => {
   const colorsTheme = colors;
   const partner = useAtom(partnerAtom)[0];
   const [details, setDetails] = useState();
   const [dataChart, setDataChart] = useState();
   const GetDetails = async () => {
-    const response = await fetch(
-      baseUrl + `PartnerDetails/getDetails?id=${partner.id}`,
-      {
-        method: "GET",
-        credentials: "include",
-      }
+    const response = await requests.Get(
+      `PartnerDetails/getDetails?id=${partner.id}`
     );
-    if (response.ok) {
-      let data = await response.json();
-      console.log(data);
-      setDetails(data);
-      getChartData(data);
-    }
+    setDetails(response);
+    getChartData(response);
   };
   const getChartData = (allDetails) => {
     let data = [];
@@ -97,7 +89,12 @@ const PartnerDetails = ({ colors }) => {
             sx={{ marginLeft: 10 }}
             maxWidth="70vw"
           >
-            <Box height="220px" m="10px 0 0 0" maxWidth="65vw" sx={{marginLeft:5}}>
+            <Box
+              height="220px"
+              m="10px 0 0 0"
+              maxWidth="65vw"
+              sx={{ marginLeft: 5 }}
+            >
               <LineChart isDashboard={true} data={dataChart} />
             </Box>
           </Box>

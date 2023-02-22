@@ -16,51 +16,19 @@ export const investmentAprovedAtom = atom("");
 
 export const loggedUserAtom = atom(async (get) => {
   get(refreshAtom);
-  const response = await fetch(baseUrl + "Accounts/currentUser", {
-    method: "GET",
-    credentials: "include",
-    headers: {
-      accept: "text/plain",
-    },
-  });
-  if (response.ok) {
-    // isLoggedAtom.init = true;
-    return await response.json();
-  }
-  return null;
+  return await requests.Get("Accounts/currentUser");
 });
 
 export const fundsAtom = atom(async (get) => {
   get(refreshFundsAtom);
-  const response = await fetch(baseUrl + "Funds/getAllPublic", {
-    method: "GET",
-    credentials: "include",
-    headers: {
-      accept: "text/plain",
-    },
-  });
-  if (response.ok) {
-    return await response.json();
-  }
-  return null;
+  return await requests.Get("Funds/getAllPublic");
 });
 
 export const notificationsAtom = atom(async (get) => {
   get(notificationRefreshAtom);
   const user = get(loggedUserAtom);
   if (user !== null && user.userRole === "Admin") {
-    const response = await fetch(baseUrl + "Notifications/getAll", {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        accept: "text/plain",
-      },
-    });
-    if (response.ok) {
-      let data = await response.json();
-      return data;
-    }
-    return null;
+    return await requests.Get("Notifications/getAll");
   }
 });
 
@@ -84,7 +52,6 @@ export const deleteUserAtom = atom(async (get) => {
   }
 });
 
-
 export const AcceptPendingAtom = atom(async (get) => {
   let id = get(acceptPendingIdAtom);
   if (id.length > 0) {
@@ -104,113 +71,44 @@ export const AcceptPendingAtom = atom(async (get) => {
 
 export const allFundsAtom = atom(async (get) => {
   get(refreshFundsAtom);
-  const response = await fetch(baseUrl + "Funds/getAll", {
-    method: "GET",
-    credentials: "include",
-    headers: {
-      accept: "text/plain",
-    },
-  });
-  if (response.ok) {
-    return await response.json();
-  }
-  return null;
+  return await requests.Get("Funds/getAll");
 });
 
 export const myFundsAtom = atom(async (get) => {
   const name = get(usernameAtom);
-  console.log(name);
-  const response = await fetch(
-    baseUrl + "Investments/UserAndInvestments?username=" + name,
-    {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        accept: "text/plain",
-      },
-    }
-  );
-  if (response.ok) {
-    return await response.json();
-  }
-  return null;
+  return await requests.Get(`Investments/UserAndInvestments?username=${name}`);
 });
 
 export const applicationAtom = atom(async (get) => {
   const id = get(applicationUserIdAtom);
-  const response = await fetch(baseUrl + `Applications/get?clientId=${id}`, {
-    method: "GET",
-    credentials: "include",
-    headers: {
-      accept: "text/plain",
-    },
-  });
-  if (response.ok) {
-    return await response.json();
-  }
-  return null;
+  return await requests.Get(`Applications/get?clientId=${id}`);
 });
 
 export const documentsAtom = atom(async (get) => {
   const id = get(applicationUserIdAtom);
-  const response = await fetch(
-    baseUrl + `Applications/getDocuments?clientId=${id}`,
-    {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        accept: "text/plain",
-      },
-    }
-  );
-  if (response.ok) {
-    return await response.json();
-  }
-  return null;
+  return await requests.Get(`Applications/getDocuments?clientId=${id}`);
 });
 
 export const usersAtom = atom(async (get) => {
   get(refreshAtom);
-  const response = await fetch(baseUrl + "Admins/AllUser", {
-    method: "GET",
-    credentials: "include",
-    headers: {
-      accept: "text/plain",
-    },
-  });
-  return await response.json();
-});
-
-export const entityInformationAtom = atom(async (get) => {
-  const id = get(entityIdAtom);
-  get(refreshAtom);
-
-  const response = await fetch(
-    baseUrl + "Informations/userInformations?id=" + id,
-    {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        accept: "text/plain",
-      },
-    }
-  );
-  return response.json();
+  return await requests.Get("Admins/AllUser");
 });
 
 export const aproveInvestmentAtom = atom(async (get) => {
   const aproved = get(investmentAprovedAtom);
   console.log(aproved);
-  if (aproved!=="") {
+  if (aproved !== "") {
     console.log(aproved, "data atom");
-    const response = await fetch(baseUrl + `Investments/aproveInvestment?id=${aproved}`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        accept: "text/plain",
-      },
-      
-    });
+    const response = await fetch(
+      baseUrl + `Investments/aproveInvestment?id=${aproved}`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          accept: "text/plain",
+        },
+      }
+    );
     if (response.ok) {
       toast.success("Aprobat cu succes");
     }
@@ -219,24 +117,40 @@ export const aproveInvestmentAtom = atom(async (get) => {
 
 export const investmentsAtom = atom(async (get) => {
   get(refreshAtom);
-  const response = await fetch(baseUrl + "Investments/getAllInvestment", {
-    method: "GET",
-    credentials: "include",
-    headers: {
-      accept: "text/plain",
-    },
-  });
-  return response.json();
+  return await requests.Get("Investments/getAllInvestment");
 });
 
 export const pendingInvestmentsAtom = atom(async (get) => {
   get(refreshAtom);
-  const response = await fetch(baseUrl + "Investments/pendingInvestments", {
-    method: "GET",
-    credentials: "include",
-    headers: {
-      accept: "text/plain",
-    },
-  });
-  return response.json();
+  return await requests.Get("Investments/pendingInvestments");
 });
+
+export const requests = {
+  Get: async (urlEnd) => {
+    try {
+      let response = await fetch(baseUrl + urlEnd, {
+        method: "GET",
+        credentials: "include",
+      });
+      return await responses(response);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  Post: async (urlEnd,form) => {
+    let response = await fetch(baseUrl + urlEnd, {
+      method: "POST",
+      credentials: "include",
+      body:form
+    });
+    return response;
+  },
+};
+
+const responses = async (response) => {
+
+  if (response.ok) {
+    return await response.json();
+  }
+  return null;
+};

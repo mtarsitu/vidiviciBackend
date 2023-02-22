@@ -12,8 +12,8 @@ import { useMode, tokens } from "../../theme";
 import { baseUrl } from "../../data/dataAtom";
 import { toast } from "react-toastify";
 import { useState } from "react";
-
-const AddPartner = ({ show, setShow, mode, setRefresh,refresh }) => {
+import { requests } from "../../data/dataAtom";
+const AddPartner = ({ show, setShow, mode, setRefresh, refresh }) => {
   const [theme] = useMode();
   const colors = tokens(theme.palette.mode);
   const [files, setFiles] = useState({ identityCard: "" });
@@ -28,7 +28,6 @@ const AddPartner = ({ show, setShow, mode, setRefresh,refresh }) => {
     setFiles({ identityCard: file });
   };
 
-
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -40,16 +39,15 @@ const AddPartner = ({ show, setShow, mode, setRefresh,refresh }) => {
   };
 
   const registerPartner = async (form) => {
-    const response = await fetch(baseUrl + `Partners/addPartner`, {
-      method: "POST",
-      credentials: "include",
-      body: form,
-    });
+    const response = await requests.Post(`Partners/addPartner`, form);
+
     if (response.ok) {
       toast.success("Partener adaugat cu succes");
       setRefresh(!refresh);
     } else {
-      toast.error("Nu a fost adaugat partenerul! Te rugam sa incerci mai tarziu");
+      toast.error(
+        "Nu a fost adaugat partenerul! Te rugam sa incerci mai tarziu"
+      );
     }
   };
 
@@ -77,7 +75,10 @@ const AddPartner = ({ show, setShow, mode, setRefresh,refresh }) => {
         }}
       >
         <Box m="20px">
-          <Header title="Creeaza un nou Partner" subtitle="Companii in care investim" />
+          <Header
+            title="Creeaza un nou Partner"
+            subtitle="Companii in care investim"
+          />
           <Box
             sx={{
               marginTop: -10,
@@ -143,15 +144,14 @@ const AddPartner = ({ show, setShow, mode, setRefresh,refresh }) => {
                 }}
               />
               <DropzoneArea
-              previewText="Hello"
-              onChange={addLogo.bind(this)}
-              filesLimit={1}
-              acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
-              showPreviews={true}
-              maxFileSize={5000000}
-              dropzoneText="Adauga logo"
-            />
-              
+                previewText="Hello"
+                onChange={addLogo.bind(this)}
+                filesLimit={1}
+                acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
+                showPreviews={true}
+                maxFileSize={5000000}
+                dropzoneText="Adauga logo"
+              />
 
               <Button
                 type="submit"

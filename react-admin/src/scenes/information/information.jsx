@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { baseUrl } from "../../data/dataAtom";
 import { useState } from "react";
 import AddInformation from "./addInformation";
-
+import { requests } from "../../data/dataAtom";
 const Information = ({
   props,
   partnerName,
@@ -14,21 +14,9 @@ const Information = ({
 }) => {
   const [entityInformation, setEntityInformation] = useState();
   const [newInfo, setNewInfo] = useState(false);
+  const [refresh,setRefresh] = useState(false);
   const GetEntityInformation = async () => {
-    const response = await fetch(
-      baseUrl + "Informations/userInformations?id=" + props,
-      {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          accept: "text/plain",
-        },
-      }
-    );
-    if (response.ok) {
-      let data = await response.json();
-      setEntityInformation(data);
-    }
+    setEntityInformation(await requests.Get(`Informations/userInformations?id=${props}`));
   };
 
   const handleAddInfo = () => {
@@ -39,7 +27,7 @@ const Information = ({
   };
   useEffect(() => {
     GetEntityInformation();
-  }, [props, newInfo]);
+  }, [props, newInfo, refresh]);
 
   return (
     <>
@@ -174,6 +162,8 @@ const Information = ({
                       userId={props}
                       mode={mode}
                       colors={colors}
+                      refresh={refresh}
+                      setRefresh={setRefresh}
                     />
                   )}
                 </>

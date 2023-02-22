@@ -6,7 +6,7 @@ namespace API_VidiVici.Services
     {
         public  async Task<string> SendTwoFactorCode(string PhoneNumber, string pin)
         {
-            string message = $"Codul pentru acces in aplicatia Vidi Vici este{pin}";
+            string message = $"Codul pentru acces in aplicatia Vidi Vici este {pin}";
             
             string baseUrl = $"https://app.smso.ro/api/v1/send?to={PhoneNumber}&sender=4&body={message}";
             try{

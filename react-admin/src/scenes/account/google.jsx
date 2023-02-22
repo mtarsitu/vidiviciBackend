@@ -7,6 +7,7 @@ import { refreshAtom } from "../../data/dataAtom";
 import { useAtom } from "jotai";
 import { baseUrl } from "../../data/dataAtom";
 import ConfirmSms from "./confirmSms";
+import { requests } from "../../data/dataAtom";
 const Google = () => {
   const { googleSignIn, user } = UserAuth();
   const [showConfirmSms,setConfirmSms] = useState(false);
@@ -36,7 +37,7 @@ const Google = () => {
       setRefresh(!refresh);
       toast.success(`${user.displayName} Te-ai logat cu succes!`);
       navigate("/dashboard");
-    }else if(response.status == "409"){
+    }else if(response.status === 409){
       setConfirmSms(true);
     }
   };

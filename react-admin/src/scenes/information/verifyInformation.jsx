@@ -1,29 +1,17 @@
 import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-
-import { baseUrl } from "../../data/dataAtom";
+import { requests } from "../../data/dataAtom";
 const VerifyInformation = ({ colors, id, partnerName }) => {
   const [entityInformation, setEntityInformation] = useState();
   const GetEntityInformation = async () => {
-    const response = await fetch(
-      baseUrl + "Informations/userInformations?id=" + id,
-      {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          accept: "text/plain",
-        },
-      }
+    setEntityInformation(
+      await requests.Get(`Informations/userInformations?id=${id}`)
     );
-    if (response.ok) {
-      let data = await response.json();
-      setEntityInformation(data);
-    }
   };
 
   useEffect(() => {
     GetEntityInformation();
-  },[id]);
+  }, [id]);
 
   return (
     <>
@@ -63,7 +51,7 @@ const VerifyInformation = ({ colors, id, partnerName }) => {
                   borderTop: "none",
                   backgroundColor: colors.purpleAccent[700],
                 },
-               
+
                 display: "flex",
                 "align-content": " center",
                 "align-items": " center",

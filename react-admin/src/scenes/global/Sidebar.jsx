@@ -215,13 +215,22 @@ const Sidebar = ({ useratom, authorized }) => {
                   </>
                 )}
                 {authorize && (
-                  <Item
-                    title="Calendar"
-                    to="/calendar"
-                    icon={<CalendarTodayOutlinedIcon />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
+                  <>
+                    <Item
+                      title="Calendar"
+                      to="/calendar"
+                      icon={<CalendarTodayOutlinedIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                    <Item
+                      title="Fonduri active"
+                      to="/funds"
+                      icon={<ReceiptOutlinedIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                  </>
                 )}
                 <Typography
                   variant="h6"

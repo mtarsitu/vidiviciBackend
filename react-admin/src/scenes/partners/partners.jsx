@@ -5,6 +5,7 @@ import {
   Button,
   Card,
   CardContent,
+  Grid,
 } from "@mui/material";
 import { tokens } from "../../theme";
 import QueueIcon from "@mui/icons-material/Queue";
@@ -14,9 +15,7 @@ import Header from "../../components/Header";
 import AddPartner from "./addPartner";
 import AddPartnerDetails from "./addPartnerDetails";
 import { useNavigate } from "react-router-dom";
-import {
-  partnerAtom,
-} from "../../data/partners/partnersAtom";
+import { partnerAtom } from "../../data/partners/partnersAtom";
 import { useAtom } from "jotai";
 
 const Partners = ({ authorized, mode, useratom }) => {
@@ -76,19 +75,14 @@ const Partners = ({ authorized, mode, useratom }) => {
           </Box>
         )}
       </Box>
-      <Box>
-        <Box m="40px" sx={{ display: "flex", justifyContent: "space-evenly" }}>
-          {partners !== undefined &&
-            partners.map((partner) => (
+
+      <Grid m="10px" container spacing={4} >
+        {partners !== undefined &&
+          partners.map((partner) => (
+            <Grid item xs={5.5} key={partner.id}>
               <Card
                 key={partner.id}
-                sx={{
-                  maxHeight: 450,
-                  minWidth: 450,
-                  maxWidth: 450,
-                  marginBottom: 10,
-                  backgroundColor: `${colors.primary[400]}`,
-                }}
+                
               >
                 <CardContent sx={{ marginLeft: 10 }}>
                   <img
@@ -104,7 +98,7 @@ const Partners = ({ authorized, mode, useratom }) => {
                   </Typography>
                 </CardContent>
 
-                <CardContent sx={{ height: 150, overflow:"scroll"}}>
+                <CardContent sx={{ height: 150, overflow: "scroll" }}>
                   <Typography
                     sx={{ fontSize: 14 }}
                     color="text.secondary"
@@ -139,28 +133,28 @@ const Partners = ({ authorized, mode, useratom }) => {
                   </Box>
                 </CardContent>
               </Card>
-            ))}
-        </Box>
-        {openNewPartner && (
-          <AddPartner
-            show={openNewPartner}
-            setShow={setOpenNewPartner}
-            mode={mode}
-            setRefresh={setRefresh}
-            refresh={refresh}
-          />
-        )}
-        {openNewDetail && (
-          <AddPartnerDetails
-            id={partnerId}
-            show={openNewDetail}
-            setShow={setOpenNewDetail}
-            mode={mode}
-            setRefresh={setRefresh}
-            refresh={refresh}
-          />
-        )}
-      </Box>
+            </Grid>
+          ))}
+      </Grid>
+      {openNewPartner && (
+        <AddPartner
+          show={openNewPartner}
+          setShow={setOpenNewPartner}
+          mode={mode}
+          setRefresh={setRefresh}
+          refresh={refresh}
+        />
+      )}
+      {openNewDetail && (
+        <AddPartnerDetails
+          id={partnerId}
+          show={openNewDetail}
+          setShow={setOpenNewDetail}
+          mode={mode}
+          setRefresh={setRefresh}
+          refresh={refresh}
+        />
+      )}
     </>
   );
 };

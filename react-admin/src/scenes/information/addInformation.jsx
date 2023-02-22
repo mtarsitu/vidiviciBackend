@@ -10,13 +10,11 @@ import QueueIcon from "@mui/icons-material/Queue";
 import { useAtom } from "jotai";
 import { toast } from "react-toastify";
 import { refreshAtom,baseUrl } from "../../data/dataAtom";
-
-const AddInformation = ({ show, setShow, userId, mode, colors }) => {
-  const [refresh,setRefresh] = useAtom(refreshAtom);
+import { requests } from "../../data/dataAtom";
+const AddInformation = ({ show, setShow, userId, mode, colors,refresh,setRefresh }) => {
   const handleClose = () => {
     setShow(false);
     console.log(show);
-    refresh();
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -28,12 +26,7 @@ const AddInformation = ({ show, setShow, userId, mode, colors }) => {
   };
 
   const registerInfo = async (info) => {
-    const response = await fetch(baseUrl + "Informations/addInformation", {
-      method: "POST",
-      credentials: "include",
-      body: info,
-    });
-
+    const response =await requests.Post("Informations/addInformation",info);
     if (response.ok) {
       setRefresh(!refresh);  
       toast.success("Informatie adaugata cu succes");

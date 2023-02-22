@@ -139,6 +139,7 @@ const Users = ({ useratom, mode, colors }) => {
   };
 
   const handleClose = () => setOpen(false);
+  
   const handleEdit = (u) => {
     setUserEdit(u);
     setOpenEdit(true);
