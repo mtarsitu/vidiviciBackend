@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
   Grid,
+  Pagination,
 } from "@mui/material";
 import { tokens } from "../../theme";
 import QueueIcon from "@mui/icons-material/Queue";
@@ -26,18 +27,22 @@ const Partners = ({ authorized, mode, useratom }) => {
   const [openNewPartner, setOpenNewPartner] = useState(false);
   const [openNewDetail, setOpenNewDetail] = useState(false);
   const [partnerId, setPartnerId] = useState();
-
+  const [page, setPage] = useState(1);
   const [, setPartneratom] = useAtom(partnerAtom);
 
   const GetPartners = async () => {
     const response = await requests.Get("Partners/getAll");
     setPartners(response);
   };
-  
+
   const handleAddPartner = () => {
     setOpenNewPartner(true);
   };
 
+  const handlePageChange = (e, p) => {
+    setPage(p);
+    // _DATA.jump(p);
+  };
   const seeDetails = (partner) => {
     setPartneratom(partner);
     navigate("/detalii-companie");
@@ -71,13 +76,13 @@ const Partners = ({ authorized, mode, useratom }) => {
         )}
       </Box>
 
-      <Grid m="10px" container spacing={6} maxWidth="80vw">
+      <Grid m="20px" container spacing={8} maxWidth="75vw">
         {partners !== undefined &&
-          partners.map((partner) => (
-            <Grid item xs={4} key={partner.id}>
+          partners.slice(page-1, 2).map((partner) => (
+            <Grid item xs={6} key={partner.id} >
               <Card
                 key={partner.id}
-                sx={{ backgroundColor: `${colors.primary[400]}` }}
+                sx={{ backgroundColor: `${colors.primary[400]}`,minHeight:500 }}
               >
                 <CardContent sx={{ marginLeft: 10 }}>
                   <img
@@ -93,7 +98,7 @@ const Partners = ({ authorized, mode, useratom }) => {
                   </Typography>
                 </CardContent>
 
-                <CardContent sx={{ height: 150, overflow: "scroll" }}>
+                <CardContent sx={{ height: 250}}>
                   <Typography
                     sx={{ fontSize: 14 }}
                     color="text.secondary"
@@ -131,6 +136,18 @@ const Partners = ({ authorized, mode, useratom }) => {
             </Grid>
           ))}
       </Grid>
+      {partners !== undefined && (
+        <Pagination
+          count={Math.round(partners.length / 2)}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: 10,
+            marginLeft: -15,
+          }}
+          onChange={handlePageChange}
+        />
+      )}
       {openNewPartner && (
         <AddPartner
           show={openNewPartner}

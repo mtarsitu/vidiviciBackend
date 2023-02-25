@@ -24,7 +24,7 @@ const Calendar = () => {
 
   const [refreshEvents, setRefreshEvents] = useState(false);
   const [events, setEvents] = useState();
-  console.log(events);
+
   const handleDateClick = (selected) => {
     const title = prompt("Please enter a new title for your event");
     const calendarApi = selected.view.calendar;
