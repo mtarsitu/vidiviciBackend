@@ -28,8 +28,9 @@ const Partners = ({ authorized, mode, useratom }) => {
   const [openNewDetail, setOpenNewDetail] = useState(false);
   const [partnerId, setPartnerId] = useState();
   const [page, setPage] = useState(1);
+  const [begin, setBegin] = useState(0);
   const [, setPartneratom] = useAtom(partnerAtom);
-
+  const ItemPerPage = 2;
   const GetPartners = async () => {
     const response = await requests.Get("Partners/getAll");
     setPartners(response);
@@ -41,12 +42,14 @@ const Partners = ({ authorized, mode, useratom }) => {
 
   const handlePageChange = (e, p) => {
     setPage(p);
+    setBegin((p - 1) * ItemPerPage);
     // _DATA.jump(p);
   };
   const seeDetails = (partner) => {
     setPartneratom(partner);
     navigate("/detalii-companie");
   };
+
   const handleAddDetail = (id) => {
     setPartnerId(id);
     setOpenNewDetail(true);
@@ -78,11 +81,14 @@ const Partners = ({ authorized, mode, useratom }) => {
 
       <Grid m="20px" container spacing={8} maxWidth="75vw">
         {partners !== undefined &&
-          partners.slice(page-1, 2).map((partner) => (
-            <Grid item xs={6} key={partner.id} >
+          partners.slice(begin, begin + ItemPerPage).map((partner) => (
+            <Grid item xs={6} key={partner.id}>
               <Card
                 key={partner.id}
-                sx={{ backgroundColor: `${colors.primary[400]}`,minHeight:500 }}
+                sx={{
+                  backgroundColor: `${colors.primary[400]}`,
+                  minHeight: 500,
+                }}
               >
                 <CardContent sx={{ marginLeft: 10 }}>
                   <img
@@ -98,7 +104,7 @@ const Partners = ({ authorized, mode, useratom }) => {
                   </Typography>
                 </CardContent>
 
-                <CardContent sx={{ height: 250}}>
+                <CardContent sx={{ height: 250 }}>
                   <Typography
                     sx={{ fontSize: 14 }}
                     color="text.secondary"
