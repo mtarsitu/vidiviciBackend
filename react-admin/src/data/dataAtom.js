@@ -145,6 +145,19 @@ export const requests = {
     });
     return response;
   },
+  PostJson: async (urlEnd,jsonObject)=>{
+    let response = await fetch(baseUrl + urlEnd, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        accept: "text/plain",
+        "Content-Type": "application/json",
+      },
+      body:JSON.stringify(jsonObject)
+    });
+    return response;
+
+  }
 };
 
 const responses = async (response) => {

@@ -14,23 +14,17 @@ import {
 } from "@mui/material";
 import Header from "../../components/Header";
 import { tokens } from "../../theme";
-import {
-  newEventAtom,
-  refreshEventsAtom,
-  eventsAtom,
-  AddNewEventAtom,
-} from "../../data/events/eventsAtom";
 import { useAtom } from "jotai";
-
+import { requests } from "../../data/dataAtom";
+import { useEffect, useState } from "react";
 const Calendar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   // const [currentEvents, setCurrentEvents] = useState([]);
-  const [, setNewEvent] = useAtom(newEventAtom);
-  useAtom(AddNewEventAtom);
-  const [refreshEvents, setRefreshEvents] = useAtom(refreshEventsAtom);
-  const events = useAtom(eventsAtom);
 
+  const [refreshEvents, setRefreshEvents] = useState(false);
+  const [events, setEvents] = useState();
+  console.log(events);
   const handleDateClick = (selected) => {
     const title = prompt("Please enter a new title for your event");
     const calendarApi = selected.view.calendar;
@@ -44,8 +38,8 @@ const Calendar = () => {
         end: selected.endStr,
         allDay: selected.allDay,
       });
-      setTimeout(() => {
-        setNewEvent({
+      setTimeout(async () => {
+        requests.PostJson("Events/add", {
           title: title,
           date: selected.start,
           start: selected.start,
@@ -54,7 +48,6 @@ const Calendar = () => {
       }, 100);
       setTimeout(() => {
         setRefreshEvents(!refreshEvents);
-        setNewEvent("");
       }, 200);
     }
   };
@@ -69,7 +62,11 @@ const Calendar = () => {
       selected.event.remove();
     }
   };
-
+  useEffect(() => {
+    requests.Get("Events/getAll").then((result) => {
+      setEvents(result);
+    });
+  }, [refreshEvents]);
   return (
     <Box m="20px">
       <Header title="Calendar" subtitle="Administreaza Calendar" />
@@ -84,53 +81,54 @@ const Calendar = () => {
         >
           <Typography variant="h5">Events</Typography>
           <List>
-            {events[0] != null && events[0].map((event) => (
-              <ListItem
-                key={event.id}
-                sx={{
-                  backgroundColor: colors.purpleAccent[700],
-                  margin: "10px 0",
-                  borderRadius: "2px",
-                }}
-              >
-                <ListItemText
-                  primary={event.title}
-                  secondary={
-                    <Typography>
-                      {event.start.split("T")[0]}
-                    </Typography>
-                  }
-                />
-              </ListItem>
-            ))}
+            {events !== undefined &&
+              events.map((event) => (
+                <ListItem
+                  key={event.id}
+                  sx={{
+                    backgroundColor: colors.purpleAccent[700],
+                    margin: "10px 0",
+                    borderRadius: "2px",
+                  }}
+                >
+                  <ListItemText
+                    primary={event.title}
+                    secondary={
+                      <Typography>{event.start.split("T")[0]}</Typography>
+                    }
+                  />
+                </ListItem>
+              ))}
           </List>
         </Box>
 
         {/* CALENDAR */}
         <Box flex="1 1 100%" ml="15px">
-          <FullCalendar
-            height="75vh"
-            plugins={[
-              dayGridPlugin,
-              timeGridPlugin,
-              interactionPlugin,
-              listPlugin,
-            ]}
-            headerToolbar={{
-              left: "prev,next today",
-              center: "title",
-              right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
-            }}
-            initialView="dayGridMonth"
-            editable={true}
-            selectable={true}
-            selectMirror={true}
-            dayMaxEvents={true}
-            select={handleDateClick}
-            eventClick={handleEventClick}
-            // eventsSet={(events) => setCurrentEvents(events)}
-            initialEvents={events[0]}
-          />
+          {events !== undefined && (
+            <FullCalendar
+              height="75vh"
+              plugins={[
+                dayGridPlugin,
+                timeGridPlugin,
+                interactionPlugin,
+                listPlugin,
+              ]}
+              headerToolbar={{
+                left: "prev,next today",
+                center: "title",
+                right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
+              }}
+              initialView="dayGridMonth"
+              editable={true}
+              selectable={true}
+              selectMirror={true}
+              dayMaxEvents={true}
+              select={handleDateClick}
+              eventClick={handleEventClick}
+              // eventsSet={(events) => setCurrentEvents(events)}
+              initialEvents={events}
+            />
+          )}
         </Box>
       </Box>
     </Box>
