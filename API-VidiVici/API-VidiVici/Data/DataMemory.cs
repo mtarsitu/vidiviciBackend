@@ -16,24 +16,28 @@ namespace API_VidiVici.Data
                     InterestRate = 7.5,
                     Private = false,
                     ReturningType = ReturningType.Anualy,
+                    Details ="Fond cu returnare a investitie si dobanzii dupa un an de la creere"
                 },
                 new Fund{
                     Name = "Semestrial",
                     InterestRate = 6.5,
                     Private = false,
                     ReturningType = ReturningType.Semestrial,
+                    Details ="Fond cu plata dobanzii semestriala si returnarea investitiei initiale dupa un an"
                 },
                 new Fund{
                     Name = "Trimestrial",
                     InterestRate = 5.5,
                     Private = false,
                     ReturningType = ReturningType.Trimestial,
+                    Details ="Fond cu plata dobanzii trimestrial si returnarea investitiei initiale dupa un an"
                 },
                 new Fund{
                     Name = "Montly",
                     InterestRate = 4.5,
                     Private = false,
                     ReturningType = ReturningType.Montly,
+                    Details ="Fond cu plata dobanzii lunare si returnarea investitiei initiale dupa un an"
                 },
             };
        }
@@ -44,41 +48,41 @@ namespace API_VidiVici.Data
             
                new Investment{
                     DateAproved = DateTime.UtcNow,
-                    ClientId= "36bce7cf-a265-41a9-a9af-1fbeafa3318b",
+                    ClientId= "2fe873ad-9a4a-4a42-8acf-b3da45e275cc",
                     FundId =1,
                     RateOnFinal=true,
-                    InitialInvestmentAmout= 1000000,
+                    InitialInvestmentAmount= 1000000,
                     Pending = false
                },
 
                new Investment{
                     DateAproved = DateTime.UtcNow,
-                    ClientId= "36bce7cf-a265-41a9-a9af-1fbeafa3318b",
+                    ClientId= "2fe873ad-9a4a-4a42-8acf-b3da45e275cc",
                     FundId =1,
-                    InitialInvestmentAmout= 2000000,
+                    InitialInvestmentAmount= 2000000,
                     Pending = false
                },
 
 
                new Investment{
                     DateAproved = DateTime.UtcNow,
-                    ClientId= "bfa8a9ec-5568-4fdf-83db-bfa901e9eb06",
+                    ClientId= "ae91b432-a7d6-4442-a1de-34abec0fdd3f",
                     FundId =2,
-                    InitialInvestmentAmout= 3000000,
+                    InitialInvestmentAmount= 3000000,
                     Pending = false
                },
                new Investment{
                     DateAproved = DateTime.UtcNow,
-                    ClientId= "bfa8a9ec-5568-4fdf-83db-bfa901e9eb06",
+                    ClientId= "ae91b432-a7d6-4442-a1de-34abec0fdd3f",
                     FundId =1,
-                    InitialInvestmentAmout= 4000000,
+                    InitialInvestmentAmount= 4000000,
                     Pending = false
                },
                new Investment{
                     DateAproved = DateTime.UtcNow,
-                    ClientId= "bfa8a9ec-5568-4fdf-83db-bfa901e9eb06",
+                    ClientId= "ae91b432-a7d6-4442-a1de-34abec0fdd3f",
                     FundId =4,
-                    InitialInvestmentAmout= 5000000,
+                    InitialInvestmentAmount= 5000000,
                     Pending = false
                },
            };
@@ -175,7 +179,7 @@ namespace API_VidiVici.Data
         {
             return new List<Information>{
                 new Information{
-                    UserId = "bfa8a9ec-5568-4fdf-83db-bfa901e9eb06",
+                    UserId = "ae91b432-a7d6-4442-a1de-34abec0fdd3f",
                     Cnp = "5020116210753",
                     Address = "Bucuresti, Sos Pipera 61 bl 4 sc 2 et 7 ap 159",
                     Iban = "RO27RZBR2161724926335584",
@@ -184,7 +188,7 @@ namespace API_VidiVici.Data
                 },
                 
                  new Information{
-                    UserId = "36bce7cf-a265-41a9-a9af-1fbeafa3318b",
+                    UserId = "2fe873ad-9a4a-4a42-8acf-b3da45e275cc",
                     Cnp = "5020116210753",
                     Address = "Iasi, Sos Pipera 61 bl 4 sc 2 et 7 ap 159",
                     Iban = "RO27RZBR2161724926335584",
@@ -193,7 +197,7 @@ namespace API_VidiVici.Data
                 },
                 
                  new Information{
-                    UserId = "834618a9-1824-41d4-9b2a-468716b85d15",
+                    UserId = "e1c6b139-aa89-47dc-a9c5-35bba184fdc4",
                     Cnp = "5020116210753",
                     Address = "Cluj, Sos Pipera 61 bl 4 sc 2 et 7 ap 159",
                     Iban = "RO27RZBR2161724926335584",

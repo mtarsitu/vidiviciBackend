@@ -10,14 +10,13 @@ import {
 import { tokens } from "../../theme";
 import QueueIcon from "@mui/icons-material/Queue";
 import { useEffect, useState } from "react";
-import { baseUrl } from "../../data/dataAtom";
 import Header from "../../components/Header";
 import AddPartner from "./addPartner";
 import AddPartnerDetails from "./addPartnerDetails";
 import { useNavigate } from "react-router-dom";
 import { partnerAtom } from "../../data/partners/partnersAtom";
 import { useAtom } from "jotai";
-
+import { requests } from "../../data/dataAtom";
 const Partners = ({ authorized, mode, useratom }) => {
   const navigate = useNavigate();
   const theme = useTheme();
@@ -27,18 +26,13 @@ const Partners = ({ authorized, mode, useratom }) => {
   const [openNewPartner, setOpenNewPartner] = useState(false);
   const [openNewDetail, setOpenNewDetail] = useState(false);
   const [partnerId, setPartnerId] = useState();
+
   const [, setPartneratom] = useAtom(partnerAtom);
   const GetPartners = async () => {
-    const response = await fetch(baseUrl + "Partners/getAll", {
-      method: "GET",
-      credentials: "include",
-    });
-    if (response.ok) {
-      let data = await response.json();
-      setPartners(data);
-    }
+    const response = await requests.Get("Partners/getAll");
+    setPartners(response);
   };
-  console.log(partners);
+  
   const handleAddPartner = () => {
     setOpenNewPartner(true);
   };
@@ -57,8 +51,8 @@ const Partners = ({ authorized, mode, useratom }) => {
 
   return (
     <>
-      <Box m="10px" backgroundColor={colors.primary[400]} maxHeight="55vh">
-        <Header title="Partneri" />
+      <Box m="10px">
+        <Header title="Partneri" subtitle="In care noi investim" />
         {authorized && (
           <Box>
             <Button
@@ -76,13 +70,13 @@ const Partners = ({ authorized, mode, useratom }) => {
         )}
       </Box>
 
-      <Grid m="10px" container spacing={4} >
+      <Grid m="10px" container spacing={6} maxWidth="80vw">
         {partners !== undefined &&
           partners.map((partner) => (
-            <Grid item xs={5.5} key={partner.id}>
+            <Grid item xs={4} key={partner.id}>
               <Card
                 key={partner.id}
-                
+                sx={{ backgroundColor: `${colors.primary[400]}` }}
               >
                 <CardContent sx={{ marginLeft: 10 }}>
                   <img

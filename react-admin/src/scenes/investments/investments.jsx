@@ -15,6 +15,7 @@ const Investments = ({ useratom, mode, colors }) => {
   const [partnerName, setPartnerName] = useState();
   const investments = useAtom(investmentsAtom);
   const loggedUser = useratom;
+
   const columns = [
     { field: "id", headerName: "ID", width: 50 },
     {
@@ -60,11 +61,21 @@ const Investments = ({ useratom, mode, colors }) => {
       },
     },
     {
+      field: "lastPayment",
+      headerName: "Ultima plata",
+      width: 130,
+      renderCell: (row) => {
+        return (row.row.lastPayment = "0001-01-01T00:00:00"
+          ? "Nici o plata"
+          : row.row.lastPayment.split("T")[0]);
+      },
+    },
+    {
       field: "nextPaymentDate",
       headerName: "Urmatoarea zi de plata",
       width: 130,
       renderCell: (row) => {
-        return row.row.datesOfPayment[0].split("T")[0];
+        return row.row.nextPaymentDate.split("T")[0];
       },
     },
     {
@@ -86,7 +97,7 @@ const Investments = ({ useratom, mode, colors }) => {
     {
       field: "actions",
       headerName: "Actiuni",
-      width: 130,
+      width: 60,
       sortable: false,
       renderCell: (row) => {
         return (
@@ -94,10 +105,9 @@ const Investments = ({ useratom, mode, colors }) => {
             <IconButton color="inherit" onClick={() => handleOpen(row.row)}>
               <InfoIcon />
             </IconButton>
-            <IconButton color="inherit">
-              {/*  */}
+            {/* <IconButton color="inherit">
               <EditIcon />
-            </IconButton>
+            </IconButton> */}
           </Box>
         );
       },
@@ -158,6 +168,7 @@ const Investments = ({ useratom, mode, colors }) => {
               pageSize={7}
               rowsPerPageOptions={[7]}
               components={{ Toolbar: GridToolbar }}
+              density="comfortable"
               // sx={{
               //   width:"75vw"
               // }}

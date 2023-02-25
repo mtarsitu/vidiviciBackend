@@ -3,7 +3,6 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import { Box } from "@mui/material";
-import { baseUrl } from "../../data/dataAtom";
 import { DataGrid } from "@mui/x-data-grid";
 import LineChart from "../../components/LineChart";
 import { tokens } from "../../theme";
@@ -70,7 +69,7 @@ const PartnerDetails = ({ colors }) => {
     { field: "debths", headerName: "Datorii", width: 150 },
     { field: "ebitda", headerName: "EBITDA", width: 150 },
   ];
-  console.log(partner);
+
   useEffect(() => {
     GetDetails();
   }, []);

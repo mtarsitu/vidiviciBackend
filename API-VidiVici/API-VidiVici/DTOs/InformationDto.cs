@@ -11,12 +11,9 @@ namespace API_VidiVici.DTOs
         public string? UserId{get;set;}
         public string? Cnp {get;set;}
         public string? Iban{get;set;}
-        public string? PhoneNumber{get;set;}
          public string? Address { get; set; }
         public string? Bank { get; set; }
-
         public string? Cui { get; set; }
-        public string? RegComertului { get; set; }
         public DateTime? BirthDate{get;set;}
 
        

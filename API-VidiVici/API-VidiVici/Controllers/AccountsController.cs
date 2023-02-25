@@ -6,7 +6,7 @@ using API_VidiVici.Model;
 using API_VidiVici.Services;
 using API_VidiVici.DTOs;
 using Microsoft.AspNetCore.Authentication.Cookies;
-
+using API_VidiVici.Modifiers;
 
 namespace API_VidiVici.Controllers
 {
@@ -35,9 +35,6 @@ namespace API_VidiVici.Controllers
             _userManager = userManager;
             _twoFactorService = twoFactorService;
             SignInManager = signInManager;
-            
-
-
         }
         [AllowAnonymous]
         [HttpPost("login")]
@@ -137,7 +134,7 @@ namespace API_VidiVici.Controllers
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public async Task<ActionResult> Register(RegisterDto registerDto)
+        public async Task<ActionResult> Register([FromForm]RegisterDto registerDto)
         {
             registerDto.UserRole =UserRole.Prospect;
             var user = new User 
@@ -172,7 +169,7 @@ namespace API_VidiVici.Controllers
 
         [Authorize(Roles = "Admin,Poweruser")]    
         [HttpPost("registerRole")]
-        public async Task<ActionResult> RegisterWithRole(RegisterDto registerDto)
+        public async Task<ActionResult> RegisterWithRole([FromForm]RegisterDto registerDto)
         {
             var userrole = char.ToUpper(registerDto.UserRole.ToLower()[0]) + registerDto.UserRole.Substring(1);
             var user = new User { 
@@ -214,7 +211,7 @@ namespace API_VidiVici.Controllers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
-                PhoneNumberConfirmed= user.PhoneNumberConfirmed 
+                TwoFactorEnabled = user.TwoFactorEnabled
             };
         }
 
@@ -288,7 +285,7 @@ namespace API_VidiVici.Controllers
             var result = await  _twoFactorService.SendTwoFactorCode(user.PhoneNumber.ToString(),twoFactorPin);
             if(result == "Success")
             {
-                
+                userToPassTwoFactor = new UserLoginDto{Username = user.UserName};
                 return Ok();
             } 
             return NotFound();     

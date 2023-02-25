@@ -13,6 +13,7 @@ import { baseUrl } from "../../data/dataAtom";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { requests } from "../../data/dataAtom";
+import { textFieldSx } from "../../data/sx/textFieldsSx";
 const AddPartner = ({ show, setShow, mode, setRefresh, refresh }) => {
   const [theme] = useMode();
   const colors = tokens(theme.palette.mode);
@@ -107,19 +108,7 @@ const AddPartner = ({ show, setShow, mode, setRefresh, refresh }) => {
                 label="name"
                 name="name"
                 autoFocus
-                sx={{
-                  "& .MuiFormLabel-root.Mui-focused": {
-                    color: "neutral.main",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "&:hover fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                  },
-                }}
+                sx={textFieldSx}
               />
               <TextField
                 margin="normal"
@@ -129,19 +118,7 @@ const AddPartner = ({ show, setShow, mode, setRefresh, refresh }) => {
                 label="Descriere"
                 type="text"
                 id="description"
-                sx={{
-                  "& .MuiFormLabel-root.Mui-focused": {
-                    color: "neutral.main",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "&:hover fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                  },
-                }}
+                sx={textFieldSx}
               />
               <DropzoneArea
                 previewText="Hello"

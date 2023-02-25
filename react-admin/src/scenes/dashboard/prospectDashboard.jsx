@@ -16,7 +16,6 @@ const ProspectDashboard = ({ colors, useratom, mode }) => {
   const [showAddPhone, setShowAddPhone] = useState(false);
   const [showConfirmSms, setShowConfirmSms] = useState(false);
 
-
   const handleOpenDocuments = () => {
     setshowDoc(true);
   };
@@ -47,7 +46,7 @@ const ProspectDashboard = ({ colors, useratom, mode }) => {
           alignItems="center"
           justifyContent="space-evenly"
         >
-          {!useratom.phoneNumberConfirmed && (
+          {!useratom.twoFactorEnabled && (
             <Box
               onClick={() => setShowAddPhone(true)}
               sx={{ cursor: "pointer" }}
@@ -136,7 +135,6 @@ const ProspectDashboard = ({ colors, useratom, mode }) => {
         <AddPhoneNumber
           show={showAddPhone}
           setShow={setShowAddPhone}
-          showConfirm={showConfirmSms}
           setConfirm={setShowConfirmSms}
           mode={mode}
         />

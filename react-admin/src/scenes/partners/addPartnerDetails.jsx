@@ -10,6 +10,7 @@ import { useMode, tokens } from "../../theme";
 import { baseUrl } from "../../data/dataAtom";
 import { toast } from "react-toastify";
 import { requests } from "../../data/dataAtom";
+import { textFieldSx } from "../../data/sx/textFieldsSx";
 const AddPartnerDetails = ({
   id,
   show,
@@ -101,19 +102,7 @@ const AddPartnerDetails = ({
                 label="An"
                 name="year"
                 autoFocus
-                sx={{
-                  "& .MuiFormLabel-root.Mui-focused": {
-                    color: "neutral.main",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "&:hover fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                  },
-                }}
+                sx={textFieldSx}
               />
               <TextField
                 margin="normal"
@@ -123,19 +112,7 @@ const AddPartnerDetails = ({
                 label="Profit"
                 type="text"
                 id="description"
-                sx={{
-                  "& .MuiFormLabel-root.Mui-focused": {
-                    color: "neutral.main",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "&:hover fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                  },
-                }}
+                sx={textFieldSx}
               />
               <TextField
                 margin="normal"
@@ -145,19 +122,7 @@ const AddPartnerDetails = ({
                 label="Datorii"
                 type="text"
                 id="debths"
-                sx={{
-                  "& .MuiFormLabel-root.Mui-focused": {
-                    color: "neutral.main",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "&:hover fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                  },
-                }}
+                sx={textFieldSx}
               />
               <TextField
                 margin="normal"
@@ -167,19 +132,7 @@ const AddPartnerDetails = ({
                 label="Cifra de afaceri"
                 type="text"
                 id="earnings"
-                sx={{
-                  "& .MuiFormLabel-root.Mui-focused": {
-                    color: "neutral.main",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "&:hover fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                  },
-                }}
+                sx={textFieldSx}
               />
               <TextField
                 margin="normal"
@@ -189,19 +142,7 @@ const AddPartnerDetails = ({
                 label="Ebitda"
                 type="text"
                 id="ebitda"
-                sx={{
-                  "& .MuiFormLabel-root.Mui-focused": {
-                    color: "neutral.main",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "&:hover fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                  },
-                }}
+                sx={textFieldSx}
               />
               <TextField
                 margin="normal"
@@ -211,19 +152,7 @@ const AddPartnerDetails = ({
                 label="Active imobilizate"
                 type="text"
                 id="fixedAssets"
-                sx={{
-                  "& .MuiFormLabel-root.Mui-focused": {
-                    color: "neutral.main",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "&:hover fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                  },
-                }}
+                sx={textFieldSx}
               />
 
               <Button

@@ -59,6 +59,7 @@ namespace API_VidiVici.Repositories.Implementation
         public async Task<IEnumerable<Investment>> GetUserInvestment(string id)
         {
             return await _context.Investments
+            .Where(i=>i.Active)
             .Include(t=> t.Fund)
             .Where(x=>x.ClientId == id)
             .ToListAsync();
@@ -70,7 +71,7 @@ namespace API_VidiVici.Repositories.Implementation
             var investments = await _context.Investments.ToListAsync();
             foreach(Investment investment in investments)
             {
-                total += investment.InitialInvestmentAmout;
+                total += investment.InitialInvestmentAmount;
             }
             return total;
         }

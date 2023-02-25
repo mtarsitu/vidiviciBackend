@@ -7,11 +7,78 @@ import { Box, Modal } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Header from "../../components/Header";
 import QueueIcon from "@mui/icons-material/Queue";
-import { useAtom } from "jotai";
 import { toast } from "react-toastify";
-import { refreshAtom,baseUrl } from "../../data/dataAtom";
 import { requests } from "../../data/dataAtom";
-const AddInformation = ({ show, setShow, userId, mode, colors,refresh,setRefresh }) => {
+import { textFieldSx } from "../../data/sx/textFieldsSx";
+import FormInput from "../../components/FormInput";
+import { useState, useEffect } from "react";
+
+const AddInformation = ({
+  show,
+  setShow,
+  userId,
+  mode,
+  colors,
+  refresh,
+  setRefresh,
+}) => {
+  const [disabled, setDisabled] = useState(true);
+  // const isNonMobile = useMediaQuery("(min-width:600px)");
+  const [values, setValues] = useState({
+    cnp: "",
+    address: "",
+    iban: "",
+    cui: "",
+    bank: "",
+  });
+  const inputs = [
+    {
+      id: 1,
+      name: "cnp",
+      label: "CNP",
+      type: "text",
+      helperText: "Te rugam introdu un CNP valid!",
+      regex:
+        /\b[1-9][0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12][0-9]|3[01])(?:0[1-9]|[1-3][0-9]|4[0-6]|51|52)[0-9]{4}\b/,
+    },
+    {
+      id: 2,
+      name: "address",
+      label: "Adresa completa",
+      type: "text",
+      helperText: "Te rugam sa introduci o adresa valida, Oras, Strada, Numar",
+      regex: /^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/,
+    },
+    {
+      id: 3,
+      name: "iban",
+      label: "Cont Bancar",
+      type: "text",
+      helperText:
+        "Te rugam sa introduci un cont bancar valid cu litere mari ex: RO86RZBR4599833751594364!",
+      regex: /^RO\d{2}[A-Z]{4}[0-9A-Z]{16}$/,
+    },
+    {
+      id: 4,
+      name: "cui",
+      label: "Cod unic de inregistrare al firmei CUI",
+      type: "text",
+      helperText: "Te rugam sa introduci un cui valid!",
+      regex: /[0-9a-zA-Z]{4,}/,
+    },
+    {
+      id: 5,
+      name: "bank",
+      label: "Numele Bancii",
+      type: "text",
+      helperText: "Te rugam sa introduci un nume valid!",
+      regex: /[a-zA-Z]{6,}/,
+    },
+  ];
+
+  const onChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
   const handleClose = () => {
     setShow(false);
     console.log(show);
@@ -20,20 +87,36 @@ const AddInformation = ({ show, setShow, userId, mode, colors,refresh,setRefresh
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
-    data.append("userId",userId)
+    data.append("userId", userId);
     registerInfo(data);
     handleClose();
   };
 
   const registerInfo = async (info) => {
-    const response =await requests.Post("Informations/addInformation",info);
+    const response = await requests.Post("Informations/addInformation", info);
+    console.log(response);
     if (response.ok) {
-      setRefresh(!refresh);  
       toast.success("Informatie adaugata cu succes");
+      setRefresh(!refresh);
     } else {
       toast.error("Informatia nu a fost adaugata");
     }
   };
+  const checkDisabled = () => {
+    for (let i = 0; i < inputs.length; i++) {
+      if (!values[inputs[i].name].match(inputs[i].regex)) {
+        if (!disabled) {
+          setDisabled(true);
+        }
+        return;
+      }
+    }
+    setDisabled(false);
+  };
+
+  useEffect(() => {
+    checkDisabled();
+  }, [values]);
 
   return (
     <Modal
@@ -84,146 +167,20 @@ const AddInformation = ({ show, setShow, userId, mode, colors,refresh,setRefresh
               noValidate
               sx={{ mt: 1 }}
             >
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="cnp"
-                label="CNP"
-                name="cnp"
-                autoFocus
-                sx={{
-                  "& .MuiFormLabel-root.Mui-focused": {
-                    color: "neutral.main",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "&:hover fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                  },
-                }}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="address"
-                label="Adresa"
-                type="text"
-                id="address"
-                sx={{
-                  "& .MuiFormLabel-root.Mui-focused": {
-                    color: "neutral.main",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "&:hover fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                  },
-                }}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="iban"
-                label="IBAN"
-                type="text"
-                id="iban"
-                sx={{
-                  "& .MuiFormLabel-root.Mui-focused": {
-                    color: "neutral.main",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "&:hover fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                  },
-                }}
-              />
-              {/* <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="phoneNumber"
-                label="Telefon"
-                type="text"
-                id="phoneNumber"
-                sx={{
-                  "& .MuiFormLabel-root.Mui-focused": {
-                    color: "neutral.main",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "&:hover fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                  },
-                }}
-              /> */}
-              
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="bank"
-                label="Numele Bancii"
-                type="text"
-                id="bank"
-                sx={{
-                  "& .MuiFormLabel-root.Mui-focused": {
-                    color: "neutral.main",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "&:hover fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                  },
-                }}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="cui"
-                label="Cui Firma"
-                type="text"
-                id="cui"
-                sx={{
-                  "& .MuiFormLabel-root.Mui-focused": {
-                    color: "neutral.main",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "&:hover fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                  },
-                }}
-              />
-             
-
+              {inputs.map((input) => (
+                <FormInput
+                  key={input.id}
+                  {...input}
+                  value={values[input.name]}
+                  onChange={onChange}
+                />
+              ))}
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                disabled={disabled}
               >
                 Adauga Detalii
               </Button>

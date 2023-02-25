@@ -23,6 +23,7 @@ namespace API_VidiVici.data
         public DbSet<Partner>? Partners {get;set;}
         public DbSet<PartnersDetails>? PartnersDetails {get;set;}
         public DbSet<Documents>? Documents {get;set;}
+        public DbSet<Payment>? Payments {get;set;}
         
         protected override void OnModelCreating(ModelBuilder builder)
         {

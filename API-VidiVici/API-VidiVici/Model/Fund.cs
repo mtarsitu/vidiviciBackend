@@ -13,5 +13,7 @@ namespace API_VidiVici.Model
         public bool Private{ get; set; }
         public string? ReturningType { get; set; }
         
+        public string? Details {get;set;}
+        public string? SecondDetails {get;set;}
     }
 }

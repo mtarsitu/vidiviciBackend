@@ -60,10 +60,10 @@ const MyInvestments = ({ useratom }) => {
                     Suma initiala investita {fund.initialInvestmentAmount}
                   </Typography>
                   <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Data initiala a investitiei {fund.dateCreated}
+                    Data initiala a investitiei {fund.dateCreated.split("T")[0]}
                   </Typography>
                   <Typography variant="body2">
-                    Urmatoarea zi de plata {fund.nextPaymentDate}
+                    Urmatoarea zi de plata {fund.nextPaymentDate.split("T")[0]}
                     <br />
                     Dobanda {fund.rateOfInterest}
                   </Typography>

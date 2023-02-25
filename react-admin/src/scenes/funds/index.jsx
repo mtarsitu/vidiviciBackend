@@ -16,6 +16,7 @@ const Funds = ({ authorized,mode,useratom }) => {
   const [fundId,setFundId] = useState('');
   const [showFunds, setShowFunds] = useState({});
   const funds = useAtom(fundsAtom);
+
   const allFunds = useAtom(allFundsAtom);
   const [showNew, setNew] = useState(false);
   const theme = useTheme();
@@ -81,19 +82,19 @@ const Funds = ({ authorized,mode,useratom }) => {
                   Dobanda {fund.interestRate}
                 </Typography>
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  Informatii suplimentare 1
+                  {fund.details}
                 </Typography>
                 <Typography variant="body2">
-                  Informatii suplimentare 2
+                  {fund.secondDetails === null? "Nici un detaliu secundar":fund.secondDetails}
                   <br />
-                  {'"informatii suplimentare 3"'}
+                  
                 </Typography>
               </CardContent>
               <CardActions>
                 {authorize ? (
                   <IconButton color="inherit">
                     {/* for admin to edit fund */}
-                    <EditIcon />
+                    {/* <EditIcon /> */}
                   </IconButton>
                 ) : (
                   

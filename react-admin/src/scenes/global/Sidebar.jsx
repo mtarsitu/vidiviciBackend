@@ -262,7 +262,6 @@ const Sidebar = ({ useratom, authorized }) => {
                       selected={selected}
                       setSelected={setSelected}
                     />
-                    /
                   </>
                 )}
                 <Item

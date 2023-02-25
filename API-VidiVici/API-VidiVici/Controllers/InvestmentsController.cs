@@ -17,12 +17,14 @@ namespace API_VidiVici.Controllers
         private readonly UserManager<User> _userManager;
         private readonly InformationsServices _informationsServices;
          private readonly NotificationService _notificationService;
+         private readonly PaymentService _paymentService;
         public InvestmentsController(
             ILogger<InvestmentsController> logger,
             InvestmentsServices services,
             UserManager<User> userManager,
             InformationsServices informationsServices,
-            NotificationService notificationService
+            NotificationService notificationService,
+            PaymentService paymentService
             )
         {
             _logger = logger;
@@ -30,6 +32,7 @@ namespace API_VidiVici.Controllers
             _userManager = userManager;
             _informationsServices = informationsServices;
             _notificationService = notificationService;
+            _paymentService = paymentService;
         }
 
         [Authorize(Roles ="Admin,Poweruser,Employee")]
@@ -108,11 +111,58 @@ namespace API_VidiVici.Controllers
             investment.Pending = false;
             investment.DateAproved = DateTime.UtcNow;
             investment.AprovedById = user.Id;
+            investment.Active = true;
             _services.Edit(investment);
 
             return Ok();
         }
 
+        [Authorize(Roles = "Admin,Employee,Poweruser")]
+        [HttpPost("addPayment")]
+        public async Task<ActionResult> AddPayment(Investment investment)
+        {
+            try{
+
+                Payment payment = new Payment
+                {
+                    ClientId = investment.ClientId,
+                    InvestmentId = investment.Id,
+                    PaymentDay = DateTime.UtcNow,
+                    PaymentAmount = investment.RateOfInterest
+                };
+                _paymentService.Add(payment);
+                investment.LastPayment = DateTime.UtcNow;
+                _services.Edit(investment);
+                return Ok();
+            }catch(Exception e)
+            {
+                return Json(new { status="error",message=e});
+            }
+        }
+
+        [Authorize(Roles = "Admin,Employee,Poweruser")]
+        [HttpPost("addFinalPayment")]
+        public async Task<ActionResult> AddFinalPayment(Investment investment)
+        {
+            try{
+
+                Payment payment = new Payment
+                {
+                    ClientId = investment.ClientId,
+                    InvestmentId = investment.Id,
+                    PaymentDay = DateTime.UtcNow,
+                    PaymentAmount = investment.InitialInvestmentAmount
+                };
+                _paymentService.Add(payment);
+                investment.LastPayment = DateTime.UtcNow;
+                investment.Active = false;
+                _services.Edit(investment);
+                return Ok();
+            }catch(Exception e)
+            {
+                return Json(new { status="error",message=e});
+            }
+        }
 
     }
 }

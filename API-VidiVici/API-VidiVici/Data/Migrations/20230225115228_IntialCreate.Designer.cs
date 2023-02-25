@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_VidiVici.Data.Migrations
 {
     [DbContext(typeof(VidiviciDbContext))]
-    [Migration("20230221101728_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230225115228_IntialCreate")]
+    partial class IntialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -101,6 +101,9 @@ namespace API_VidiVici.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Details")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("InterestRate")
                         .HasColumnType("float");
 
@@ -111,6 +114,9 @@ namespace API_VidiVici.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("ReturningType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SecondDetails")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -160,6 +166,9 @@ namespace API_VidiVici.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
                     b.Property<string>("AprovedById")
                         .HasColumnType("nvarchar(450)");
 
@@ -175,8 +184,11 @@ namespace API_VidiVici.Data.Migrations
                     b.Property<int>("FundId")
                         .HasColumnType("int");
 
-                    b.Property<double>("InitialInvestmentAmout")
+                    b.Property<double>("InitialInvestmentAmount")
                         .HasColumnType("float");
+
+                    b.Property<DateTime>("LastPayment")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("Pending")
                         .HasColumnType("bit");
@@ -276,6 +288,35 @@ namespace API_VidiVici.Data.Migrations
                     b.HasIndex("PartnerId");
 
                     b.ToTable("PartnersDetails");
+                });
+
+            modelBuilder.Entity("API_VidiVici.Model.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClientId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("InvestmentId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("PaymentAmount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("PaymentDay")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("InvestmentId");
+
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("API_VidiVici.Model.User", b =>
@@ -392,37 +433,37 @@ namespace API_VidiVici.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "895aeef6-025c-420a-b743-fd012c95db2b",
+                            Id = "68ad79bd-d937-4564-ab56-5c4e59bd752c",
                             Name = "Poweruser",
                             NormalizedName = "POWERUSER"
                         },
                         new
                         {
-                            Id = "37c30c4d-4c97-4f6e-ba9a-5de325d10dc0",
+                            Id = "6f044dd5-1483-4f3d-86a5-21f9edb7d035",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "0b3cb33c-563b-4fcf-a243-6d5fd040466b",
+                            Id = "5b0c6852-a7a9-4cb8-8dea-97c8701a949c",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "ae3b8a0a-f20a-45a9-a1ef-72806eaa594b",
+                            Id = "e3c3c9a5-9fc0-41d1-af45-6cedc860bb88",
                             Name = "Prospect",
                             NormalizedName = "PROSPECT"
                         },
                         new
                         {
-                            Id = "79167bd8-fbbc-4b3e-aeeb-e477ece34db5",
+                            Id = "9ff04bdd-dabc-46bf-a879-9bb4ce746c88",
                             Name = "Pending",
                             NormalizedName = "PENDING"
                         },
                         new
                         {
-                            Id = "ad8e5f58-44e6-4f7a-8685-0265b8bbe9e1",
+                            Id = "89cae3dd-d030-46f2-bc4f-2418b62812ce",
                             Name = "Investor",
                             NormalizedName = "INVESTOR"
                         });
@@ -588,6 +629,23 @@ namespace API_VidiVici.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Partner");
+                });
+
+            modelBuilder.Entity("API_VidiVici.Model.Payment", b =>
+                {
+                    b.HasOne("API_VidiVici.Model.User", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId");
+
+                    b.HasOne("API_VidiVici.Model.Investment", "Investment")
+                        .WithMany()
+                        .HasForeignKey("InvestmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Investment");
                 });
 
             modelBuilder.Entity("API_VidiVici.Model.User", b =>

@@ -29,11 +29,19 @@ namespace API_VidiVici.Modifiers
             {
                 Id = item.Id,
                 ClientId = item.ClientId,
-                InitialInvestmentAmount = item.InitialInvestmentAmout,
+                InitialInvestmentAmount = item.InitialInvestmentAmount,
                 DateAproved = item.DateAproved,
                 DateCreated = item.DateCreated,
                 Fund = item.Fund,
                 Client = Modifiers.UserModifier.ToUserDto(item.Client),
+                LastPayment = item.LastPayment,
+                NextPaymentDate = item.NextPaymentDate,
+                FinalPaymentDate = item.FinalPaymentDate,
+                RateOfInterest =  item.RateOfInterest,
+                AprovedById = item.AprovedById,
+                Pending = item.Pending,
+                Active = item.Active
+                
             };
             
             return  investmentDto;
@@ -44,10 +52,11 @@ namespace API_VidiVici.Modifiers
             return new Investment
             {
                 ClientId = investmentDto.ClientId,
-                InitialInvestmentAmout = investmentDto.InitialInvestmentAmount,
+                InitialInvestmentAmount = investmentDto.InitialInvestmentAmount,
                 FundId = investmentDto.FundId,
                 RateOnFinal = false,
-                Pending = true
+                Pending = true,
+                DateAproved =  DateTime.Parse("0001-01-01T00:00:00"),
             };
         }
     }

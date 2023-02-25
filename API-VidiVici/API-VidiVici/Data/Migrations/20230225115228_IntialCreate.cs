@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace API_VidiVici.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class IntialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -102,7 +102,9 @@ namespace API_VidiVici.Data.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     InterestRate = table.Column<double>(type: "float", nullable: false),
                     Private = table.Column<bool>(type: "bit", nullable: false),
-                    ReturningType = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ReturningType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Details = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecondDetails = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -298,12 +300,14 @@ namespace API_VidiVici.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ClientId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    InitialInvestmentAmout = table.Column<double>(type: "float", nullable: false),
+                    InitialInvestmentAmount = table.Column<double>(type: "float", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateAproved = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastPayment = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FundId = table.Column<int>(type: "int", nullable: false),
                     RateOnFinal = table.Column<bool>(type: "bit", nullable: false),
                     Pending = table.Column<bool>(type: "bit", nullable: false),
+                    Active = table.Column<bool>(type: "bit", nullable: false),
                     AprovedById = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -353,17 +357,44 @@ namespace API_VidiVici.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Payments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ClientId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    InvestmentId = table.Column<int>(type: "int", nullable: false),
+                    PaymentDay = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PaymentAmount = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Payments_AspNetUsers_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Payments_Investments_InvestmentId",
+                        column: x => x.InvestmentId,
+                        principalTable: "Investments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "0b3cb33c-563b-4fcf-a243-6d5fd040466b", null, "Employee", "EMPLOYEE" },
-                    { "37c30c4d-4c97-4f6e-ba9a-5de325d10dc0", null, "Admin", "ADMIN" },
-                    { "79167bd8-fbbc-4b3e-aeeb-e477ece34db5", null, "Pending", "PENDING" },
-                    { "895aeef6-025c-420a-b743-fd012c95db2b", null, "Poweruser", "POWERUSER" },
-                    { "ad8e5f58-44e6-4f7a-8685-0265b8bbe9e1", null, "Investor", "INVESTOR" },
-                    { "ae3b8a0a-f20a-45a9-a1ef-72806eaa594b", null, "Prospect", "PROSPECT" }
+                    { "5b0c6852-a7a9-4cb8-8dea-97c8701a949c", null, "Employee", "EMPLOYEE" },
+                    { "68ad79bd-d937-4564-ab56-5c4e59bd752c", null, "Poweruser", "POWERUSER" },
+                    { "6f044dd5-1483-4f3d-86a5-21f9edb7d035", null, "Admin", "ADMIN" },
+                    { "89cae3dd-d030-46f2-bc4f-2418b62812ce", null, "Investor", "INVESTOR" },
+                    { "9ff04bdd-dabc-46bf-a879-9bb4ce746c88", null, "Pending", "PENDING" },
+                    { "e3c3c9a5-9fc0-41d1-af45-6cedc860bb88", null, "Prospect", "PROSPECT" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -439,6 +470,16 @@ namespace API_VidiVici.Data.Migrations
                 name: "IX_PartnersDetails_PartnerId",
                 table: "PartnersDetails",
                 column: "PartnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payments_ClientId",
+                table: "Payments",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payments_InvestmentId",
+                table: "Payments",
+                column: "InvestmentId");
         }
 
         /// <inheritdoc />
@@ -472,25 +513,28 @@ namespace API_VidiVici.Data.Migrations
                 name: "Informations");
 
             migrationBuilder.DropTable(
-                name: "Investments");
-
-            migrationBuilder.DropTable(
                 name: "Notifications");
 
             migrationBuilder.DropTable(
                 name: "PartnersDetails");
 
             migrationBuilder.DropTable(
+                name: "Payments");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Partners");
+
+            migrationBuilder.DropTable(
+                name: "Investments");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Funds");
-
-            migrationBuilder.DropTable(
-                name: "Partners");
         }
     }
 }

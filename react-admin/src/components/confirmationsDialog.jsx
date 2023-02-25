@@ -16,7 +16,6 @@ export default function AlertDialog({ setConfirmed, open, setOpen, message }) {
 
   };
  
-  console.log(open);
   return (
     <div>
       <Dialog

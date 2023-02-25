@@ -7,7 +7,7 @@ import { Box, Modal } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Header from "../../components/Header";
 import QueueIcon from "@mui/icons-material/Queue";
-
+import { textFieldSx } from "../../data/sx/textFieldsSx";
 import { useMode, tokens } from "../../theme";
 import { useAtom } from "jotai";
 import { refreshFundsAtom,baseUrl } from "../../data/dataAtom";
@@ -107,19 +107,7 @@ const AddFund = ({ show, setShow, mode }) => {
                 label="name"
                 name="name"
                 autoFocus
-                sx={{
-                  "& .MuiFormLabel-root.Mui-focused": {
-                    color: "neutral.main",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "&:hover fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                  },
-                }}
+                sx={textFieldSx}
               />
               <TextField
                 margin="normal"
@@ -129,19 +117,7 @@ const AddFund = ({ show, setShow, mode }) => {
                 label="Dobanda"
                 type="text"
                 id="interestRate"
-                sx={{
-                  "& .MuiFormLabel-root.Mui-focused": {
-                    color: "neutral.main",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "&:hover fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                  },
-                }}
+                sx={textFieldSx}
               />
               <TextField
                 margin="normal"
@@ -151,19 +127,7 @@ const AddFund = ({ show, setShow, mode }) => {
                 label="Privat"
                 type="text"
                 id="private"
-                sx={{
-                  "& .MuiFormLabel-root.Mui-focused": {
-                    color: "neutral.main",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "&:hover fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                  },
-                }}
+                sx={textFieldSx}
               />
               <TextField
                 margin="normal"
@@ -173,19 +137,7 @@ const AddFund = ({ show, setShow, mode }) => {
                 label="Perioada returnare"
                 type="text"
                 id="returningType"
-                sx={{
-                  "& .MuiFormLabel-root.Mui-focused": {
-                    color: "neutral.main",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "&:hover fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                  },
-                }}
+                sx={textFieldSx}
               />
 
               <Button

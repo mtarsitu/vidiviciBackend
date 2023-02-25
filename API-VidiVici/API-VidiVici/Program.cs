@@ -64,6 +64,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 
 builder.Services.AddAuthorization();
+builder.Services.AddScoped<PaymentRepository>();
+builder.Services.AddScoped<PaymentService>();
 builder.Services.AddScoped<PartnerRepository>();
 builder.Services.AddScoped<PartnersService>();
 builder.Services.AddScoped<TwoFactorServices>();

@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { baseUrl,refreshAtom } from "../../data/dataAtom";
 import { useAtom } from "jotai";
 import { tokens } from "../../theme";
+import { textFieldSx } from "../../data/sx/textFieldsSx";
 const EditUser = ({
   oldUser,
   setUserEdit,
@@ -114,19 +115,7 @@ const EditUser = ({
                   type="text"
                   id="firstName"
                   defaultValue={oldUser.firstName}
-                  sx={{
-                    "& .MuiFormLabel-root.Mui-focused": {
-                      color: "neutral.main",
-                    },
-                    "& .MuiOutlinedInput-root": {
-                      "&:hover fieldset": {
-                        borderColor: `neutral.main`,
-                      },
-                      "&.Mui-focused fieldset": {
-                        borderColor: `neutral.main`,
-                      },
-                    },
-                  }}
+                  sx={textFieldSx}
                 />
                 <TextField
                   margin="normal"
@@ -137,19 +126,7 @@ const EditUser = ({
                   type="text"
                   id="lastName"
                   defaultValue={oldUser.lastName}
-                  sx={{
-                    "& .MuiFormLabel-root.Mui-focused": {
-                      color: "neutral.main",
-                    },
-                    "& .MuiOutlinedInput-root": {
-                      "&:hover fieldset": {
-                        borderColor: `neutral.main`,
-                      },
-                      "&.Mui-focused fieldset": {
-                        borderColor: `neutral.main`,
-                      },
-                    },
-                  }}
+                  sx={textFieldSx}
                 />
                 <TextField
                   margin="normal"

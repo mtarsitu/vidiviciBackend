@@ -216,6 +216,7 @@ const Users = ({ useratom, mode, colors }) => {
               pageSize={7}
               rowsPerPageOptions={[7]}
               components={{ Toolbar: GridToolbar }}
+              density="comfortable"
               // sx={{
               //   width:"75vw"
               // }}

@@ -35,13 +35,15 @@ export default function Login({ useratom }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
     singIn(data);
   };
   const singIn = async (user) => {
+    let username = user.get("username");
     try {
-      let response = await requests.Post(`Accounts/login`,user)
+      let response = await requests.Post(`Accounts/login`, user);
       if (response.ok) {
-        toast.success(`${user.username} Te-ai logat cu succes!`);
+        toast.success(`${username} Te-ai logat cu succes!`);
         setRefresh(!refresh);
         navigate("/dashboard");
       } else if (response.status === 409) {
@@ -97,7 +99,8 @@ export default function Login({ useratom }) {
             >
               <TextField
                 margin="normal"
-                required
+                required={true}
+                // error
                 fullWidth
                 id="username"
                 label="Username"

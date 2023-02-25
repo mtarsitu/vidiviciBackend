@@ -11,6 +11,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import Header from "../../components/Header";
 import { toast } from "react-toastify";
 import { baseUrl } from "../../data/dataAtom";
+import { textFieldSx } from "../../data/sx/textFieldsSx";
 const NewInvestment = ({ show, setShow, fund, useratom, mode }) => {
   const [theme,] = useMode();
   const colors = tokens(theme.palette.mode);
@@ -93,19 +94,7 @@ const NewInvestment = ({ show, setShow, fund, useratom, mode }) => {
                 label="Suma pe care vrei sa o investesti"
                 type="text"
                 id="initialInvestmentAmout"
-                sx={{
-                  "& .MuiFormLabel-root.Mui-focused": {
-                    color: "neutral.main",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "&:hover fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: `neutral.main`,
-                    },
-                  },
-                }}
+                sx={textFieldSx}
               />
               <Button
                 type="submit"
