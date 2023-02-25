@@ -23,6 +23,7 @@ const Notifications = ({
             {notification.notificationType} - {notification.message}
           </MenuItem>
         ))}
+        <MenuItem>Sterge Notificarile</MenuItem>
       </Menu>
 
   );

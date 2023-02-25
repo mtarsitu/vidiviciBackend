@@ -28,6 +28,7 @@ const Partners = ({ authorized, mode, useratom }) => {
   const [partnerId, setPartnerId] = useState();
 
   const [, setPartneratom] = useAtom(partnerAtom);
+
   const GetPartners = async () => {
     const response = await requests.Get("Partners/getAll");
     setPartners(response);
@@ -47,7 +48,7 @@ const Partners = ({ authorized, mode, useratom }) => {
   };
   useEffect(() => {
     GetPartners();
-  }, []);
+  }, [refresh]);
 
   return (
     <>
@@ -81,8 +82,8 @@ const Partners = ({ authorized, mode, useratom }) => {
                 <CardContent sx={{ marginLeft: 10 }}>
                   <img
                     src={`data:image/png;base64,${partner.logo}`}
-                    width="130"
-                    height="130"
+                    width="100"
+                    height="100"
                     alt="documentul utilizatorului"
                   />
                 </CardContent>
