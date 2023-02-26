@@ -24,7 +24,7 @@ import EditUser from "./editUser";
 import RoleRegister from "../account/roleRegister";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AlertDialog from "../../components/confirmationsDialog";
-
+import { userTableSx } from "../../data/sx/tableSx";
 const Users = ({ useratom, mode, colors }) => {
   const [openEdit, setOpenEdit] = useState(false);
   const [open, setOpen] = useState(false);
@@ -182,31 +182,7 @@ const Users = ({ useratom, mode, colors }) => {
           <Box
             m="-20px 0 0 0"
             height="75vh"
-            sx={{
-              "& .MuiDataGrid-root": {
-                border: "none",
-              },
-              "& .MuiDataGrid-cell": {
-                borderBottom: "none",
-              },
-              "& .username-column--cell": {
-                color: colors.greenAccent[300],
-              },
-              "& .MuiDataGrid-columnHeaders": {
-                backgroundColor: colors.purpleAccent[700],
-                borderBottom: "none",
-              },
-              "& .MuiDataGrid-virtualScroller": {
-                backgroundColor: colors.primary[400],
-              },
-              "& .MuiDataGrid-footerContainer": {
-                borderTop: "none",
-                backgroundColor: colors.purpleAccent[700],
-              },
-              "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                color: `${colors.grey[100]} !important`,
-              },
-            }}
+            sx={userTableSx(colors)}
           >
             {/* //checkboxSelection */}
 
@@ -217,9 +193,7 @@ const Users = ({ useratom, mode, colors }) => {
               rowsPerPageOptions={[7]}
               components={{ Toolbar: GridToolbar }}
               density="comfortable"
-              // sx={{
-              //   width:"75vw"
-              // }}
+              
             />
           </Box>
 

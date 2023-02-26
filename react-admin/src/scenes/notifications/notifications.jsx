@@ -17,6 +17,7 @@ const Notifications = ({
         MenuListProps={{
           "aria-labelledby": "basic-button",
         }}
+        
       >
         {notifications.map((notification) => (
           <MenuItem key={notification.id}>

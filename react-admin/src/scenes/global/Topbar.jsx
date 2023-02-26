@@ -114,7 +114,7 @@ const Topbar = ({ useratom }) => {
           <SearchIcon />
         </IconButton> */}
             </Box>
-
+             
             {/* ICONS */}
             <Box display="flex">
               <IconButton onClick={colorMode.toggleColorMode}>

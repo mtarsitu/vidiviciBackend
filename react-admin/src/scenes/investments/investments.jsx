@@ -8,6 +8,7 @@ import { useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import Unauthorize from "../unauthorize";
 import Information from "../information/information";
+import { tableSx } from "../../data/sx/tableSx";
 const Investments = ({ useratom, mode, colors }) => {
   const [open, setOpen] = useState(false);
   const [infoId, setInfoId] = useState();
@@ -131,34 +132,7 @@ const Investments = ({ useratom, mode, colors }) => {
           <Box
             m="20px 0 0 0"
             height="75vh"
-            sx={{
-              "& .MuiDataGrid-root": {
-                border: "none",
-              },
-              "& .MuiDataGrid-cell": {
-                borderBottom: "none",
-              },
-              // "& .name-column--cell": {
-              //   color: colors.purpleAccent[300],
-              // },
-              "& .MuiDataGrid-columnHeaders": {
-                backgroundColor: colors.purpleAccent[700],
-                borderBottom: "none",
-              },
-              "& .MuiDataGrid-virtualScroller": {
-                backgroundColor: colors.primary[400],
-              },
-              "& .MuiDataGrid-footerContainer": {
-                borderTop: "none",
-                backgroundColor: colors.purpleAccent[700],
-              },
-              "& .MuiCheckbox-root": {
-                color: `${colors.purpleAccent[200]} !important`,
-              },
-              "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                color: `${colors.grey[100]} !important`,
-              },
-            }}
+            sx={tableSx(colors)}
           >
             {/* //checkboxSelection */}
 

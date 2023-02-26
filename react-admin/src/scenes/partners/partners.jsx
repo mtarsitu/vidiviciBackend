@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { partnerAtom } from "../../data/partners/partnersAtom";
 import { useAtom } from "jotai";
 import { requests } from "../../data/dataAtom";
+
 const Partners = ({ authorized, mode, useratom }) => {
   const navigate = useNavigate();
   const theme = useTheme();

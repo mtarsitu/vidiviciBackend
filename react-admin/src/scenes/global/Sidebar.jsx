@@ -42,7 +42,7 @@ const Sidebar = ({ useratom, authorized }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
   const authorize = authorized;
-
+  console.log(isCollapsed);
   return (
     <>
       {loggedUser != null && (
@@ -68,6 +68,37 @@ const Sidebar = ({ useratom, authorized }) => {
           <ProSidebar collapsed={isCollapsed}>
             <Menu iconShape="square">
               {/* LOGO AND MENU ICON */}
+
+              {!isCollapsed &&
+                (theme.palette.mode === "dark" ? (
+                  <img
+                    alt="profile-user"
+                    width="250px"
+                    height="150px"
+                    src={`../../../assets/vidivici-logo.png`}
+                    style={{
+                      cursor: "pointer",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      marginLeft: "-50px",
+                      marginTop: "-50px",
+                    }}
+                  />
+                ) : (
+                  <img
+                    alt="profile-user"
+                    width="250px"
+                    height="150px"
+                    src={`../../../assets/logo-inchis.png`}
+                    style={{
+                      cursor: "pointer",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      marginLeft: "-50px",
+                      marginTop: "-50px",
+                    }}
+                  />
+                ))}
               <MenuItem
                 onClick={() => setIsCollapsed(!isCollapsed)}
                 icon={
@@ -104,18 +135,18 @@ const Sidebar = ({ useratom, authorized }) => {
                   <Box textAlign="center" marginBottom="20px">
                     <Typography
                       variant="h3"
-                      color={colors.grey[100]}
+                      color={colors.purpleAccent[400]}
                       fontWeight="bold"
                       sx={{ m: "10px 0 0 0" }}
                     >
-                      techaine
+                      Vidi Vici
                     </Typography>
                     <Typography variant="h5" color={colors.purpleAccent[400]}>
-                      REACT ADMIN DASHBOARD
+                      We come We conquered
                     </Typography>
                   </Box>
                   <Divider />
-                  <Box
+                  {/* <Box
                     display="flex"
                     justifyContent="center"
                     alignItems="center"
@@ -128,7 +159,7 @@ const Sidebar = ({ useratom, authorized }) => {
                       src={`../../assets/techaine-logo-g.png`}
                       style={{ cursor: "pointer", borderRadius: "50%" }}
                     />
-                  </Box>
+                  </Box> */}
                   <Box textAlign="center">
                     <Typography
                       variant="h4"
@@ -273,6 +304,20 @@ const Sidebar = ({ useratom, authorized }) => {
                 />
               </Box>
             </Menu>
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              // marginTop="20px"
+            >
+              <img
+                alt="profile-user"
+                width="50px"
+                height="50px"
+                src={`../../assets/techaine-logo-g.png`}
+                style={{ cursor: "pointer", borderRadius: "50%" }}
+              />
+            </Box>
           </ProSidebar>
         </Box>
       )}

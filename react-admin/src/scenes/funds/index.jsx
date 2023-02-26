@@ -1,4 +1,11 @@
-import { Box, IconButton, Typography, useTheme,Button  } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Typography,
+  useTheme,
+  Button,
+  Pagination,
+} from "@mui/material";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import Card from "@mui/material/Card";
@@ -9,39 +16,44 @@ import { allFundsAtom, fundsAtom } from "../../data/dataAtom";
 import QueueIcon from "@mui/icons-material/Queue";
 import EditIcon from "@mui/icons-material/Edit";
 import AddFund from "./addFund";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import NewInvestment from "../investments/newInvestment";
-const Funds = ({ authorized,mode,useratom }) => {
-  const [newInvestmentModal,setNewInvestmentModal] = useState(false);
-  const [fundId,setFundId] = useState('');
+const Funds = ({ authorized, mode, useratom }) => {
+  const [newInvestmentModal, setNewInvestmentModal] = useState(false);
+  const [fundId, setFundId] = useState("");
   const [showFunds, setShowFunds] = useState({});
+  const [page, setPage] = useState(1);
+  const [begin, setBegin] = useState(0);
   const funds = useAtom(fundsAtom);
-
+  const ItemPerPage = 2;
   const allFunds = useAtom(allFundsAtom);
   const [showNew, setNew] = useState(false);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const authorize = authorized;
-  const handleApply =(id)=>{
+  const handleApply = (id) => {
     console.log(id);
     setFundId(id);
     setNewInvestmentModal(true);
   };
-  const handleAddFund=()=>{
+  const handleAddFund = () => {
     setNew(true);
-  }
-
+  };
+  const handlePageChange = (e, p) => {
+    setPage(p);
+    setBegin((p - 1) * ItemPerPage);
+  };
+  console.log(showFunds);
   useEffect(() => {
     if (authorize) {
       setShowFunds(allFunds[0]);
     } else setShowFunds(funds[0]);
   }, [showNew]);
   return (
-    <Box m="20px" >
+    <Box m="20px">
       <Header title="Fonduri" subtitle="Oportunitati investitii" />
       {/* for admin to add fund */}
       {authorize && (
-        
         <Box>
           <Button
             variant="contained"
@@ -56,17 +68,15 @@ const Funds = ({ authorized,mode,useratom }) => {
           </Button>
         </Box>
       )}
-      <Box
-        m="-10px"
-       
-      >
+      <Box m="-10px">
         {showFunds.length > 0 &&
-          showFunds.map((fund) => (
+          showFunds.slice(begin, begin + ItemPerPage).map((fund) => (
             <Card
               key={fund.id}
               sx={{
+                minHeight: 240,
                 minWidth: "150!important",
-                marginBottom: 10,
+                marginBottom: 5,
                 backgroundColor: `${colors.primary[400]}`,
               }}
             >
@@ -85,9 +95,10 @@ const Funds = ({ authorized,mode,useratom }) => {
                   {fund.details}
                 </Typography>
                 <Typography variant="body2">
-                  {fund.secondDetails === null? "Nici un detaliu secundar":fund.secondDetails}
+                  {fund.secondDetails === null
+                    ? "Nici un detaliu secundar"
+                    : fund.secondDetails}
                   <br />
-                  
                 </Typography>
               </CardContent>
               <CardActions>
@@ -97,13 +108,12 @@ const Funds = ({ authorized,mode,useratom }) => {
                     {/* <EditIcon /> */}
                   </IconButton>
                 ) : (
-                  
                   <Button
                     size="small"
                     sx={{
                       color: `${colors.greenAccent[400]}`,
                     }}
-                    onClick={()=>handleApply(fund.id)}
+                    onClick={() => handleApply(fund.id)}
                   >
                     Aplica la aceasta opurtunitate{" "}
                   </Button>
@@ -111,14 +121,26 @@ const Funds = ({ authorized,mode,useratom }) => {
               </CardActions>
             </Card>
           ))}
+        <Pagination
+          count={Math.round(showFunds.length / ItemPerPage)}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: 5,
+            marginLeft: -15,
+          }}
+          onChange={handlePageChange}
+        />
       </Box>
-      {showNew&&
-      
-      <AddFund show={showNew} setShow={setNew} mode={mode}/>
-      }
-     
-        <NewInvestment show={newInvestmentModal} setShow={setNewInvestmentModal} fund={fundId} useratom={useratom} mode={mode}/>
-   
+      {showNew && <AddFund show={showNew} setShow={setNew} mode={mode} />}
+
+      <NewInvestment
+        show={newInvestmentModal}
+        setShow={setNewInvestmentModal}
+        fund={fundId}
+        useratom={useratom}
+        mode={mode}
+      />
     </Box>
   );
 };
