@@ -9,7 +9,6 @@ namespace API_VidiVici.Model
     {
 
         public DateTime Date {get;set;} = DateTime.UtcNow;
-
         public string? NotificationType {get;set;}        
         public string? Message{get;set;}
 

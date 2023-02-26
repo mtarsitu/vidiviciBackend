@@ -79,7 +79,7 @@ const Partners = ({ authorized, mode, useratom }) => {
         )}
       </Box>
 
-      <Grid m="20px" container spacing={8} maxWidth="75vw">
+      <Grid m="20px" container spacing={8} maxWidth="75vw" sx={{marginTop:-10}}>
         {partners !== undefined &&
           partners.slice(begin, begin + ItemPerPage).map((partner) => (
             <Grid item xs={6} key={partner.id}>
@@ -104,7 +104,7 @@ const Partners = ({ authorized, mode, useratom }) => {
                   </Typography>
                 </CardContent>
 
-                <CardContent sx={{ height: 250 }}>
+                <CardContent sx={{ height: "30vh" }}>
                   <Typography
                     sx={{ fontSize: 14 }}
                     color="text.secondary"
@@ -148,7 +148,7 @@ const Partners = ({ authorized, mode, useratom }) => {
           sx={{
             display: "flex",
             justifyContent: "center",
-            marginTop: 10,
+            marginTop: 5,
             marginLeft: -15,
           }}
           onChange={handlePageChange}
