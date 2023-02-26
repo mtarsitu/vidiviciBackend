@@ -144,7 +144,7 @@ const Partners = ({ authorized, mode, useratom }) => {
       </Grid>
       {partners !== undefined && (
         <Pagination
-          count={Math.round(partners.length / 2)}
+          count={Math.round(partners.length / ItemPerPage)}
           sx={{
             display: "flex",
             justifyContent: "center",
