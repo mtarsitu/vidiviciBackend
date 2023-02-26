@@ -16,7 +16,7 @@ import Information from "../information/information";
 import Unauthorize from "../unauthorize";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-
+import { userTableSx } from "../../data/sx/tableSx";
 // import UserApplication from "../application/userApplication";
 import VerifyApplication from "../application/verifyApplication";
 const PendingInvestors = ({ useratom, authorized, mode, colors }) => {
@@ -97,39 +97,12 @@ const PendingInvestors = ({ useratom, authorized, mode, colors }) => {
       {loggedUser != null ? (
         <>
           {!openManage ? (
-            <Box m="20px">
+            <Box m="10px">
               <Header title="Utilizatori" subtitle="Administrare utilizatori" />
               <Box
-                m="40px 0 0 0"
+                m="20px 0 0 0"
                 height="75vh"
-                sx={{
-                  "& .MuiDataGrid-root": {
-                    border: "none",
-                  },
-                  "& .MuiDataGrid-cell": {
-                    borderBottom: "none",
-                  },
-                  // "& .name-column--cell": {
-                  //   color: colors.purpleAccent[300],
-                  // },
-                  "& .MuiDataGrid-columnHeaders": {
-                    backgroundColor: colors.purpleAccent[700],
-                    borderBottom: "none",
-                  },
-                  "& .MuiDataGrid-virtualScroller": {
-                    backgroundColor: colors.primary[400],
-                  },
-                  "& .MuiDataGrid-footerContainer": {
-                    borderTop: "none",
-                    backgroundColor: colors.purpleAccent[700],
-                  },
-                  "& .MuiCheckbox-root": {
-                    color: `${colors.purpleAccent[200]} !important`,
-                  },
-                  "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                    color: `${colors.grey[100]} !important`,
-                  },
-                }}
+                sx={userTableSx(colors)}
               >
                 {/* //checkboxSelection */}
 
