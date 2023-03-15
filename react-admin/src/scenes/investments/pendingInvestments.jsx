@@ -131,17 +131,13 @@ const PendingInvestment = ({ useratom, authorized, mode, colors }) => {
             height="75vh"
             sx={userTableSx(colors)}
           >
-            {/* //checkboxSelection */}
-
             <DataGrid
               rows={investments[0]}
               columns={columns}
               pageSize={7}
               rowsPerPageOptions={[7]}
               components={{ Toolbar: GridToolbar }}
-              // sx={{
-              //   width:"75vw"
-              // }}
+             
             />
           </Box>
 

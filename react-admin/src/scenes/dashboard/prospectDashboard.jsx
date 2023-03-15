@@ -2,24 +2,60 @@ import { Box, Typography } from "@mui/material";
 import StatBox from "../../components/StatBox";
 import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
 import Header from "../../components/Header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UploadDocuments from "../application/uploadDocuments";
 import AddInformation from "../information/addInformation";
 import InfoIcon from "@mui/icons-material/Info";
 import AddPhoneNumber from "../users/addPhoneNumber";
 import ConfirmSms from "../account/confirmSms";
-import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
+import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
+import VerifiedIcon from "@mui/icons-material/Verified";
+import { requests } from "../../data/dataAtom";
+import { refreshAtom } from "../../data/dataAtom";
+import { useAtom } from "jotai";
 const ProspectDashboard = ({ colors, useratom, mode }) => {
-  
   const [showDoc, setshowDoc] = useState(false);
   const [newInformation, setNewInformation] = useState(false);
   const [showAddPhone, setShowAddPhone] = useState(false);
   const [showConfirmSms, setShowConfirmSms] = useState(false);
-
-  const handleOpenDocuments = () => {
-    setshowDoc(true);
+  const [section, setSection] = useState(0);
+  const [entityInformation, setEntityInformation] = useState();
+  const [refresh, setRefresh] = useAtom(refreshAtom);
+  const GetEntityInformation = async () => {
+    setEntityInformation(
+      await requests.Get(`Informations/userInformations?id=${useratom.id}`)
+    );
   };
 
+  const apply = () => {
+    setTimeout(() => {
+      setSection(0);
+    }, 10);
+    console.log(section, "apply");
+    setTimeout(() => {
+      if (entityInformation.length !== 0 && !useratom.uploadedDocuments) {
+        setSection(2);
+      }
+      if (entityInformation.length !== 0 && useratom.uploadedDocuments) {
+        setSection(3);
+        console.log(section, "dupa");
+      }
+      if (entityInformation.length === 0) {
+        setSection(1);
+      }
+    }, 20);
+  };
+  console.log(showAddPhone);
+  useEffect(() => {
+    GetEntityInformation();
+  }, [newInformation]);
+  useEffect(() => {
+    setNewInformation(section === 1 ? true : false);
+    setshowDoc(section === 2 ? true : false);
+    setShowAddPhone(section === 3 ? true : false);
+    setShowConfirmSms(section === 4 ? true : false);
+    console.log("intra aici");
+  }, [section]);
   return (
     <>
       <Box m="20px" sx={{ marginTop: 10 }}>
@@ -33,9 +69,13 @@ const ProspectDashboard = ({ colors, useratom, mode }) => {
             color={colors.grey[100]}
             sx={{ m: "0 0 5px 0" }}
           >
-            Aceasta platforma este dedicata actionarilor Vidi Vici Investmets
-            SA. SI are ca scop transparenta activelor si vizualizarea profitului
-            in timp real. Daca esti unul dintre ei confirma-ti contul.
+            Această platformă este dedicată acționarilor Vidi Vici Investments
+            SA, având ca scop asigurarea transparenței privind activele și
+            profiturile generate în timp real. Dacă ești unul dintre acționarii
+            noștri, te rugăm să îți confirmi contul. Pentru a face acest lucru,
+            urmand pasii de mai jos, este necesar să încarci o fotografie a
+            buletinului tău de identitate, o poză cu extrasul de cont și să ai
+            telefonul aproape pentru verifica numarul de telefon.
           </Typography>
         </Box>
         <Box
@@ -46,7 +86,18 @@ const ProspectDashboard = ({ colors, useratom, mode }) => {
           alignItems="center"
           justifyContent="space-evenly"
         >
-          {!useratom.twoFactorEnabled && (
+          <Box onClick={() => apply()} sx={{ cursor: "pointer" }}>
+            <StatBox
+              title={"Verificare actionar"}
+              subtitle="Incepe procesul de validare"
+              icon={
+                <VerifiedIcon
+                  sx={{ color: colors.purpleAccent[500], fontSize: "26px" }}
+                />
+              }
+            />
+          </Box>
+          {/* {!useratom.twoFactorEnabled && (
             <Box
               onClick={() => setShowAddPhone(true)}
               sx={{ cursor: "pointer" }}
@@ -86,59 +137,43 @@ const ProspectDashboard = ({ colors, useratom, mode }) => {
                 />
               }
             />
-          </Box>
-
-          {/* <Box onClick={handleOpenModal} sx={{ cursor: "pointer" }}>
-            <StatBox
-              title={"3. Formular"}
-              subtitle="Completeaza cu informatii necesare"
-              icon={
-                <NoteAltIcon
-                  sx={{ color: colors.purpleAccent[500], fontSize: "26px" }}
-                />
-              }
-            />
           </Box> */}
         </Box>
-        {/* <Button
-        variant="contained"
-        onClick={handleOpenModal}
-        sx={{
-          marginRight: 5,
-          marginTop: 5,
-          backgroundColor: colors.purpleAccent[700],
-        }}
-      >
-        <QueueIcon /> &nbsp; Devino investitor profesionist
-      </Button> */}
+
         <AddInformation
           show={newInformation}
           setShow={setNewInformation}
           userId={useratom.id}
           mode={mode}
           colors={colors}
+          section={section}
+          setSection={setSection}
         />
-        {/* <ToProfesional
-          show={show}
-          setShow={setShow}
-          user={useratom}
-          mode={mode}
-          colors={colors}
-        /> */}
+
         <UploadDocuments
           show={showDoc}
           setShow={setshowDoc}
           mode={mode}
           colors={colors}
           user={useratom}
+          setRefresh={setRefresh}
+          refresh={refresh}
+          section={section}
+          setSection={setSection}
         />
-        <AddPhoneNumber
-          show={showAddPhone}
-          setShow={setShowAddPhone}
-          setConfirm={setShowConfirmSms}
+        {!useratom.twoFactorEnabled && (
+          <AddPhoneNumber
+            show={showAddPhone}
+            setShow={setShowAddPhone}
+            setConfirm={setShowConfirmSms}
+            mode={mode}
+          />
+        )}
+        <ConfirmSms
+          show={showConfirmSms}
+          setShow={setShowConfirmSms}
           mode={mode}
         />
-        <ConfirmSms show={showConfirmSms} setShow={setShowConfirmSms} mode={mode} />
       </Box>
     </>
   );

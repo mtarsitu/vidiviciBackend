@@ -10,7 +10,7 @@ namespace API_VidiVici.Model
         public string? UserRole {get;set;}
         public DateTime DateCreated {get;set;} = DateTime.UtcNow;
         public string? UsedPlatform {get;set;}
-
+        public bool UploadedDocuments {get;set;}
         public string? AprovedById {get;set;}
         public User? AprovedBy {get;set;}
     }

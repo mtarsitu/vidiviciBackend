@@ -10,8 +10,10 @@ namespace API_VidiVici.Model
        
 
         public string? ClientId {get;set;}
-        public string? IdentityCardTitle { get; set; }
-        public byte[]? IdentityCardData { get; set; }
+        public string? IdTitle { get; set; }
+        public byte[]? IdImage { get; set; }
+        public string? BankStatementTitle {get;set;}
+        public byte[]? BankStatementImage {get;set;}
         public User? Client { get; set; }
     }
 }

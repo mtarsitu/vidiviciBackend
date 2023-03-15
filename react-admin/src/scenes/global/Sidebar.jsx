@@ -69,7 +69,7 @@ const Sidebar = ({ useratom, authorized }) => {
             <Menu iconShape="square">
               {/* LOGO AND MENU ICON */}
 
-              {!isCollapsed &&
+              {/* {!isCollapsed &&
                 (theme.palette.mode === "dark" ? (
                   <img
                     alt="profile-user"
@@ -98,7 +98,7 @@ const Sidebar = ({ useratom, authorized }) => {
                       marginTop: "-50px",
                     }}
                   />
-                ))}
+                ))} */}
               <MenuItem
                 onClick={() => setIsCollapsed(!isCollapsed)}
                 icon={
@@ -218,33 +218,36 @@ const Sidebar = ({ useratom, authorized }) => {
                     />
                   </>
                 )}
-                {useratom.userRole !== "Prospect" && (
-                  <Item
-                    title="Companii in care investim"
-                    to="/partneri"
-                    icon={<BusinessIcon />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
-                )}
-                {!authorize && useratom.userRole !== "Prospect" && (
-                  <>
+                {useratom.userRole !== "Prospect" &&
+                  useratom.userRole !== "Pending" && (
                     <Item
-                      title="Investitiile mele"
-                      to="/myfunds"
-                      icon={<AccountBalanceWalletIcon />}
+                      title="Companii in care investim"
+                      to="/partneri"
+                      icon={<BusinessIcon />}
                       selected={selected}
                       setSelected={setSelected}
                     />
-                    <Item
-                      title="Fonduri active"
-                      to="/funds"
-                      icon={<ReceiptOutlinedIcon />}
-                      selected={selected}
-                      setSelected={setSelected}
-                    />
-                  </>
-                )}
+                  )}
+                {!authorize &&
+                  useratom.userRole !== "Prospect" &&
+                  useratom.userRole !== "Pending" && (
+                    <>
+                      <Item
+                        title="Investitiile mele"
+                        to="/myfunds"
+                        icon={<AccountBalanceWalletIcon />}
+                        selected={selected}
+                        setSelected={setSelected}
+                      />
+                      <Item
+                        title="Fonduri active"
+                        to="/funds"
+                        icon={<ReceiptOutlinedIcon />}
+                        selected={selected}
+                        setSelected={setSelected}
+                      />
+                    </>
+                  )}
                 {authorize && (
                   <>
                     <Item
@@ -309,6 +312,7 @@ const Sidebar = ({ useratom, authorized }) => {
               justifyContent="center"
               alignItems="center"
               // marginTop="20px"
+              
             >
               <img
                 alt="profile-user"

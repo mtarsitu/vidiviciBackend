@@ -72,6 +72,7 @@ const Partners = ({ authorized, mode, useratom }) => {
                 marginTop: -15,
                 marginLeft: 25,
                 backgroundColor: colors.purpleAccent[700],
+                
               }}
             >
               <QueueIcon /> &nbsp; Adauga partneri

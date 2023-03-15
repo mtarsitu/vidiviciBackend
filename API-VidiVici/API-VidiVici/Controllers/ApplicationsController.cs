@@ -81,32 +81,33 @@ namespace API_VidiVici.Controllers
             var user = await _userManager.FindByIdAsync(documentsDto.ClientId);
             if(documentsDto !=null){
                 
-                Documents documents = new Documents {IdentityCardTitle = documentsDto.Title, ClientId=documentsDto.ClientId};
-                byte[] imageData = null;
-                using (var binaryReader = new BinaryReader(documentsDto.Image.OpenReadStream()))
+                Documents documents = new Documents {IdTitle = documentsDto.IdTitle,BankStatementTitle = documentsDto.BankStatementTitle, ClientId=documentsDto.ClientId};
+                byte[] idDataImage = null;
+                byte[] bankStatementDataImage = null;
+                using (var binaryReader = new BinaryReader(documentsDto.IdImage.OpenReadStream()))
                 {
-                    imageData = binaryReader.ReadBytes((int)documentsDto.Image.Length);
+                    idDataImage = binaryReader.ReadBytes((int)documentsDto.IdImage.Length);
                 }
-                documents.IdentityCardData = imageData;
+                 using (var binaryReader = new BinaryReader(documentsDto.BankStatementImage.OpenReadStream()))
+                {
+                    bankStatementDataImage = binaryReader.ReadBytes((int)documentsDto.BankStatementImage.Length);
+                }
+                documents.IdImage = idDataImage;
+                documents.BankStatementImage = bankStatementDataImage;
                 _service.AddDocuments(documents);
                 
             }
-            if (user!= null)
-            {
-                await _userManager.RemoveFromRoleAsync(user, UserRole.Prospect);
-                
-                await _userManager.AddToRoleAsync(user, UserRole.Pending);
+            if(user!= null){
+                user.UploadedDocuments = true;
                 await _userManager.UpdateAsync(user);
-                user.UserRole = UserRole.Pending;
-                _context.SaveChanges();
                 _notificationService.Add(new Notification{
                     NotificationType = NotificationsType.Pending,
-                    Message = $"{user.FirstName} a completat toate documentele, necesita verificare"
+                    Message = $"{user.FirstName} a introdus toate documentele!"
                 });
-                return Ok();   
+                return Ok();
             }
+           
             return NotFound();
-            // return Ok();
         }
 
 

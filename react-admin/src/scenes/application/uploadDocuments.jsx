@@ -6,23 +6,39 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { baseUrl } from "../../data/dataAtom";
 import { requests } from "../../data/dataAtom";
-const UploadDocuments = ({ show, setShow, mode, colors, user }) => {
-  const [files, setFiles] = useState({ identityCard: "" });
+const UploadDocuments = ({
+  show,
+  setShow,
+  mode,
+  colors,
+  user,
+  refresh,
+  setRefresh,
+  section,
+  setSection,
+}) => {
+  const [files, setFiles] = useState({ identityCard: "", bankStatement: "" });
 
   const handleClose = () => {
     setShow(false);
   };
-
+  console.log(files.identityCard);
   const addIdentityCard = (file) => {
     //Saving files to state for further use and closing Modal.
     // setShow(false);
-    setFiles({ identityCard: file });
+    setFiles((prevState) => ({ ...prevState, identityCard: file }));
+  };
+
+  const addStatement = (file) => {
+    setFiles((prevState) => ({ ...prevState, bankStatement: file }));
   };
   const setForm = () => {
     const formData = new FormData();
     formData.append("clientId", user.id);
-    formData.append("title", files.identityCard[0].name);
-    formData.append("image", files.identityCard[0]);
+    formData.append("idTitle", files.identityCard[0].name);
+    formData.append("idImage", files.identityCard[0]);
+    formData.append("bankStatementTitle", files.bankStatement[0].name);
+    formData.append("bankStatementImage", files.bankStatement[0]);
     upload(formData);
     setShow(false);
   };
@@ -30,18 +46,23 @@ const UploadDocuments = ({ show, setShow, mode, colors, user }) => {
   const upload = async (form) => {
     const response = await requests.Post("Applications/addDocuments", form);
     if (response.ok) {
+      setRefresh(!refresh);
+      if (section) {
+        setSection(section + 1);
+      }
       toast.success("Documente adaugate cu succes!");
     } else {
       toast.error("Nu au fost adaugate");
     }
   };
-  
+
   return (
     <Modal
       open={show}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      sx={{ overflow: "scroll" }}
     >
       <Box
         sx={{
@@ -90,13 +111,22 @@ const UploadDocuments = ({ show, setShow, mode, colors, user }) => {
             </Typography>
 
             <DropzoneArea
-              previewText="Hello"
+              previewText="Buletin"
               onChange={addIdentityCard.bind(this)}
               filesLimit={1}
               acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
               showPreviews={true}
               maxFileSize={5000000}
               dropzoneText="Apasa sau pune buletinul direct aici "
+            />
+            <DropzoneArea
+              previewText="Extras"
+              onChange={addStatement.bind(this)}
+              filesLimit={1}
+              acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
+              showPreviews={true}
+              maxFileSize={5000000}
+              dropzoneText="Incarca extrasul de banca "
             />
             <Button
               onClick={setForm}

@@ -16,6 +16,7 @@ namespace API_VidiVici.Model
         public string? Email {get;set;}
         public string? PhoneNumber{get;set;}
         public bool TwoFactorEnabled {get;set;}
+        public bool UploadedDocuments {get;set;}
         public string? UsedPlatform {get;set;}
         public string? AprovedBy {get;set;}
 

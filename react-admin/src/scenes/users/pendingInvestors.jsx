@@ -104,8 +104,6 @@ const PendingInvestors = ({ useratom, authorized, mode, colors }) => {
                 height="75vh"
                 sx={userTableSx(colors)}
               >
-                {/* //checkboxSelection */}
-
                 <DataGrid
                   rows={users[0].filter(
                     (investor) => investor.userRole === "Pending"
@@ -114,9 +112,6 @@ const PendingInvestors = ({ useratom, authorized, mode, colors }) => {
                   pageSize={7}
                   rowsPerPageOptions={[7]}
                   components={{ Toolbar: GridToolbar }}
-                  // sx={{
-                  //   width:"75vw"
-                  // }}
                 />
               </Box>
               <Information

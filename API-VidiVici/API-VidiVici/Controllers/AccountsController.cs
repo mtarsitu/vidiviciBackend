@@ -211,7 +211,8 @@ namespace API_VidiVici.Controllers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
-                TwoFactorEnabled = user.TwoFactorEnabled
+                TwoFactorEnabled = user.TwoFactorEnabled,
+                UploadedDocuments = user.UploadedDocuments
             };
         }
 
@@ -286,7 +287,17 @@ namespace API_VidiVici.Controllers
             if(result == "Success")
             {
                 userToPassTwoFactor = new UserLoginDto{Username = user.UserName};
-                return Ok();
+             
+                await _userManager.RemoveFromRoleAsync(user, UserRole.Prospect);
+                
+                await _userManager.AddToRoleAsync(user, UserRole.Pending);
+                await _userManager.UpdateAsync(user);
+                user.UserRole = UserRole.Pending;
+                _notificationService.Add(new Notification{
+                    NotificationType = NotificationsType.Pending,
+                    Message = $"{user.FirstName} si-a validat cu succes numarul de telefon. Necesita verificare!"
+                });
+                return Ok();   
             } 
             return NotFound();     
         }

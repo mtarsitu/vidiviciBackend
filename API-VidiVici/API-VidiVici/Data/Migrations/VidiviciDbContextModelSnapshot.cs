@@ -49,13 +49,19 @@ namespace API_VidiVici.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<byte[]>("BankStatementImage")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("BankStatementTitle")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ClientId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<byte[]>("IdentityCardData")
+                    b.Property<byte[]>("IdImage")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("IdentityCardTitle")
+                    b.Property<string>("IdTitle")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -376,6 +382,9 @@ namespace API_VidiVici.Data.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("UploadedDocuments")
+                        .HasColumnType("bit");
+
                     b.Property<string>("UsedPlatform")
                         .HasColumnType("nvarchar(max)");
 
@@ -430,37 +439,37 @@ namespace API_VidiVici.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "68ad79bd-d937-4564-ab56-5c4e59bd752c",
+                            Id = "be6d31de-e6c9-4b34-ae68-36e2d831a1f4",
                             Name = "Poweruser",
                             NormalizedName = "POWERUSER"
                         },
                         new
                         {
-                            Id = "6f044dd5-1483-4f3d-86a5-21f9edb7d035",
+                            Id = "0aee6fa8-c886-4a3b-8f19-546cdc10ae98",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "5b0c6852-a7a9-4cb8-8dea-97c8701a949c",
+                            Id = "806a1a36-f43b-4b8a-9369-d17bbec277b4",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "e3c3c9a5-9fc0-41d1-af45-6cedc860bb88",
+                            Id = "57556447-0366-43ce-b688-7770b24be45d",
                             Name = "Prospect",
                             NormalizedName = "PROSPECT"
                         },
                         new
                         {
-                            Id = "9ff04bdd-dabc-46bf-a879-9bb4ce746c88",
+                            Id = "8a67e121-7e0c-46f3-826f-f4a03fc0ea34",
                             Name = "Pending",
                             NormalizedName = "PENDING"
                         },
                         new
                         {
-                            Id = "89cae3dd-d030-46f2-bc4f-2418b62812ce",
+                            Id = "e36f6fc8-e18e-423f-8b69-88dc7fbb53fe",
                             Name = "Investor",
                             NormalizedName = "INVESTOR"
                         });

@@ -21,6 +21,8 @@ const AddInformation = ({
   colors,
   refresh,
   setRefresh,
+  setSection,
+  section,
 }) => {
   const [disabled, setDisabled] = useState(true);
   // const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -89,6 +91,7 @@ const AddInformation = ({
     const data = new FormData(event.currentTarget);
     data.append("userId", userId);
     registerInfo(data);
+    if(section){setSection(section+1)};
     handleClose();
   };
 
