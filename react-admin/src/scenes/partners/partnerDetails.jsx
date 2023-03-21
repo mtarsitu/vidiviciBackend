@@ -72,7 +72,7 @@ const PartnerDetails = ({ colors,mode }) => {
   // Active Circulante
   // Capitaluri Proprii
   // EBITDA ?????
-  console.log(finalData);
+  console.log(dataChart);
   console.log(colors);
   const columns = [
     { field: "year", headerName: "Anul" },
