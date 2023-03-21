@@ -31,24 +31,25 @@ const PartnerDetails = ({ colors,mode }) => {
     setOpenEditDetails(true);
   };
   const getChartData = (allDetails) => {
-    let finalData = [
-      {
-        id: "Profit",
-        color: colors[0],
-        data: [],
-      },
-      {
-        id: "Cifra de Afaceri",
-        color: colors[1],
-        data: [],
-      },
-    ];
-    colors = [
+    colorsChart = [
       tokens("dark").greenAccent[500],
       tokens("dark").blueAccent[300],
       tokens("dark").redAccent[200],
       tokens("dark").purpleAccent[200],
     ];
+    let finalData = [
+      {
+        id: "Profit",
+        color: colorsChart[0],
+        data: [],
+      },
+      {
+        id: "Cifra de Afaceri",
+        color: colorsChart[1],
+        data: [],
+      },
+    ];
+    
     
     if (allDetails !== undefined) {
       for (let i = 0; i < allDetails.length; i++) {
