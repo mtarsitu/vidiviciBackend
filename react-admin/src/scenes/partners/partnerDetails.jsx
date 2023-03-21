@@ -49,7 +49,7 @@ const PartnerDetails = ({ colors,mode }) => {
       tokens("dark").redAccent[200],
       tokens("dark").purpleAccent[200],
     ];
-    console.log(allDetails);
+    
     if (allDetails !== undefined) {
       for (let i = 0; i < allDetails.length; i++) {
         finalData[0].data.push({
@@ -72,7 +72,8 @@ const PartnerDetails = ({ colors,mode }) => {
   // Active Circulante
   // Capitaluri Proprii
   // EBITDA ?????
-  
+  console.log(finalData);
+  console.log(colors);
   const columns = [
     { field: "year", headerName: "Anul" },
     { field: "earnings", headerName: "Cifra de afaceri", width: 150 },
