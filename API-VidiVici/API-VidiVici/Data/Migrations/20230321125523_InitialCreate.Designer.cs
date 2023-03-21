@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_VidiVici.Data.Migrations
 {
     [DbContext(typeof(VidiviciDbContext))]
-    [Migration("20230321110322_IntialCreate")]
-    partial class IntialCreate
+    [Migration("20230321125523_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -125,7 +125,7 @@ namespace API_VidiVici.Data.Migrations
                     b.Property<bool>("Private")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("ReturningType")
+                    b.Property<int>("ReturningType")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -245,6 +245,9 @@ namespace API_VidiVici.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CompanyName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -451,37 +454,37 @@ namespace API_VidiVici.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f77d23a1-726c-4769-a161-b37595eba3c8",
+                            Id = "642997d7-2594-44f6-a998-8794f43657ed",
                             Name = "Poweruser",
                             NormalizedName = "POWERUSER"
                         },
                         new
                         {
-                            Id = "c3585b99-e99c-4c54-863d-8a2b5a580627",
+                            Id = "ab01ae4e-1b06-4bfc-aa89-b0c3983a2872",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "ab8011b1-4799-4a93-9b8c-7b2198ea74c0",
+                            Id = "a90bca49-51d5-42c2-81c1-4c1929823970",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "c936fd03-a9f8-4026-a2c5-0dc809651d9c",
+                            Id = "eb3cc7ea-d710-4000-bf64-1a954ef7a309",
                             Name = "Prospect",
                             NormalizedName = "PROSPECT"
                         },
                         new
                         {
-                            Id = "09cd8ab1-b370-4977-8851-5e9b8309f773",
+                            Id = "c2854db9-bb00-4fef-87b1-cbc5ded4d7a0",
                             Name = "Pending",
                             NormalizedName = "PENDING"
                         },
                         new
                         {
-                            Id = "23a6c1e5-5b8e-41a1-b3e6-ab26c3743af0",
+                            Id = "4dd56428-4093-4b98-97b6-ad0a82659315",
                             Name = "Investor",
                             NormalizedName = "INVESTOR"
                         });

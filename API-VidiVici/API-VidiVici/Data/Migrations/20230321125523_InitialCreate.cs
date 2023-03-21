@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace API_VidiVici.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class IntialCreate : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -105,7 +105,7 @@ namespace API_VidiVici.Data.Migrations
                     Period = table.Column<int>(type: "int", nullable: true),
                     InterestRate = table.Column<double>(type: "float", nullable: false),
                     Private = table.Column<bool>(type: "bit", nullable: false),
-                    ReturningType = table.Column<int>(type: "int", nullable: true),
+                    ReturningType = table.Column<int>(type: "int", nullable: false),
                     Details = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -135,6 +135,7 @@ namespace API_VidiVici.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LogoTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Logo = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
@@ -395,12 +396,12 @@ namespace API_VidiVici.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "09cd8ab1-b370-4977-8851-5e9b8309f773", null, "Pending", "PENDING" },
-                    { "23a6c1e5-5b8e-41a1-b3e6-ab26c3743af0", null, "Investor", "INVESTOR" },
-                    { "ab8011b1-4799-4a93-9b8c-7b2198ea74c0", null, "Employee", "EMPLOYEE" },
-                    { "c3585b99-e99c-4c54-863d-8a2b5a580627", null, "Admin", "ADMIN" },
-                    { "c936fd03-a9f8-4026-a2c5-0dc809651d9c", null, "Prospect", "PROSPECT" },
-                    { "f77d23a1-726c-4769-a161-b37595eba3c8", null, "Poweruser", "POWERUSER" }
+                    { "4dd56428-4093-4b98-97b6-ad0a82659315", null, "Investor", "INVESTOR" },
+                    { "642997d7-2594-44f6-a998-8794f43657ed", null, "Poweruser", "POWERUSER" },
+                    { "a90bca49-51d5-42c2-81c1-4c1929823970", null, "Employee", "EMPLOYEE" },
+                    { "ab01ae4e-1b06-4bfc-aa89-b0c3983a2872", null, "Admin", "ADMIN" },
+                    { "c2854db9-bb00-4fef-87b1-cbc5ded4d7a0", null, "Pending", "PENDING" },
+                    { "eb3cc7ea-d710-4000-bf64-1a954ef7a309", null, "Prospect", "PROSPECT" }
                 });
 
             migrationBuilder.CreateIndex(
