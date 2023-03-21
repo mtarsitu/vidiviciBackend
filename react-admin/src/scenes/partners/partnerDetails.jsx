@@ -2,16 +2,22 @@ import { partnerAtom } from "../../data/partners/partnersAtom";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import Header from "../../components/Header";
-import { Box } from "@mui/material";
+import { Box, Tooltip, IconButton } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import LineChart from "../../components/LineChart";
 import { tokens } from "../../theme";
 import { requests } from "../../data/dataAtom";
-const PartnerDetails = ({ colors }) => {
+import EditDetails from "./editDetailsPartner";
+import EditIcon from "@mui/icons-material/Edit";
+
+const PartnerDetails = ({ colors,mode }) => {
   const colorsTheme = colors;
   const partner = useAtom(partnerAtom)[0];
   const [details, setDetails] = useState();
   const [dataChart, setDataChart] = useState();
+  const [openEditDetails, setOpenEditDetails] = useState(false);
+  const [detailToEdit, setDetailToEdit] = useState({});
+
   const GetDetails = async () => {
     const response = await requests.Get(
       `PartnerDetails/getDetails?id=${partner.id}`
@@ -19,68 +25,107 @@ const PartnerDetails = ({ colors }) => {
     setDetails(response);
     getChartData(response);
   };
+
+  const handleEditDetails = async (details) => {
+    setDetailToEdit(details);
+    setOpenEditDetails(true);
+  };
   const getChartData = (allDetails) => {
-    let data = [];
+    let finalData = [
+      {
+        id: "Profit",
+        color: colors[0],
+        data: [],
+      },
+      {
+        id: "Cifra de Afaceri",
+        color: colors[1],
+        data: [],
+      },
+    ];
     colors = [
       tokens("dark").greenAccent[500],
       tokens("dark").blueAccent[300],
       tokens("dark").redAccent[200],
       tokens("dark").purpleAccent[200],
     ];
+    console.log(allDetails);
     if (allDetails !== undefined) {
       for (let i = 0; i < allDetails.length; i++) {
-        data[i] = {
-          id: allDetails[i].year,
-          color: colors[i],
-          data: [
-            {
-              x: "Ebitda",
-              y: allDetails[i].ebitda,
-            },
-            {
-              x: "Active imobilizate",
-              y: allDetails[i].fixedAssets,
-            },
-            {
-              x: "Datorii",
-              y: allDetails[i].debths,
-            },
-            {
-              x: "Profit",
-              y: allDetails[i].profit,
-            },
-          ],
-        };
+        console.log(i);
+        finalData[0].data.push({
+          x: allDetails[i].year.toString(),
+          y: allDetails[i].profit,
+        });
+
+        finalData[1].data.push({
+          x: allDetails[i].year.toString(),
+          y: allDetails[i].earnings,
+        });
       }
     }
-    setDataChart(data);
+    setDataChart(finalData);
   };
-
+  // Cifra Afaceri
+  // Profit Net
+  // Datorii
+  // Active Imobilizate
+  // Active Circulante
+  // Capitaluri Proprii
+  // EBITDA ?????
+  
   const columns = [
     { field: "year", headerName: "Anul" },
+    { field: "earnings", headerName: "Cifra de afaceri", width: 150 },
     {
       field: "profit",
-      headerName: "Profit",
+      headerName: "Profit Net",
       cellClassName: "username-column--cell",
       width: 150,
     },
-    { field: "fixedAssets", headerName: "Active imobilizate", width: 150 },
-    { field: "earnings", headerName: "Cifra de afaceri", width: 150 },
     { field: "debths", headerName: "Datorii", width: 150 },
+    { field: "fixedAssets", headerName: "Active Imobilizate", width: 150 },
+    { field: "circulantAssets", headerName: "Active Circulante", width: 150 },
+    { field: "ownCapitals", headerName: "Capitaluri propii", width: 150 },
     { field: "ebitda", headerName: "EBITDA", width: 150 },
+    {
+      field: "actions",
+      headerName: "Actiuni",
+      width: 150,
+      sortable: false,
+      renderCell: (row) => {
+        return (
+          <Box>
+            {/* <IconButton color="inherit">
+              <ManageAccountsIcon />
+            </IconButton> */}
+            <Tooltip title={`Editeaza user ${row.row.username}`}>
+              <IconButton
+                color="inherit"
+                onClick={() => handleEditDetails(row.row)}
+              >
+                {/*  */}
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+          </Box>
+        );
+      },
+    },
   ];
 
   useEffect(() => {
     GetDetails();
   }, []);
   return (
-    <div>
+    <>
       {details !== undefined && (
         <Box m="10px">
           <Header
             title={partner.name.toUpperCase()}
             subtitle="Detalii companie"
           />
+
           <Box
             gridColumn="span 8"
             gridRow="span 2"
@@ -91,7 +136,8 @@ const PartnerDetails = ({ colors }) => {
             <Box
               height="220px"
               m="10px 0 0 0"
-              maxWidth="65vw"
+              maxWidth="90%"
+              width="90%"
               sx={{ marginLeft: 5 }}
             >
               <LineChart isDashboard={true} data={dataChart} />
@@ -132,14 +178,25 @@ const PartnerDetails = ({ colors }) => {
               pageSize={5}
               rowsPerPageOptions={[5]}
               sx={{
-                marginLeft: 15,
-                width: "60vw",
+                marginLeft: 10,
+                width: "88%",
+                maxWidth: "90%",
               }}
             />
           </Box>
         </Box>
       )}
-    </div>
+      {openEditDetails && (
+        <EditDetails
+          oldDetails={detailToEdit}
+          setDetailToEdit={setDetailToEdit}
+          mode={mode}
+          show={openEditDetails}
+          setShow={setOpenEditDetails}
+          refresh={GetDetails}
+        />
+      )}
+    </>
   );
 };
 

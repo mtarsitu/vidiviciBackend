@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_VidiVici.Data.Migrations
 {
     [DbContext(typeof(VidiviciDbContext))]
-    [Migration("20230315071354_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230321110322_IntialCreate")]
+    partial class IntialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -107,6 +107,9 @@ namespace API_VidiVici.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Currency")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Details")
                         .HasColumnType("nvarchar(max)");
 
@@ -116,14 +119,14 @@ namespace API_VidiVici.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("Period")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Private")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ReturningType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SecondDetails")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("ReturningType")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -268,6 +271,9 @@ namespace API_VidiVici.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<double>("CirculantAssets")
+                        .HasColumnType("float");
+
                     b.Property<double>("Debths")
                         .HasColumnType("float");
 
@@ -278,6 +284,9 @@ namespace API_VidiVici.Data.Migrations
                         .HasColumnType("float");
 
                     b.Property<double>("FixedAssets")
+                        .HasColumnType("float");
+
+                    b.Property<double>("OwnCapitals")
                         .HasColumnType("float");
 
                     b.Property<int>("PartnerId")
@@ -442,37 +451,37 @@ namespace API_VidiVici.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "be6d31de-e6c9-4b34-ae68-36e2d831a1f4",
+                            Id = "f77d23a1-726c-4769-a161-b37595eba3c8",
                             Name = "Poweruser",
                             NormalizedName = "POWERUSER"
                         },
                         new
                         {
-                            Id = "0aee6fa8-c886-4a3b-8f19-546cdc10ae98",
+                            Id = "c3585b99-e99c-4c54-863d-8a2b5a580627",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "806a1a36-f43b-4b8a-9369-d17bbec277b4",
+                            Id = "ab8011b1-4799-4a93-9b8c-7b2198ea74c0",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "57556447-0366-43ce-b688-7770b24be45d",
+                            Id = "c936fd03-a9f8-4026-a2c5-0dc809651d9c",
                             Name = "Prospect",
                             NormalizedName = "PROSPECT"
                         },
                         new
                         {
-                            Id = "8a67e121-7e0c-46f3-826f-f4a03fc0ea34",
+                            Id = "09cd8ab1-b370-4977-8851-5e9b8309f773",
                             Name = "Pending",
                             NormalizedName = "PENDING"
                         },
                         new
                         {
-                            Id = "e36f6fc8-e18e-423f-8b69-88dc7fbb53fe",
+                            Id = "23a6c1e5-5b8e-41a1-b3e6-ab26c3743af0",
                             Name = "Investor",
                             NormalizedName = "INVESTOR"
                         });

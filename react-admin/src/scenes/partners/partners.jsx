@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import AddPartner from "./addPartner";
 import AddPartnerDetails from "./addPartnerDetails";
+import EditPartner from "./editPartener";
 import { useNavigate } from "react-router-dom";
 import { partnerAtom } from "../../data/partners/partnersAtom";
 import { useAtom } from "jotai";
@@ -27,11 +28,14 @@ const Partners = ({ authorized, mode, useratom }) => {
   const [refresh, setRefresh] = useState(false);
   const [openNewPartner, setOpenNewPartner] = useState(false);
   const [openNewDetail, setOpenNewDetail] = useState(false);
+  const [openEditPartner,setOpenEditPartner] = useState(false);
+  const [editPartner,setEditPartner] = useState({});
   const [partnerId, setPartnerId] = useState();
   const [page, setPage] = useState(1);
   const [begin, setBegin] = useState(0);
   const [, setPartneratom] = useAtom(partnerAtom);
   const ItemPerPage = 2;
+  console.log(partners);
   const GetPartners = async () => {
     const response = await requests.Get("Partners/getAll");
     setPartners(response);
@@ -55,6 +59,11 @@ const Partners = ({ authorized, mode, useratom }) => {
     setPartnerId(id);
     setOpenNewDetail(true);
   };
+
+  const handleEditPartner = (partner)=>{
+    setEditPartner(partner);
+    setOpenEditPartner(true);
+  }
   useEffect(() => {
     GetPartners();
   }, [refresh]);
@@ -72,7 +81,6 @@ const Partners = ({ authorized, mode, useratom }) => {
                 marginTop: -15,
                 marginLeft: 25,
                 backgroundColor: colors.purpleAccent[700],
-                
               }}
             >
               <QueueIcon /> &nbsp; Adauga partneri
@@ -81,7 +89,13 @@ const Partners = ({ authorized, mode, useratom }) => {
         )}
       </Box>
 
-      <Grid m="20px" container spacing={8} maxWidth="75vw" sx={{marginTop:-10}}>
+      <Grid
+        m="20px"
+        container
+        spacing={8}
+        maxWidth="75vw"
+        sx={{ marginTop: -10 }}
+      >
         {partners !== undefined &&
           partners.slice(begin, begin + ItemPerPage).map((partner) => (
             <Grid item xs={6} key={partner.id}>
@@ -95,7 +109,7 @@ const Partners = ({ authorized, mode, useratom }) => {
                 <CardContent sx={{ marginLeft: 10 }}>
                   <img
                     src={`data:image/png;base64,${partner.logo}`}
-                    width="100"
+                    width="250"
                     height="100"
                     alt="documentul utilizatorului"
                   />
@@ -103,6 +117,9 @@ const Partners = ({ authorized, mode, useratom }) => {
                 <CardContent>
                   <Typography variant="h3" color="text.secondary" gutterBottom>
                     {partner.name.toUpperCase()}
+                  </Typography>
+                  <Typography variant="h5" color="text.secondary" gutterBottom>
+                    {partner.companyName}
                   </Typography>
                 </CardContent>
 
@@ -119,15 +136,26 @@ const Partners = ({ authorized, mode, useratom }) => {
                 <CardContent>
                   <Box sx={{ display: "flex", justifyContent: "space-evenly" }}>
                     {authorized && (
-                      <Button
-                        variant="contained"
-                        onClick={() => handleAddDetail(partner.id)}
-                        sx={{
-                          backgroundColor: colors.purpleAccent[700],
-                        }}
-                      >
-                        <QueueIcon /> &nbsp; Adauga detalii
-                      </Button>
+                      <>
+                        <Button
+                          variant="contained"
+                          onClick={() => handleAddDetail(partner.id)}
+                          sx={{
+                            backgroundColor: colors.purpleAccent[700],
+                          }}
+                        >
+                          <QueueIcon /> &nbsp; Adauga detalii
+                        </Button>
+                        <Button
+                          variant="contained"
+                          onClick={() => handleEditPartner(partner)}
+                          sx={{
+                            backgroundColor: colors.purpleAccent[700],
+                          }}
+                        >
+                          <QueueIcon /> &nbsp; Editeaza
+                        </Button>
+                      </>
                     )}
                     <Button
                       variant="contained"
@@ -173,6 +201,16 @@ const Partners = ({ authorized, mode, useratom }) => {
           mode={mode}
           setRefresh={setRefresh}
           refresh={refresh}
+        />
+      )}
+      {openEditPartner &&(
+        <EditPartner
+          oldPartner={editPartner}
+          setPartenerEdit={setEditPartner}
+          mode={mode}
+          show={openEditPartner}
+          setShow={setOpenEditPartner}
+          refresh={GetPartners}
         />
       )}
     </>

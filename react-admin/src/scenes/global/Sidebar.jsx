@@ -16,10 +16,9 @@ import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import PendingIcon from "@mui/icons-material/Pending";
-const Item = ({ title, to, icon, selected, setSelected }) => {
+const Item = ({ title, title2, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
   return (
     <MenuItem
       active={selected === title}
@@ -29,7 +28,14 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
       onClick={() => setSelected(title)}
       icon={icon}
     >
-      <Typography>{title}</Typography>
+      {title2 === undefined ? (
+        <Typography>{title} </Typography>
+      ) : (
+        <>
+          <Typography>{title} </Typography>
+          <Typography>{title2} </Typography>
+        </>
+      )}
       <Link to={to} />
     </MenuItem>
   );
@@ -42,7 +48,6 @@ const Sidebar = ({ useratom, authorized }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
   const authorize = authorized;
-  console.log(isCollapsed);
   return (
     <>
       {loggedUser != null && (
@@ -178,7 +183,7 @@ const Sidebar = ({ useratom, authorized }) => {
 
               <Box paddingLeft={isCollapsed ? undefined : "10%"}>
                 <Item
-                  title="Dashboard"
+                  title="Acasa"
                   to="/dashboard"
                   icon={<HomeOutlinedIcon />}
                   selected={selected}
@@ -221,7 +226,7 @@ const Sidebar = ({ useratom, authorized }) => {
                 {useratom.userRole !== "Prospect" &&
                   useratom.userRole !== "Pending" && (
                     <Item
-                      title="Companii in care investim"
+                      title="Unde investim"
                       to="/partneri"
                       icon={<BusinessIcon />}
                       selected={selected}
@@ -240,7 +245,8 @@ const Sidebar = ({ useratom, authorized }) => {
                         setSelected={setSelected}
                       />
                       <Item
-                        title="Fonduri active"
+                        title="Tipuri de investitii"
+                        title2="/ Obligatiuni"
                         to="/funds"
                         icon={<ReceiptOutlinedIcon />}
                         selected={selected}
@@ -258,7 +264,8 @@ const Sidebar = ({ useratom, authorized }) => {
                       setSelected={setSelected}
                     />
                     <Item
-                      title="Fonduri active"
+                      title="Tipuri de investitii"
+                      title2="/ Obligatiuni"
                       to="/funds"
                       icon={<ReceiptOutlinedIcon />}
                       selected={selected}
@@ -312,7 +319,6 @@ const Sidebar = ({ useratom, authorized }) => {
               justifyContent="center"
               alignItems="center"
               // marginTop="20px"
-              
             >
               <img
                 alt="profile-user"

@@ -15,7 +15,7 @@ const MyInvestments = ({ useratom }) => {
   const [, setUsername] = useAtom(usernameAtom);
   setUsername(useratom.username);
   const myFunds = useAtom(myFundsAtom)[0];
-
+  console.log(myFunds);
 
   return (
     <>
@@ -25,12 +25,12 @@ const MyInvestments = ({ useratom }) => {
           m="20px"
           sx={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, 220px)", //the width of the card
+            gridTemplateColumns: "repeat(auto-fill, 400px)", //the width of the card
             justifyContent: "center",
-            gridGap: "50px",
+            gridGap: "100px",
 
             "& .MuiPaper-root": {
-              width: 250,
+              width: 450,
             },
           }}
         >
@@ -38,12 +38,12 @@ const MyInvestments = ({ useratom }) => {
             myFunds.investments.map((fund) => (
               <Card
                 sx={{
-                  minWidth: "150!important",
-                  maxWidth: 350,
+                  minWidth: "400!important",
+                  maxWidth: 450,
                   marginBottom: 10,
                   backgroundColor: `${colors.primary[400]}`,
                 }}
-                key={fund.id+"personalInvestment"}
+                key={fund.id + "personalInvestment"}
               >
                 <CardContent>
                   <Typography
@@ -54,18 +54,25 @@ const MyInvestments = ({ useratom }) => {
                     {fund.fund.name}
                   </Typography>
                   <Typography variant="h5" component="div">
-                    Dobanda in procente {fund.fund.interestRate}
+                    Dobanda in procente: {fund.fund.interestRate}&nbsp;%
                   </Typography>
                   <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Suma initiala investita {fund.initialInvestmentAmount}
+                    Suma initiala investita: {fund.initialInvestmentAmount}
                   </Typography>
                   <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Data initiala a investitiei {fund.dateCreated.split("T")[0]}
+                    Data initiala a investitiei:{" "}
+                    {fund.dateCreated.split("T")[0]}
                   </Typography>
-                  <Typography variant="body2">
-                    Urmatoarea zi de plata {fund.nextPaymentDate.split("T")[0]}
-                    <br />
-                    Dobanda {fund.rateOfInterest}
+                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                    Data incare suma initiala:{" "}
+                    {fund.finalPaymentDate.split("T")[0]}
+                  </Typography>
+                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                    Urmatoarea zi de plata a profitului:{" "}
+                    {fund.nextPaymentDate.split("T")[0]}
+                  </Typography>
+                  <Typography variant="h5" component="div">
+                    Suma de incasat: {fund.rateOfInterest}
                   </Typography>
                 </CardContent>
                 <CardActions>

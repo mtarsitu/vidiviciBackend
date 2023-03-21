@@ -105,8 +105,18 @@ const AddPartner = ({ show, setShow, mode, setRefresh, refresh }) => {
                 required
                 fullWidth
                 id="name"
-                label="name"
+                label="Nume"
                 name="name"
+                autoFocus
+                sx={textFieldSx}
+              />
+               <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="companyName"
+                label="Denumire Srl"
+                name="companyName"
                 autoFocus
                 sx={textFieldSx}
               />
@@ -121,11 +131,10 @@ const AddPartner = ({ show, setShow, mode, setRefresh, refresh }) => {
                 sx={textFieldSx}
               />
               <DropzoneArea
-                previewText="Hello"
+                previewText="Logo"
                 onChange={addLogo.bind(this)}
                 filesLimit={1}
                 acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
-                showPreviews={true}
                 maxFileSize={5000000}
                 dropzoneText="Adauga logo"
               />

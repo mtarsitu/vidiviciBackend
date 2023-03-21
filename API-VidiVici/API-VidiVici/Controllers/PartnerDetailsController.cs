@@ -40,6 +40,12 @@ namespace API_VidiVici.Controllers
         {
             return await _service.GetDetails(id);
         }
-
+        
+        [Authorize(Roles ="Admin,Poweruser,Employee")]
+        [HttpPost("edit")]
+        public void Edit([FromForm]PartnersDetails partnersDetails)
+        {
+            _service.Edit(partnersDetails);
+        }
     }
 }

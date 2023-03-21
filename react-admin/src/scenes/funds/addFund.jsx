@@ -3,20 +3,30 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 // import { ColorModeContext, useMode } from "../../theme";
 import TextField from "@mui/material/TextField";
-import { Box, Modal } from "@mui/material";
+import {
+  Box,
+  Modal,
+  Select,
+  InputLabel,
+  MenuItem,
+  FormControl,
+} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Header from "../../components/Header";
 import QueueIcon from "@mui/icons-material/Queue";
 import { textFieldSx } from "../../data/sx/textFieldsSx";
 import { useMode, tokens } from "../../theme";
 import { useAtom } from "jotai";
-import { refreshFundsAtom,baseUrl } from "../../data/dataAtom";
+import { refreshFundsAtom, baseUrl } from "../../data/dataAtom";
 import { toast } from "react-toastify";
+import { requests } from "../../data/dataAtom";
+import { useState } from "react";
 const AddFund = ({ show, setShow, mode }) => {
   const [theme] = useMode();
   const colors = tokens(theme.palette.mode);
   const [refreshFunds, setRefreshFunds] = useAtom(refreshFundsAtom);
-
+  const [period, setPeriod] = useState();
+  const [returningType, setReturningType] = useState();
   // const isNonMobile = useMediaQuery("(min-width:600px)");
   // colors.primary[500]
 
@@ -27,25 +37,21 @@ const AddFund = ({ show, setShow, mode }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    let fund = {
-      name: data.get("name"),
-      interestRate: parseFloat(data.get("interestRate")),
-      private: Boolean(data.get("private")),
-      returningType: data.get("returningType"),
-    };
-    registerFund(fund);
+    data.append("period", period);
+    data.append("returningType", returningType);
+    registerFund(data);
+  };
+
+  const handleChangePeriod = (event) => {
+    setPeriod(event.target.value);
+  };
+
+  const handleChangeReturning = (event) => {
+    setReturningType(event.target.value);
   };
 
   const registerFund = async (fund) => {
-    const response = await fetch(baseUrl + `Funds/addFund`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        accept: "text/plain",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(fund),
-    });
+    const response = await requests.Post(`Funds/addFund`, fund);
     if (response.ok) {
       toast.success("Fond adaugat cu succes");
       setRefreshFunds(!refreshFunds);
@@ -53,6 +59,7 @@ const AddFund = ({ show, setShow, mode }) => {
       toast.error("Nu a fost adaugat fondul");
     }
   };
+  console.log(period, returningType, "asdada");
 
   return (
     <Modal
@@ -113,6 +120,32 @@ const AddFund = ({ show, setShow, mode }) => {
                 margin="normal"
                 required
                 fullWidth
+                id="currency"
+                label="Moneda"
+                name="currency"
+                autoFocus
+                sx={textFieldSx}
+              />
+              <FormControl variant="standard" sx={{ m: 1 }} fullWidth required>
+                <InputLabel id="demo-simple-select-label">Perioada</InputLabel>
+                <Select
+                  fullWidth
+                  labelId="period"
+                  name="period"
+                  id="period"
+                  onChange={handleChangePeriod}
+                >
+                  <MenuItem value={1}>1 an</MenuItem>
+                  <MenuItem value={2}>2 ani</MenuItem>
+                  <MenuItem value={3}>3 ani</MenuItem>
+                  <MenuItem value={4}>4 ani</MenuItem>
+                  <MenuItem value={5}>5 ani</MenuItem>
+                </Select>
+              </FormControl>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
                 name="interestRate"
                 label="Dobanda"
                 type="text"
@@ -129,17 +162,37 @@ const AddFund = ({ show, setShow, mode }) => {
                 id="private"
                 sx={textFieldSx}
               />
+              <FormControl variant="standard" sx={{ m: 1 }} fullWidth required>
+                <InputLabel id="demo-simple-select-label">
+                  Tip de returnare
+                </InputLabel>
+                <Select
+                  value={returningType}
+                  labelId="returningType"
+                  required
+                  fullWidth
+                  name="returningType"
+                  id="returningType"
+                  label="Tip returnare"
+                  onChange={handleChangeReturning}
+                  sx={textFieldSx}
+                >
+                  <MenuItem value={1}>Anual</MenuItem>
+                  <MenuItem value={2}>Semestrial</MenuItem>
+                  <MenuItem value={3}>Trimestial</MenuItem>
+                  <MenuItem value={4}>Lunar</MenuItem>
+                </Select>
+              </FormControl>
               <TextField
                 margin="normal"
                 required
                 fullWidth
-                name="returningType"
-                label="Perioada returnare"
-                type="text"
-                id="returningType"
+                id="details"
+                label="Detalii"
+                name="details"
+                autoFocus
                 sx={textFieldSx}
               />
-
               <Button
                 type="submit"
                 fullWidth

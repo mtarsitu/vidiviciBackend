@@ -108,6 +108,16 @@ const AddPartnerDetails = ({
                 margin="normal"
                 required
                 fullWidth
+                name="earnings"
+                label="Cifra de afaceri"
+                type="text"
+                id="earnings"
+                sx={textFieldSx}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
                 name="profit"
                 label="Profit"
                 type="text"
@@ -128,10 +138,30 @@ const AddPartnerDetails = ({
                 margin="normal"
                 required
                 fullWidth
-                name="earnings"
-                label="Cifra de afaceri"
+                name="fixedAssets"
+                label="Active Imobilizate"
                 type="text"
-                id="earnings"
+                id="fixedAssets"
+                sx={textFieldSx}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="circulantAssets"
+                label="Active Circulante"
+                type="text"
+                id="circulantAssets"
+                sx={textFieldSx}
+              />
+               <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="ownCapitals"
+                label="Capitaluri Propii"
+                type="text"
+                id="ownCapitals"
                 sx={textFieldSx}
               />
               <TextField
@@ -139,21 +169,12 @@ const AddPartnerDetails = ({
                 required
                 fullWidth
                 name="ebitda"
-                label="Ebitda"
+                label="EBITDA"
                 type="text"
                 id="ebitda"
                 sx={textFieldSx}
               />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="fixedAssets"
-                label="Active imobilizate"
-                type="text"
-                id="fixedAssets"
-                sx={textFieldSx}
-              />
+          
 
               <Button
                 type="submit"

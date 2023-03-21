@@ -35,13 +35,13 @@ namespace API_VidiVici.Model
             int daysOfTrimester = daysOfWeek * 13;     
             int Anualy = daysOfWeek * 52;
             
-            if(Fund.ReturningType == "Anualy")
+            if(Fund.ReturningType == ReturningEnum.Anualy)
             {
                 RateOnFinal = true;
             
                 return DateAproved.AddYears(1);
 
-            }else if(Fund.ReturningType == "Semestrial" && !this.RateOnFinal)
+            }else if(Fund.ReturningType == ReturningEnum.Semestrial && !this.RateOnFinal)
             {
                 if(this.LastPayment!= DateTime.Parse("0001-01-01T00:00:00"))
                 {   
@@ -49,7 +49,7 @@ namespace API_VidiVici.Model
                 }else{
                     return  DateAproved.AddDays(daysOfSemester);
                 }
-            }else if (Fund.ReturningType =="Trimestial" && !this.RateOnFinal)
+            }else if (Fund.ReturningType ==ReturningEnum.Trimestrial && !this.RateOnFinal)
             {
                
                 if(this.LastPayment!= DateTime.Parse("0001-01-01T00:00:00"))
@@ -73,7 +73,7 @@ namespace API_VidiVici.Model
         }
         private DateTime GetFinalPaymentDate()
         {
-            return DateAproved.AddYears(1);
+            return DateAproved.AddYears((int)Fund.Period);
         }
     }
 }

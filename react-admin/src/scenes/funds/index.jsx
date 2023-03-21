@@ -89,7 +89,16 @@ const Funds = ({ authorized, mode, useratom }) => {
                   {fund.name}
                 </Typography>
                 <Typography variant="h5" component="div">
-                  Dobanda {fund.interestRate}
+                  Moneda: {fund.currency}
+                </Typography>
+                <Typography variant="h5" component="div">
+                  Dobanda {fund.interestRate}&nbsp;% /an
+                </Typography>
+                <Typography variant="h5" component="div">
+                  Perioada:{" "}
+                  {fund.period === 1
+                    ? `${fund.period} an`
+                    : `${fund.period} ani`}
                 </Typography>
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
                   {fund.details}

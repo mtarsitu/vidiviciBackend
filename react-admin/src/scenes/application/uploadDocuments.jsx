@@ -114,17 +114,27 @@ const UploadDocuments = ({
               previewText="Buletin"
               onChange={addIdentityCard.bind(this)}
               filesLimit={1}
+              maxWidth={"200px"}
               acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
-              showPreviews={true}
+              showPreviews={false}
               maxFileSize={5000000}
               dropzoneText="Apasa sau pune buletinul direct aici "
+           
             />
+            <Typography
+              variant="h3"
+              color={colors.grey[100]}
+              fontWeight="bold"
+              sx={{ m: "0 0 5px 0" }}
+            >
+              Incarca Extrasul
+            </Typography>
             <DropzoneArea
               previewText="Extras"
               onChange={addStatement.bind(this)}
               filesLimit={1}
               acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
-              showPreviews={true}
+              showPreviews={false}
               maxFileSize={5000000}
               dropzoneText="Incarca extrasul de banca "
             />

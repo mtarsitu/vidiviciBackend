@@ -39,6 +39,7 @@ namespace API_VidiVici.Controllers
                 Partner partner = new Partner
                 {
                     Name = partnerDto.Name, 
+                    CompanyName= partnerDto.CompanyName,
                     Description = partnerDto.Description,
                     LogoTitle = partnerDto.LogoTitle
                 };
@@ -51,6 +52,12 @@ namespace API_VidiVici.Controllers
                 partner.Logo=imageData;
                 _service.Add(partner);
             }
+        }
+        [Authorize(Roles ="Admin,Poweruser,Employee")]
+        [HttpPost("editPartner")]
+        public void EditPartner([FromForm] Partner partner)
+        {
+            _service.Edit(partner);
         }
 
        

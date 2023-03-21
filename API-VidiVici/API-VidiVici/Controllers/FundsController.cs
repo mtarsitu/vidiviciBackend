@@ -48,7 +48,7 @@ namespace API_VidiVici.Controllers
 
         [Authorize(Roles ="Admin,Poweruser,Employee")]
         [HttpPost("addFund")]
-        public void Add(Fund fund){
+        public void Add([FromForm] Fund fund){
             _services.Add(fund);
         }
 

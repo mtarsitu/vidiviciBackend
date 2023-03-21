@@ -10,11 +10,13 @@ namespace API_VidiVici.Model
 
         public int PartnerId {get;set;}
         public  int Year {get;set;}
+        public double Earnings {get;set;}
         public double Profit {get;set;}
         public double Debths {get;set;}
-        public double Earnings {get;set;}
-        public double Ebitda {get;set;}
         public double FixedAssets {get;set;}
+        public double CirculantAssets {get;set;}
+        public double OwnCapitals {get;set;}
+        public double Ebitda {get;set;}
         public Partner? Partner {get;set;}
     }
 } 

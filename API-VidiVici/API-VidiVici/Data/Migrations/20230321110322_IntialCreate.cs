@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace API_VidiVici.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class IntialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -101,11 +101,12 @@ namespace API_VidiVici.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Period = table.Column<int>(type: "int", nullable: true),
                     InterestRate = table.Column<double>(type: "float", nullable: false),
                     Private = table.Column<bool>(type: "bit", nullable: false),
-                    ReturningType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Details = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecondDetails = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ReturningType = table.Column<int>(type: "int", nullable: true),
+                    Details = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -343,11 +344,13 @@ namespace API_VidiVici.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PartnerId = table.Column<int>(type: "int", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
+                    Earnings = table.Column<double>(type: "float", nullable: false),
                     Profit = table.Column<double>(type: "float", nullable: false),
                     Debths = table.Column<double>(type: "float", nullable: false),
-                    Earnings = table.Column<double>(type: "float", nullable: false),
-                    Ebitda = table.Column<double>(type: "float", nullable: false),
-                    FixedAssets = table.Column<double>(type: "float", nullable: false)
+                    FixedAssets = table.Column<double>(type: "float", nullable: false),
+                    CirculantAssets = table.Column<double>(type: "float", nullable: false),
+                    OwnCapitals = table.Column<double>(type: "float", nullable: false),
+                    Ebitda = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -392,12 +395,12 @@ namespace API_VidiVici.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "0aee6fa8-c886-4a3b-8f19-546cdc10ae98", null, "Admin", "ADMIN" },
-                    { "57556447-0366-43ce-b688-7770b24be45d", null, "Prospect", "PROSPECT" },
-                    { "806a1a36-f43b-4b8a-9369-d17bbec277b4", null, "Employee", "EMPLOYEE" },
-                    { "8a67e121-7e0c-46f3-826f-f4a03fc0ea34", null, "Pending", "PENDING" },
-                    { "be6d31de-e6c9-4b34-ae68-36e2d831a1f4", null, "Poweruser", "POWERUSER" },
-                    { "e36f6fc8-e18e-423f-8b69-88dc7fbb53fe", null, "Investor", "INVESTOR" }
+                    { "09cd8ab1-b370-4977-8851-5e9b8309f773", null, "Pending", "PENDING" },
+                    { "23a6c1e5-5b8e-41a1-b3e6-ab26c3743af0", null, "Investor", "INVESTOR" },
+                    { "ab8011b1-4799-4a93-9b8c-7b2198ea74c0", null, "Employee", "EMPLOYEE" },
+                    { "c3585b99-e99c-4c54-863d-8a2b5a580627", null, "Admin", "ADMIN" },
+                    { "c936fd03-a9f8-4026-a2c5-0dc809651d9c", null, "Prospect", "PROSPECT" },
+                    { "f77d23a1-726c-4769-a161-b37595eba3c8", null, "Poweruser", "POWERUSER" }
                 });
 
             migrationBuilder.CreateIndex(
