@@ -31,7 +31,7 @@ const PartnerDetails = ({ colors,mode }) => {
     setOpenEditDetails(true);
   };
   const getChartData = (allDetails) => {
-    colorsChart = [
+    const colorsChart = [
       tokens("dark").greenAccent[500],
       tokens("dark").blueAccent[300],
       tokens("dark").redAccent[200],
