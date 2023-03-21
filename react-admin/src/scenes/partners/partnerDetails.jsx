@@ -52,7 +52,6 @@ const PartnerDetails = ({ colors,mode }) => {
     console.log(allDetails);
     if (allDetails !== undefined) {
       for (let i = 0; i < allDetails.length; i++) {
-        console.log(i);
         finalData[0].data.push({
           x: allDetails[i].year.toString(),
           y: allDetails[i].profit,
@@ -96,9 +95,6 @@ const PartnerDetails = ({ colors,mode }) => {
       renderCell: (row) => {
         return (
           <Box>
-            {/* <IconButton color="inherit">
-              <ManageAccountsIcon />
-            </IconButton> */}
             <Tooltip title={`Editeaza user ${row.row.username}`}>
               <IconButton
                 color="inherit"
